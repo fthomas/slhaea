@@ -29,6 +29,7 @@ class TestSlhaLine : public CppUnit::TestFixture
   CPPUNIT_TEST_SUITE(TestSlhaLine);
   CPPUNIT_TEST(testConstructors);
   CPPUNIT_TEST(testAccessors);
+  CPPUNIT_TEST(testOperators);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -76,13 +77,43 @@ public:
 
     try
     {
-      l1[1] = "3";
-      l1.at(2) = "4";
+      l1.at(1) = "3";
     }
     catch (std::out_of_range ex)
     {
       CPPUNIT_ASSERT(l1.empty() == true);
     }
+  }
+
+  void testOperators()
+  {
+    SlhaLine l1(" 1 2 three # four");
+    const SlhaLine cl1 = l1;
+
+    l1 = " 1 2 three #";
+    CPPUNIT_ASSERT(l1.size() == 4);
+    CPPUNIT_ASSERT(l1[3] == "#");
+
+    l1 += " four";
+    CPPUNIT_ASSERT(l1.str() == cl1.str());
+    CPPUNIT_ASSERT(l1.size() == 4);
+    CPPUNIT_ASSERT(cl1.size() == 4);
+
+    l1 = "";
+    CPPUNIT_ASSERT(l1.size() == 1);
+    CPPUNIT_ASSERT(l1.empty() == true);
+
+    l1 = "1";
+    CPPUNIT_ASSERT(l1.size() == 1);
+    CPPUNIT_ASSERT(l1.empty() == false);
+
+    l1 += " 2";
+    CPPUNIT_ASSERT(l1.size() == 2);
+    CPPUNIT_ASSERT(l1.empty() == false);
+
+    l1 += "\n 3";
+    CPPUNIT_ASSERT(l1.size() == 2);
+    CPPUNIT_ASSERT(l1.empty() == false);
   }
 
 /*
