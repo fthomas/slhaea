@@ -1,2 +1,23 @@
 SLHAme - SUSY Les Houches Accord made easy
 ==========================================
+
+Source code:
+  http://github.com/fthomas/slhame
+  git clone git://github.com/fthomas/slhame.git
+
+API Documentation:
+  http://www.physik.uni-wuerzburg.de/~fthomas/slhame/doc/
+
+Requirements:
+  To use SLHAme only the C++ Standard Library, the Standard Template
+  Library (STL) and some headers from the Boost C++ Libraries[1] are
+  required.
+
+  Doxygen[2] is used for building the API documentation, CppUnit[3] is
+  required to compile the unit tests and CMake[4] is used to build
+  them. This is of course all optional.
+
+  [1] http://www.boost.org/
+  [2] http://www.doxygen.org/
+  [3] http://cppunit.sourceforge.net/
+  [4] http://www.cmake.org/
