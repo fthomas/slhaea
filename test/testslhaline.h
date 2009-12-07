@@ -30,6 +30,9 @@ class TestSlhaLine : public CppUnit::TestFixture
   CPPUNIT_TEST(testConstructors);
   CPPUNIT_TEST(testAccessors);
   CPPUNIT_TEST(testOperators);
+  CPPUNIT_TEST(testModifiers);
+  CPPUNIT_TEST(testIterators);
+  CPPUNIT_TEST(testMiscellaneous);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -68,6 +71,10 @@ public:
     CPPUNIT_ASSERT(cl1[0] == "");
     CPPUNIT_ASSERT(l1[0] == l1.at(0));
     CPPUNIT_ASSERT(cl1[0] == cl1.at(0));
+    CPPUNIT_ASSERT(l1.front() == l1.at(0));
+    CPPUNIT_ASSERT(l1.back() == l1.at(0));
+    CPPUNIT_ASSERT(cl1.front() == l1.at(0));
+    CPPUNIT_ASSERT(cl1.back() == l1.at(0));
 
     l1[0] = " 1 2 ";
     CPPUNIT_ASSERT(l1[0] == " 1 2 ");
@@ -83,6 +90,18 @@ public:
     {
       CPPUNIT_ASSERT(l1.empty() == true);
     }
+
+    l1 = "  1  2  3  ";
+    const SlhaLine cl2 = l1;
+    CPPUNIT_ASSERT(l1.front() == "1");
+    CPPUNIT_ASSERT(cl2.front() == "1");
+    CPPUNIT_ASSERT(l1.back() == "3");
+    CPPUNIT_ASSERT(cl2.back() == "3");
+    CPPUNIT_ASSERT(l1.size() == 3);
+    CPPUNIT_ASSERT(cl2.size() == 3);
+
+    CPPUNIT_ASSERT(cl2.str() == "  1  2  3");
+    CPPUNIT_ASSERT(cl2.str_plain() == "1 2 3");
   }
 
   void testOperators()
@@ -116,8 +135,56 @@ public:
     CPPUNIT_ASSERT(l1.empty() == false);
   }
 
-/*
-  void testSlhaLine()
+  void testModifiers()
+  {
+    SlhaLine l1(" 1 2 three # four");
+    const SlhaLine cl1(" 1 2 three # four");
+
+    l1.clear();
+    CPPUNIT_ASSERT(l1.empty() == true);
+
+    l1.append(" 1 2");
+    CPPUNIT_ASSERT(l1.size() == 2);
+
+    l1 += " three # four";
+    CPPUNIT_ASSERT(l1.size() == 4);
+    CPPUNIT_ASSERT(l1.str() == cl1.str());
+
+    l1.clear();
+    CPPUNIT_ASSERT(l1.empty() == true);
+
+    l1.str(" 1 2 three # four");
+    CPPUNIT_ASSERT(l1.str() == cl1.str());
+
+    l1.clear();
+    l1 = " 1 2 three # four";
+    CPPUNIT_ASSERT(l1.str() == cl1.str());
+  }
+
+  void testIterators()
+  {
+    SlhaLine l1 = std::string(" one two three four # five ");
+    const SlhaLine cl1 = l1;
+
+    CPPUNIT_ASSERT(*l1.begin() == *cl1.begin());
+    CPPUNIT_ASSERT(*(l1.end()-1) == *(cl1.end()-1));
+    CPPUNIT_ASSERT(*l1.rbegin() == *cl1.rbegin());
+    CPPUNIT_ASSERT(*(l1.rend()-1) == *(cl1.rend()-1));
+
+    CPPUNIT_ASSERT(l1.begin()+0 == l1.end()-5);
+    CPPUNIT_ASSERT(l1.begin()+1 == l1.end()-4);
+    CPPUNIT_ASSERT(l1.begin()+2 == l1.end()-3);
+    CPPUNIT_ASSERT(l1.begin()+3 == l1.end()-2);
+    CPPUNIT_ASSERT(l1.begin()+4 == l1.end()-1);
+
+    CPPUNIT_ASSERT(l1.rbegin()+0 == l1.rend()-5);
+    CPPUNIT_ASSERT(l1.rbegin()+1 == l1.rend()-4);
+    CPPUNIT_ASSERT(l1.rbegin()+2 == l1.rend()-3);
+    CPPUNIT_ASSERT(l1.rbegin()+3 == l1.rend()-2);
+    CPPUNIT_ASSERT(l1.rbegin()+4 == l1.rend()-1);
+  }
+
+  void testMiscellaneous()
   {
     SlhaLine l1;
     CPPUNIT_ASSERT(l1.str() == "");
@@ -192,9 +259,9 @@ public:
     l1 += " 7 ";
     CPPUNIT_ASSERT(l1[5] == "# a comment 7");
 
-    l1 = " test  str() and   strPlain() ";
-    CPPUNIT_ASSERT(l1.str() == " test  str() and   strPlain()");
-    CPPUNIT_ASSERT(l1.strPlain() == "test str() and strPlain()");
+    l1 = " test  str() and   str_plain() ";
+    CPPUNIT_ASSERT(l1.str() == " test  str() and   str_plain()");
+    CPPUNIT_ASSERT(l1.str_plain() == "test str() and str_plain()");
 
     l1 = " 1 2 3 4 5 ";
     CPPUNIT_ASSERT(l1.back() == "5");
@@ -218,7 +285,7 @@ public:
     CPPUNIT_ASSERT(l1.back() == "8");
     *(l1.rend()-1) = "-2";
     CPPUNIT_ASSERT(l1.front() == "-2");
-  }*/
+  }
 };
 
 } // namespace SLHAme

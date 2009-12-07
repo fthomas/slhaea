@@ -213,7 +213,7 @@ public:
     return fmter.str();
   }
 
-  std::string strPlain() const
+  std::string str_plain() const
   {
     std::string retval;
     for (const_iterator it = begin(); it != end(); ++it) retval += *it + " ";
