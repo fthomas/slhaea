@@ -1,4 +1,4 @@
-// SLHAme - SUSY Les Houches Accord made easy
+// SLHApp - SUSY Les Houches Accord plus plus
 // Copyright © 2009 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SLHAME_H
-#define SLHAME_H
+#ifndef SLHAPP_H
+#define SLHAPP_H
 
 #include <algorithm>
 #include <cstddef>
@@ -29,7 +29,7 @@
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
-namespace SLHAme {
+namespace SLHApp {
 
 inline bool to_bool(const std::string& str)
 { return boost::lexical_cast<bool>(str); }
@@ -79,16 +79,16 @@ inline std::string concat_strings(std::vector<std::string> vec)
   return boost::trim_copy(str);
 }
 
-class SlhaLine;
-class SlhaBlock;
-class Slha;
+class SLHALine;
+class SLHABlock;
+class SLHA;
 
-std::ostream& operator<<(std::ostream& os, const SlhaLine& line);
-std::ostream& operator<<(std::ostream& os, const SlhaBlock& block);
-std::ostream& operator<<(std::ostream& os, const Slha& slha);
+std::ostream& operator<<(std::ostream& os, const SLHALine& line);
+std::ostream& operator<<(std::ostream& os, const SLHABlock& block);
+std::ostream& operator<<(std::ostream& os, const SLHA& slha);
 
 
-class SlhaLine
+class SLHALine
 {
 public:
   typedef std::vector<std::string>::iterator iterator;
@@ -97,16 +97,16 @@ public:
   typedef std::vector<std::string>::const_reverse_iterator
           const_reverse_iterator;
 
-  SlhaLine()
+  SLHALine()
   { str(""); }
 
-  SlhaLine(const std::string& line)
+  SLHALine(const std::string& line)
   { str(line); }
 
-  SlhaLine& operator=(const std::string& line)
+  SLHALine& operator=(const std::string& line)
   { return str(line); }
 
-  SlhaLine& operator+=(const std::string& rhs)
+  SLHALine& operator+=(const std::string& rhs)
   { return append(rhs); }
 
   std::string& operator[](std::size_t n)
@@ -121,7 +121,7 @@ public:
   const std::string& at(std::size_t n) const
   { return impl_.at(n); }
 
-  SlhaLine& append(const std::string& rhs)
+  SLHALine& append(const std::string& rhs)
   { return str(str() + rhs); }
 
   std::string& back()
@@ -136,7 +136,7 @@ public:
   const_iterator begin() const
   { return impl_.begin(); }
 
-  SlhaLine& clear()
+  SLHALine& clear()
   {
     impl_.clear();
     impl_.push_back("");
@@ -174,7 +174,7 @@ public:
   std::size_t size() const
   { return impl_.size(); }
 
-  SlhaLine& str(const std::string& line)
+  SLHALine& str(const std::string& line)
   {
     const std::string
       line_tr = boost::trim_copy(line.substr(0, line.find("\n")));
@@ -226,49 +226,49 @@ private:
 };
 
 
-class SlhaBlock
+class SLHABlock
 {
 public:
-  typedef std::vector<SlhaLine>::iterator iterator;
-  typedef std::vector<SlhaLine>::const_iterator const_iterator;
-  typedef std::vector<SlhaLine>::reverse_iterator reverse_iterator;
-  typedef std::vector<SlhaLine>::const_reverse_iterator
+  typedef std::vector<SLHALine>::iterator iterator;
+  typedef std::vector<SLHALine>::const_iterator const_iterator;
+  typedef std::vector<SLHALine>::reverse_iterator reverse_iterator;
+  typedef std::vector<SLHALine>::const_reverse_iterator
           const_reverse_iterator;
 
-  SlhaBlock(const std::string& name = "") : mName(name) {}
+  SLHABlock(const std::string& name = "") : mName(name) {}
 
-  SlhaLine& operator[](const std::vector<std::string>& keys)
+  SLHALine& operator[](const std::vector<std::string>& keys)
   {
     iterator it = find(keys);
     if (end() == it)
-    { push_back(SlhaLine()); return back(); }
+    { push_back(SLHALine()); return back(); }
     return *it;
   }
 
-  const SlhaLine& operator[](const std::vector<std::string>& keys) const
+  const SLHALine& operator[](const std::vector<std::string>& keys) const
   {
     const_iterator it = find(keys);
     if (end() == it)
     {
-      throw std::out_of_range("SlhaBlock::{operator[],at}(" +
+      throw std::out_of_range("SLHABlock::{operator[],at}(" +
                               concat_strings(keys) + ");");
     }
     return *it;
   }
 
-  SlhaLine& operator[](const std::vector<int>& intKeys)
+  SLHALine& operator[](const std::vector<int>& intKeys)
   { return (*this)[to_string_vector<int>(intKeys)]; }
 
-  const SlhaLine& operator[](const std::vector<int>& intKeys) const
+  const SLHALine& operator[](const std::vector<int>& intKeys) const
   { return (*this)[to_string_vector<int>(intKeys)]; }
 
-  SlhaLine& operator[](const std::string& keysStr)
+  SLHALine& operator[](const std::string& keysStr)
   { return (*this)[to_string_vector(keysStr)]; }
 
-  const SlhaLine& operator[](const std::string& keysStr) const
+  const SLHALine& operator[](const std::string& keysStr) const
   { return (*this)[to_string_vector(keysStr)]; }
 
-  SlhaLine& at(const std::string& s0 = "", const std::string& s1 = "",
+  SLHALine& at(const std::string& s0 = "", const std::string& s1 = "",
                const std::string& s2 = "", const std::string& s3 = "")
   {
     std::vector<std::string> keys;
@@ -286,7 +286,7 @@ public:
   }
 
   const
-  SlhaLine& at(const std::string& s0 = "", const std::string& s1 = "",
+  SLHALine& at(const std::string& s0 = "", const std::string& s1 = "",
                const std::string& s2 = "", const std::string& s3 = "") const
   {
     std::vector<std::string> keys;
@@ -303,7 +303,7 @@ public:
     return (*this)[keys];
   }
 
-  SlhaLine& at(int i0, int i1 = nind, int i2 = nind, int i3 = nind)
+  SLHALine& at(int i0, int i1 = nind, int i2 = nind, int i3 = nind)
   {
     std::vector<std::string> keys;
 
@@ -320,7 +320,7 @@ public:
   }
 
   const
-  SlhaLine& at(int i0, int i1 = nind, int i2 = nind, int i3 = nind) const
+  SLHALine& at(int i0, int i1 = nind, int i2 = nind, int i3 = nind) const
   {
     std::vector<std::string> keys;
 
@@ -336,10 +336,10 @@ public:
     return (*this)[keys];
   }
 
-  SlhaLine& back()
+  SLHALine& back()
   { return impl_.back(); }
 
-  const SlhaLine& back() const
+  const SLHALine& back() const
   { return impl_.back(); }
 
   iterator begin()
@@ -348,7 +348,7 @@ public:
   const_iterator begin() const
   { return impl_.begin(); }
 
-  SlhaBlock& clear()
+  SLHABlock& clear()
   { impl_.clear(); return *this; }
 
   bool empty() const
@@ -388,26 +388,26 @@ public:
     return end();
   }
 
-  SlhaLine& front()
+  SLHALine& front()
   { return impl_.front(); }
 
-  const SlhaLine& front() const
+  const SLHALine& front() const
   { return impl_.front(); }
 
-  SlhaBlock& name(const std::string& newName)
+  SLHABlock& name(const std::string& newName)
   { mName = newName; return *this; }
 
   const std::string& name() const
   { return mName; }
 
-  SlhaBlock& pop_back()
+  SLHABlock& pop_back()
   { impl_.pop_back(); return *this; }
 
-  SlhaBlock& push_back(const SlhaLine& line)
+  SLHABlock& push_back(const SLHALine& line)
   { impl_.push_back(line); return *this; }
 
-  SlhaBlock& push_back(const std::string& line)
-  { impl_.push_back(SlhaLine(line)); return *this; }
+  SLHABlock& push_back(const std::string& line)
+  { impl_.push_back(SLHALine(line)); return *this; }
 
   reverse_iterator rbegin()
   { return impl_.rbegin(); }
@@ -424,7 +424,7 @@ public:
   std::size_t size() const
   { return impl_.size(); }
 
-  SlhaBlock& str(const std::string& block)
+  SLHABlock& str(const std::string& block)
   {
     std::string line;
     std::stringstream ss(block);
@@ -439,44 +439,44 @@ public:
 
 private:
   std::string mName;
-  std::vector<SlhaLine> impl_;
+  std::vector<SLHALine> impl_;
   static const int nind = -32767;
 };
 
-class Slha
+class SLHA
 {
 public:
-  typedef std::vector<SlhaBlock>::iterator iterator;
-  typedef std::vector<SlhaBlock>::const_iterator const_iterator;
-  typedef std::vector<SlhaBlock>::reverse_iterator reverse_iterator;
-  typedef std::vector<SlhaBlock>::const_reverse_iterator
+  typedef std::vector<SLHABlock>::iterator iterator;
+  typedef std::vector<SLHABlock>::const_iterator const_iterator;
+  typedef std::vector<SLHABlock>::reverse_iterator reverse_iterator;
+  typedef std::vector<SLHABlock>::const_reverse_iterator
           const_reverse_iterator;
 
-  Slha() {}
+  SLHA() {}
 
-  Slha(const std::string filename)
+  SLHA(const std::string filename)
   { readFile(filename); }
 
-  SlhaBlock& operator[](const std::string& blockName)
+  SLHABlock& operator[](const std::string& blockName)
   {
     iterator it = find(blockName);
     if (end() == it)
-    { push_back(SlhaBlock(blockName)); return back(); }
+    { push_back(SLHABlock(blockName)); return back(); }
     return *it;
   }
 
-  const SlhaBlock& operator[](const std::string& blockName) const
+  const SLHABlock& operator[](const std::string& blockName) const
   {
     const_iterator it = find(blockName);
     if (end() == it)
-    { throw std::out_of_range("Slha::operator[](\"" + blockName + "\")"); }
+    { throw std::out_of_range("SLHA::operator[](\"" + blockName + "\")"); }
     return *it;
   }
 
-  SlhaBlock& back()
+  SLHABlock& back()
   { return impl_.back(); }
 
-  const SlhaBlock& back() const
+  const SLHABlock& back() const
   { return impl_.back(); }
 
   iterator begin()
@@ -485,7 +485,7 @@ public:
   const_iterator begin() const
   { return impl_.begin(); }
 
-  Slha& clear()
+  SLHA& clear()
   { impl_.clear(); return *this; }
 
   bool empty() const
@@ -517,19 +517,19 @@ public:
     return end();
   }
 
-  SlhaBlock& front()
+  SLHABlock& front()
   { return impl_.front(); }
 
-  const SlhaBlock& front() const
+  const SLHABlock& front() const
   { return impl_.front(); }
 
-  Slha& pop_back()
+  SLHA& pop_back()
   { impl_.pop_back(); return *this; }
 
-  Slha& push_back(const SlhaBlock& block)
+  SLHA& push_back(const SLHABlock& block)
   { impl_.push_back(block); return *this; }
 
-  Slha& read(std::istream& is)
+  SLHA& read(std::istream& is)
   {
     std::string line_str, curr_name;
 
@@ -537,7 +537,7 @@ public:
     {
       if (boost::trim_copy(line_str).empty()) continue;
 
-      const SlhaLine line_slha(line_str);
+      const SLHALine line_slha(line_str);
       if ((boost::iequals("BLOCK", line_slha[0]) ||
            boost::iequals("DECAY", line_slha[0])) && line_slha.size() > 1)
       {
@@ -548,12 +548,12 @@ public:
     return *this;
   }
 
-  Slha& readFile(const std::string& filename)
+  SLHA& readFile(const std::string& filename)
   {
     std::ifstream fs(filename.c_str());
     if (!fs)
     {
-      std::cerr << "Slha::readFile(\"" << filename << "\") failed"
+      std::cerr << "SLHA::readFile(\"" << filename << "\") failed"
                 << std::endl;
       return *this;
     }
@@ -575,18 +575,18 @@ public:
   std::size_t size() const
   { return impl_.size(); }
 
-  Slha& str(const std::string& slhaStr)
+  SLHA& str(const std::string& slhaStr)
   { std::stringstream ss(""); ss << slhaStr; return read(ss); }
 
   std::string str() const
   { std::stringstream ss(""); ss << *this; return ss.str(); }
 
-  Slha& writeFile(const std::string& filename)
+  SLHA& writeFile(const std::string& filename)
   {
     std::ofstream fs(filename.c_str());
     if (!fs)
     {
-      std::cerr << "Error: Slha::writeFile(\"" << filename << "\") failed"
+      std::cerr << "Error: SLHA::writeFile(\"" << filename << "\") failed"
                 << std::endl;
       return *this;
     }
@@ -595,29 +595,29 @@ public:
   }
 
 private:
-  std::vector<SlhaBlock>  impl_;
+  std::vector<SLHABlock>  impl_;
 };
 
 
-inline std::ostream& operator<<(std::ostream& os, const Slha& slha)
+inline std::ostream& operator<<(std::ostream& os, const SLHA& slha)
 {
-  for (Slha::const_iterator it = slha.begin(); it != slha.end(); ++it)
+  for (SLHA::const_iterator it = slha.begin(); it != slha.end(); ++it)
   { os << *it; }
   return os;
 }
 
-inline std::ostream& operator<<(std::ostream& os, const SlhaBlock& block)
+inline std::ostream& operator<<(std::ostream& os, const SLHABlock& block)
 {
-  for (SlhaBlock::const_iterator it = block.begin(); it != block.end(); ++it)
+  for (SLHABlock::const_iterator it = block.begin(); it != block.end(); ++it)
   { os << *it << std::endl; }
   return os;
 }
 
-inline std::ostream& operator<<(std::ostream& os, const SlhaLine& line)
+inline std::ostream& operator<<(std::ostream& os, const SLHALine& line)
 { return os << line.str(); }
 
-} // namespace SLHAme
+} // namespace SLHApp
 
-#endif // SLHAME_H
+#endif // SLHAPP_H
 
 // vim: sw=2 tw=78

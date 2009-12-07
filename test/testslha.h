@@ -1,4 +1,4 @@
-// SLHAme - SUSY Les Houches Accord made easy
+// SLHApp - SUSY Les Houches Accord plus plus
 // Copyright © 2009 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -14,19 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SLHAME_TESTSLHA_H
-#define SLHAME_TESTSLHA_H
+#ifndef SLHAPP_TESTSLHA_H
+#define SLHAPP_TESTSLHA_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <slhame.h>
+#include <slhapp.h>
 
-namespace SLHAme {
+namespace SLHApp {
 
-class TestSlha : public CppUnit::TestFixture
+class TestSLHA : public CppUnit::TestFixture
 {
-  CPPUNIT_TEST_SUITE(TestSlha);
+  CPPUNIT_TEST_SUITE(TestSLHA);
   /*CPPUNIT_TEST(testSlha);
   CPPUNIT_TEST(testSlhaBlock);
   CPPUNIT_TEST(testSlhaLine);*/
@@ -218,8 +218,8 @@ public:
   }*/
 };
 
-} // namespace SLHAme
+} // namespace SLHApp
 
-#endif // SLHAME_TESTSLHA_H
+#endif // SLHAPP_TESTSLHA_H
 
 // vim: sw=2 tw=78

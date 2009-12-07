@@ -1,15 +1,15 @@
-SLHAme - SUSY Les Houches Accord made easy
+SLHApp - SUSY Les Houches Accord plus plus
 ==========================================
 
 Source code:
-  http://github.com/fthomas/slhame
-  git clone git://github.com/fthomas/slhame.git
+  http://github.com/fthomas/slhapp
+  git clone git://github.com/fthomas/slhapp.git
 
 API Documentation:
-  http://www.physik.uni-wuerzburg.de/~fthomas/slhame/doc/
+  http://www.physik.uni-wuerzburg.de/~fthomas/slhapp/doc/
 
 Requirements:
-  To use SLHAme only the C++ Standard Library, the Standard Template
+  To use SLHApp only the C++ Standard Library, the Standard Template
   Library (STL) and some headers from the Boost C++ Libraries[1] are
   required.
 

@@ -1,4 +1,4 @@
-// SLHAme - SUSY Les Houches Accord made easy
+// SLHApp - SUSY Les Houches Accord plus plus
 // Copyright © 2009 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -14,19 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SLHAME_TESTSLHALINE_H
-#define SLHAME_TESTSLHALINE_H
+#ifndef SLHAPP_TESTSLHALINE_H
+#define SLHAPP_TESTSLHALINE_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <slhame.h>
+#include <slhapp.h>
 
-namespace SLHAme {
+namespace SLHApp {
 
-class TestSlhaLine : public CppUnit::TestFixture
+class TestSLHALine : public CppUnit::TestFixture
 {
-  CPPUNIT_TEST_SUITE(TestSlhaLine);
+  CPPUNIT_TEST_SUITE(TestSLHALine);
   CPPUNIT_TEST(testConstructors);
   CPPUNIT_TEST(testAccessors);
   CPPUNIT_TEST(testOperators);
@@ -42,31 +42,31 @@ public:
 
   void testConstructors()
   {
-    SlhaLine l1;
+    SLHALine l1;
     CPPUNIT_ASSERT(l1.empty() == true);
     CPPUNIT_ASSERT(l1.size() == 1);
 
-    SlhaLine l2(" 1 2 3 4 ");
+    SLHALine l2(" 1 2 3 4 ");
     CPPUNIT_ASSERT(l2.empty() == false);
     CPPUNIT_ASSERT(l2.size() == 4);
 
-    SlhaLine l3(" 1 2 3 4 \n 5 6 ");
+    SLHALine l3(" 1 2 3 4 \n 5 6 ");
     CPPUNIT_ASSERT(l3.empty() == false);
     CPPUNIT_ASSERT(l3.size() == 4);
 
-    const SlhaLine l4(" 1 2 3 4 # 5 6 ");
+    const SLHALine l4(" 1 2 3 4 # 5 6 ");
     CPPUNIT_ASSERT(l4.empty() == false);
     CPPUNIT_ASSERT(l4.size() == 5);
 
-    const SlhaLine l5(" \n 1 2 3 4 # 5 6 ");
+    const SLHALine l5(" \n 1 2 3 4 # 5 6 ");
     CPPUNIT_ASSERT(l5.empty() == true);
     CPPUNIT_ASSERT(l5.size() == 1);
   }
 
   void testAccessors()
   {
-    SlhaLine l1;
-    const SlhaLine cl1;
+    SLHALine l1;
+    const SLHALine cl1;
     CPPUNIT_ASSERT(l1[0] == "");
     CPPUNIT_ASSERT(cl1[0] == "");
     CPPUNIT_ASSERT(l1[0] == l1.at(0));
@@ -92,7 +92,7 @@ public:
     }
 
     l1 = "  1  2  3  ";
-    const SlhaLine cl2 = l1;
+    const SLHALine cl2 = l1;
     CPPUNIT_ASSERT(l1.front() == "1");
     CPPUNIT_ASSERT(cl2.front() == "1");
     CPPUNIT_ASSERT(l1.back() == "3");
@@ -106,8 +106,8 @@ public:
 
   void testOperators()
   {
-    SlhaLine l1(" 1 2 three # four");
-    const SlhaLine cl1 = l1;
+    SLHALine l1(" 1 2 three # four");
+    const SLHALine cl1 = l1;
 
     l1 = " 1 2 three #";
     CPPUNIT_ASSERT(l1.size() == 4);
@@ -137,8 +137,8 @@ public:
 
   void testModifiers()
   {
-    SlhaLine l1(" 1 2 three # four");
-    const SlhaLine cl1(" 1 2 three # four");
+    SLHALine l1(" 1 2 three # four");
+    const SLHALine cl1(" 1 2 three # four");
 
     l1.clear();
     CPPUNIT_ASSERT(l1.empty() == true);
@@ -163,8 +163,8 @@ public:
 
   void testIterators()
   {
-    SlhaLine l1 = std::string(" one two three four # five ");
-    const SlhaLine cl1 = l1;
+    SLHALine l1 = std::string(" one two three four # five ");
+    const SLHALine cl1 = l1;
 
     CPPUNIT_ASSERT(*l1.begin() == *cl1.begin());
     CPPUNIT_ASSERT(*(l1.end()-1) == *(cl1.end()-1));
@@ -186,7 +186,7 @@ public:
 
   void testMiscellaneous()
   {
-    SlhaLine l1;
+    SLHALine l1;
     CPPUNIT_ASSERT(l1.str() == "");
     
     l1.str(" 1 2 3 4 ");
@@ -288,8 +288,8 @@ public:
   }
 };
 
-} // namespace SLHAme
+} // namespace SLHApp
 
-#endif // SLHAME_TESTSLHALINE_H
+#endif // SLHAPP_TESTSLHALINE_H
 
 // vim: sw=2 tw=78
