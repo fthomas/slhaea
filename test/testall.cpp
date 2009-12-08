@@ -1,4 +1,4 @@
-// SLHApp - SUSY Les Houches Accord made easy
+// SLHAea - SUSY Les Houches Accord made easy
 // Copyright © 2009 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -24,9 +24,9 @@ int main()
 {
   CppUnit::TextUi::TestRunner runner;
 
-  runner.addTest(SLHApp::TestSLHALine::suite());
-  runner.addTest(SLHApp::TestSLHABlock::suite());
-  runner.addTest(SLHApp::TestSLHA::suite());
+  runner.addTest(SLHAea::TestSLHALine::suite());
+  runner.addTest(SLHAea::TestSLHABlock::suite());
+  runner.addTest(SLHAea::TestSLHA::suite());
   runner.run();
 
   return 0;

@@ -1,15 +1,15 @@
-SLHApp - SUSY Les Houches Accord plus plus
-==========================================
+SLHAea - another SUSY Les Houches Accord input/output library
+=============================================================
 
 Source code:
-  http://github.com/fthomas/slhapp
-  git clone git://github.com/fthomas/slhapp.git
+  http://github.com/fthomas/slhaea
+  git clone git://github.com/fthomas/slhaea.git
 
 API Documentation:
-  http://www.physik.uni-wuerzburg.de/~fthomas/slhapp/doc/
+  http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/doc/
 
 Requirements:
-  To use SLHApp only the C++ Standard Library, the Standard Template
+  To use SLHAea only the C++ Standard Library, the Standard Template
   Library (STL) and some headers from the Boost C++ Libraries[1] are
   required.
 

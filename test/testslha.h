@@ -1,4 +1,4 @@
-// SLHApp - SUSY Les Houches Accord plus plus
+// SLHAea - another SUSY Les Houches Accord input/output library
 // Copyright © 2009 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -14,17 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SLHAPP_TESTSLHA_H
-#define SLHAPP_TESTSLHA_H
+#ifndef SLHAEA_TESTSLHA_H
+#define SLHAEA_TESTSLHA_H
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <slhapp.h>
+#include <slhaea.h>
 
 using namespace std;
 
-namespace SLHApp {
+namespace SLHAea {
 
 class TestSLHA : public CppUnit::TestFixture
 {
@@ -220,8 +220,8 @@ public:
   }*/
 };
 
-} // namespace SLHApp
+} // namespace SLHAea
 
-#endif // SLHAPP_TESTSLHA_H
+#endif // SLHAEA_TESTSLHA_H
 
 // vim: sw=2 tw=78

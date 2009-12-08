@@ -1,4 +1,4 @@
-// SLHApp - SUSY Les Houches Accord plus plus
+// SLHAea - another SUSY Les Houches Accord input/output library
 // Copyright © 2009 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SLHAPP_H
-#define SLHAPP_H
+#ifndef SLHAEA_H
+#define SLHAEA_H
 
 #include <algorithm>
 #include <climits>
@@ -30,7 +30,7 @@
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
-namespace SLHApp {
+namespace SLHAea {
 
 inline bool to_bool(const std::string& str)
 { return boost::lexical_cast<bool>(str); }
@@ -618,8 +618,8 @@ inline std::ostream& operator<<(std::ostream& os, const SLHABlock& block)
 inline std::ostream& operator<<(std::ostream& os, const SLHALine& line)
 { return os << line.str(); }
 
-} // namespace SLHApp
+} // namespace SLHAea
 
-#endif // SLHAPP_H
+#endif // SLHAEA_H
 
 // vim: sw=2 tw=78
