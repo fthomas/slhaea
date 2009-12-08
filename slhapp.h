@@ -18,6 +18,7 @@
 #define SLHAPP_H
 
 #include <algorithm>
+#include <climits>
 #include <cstddef>
 #include <fstream>
 #include <iostream>
@@ -60,7 +61,8 @@ std::vector<std::string> to_string_vector(const std::vector<T>& vec)
 {
   std::vector<std::string> str_vec;
   for (typename std::vector<T>::const_iterator it = vec.begin();
-       it != vec.end(); ++it) str_vec.push_back(to_string(*it));
+       it != vec.end(); ++it)
+  { str_vec.push_back(boost::lexical_cast<std::string>(*it)); }
   return str_vec;
 }
 
@@ -440,7 +442,7 @@ public:
 private:
   std::string mName;
   std::vector<SLHALine> impl_;
-  static const int nind = -32767;
+  static const int nind = INT_MIN;
 };
 
 class SLHA
@@ -455,7 +457,7 @@ public:
   SLHA() {}
 
   SLHA(const std::string filename)
-  { readFile(filename); }
+  { read_file(filename); }
 
   SLHABlock& operator[](const std::string& blockName)
   {
@@ -548,7 +550,7 @@ public:
     return *this;
   }
 
-  SLHA& readFile(const std::string& filename)
+  SLHA& read_file(const std::string& filename)
   {
     std::ifstream fs(filename.c_str());
     if (!fs)
@@ -581,7 +583,7 @@ public:
   std::string str() const
   { std::stringstream ss(""); ss << *this; return ss.str(); }
 
-  SLHA& writeFile(const std::string& filename)
+  SLHA& write_file(const std::string& filename)
   {
     std::ofstream fs(filename.c_str());
     if (!fs)

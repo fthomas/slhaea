@@ -22,6 +22,8 @@
 
 #include <slhapp.h>
 
+using namespace std;
+
 namespace SLHApp {
 
 class TestSLHA : public CppUnit::TestFixture
