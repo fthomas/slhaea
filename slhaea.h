@@ -555,7 +555,7 @@ public:
     std::ifstream fs(filename.c_str());
     if (!fs)
     {
-      std::cerr << "SLHA::readFile(\"" << filename << "\") failed"
+      std::cerr << "SLHA::read_file(\"" << filename << "\") failed"
                 << std::endl;
       return *this;
     }
@@ -588,7 +588,7 @@ public:
     std::ofstream fs(filename.c_str());
     if (!fs)
     {
-      std::cerr << "Error: SLHA::writeFile(\"" << filename << "\") failed"
+      std::cerr << "Error: SLHA::write_file(\"" << filename << "\") failed"
                 << std::endl;
       return *this;
     }
