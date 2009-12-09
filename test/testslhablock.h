@@ -31,7 +31,7 @@ class TestSLHABlock : public CppUnit::TestFixture
   CPPUNIT_TEST_SUITE(TestSLHABlock);
   CPPUNIT_TEST(testConstructors);
   CPPUNIT_TEST(testAccessors);
-  //CPPUNIT_TEST(testModifiers);
+  CPPUNIT_TEST(testModifiers);
   //CPPUNIT_TEST(testIterators);
   CPPUNIT_TEST(testMiscellaneous);
   CPPUNIT_TEST_SUITE_END();
@@ -94,6 +94,50 @@ public:
 
     CPPUNIT_ASSERT(b1.front().str() == cb1.front().str());
     CPPUNIT_ASSERT(b1.back().str() == cb1.back().str());
+  }
+
+  void testModifiers()
+  {
+    SLHABlock b1("test");
+    b1[""] = " 1 1 # 11";
+    b1[""] = " 1 2 # 12";
+    b1[""] = " 2 1 # 21";
+    const SLHABlock cb1 = b1;
+
+    b1.clear();
+    CPPUNIT_ASSERT(b1.empty() == true);
+    CPPUNIT_ASSERT(b1.size() == 0);
+    CPPUNIT_ASSERT(b1.str() == "");
+
+    vector<string> vs1;
+    vs1.push_back("1");
+    vs1.push_back("2");
+    b1 = cb1;
+    b1.erase(b1.find(vs1));
+    CPPUNIT_ASSERT(b1.size() == 2);
+    CPPUNIT_ASSERT(b1.str() == " 1 1 # 11\n 2 1 # 21\n");
+
+    vector<string> vs2;
+    vs2.push_back("2");
+    vs2.push_back("1");
+    b1 = cb1;
+    b1.erase(b1.find(vs1), ++b1.find(vs2));
+    CPPUNIT_ASSERT(b1.str() == " 1 1 # 11\n");
+
+    b1.name("test2");
+    CPPUNIT_ASSERT(b1.name() == "test2");
+
+    b1 = cb1;
+    b1.pop_back();
+    CPPUNIT_ASSERT(b1.size() == 2);
+    CPPUNIT_ASSERT(b1.str() == " 1 1 # 11\n 1 2 # 12\n");
+    b1.push_back(" 2 1 # 21");
+    CPPUNIT_ASSERT(b1.str() == cb1.str());
+
+    b1.clear();
+    CPPUNIT_ASSERT(b1.str() == "");
+    b1.str(" 1 1 # 11\n 1 2 # 12\n 2 1 # 21");
+    CPPUNIT_ASSERT(b1.str() == cb1.str());
   }
 
   void testMiscellaneous()
