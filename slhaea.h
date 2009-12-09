@@ -41,44 +41,40 @@ inline int to_int(const std::string& str)
 inline double to_double(const std::string& str)
 { return boost::lexical_cast<double>(str); }
 
-inline long double to_long_double(const std::string& str)
-{ return boost::lexical_cast<long double>(str); }
+template<class T> inline T to_(const std::string& str)
+{ return boost::lexical_cast<T>(str); }
 
-inline std::string to_string(bool v)
+template<class T> inline std::string to_string(const T& v)
 { return boost::lexical_cast<std::string>(v); }
 
-inline std::string to_string(int v)
-{ return boost::lexical_cast<std::string>(v); }
-
-inline std::string to_string(double v)
-{ return boost::lexical_cast<std::string>(v); }
-
-inline std::string to_string(long double v)
-{ return boost::lexical_cast<std::string>(v); }
-
-template<class T>
+template<class T> inline
 std::vector<std::string> to_string_vector(const std::vector<T>& vec)
 {
   std::vector<std::string> str_vec;
   for (typename std::vector<T>::const_iterator it = vec.begin();
-       it != vec.end(); ++it)
-  { str_vec.push_back(boost::lexical_cast<std::string>(*it)); }
+       it != vec.end(); ++it) str_vec.push_back(to_string(*it));
   return str_vec;
 }
 
-inline std::vector<std::string> to_string_vector(const std::string str)
+inline std::vector<std::string>
+to_string_vector(const std::string& str, const std::string& sep = " ")
 {
-  std::vector<std::string> vec;
-  boost::split(vec, str, boost::is_space(), boost::token_compress_on);
-  return vec;
+  std::vector<std::string> v;
+  if (" " == sep)
+  { boost::split(v, str, boost::is_space(), boost::token_compress_on); }
+  else
+  { boost::split(v, str, boost::is_any_of(sep), boost::token_compress_on); }
+  return v;
 }
 
-inline std::string concat_strings(std::vector<std::string> vec)
+inline std::string concat_strings(const std::vector<std::string>& vec,
+                                  const std::string& sep = " ")
 {
   std::string str;
   for (std::vector<std::string>::const_iterator it = vec.begin();
-       it != vec.end(); ++it) str += *it + " ";
-  return boost::trim_copy(str);
+       it != vec.end(); ++it) str += *it + sep;
+  if (str.size() > 0) boost::erase_last(str, sep);
+  return str;
 }
 
 class SLHALine;
@@ -88,6 +84,39 @@ class SLHA;
 std::ostream& operator<<(std::ostream& os, const SLHALine& line);
 std::ostream& operator<<(std::ostream& os, const SLHABlock& block);
 std::ostream& operator<<(std::ostream& os, const SLHA& slha);
+
+
+struct SLHAKey
+{
+  std::string block;
+  std::vector<std::string> line;
+  std::size_t element;
+
+  SLHAKey(const std::string& _block, const std::vector<std::string>& _line,
+    std::size_t _element) : block(_block), line(_line), element(_element) {}
+
+  SLHAKey(const std::string& keyStr)
+  { str(keyStr); }
+
+  SLHAKey& str(const std::string& keyStr)
+  {
+    std::vector<std::string> v = to_string_vector(keyStr, ";");
+    if (3 != v.size())
+    { throw std::invalid_argument("SLHAKey::str(\"" + keyStr + "\");"); }
+
+    block = v[0];
+    line = to_string_vector(v[1], ",");
+    element = to_<std::size_t>(v[2]);
+    return *this;
+  }
+
+  std::string str() const
+  {
+    std::stringstream ss("");
+    ss << block << ";" << concat_strings(line, ",") << ";" << element;
+    return ss.str();
+  }
+};
 
 
 class SLHALine

@@ -32,6 +32,7 @@ class TestSLHA : public CppUnit::TestFixture
   /*CPPUNIT_TEST(testSlha);
   CPPUNIT_TEST(testSlhaBlock);
   CPPUNIT_TEST(testSlhaLine);*/
+  CPPUNIT_TEST(testSLHAKey);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -218,6 +219,24 @@ public:
     *(l1.rend()-1) = "-2";
     CPPUNIT_ASSERT(l1.front() == "-2");
   }*/
+
+  void testSLHAKey()
+  {
+    vector<string> keys = to_string_vector("1");
+    SLHAKey k1("RVKAPPAIN", keys, 1);
+    CPPUNIT_ASSERT(k1.str() == "RVKAPPAIN;1;1");
+
+    k1.line.push_back("2");
+    CPPUNIT_ASSERT(k1.str() == "RVKAPPAIN;1,2;1");
+
+    k1.line.clear();
+    CPPUNIT_ASSERT(k1.str() == "RVKAPPAIN;;1");
+
+    k1.block = "";
+    k1.element = 0;
+    CPPUNIT_ASSERT(k1.str() == ";;0");
+    CPPUNIT_ASSERT(k1.str("RVKAPPAIN;1,3;1").str() == "RVKAPPAIN;1,3;1");
+  }
 };
 
 } // namespace SLHAea
