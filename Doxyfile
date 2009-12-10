@@ -88,7 +88,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 INPUT                  =
 INPUT_ENCODING         = UTF-8
-FILE_PATTERNS          = *.h
+FILE_PATTERNS          = *.h *.dox
 RECURSIVE              = NO
 EXCLUDE                =
 EXCLUDE_SYMLINKS       = NO

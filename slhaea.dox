@@ -1,0 +1,12 @@
+/*! \mainpage
+ *
+ * \section sec_intro Introduction
+ * %SLHAea is an easy to use input/output C++ library for the SUSY Les
+ * Houches Accord [\ref r1, \ref r2].
+ *
+ * \sa
+ * \anchor r1 [r1] P. Skands and others,
+ *   http://arxiv.org/abs/hep-ph/0311123 \n
+ * \anchor r2 [r2] B. Allanach and others,
+ *   http://arxiv.org/abs/0801.0045
+ */
