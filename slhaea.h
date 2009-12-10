@@ -647,6 +647,9 @@ inline std::ostream& operator<<(std::ostream& os, const SLHABlock& block)
 inline std::ostream& operator<<(std::ostream& os, const SLHALine& line)
 { return os << line.str(); }
 
+inline std::ostream& operator<<(std::ostream& os, const SLHAKey& key)
+{ return os << key.str(); }
+
 } // namespace SLHAea
 
 #endif // SLHAEA_H

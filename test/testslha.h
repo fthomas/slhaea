@@ -32,7 +32,7 @@ class TestSLHA : public CppUnit::TestFixture
   CPPUNIT_TEST(testAccessors);
   CPPUNIT_TEST(testModifiers);
   //CPPUNIT_TEST(testIterators);
-  //CPPUNIT_TEST(testFileOperations);
+  CPPUNIT_TEST(testFileOperations);
   CPPUNIT_TEST(testMiscellaneous);
   CPPUNIT_TEST(testSLHAKey);
   CPPUNIT_TEST_SUITE_END();
@@ -116,6 +116,24 @@ public:
     s1.push_back(cs1["test2"]);
     CPPUNIT_ASSERT(s1.size() == 2);
     CPPUNIT_ASSERT(s1.str() == cs1.str());
+  }
+
+  void testFileOperations()
+  {
+    string test =
+      "BLOCK test1 # 1st comment\n"
+      " 1  1  # 2nd comment\n"
+      " 2  1  # 3rd comment\n"
+      "Block test2 # 4th comment\n"
+      " 2  1  # 5th comment\n"
+      "3  2  # 6th comment\n"
+      " 4  3  # 7th comment\n";
+
+    SLHA s1; s1.str(test);
+    s1.write_file(".slhaea_test");
+    const SLHA cs1(".slhaea_test");
+    CPPUNIT_ASSERT(cs1.str() == s1.str());
+    CPPUNIT_ASSERT(cs1.str() == test);
   }
 
   void testMiscellaneous()
