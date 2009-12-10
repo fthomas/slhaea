@@ -17,9 +17,10 @@
 #ifndef SLHAEA_TESTSLHABLOCK_H
 #define SLHAEA_TESTSLHABLOCK_H
 
+#include <string>
+#include <vector>
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-
 #include <slhaea.h>
 
 using namespace std;

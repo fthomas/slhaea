@@ -17,9 +17,10 @@
 #ifndef SLHAEA_TESTSLHA_H
 #define SLHAEA_TESTSLHA_H
 
+#include <sstream>
+#include <string>
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-
 #include <slhaea.h>
 
 using namespace std;
@@ -31,7 +32,7 @@ class TestSLHA : public CppUnit::TestFixture
   CPPUNIT_TEST_SUITE(TestSLHA);
   CPPUNIT_TEST(testAccessors);
   CPPUNIT_TEST(testModifiers);
-  //CPPUNIT_TEST(testIterators);
+  CPPUNIT_TEST(testIterators);
   CPPUNIT_TEST(testFileOperations);
   CPPUNIT_TEST(testMiscellaneous);
   CPPUNIT_TEST(testSLHAKey);
@@ -68,6 +69,17 @@ public:
 
     CPPUNIT_ASSERT(s1.str() == test);
     CPPUNIT_ASSERT(cs1.str() == test);
+
+    CPPUNIT_ASSERT(cs1.at(SLHAKey("test2;4,3;1")) == "3");
+    CPPUNIT_ASSERT(cs1.at(SLHAKey("test1;2;2")) == "# 3rd comment");
+    CPPUNIT_ASSERT(cs1.at(string("test1;2;2")) == "# 3rd comment");
+
+    CPPUNIT_ASSERT(s1.at(SLHAKey("test2;4,3;1")) == "3");
+    CPPUNIT_ASSERT(s1.at(SLHAKey("test1;2;2")) == "# 3rd comment");
+    CPPUNIT_ASSERT(s1.at(string("test1;2;2")) == "# 3rd comment");
+
+    s1.at(SLHAKey("test2;4,3;1")) = "3.14";
+    CPPUNIT_ASSERT(s1.at(SLHAKey("test2;4;1")) == "3.14");
   }
 
   void testModifiers()
@@ -116,6 +128,57 @@ public:
     s1.push_back(cs1["test2"]);
     CPPUNIT_ASSERT(s1.size() == 2);
     CPPUNIT_ASSERT(s1.str() == cs1.str());
+  }
+
+  void testIterators()
+  {
+    string test =
+      "BLOCK test1\n"
+      " 1  1\n"
+      " 1  2\n"
+      "Block test2\n"
+      " 2  1\n"
+      " 2  2\n"
+      "bLoCk test3\n"
+      " 3  1\n"
+      " 3  2\n";
+
+    SLHA s1; s1.str(test);
+    const SLHA cs1 = s1;
+
+    CPPUNIT_ASSERT((*s1.begin()).str() == (*cs1.begin()).str());
+    CPPUNIT_ASSERT((*(s1.end()-1)).str() == (*(cs1.end()-1)).str());
+    CPPUNIT_ASSERT((*s1.rbegin()).str() == (*cs1.rbegin()).str());
+    CPPUNIT_ASSERT((*(s1.rend()-1)).str() == (*(cs1.rend()-1)).str());
+
+    CPPUNIT_ASSERT(s1.begin()+0 == s1.end()-3);
+    CPPUNIT_ASSERT(s1.begin()+1 == s1.end()-2);
+    CPPUNIT_ASSERT(s1.begin()+2 == s1.end()-1);
+
+    CPPUNIT_ASSERT(s1.rbegin()+0 == s1.rend()-3);
+    CPPUNIT_ASSERT(s1.rbegin()+1 == s1.rend()-2);
+    CPPUNIT_ASSERT(s1.rbegin()+2 == s1.rend()-1);
+
+    CPPUNIT_ASSERT(cs1.begin()+0 == cs1.end()-3);
+    CPPUNIT_ASSERT(cs1.begin()+1 == cs1.end()-2);
+    CPPUNIT_ASSERT(cs1.begin()+2 == cs1.end()-1);
+
+    CPPUNIT_ASSERT(cs1.rbegin()+0 == cs1.rend()-3);
+    CPPUNIT_ASSERT(cs1.rbegin()+1 == cs1.rend()-2);
+    CPPUNIT_ASSERT(cs1.rbegin()+2 == cs1.rend()-1);
+
+    SLHA::iterator it = s1.erase(s1.end()-1);
+    CPPUNIT_ASSERT(s1.end() == it);
+
+    s1 = cs1;
+    it = s1.erase(s1.begin()+1, s1.end());
+    CPPUNIT_ASSERT(s1.end() == it);
+
+    s1 = cs1;
+    CPPUNIT_ASSERT(s1.begin() == s1.find("test1"));
+    CPPUNIT_ASSERT(s1.end()-1 == s1.find("test3"));
+    CPPUNIT_ASSERT(cs1.begin() == cs1.find("test1"));
+    CPPUNIT_ASSERT(cs1.end()-1 == cs1.find("test3"));
   }
 
   void testFileOperations()
@@ -180,6 +243,10 @@ public:
     k1.element = 0;
     CPPUNIT_ASSERT(k1.str() == ";;0");
     CPPUNIT_ASSERT(k1.str("RVKAPPAIN;1,3;1").str() == "RVKAPPAIN;1,3;1");
+
+    stringstream ss("");
+    ss << k1;
+    CPPUNIT_ASSERT(k1.str() == ss.str());
   }
 };
 

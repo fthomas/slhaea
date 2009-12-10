@@ -17,9 +17,10 @@
 #ifndef SLHAEA_TESTSLHALINE_H
 #define SLHAEA_TESTSLHALINE_H
 
+#include <stdexcept>
+#include <string>
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-
 #include <slhaea.h>
 
 using namespace std;
@@ -88,7 +89,7 @@ public:
     {
       l1.at(1) = "3";
     }
-    catch (std::out_of_range ex)
+    catch (out_of_range ex)
     {
       CPPUNIT_ASSERT(l1.empty() == true);
     }
@@ -165,7 +166,7 @@ public:
 
   void testIterators()
   {
-    SLHALine l1 = std::string(" one two three four # five ");
+    SLHALine l1 = string(" one two three four # five ");
     const SLHALine cl1 = l1;
 
     CPPUNIT_ASSERT(*l1.begin() == *cl1.begin());

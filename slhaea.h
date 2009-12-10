@@ -504,6 +504,12 @@ public:
     return *it;
   }
 
+  std::string& at(const SLHAKey& key)
+  { return (*this)[key.block][key.line].at(key.element); }
+
+  const std::string& at(const SLHAKey& key) const
+  { return (*this)[key.block][key.line].at(key.element); }
+
   SLHABlock& back()
   { return impl_.back(); }
 
