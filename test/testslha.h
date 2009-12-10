@@ -29,9 +29,11 @@ namespace SLHAea {
 class TestSLHA : public CppUnit::TestFixture
 {
   CPPUNIT_TEST_SUITE(TestSLHA);
-  /*CPPUNIT_TEST(testSlha);
-  CPPUNIT_TEST(testSlhaBlock);
-  CPPUNIT_TEST(testSlhaLine);*/
+  CPPUNIT_TEST(testAccessors);
+  CPPUNIT_TEST(testModifiers);
+  //CPPUNIT_TEST(testIterators);
+  //CPPUNIT_TEST(testFileOperations);
+  CPPUNIT_TEST(testMiscellaneous);
   CPPUNIT_TEST(testSLHAKey);
   CPPUNIT_TEST_SUITE_END();
 
@@ -40,7 +42,83 @@ public:
 
   void tearDown() {}
 
-  /*void testSlha()
+  void testAccessors()
+  {
+    string test =
+      "BLOCK test1 # 1st comment\n"
+      " 1  1  # 2nd comment\n"
+      " 2  1  # 3rd comment\n"
+      "Block test2 # 4th comment\n"
+      " 2  1  # 5th comment\n"
+      " 3  2  # 6th comment\n"
+      " 4  3  # 7th comment\n";
+
+    SLHA s1; s1.str(test);
+    const SLHA cs1 = s1;
+
+    CPPUNIT_ASSERT(s1["test1"].size() == 3);
+    CPPUNIT_ASSERT(cs1["test1"].size() == 3);
+    CPPUNIT_ASSERT(s1.front().size() == 3);
+    CPPUNIT_ASSERT(cs1.front().size() == 3);
+
+    CPPUNIT_ASSERT(s1["test2"].size() == 4);
+    CPPUNIT_ASSERT(cs1["test2"].size() == 4);
+    CPPUNIT_ASSERT(s1.back().size() == 4);
+    CPPUNIT_ASSERT(cs1.back().size() == 4);
+
+    CPPUNIT_ASSERT(s1.str() == test);
+    CPPUNIT_ASSERT(cs1.str() == test);
+  }
+
+  void testModifiers()
+  {
+    string test =
+      "BLOCK test1 # 1st comment\n"
+      " 1  1  # 2nd comment\n"
+      " 2  1  # 3rd comment\n"
+      "Block test2 # 4th comment\n"
+      " 2  1  # 5th comment\n"
+      " 3  2  # 6th comment\n"
+      " 4  3  # 7th comment\n";
+
+    SLHA s1; s1.str(test);
+    const SLHA cs1 = s1;
+
+    s1["test1"][""] = " 3 1 # comment";
+    CPPUNIT_ASSERT(s1["test1"].size() == 4);
+    CPPUNIT_ASSERT(s1["test1"].back().str() == " 3 1 # comment");
+
+    s1.clear();
+    CPPUNIT_ASSERT(s1.size() == 0);
+    CPPUNIT_ASSERT(s1.str() == "");
+
+    s1 = cs1;
+    s1.erase(s1.end()-1);
+    CPPUNIT_ASSERT(s1.size() == 1);
+    CPPUNIT_ASSERT(s1.str() ==
+      "BLOCK test1 # 1st comment\n"
+      " 1  1  # 2nd comment\n"
+      " 2  1  # 3rd comment\n");
+
+    s1 = cs1;
+    s1.erase(s1.begin(), s1.end());
+    CPPUNIT_ASSERT(s1.size() == 0);
+    CPPUNIT_ASSERT(s1.str() == "");
+
+    s1 = cs1;
+    s1.pop_back();
+    CPPUNIT_ASSERT(s1.size() == 1);
+    CPPUNIT_ASSERT(s1.str() ==
+      "BLOCK test1 # 1st comment\n"
+      " 1  1  # 2nd comment\n"
+      " 2  1  # 3rd comment\n");
+
+    s1.push_back(cs1["test2"]);
+    CPPUNIT_ASSERT(s1.size() == 2);
+    CPPUNIT_ASSERT(s1.str() == cs1.str());
+  }
+
+  void testMiscellaneous()
   {
     std::string data =
       "# first comment\n"
@@ -59,7 +137,7 @@ public:
       " -9000 B    3  more \n"
       "# comment after second block\n";
 
-    Slha s1; s1.str(data);
+    SLHA s1; s1.str(data);
     CPPUNIT_ASSERT(s1[""].front().str() == "# first comment");
     CPPUNIT_ASSERT(s1[""].back().str() == "# second comment");
     CPPUNIT_ASSERT(s1["fIrSt"]["2 10.0"].str() == " 2  10.0");
@@ -67,158 +145,6 @@ public:
     CPPUNIT_ASSERT(s1["second"].size() == 7);
     CPPUNIT_ASSERT(s1["second"].at("BlOcK")[2] == "blob");
   }
-
-  void testSlhaBlock()
-  {
-    SlhaBlock b1;
-    CPPUNIT_ASSERT(b1.name() == "");
-    b1.name("test");
-    CPPUNIT_ASSERT(b1.name() == "test");
-    CPPUNIT_ASSERT(b1.size() == 0);
-
-    b1.push_back(SlhaLine(" 1 a b c"));
-    CPPUNIT_ASSERT(b1.front().str() == " 1 a b c");
-    CPPUNIT_ASSERT(b1.back().str() == " 1 a b c");
-
-    b1.push_back(SlhaLine(" 2 a b"));
-    CPPUNIT_ASSERT(b1.front().str() == " 1 a b c");
-    CPPUNIT_ASSERT(b1.back().str() == " 2 a b");
-    CPPUNIT_ASSERT(b1.str() == " 1 a b c\n 2 a b\n");
-
-    b1[""] = " 2 a c";
-    std::vector<int> vi;
-    std::vector<std::string> vs;
-    vi.push_back(1);
-    vs.push_back("1");
-    CPPUNIT_ASSERT(b1[vi].str() == " 1 a b c");
-    CPPUNIT_ASSERT(b1[vs].str() == " 1 a b c");
-    CPPUNIT_ASSERT(b1["2 a"].str() == " 2 a b");
-    CPPUNIT_ASSERT(b1["2 a c"].str() == " 2 a c");
-    CPPUNIT_ASSERT(b1["2 a c"][2] == "c");
-    CPPUNIT_ASSERT(b1.at("2", "a", "c")[2] == "c");
-    b1.at() = " 3 -1 y zzz";
-    CPPUNIT_ASSERT(b1.at("3").str() == " 3 -1 y zzz");
-    CPPUNIT_ASSERT(b1.at(3,-1).str() == " 3 -1 y zzz");
-    CPPUNIT_ASSERT(b1.push_back(" 4 1 f g").back().str() == " 4 1 f g");
-
-    std::string block = " 1 a b c \n"
-                        " 2 d e f # comment\n"
-                        " 3 1 g h i   \n"
-                        " 3 2 gg hh ii";
-    std::string block_bh =
-                        " 1 a b c\n"
-                        " 2 d e f # comment\n"
-                        " 3 1 g h i\n"
-                        " 3 2 gg hh ii\n";
-
-    b1.str(block);
-    CPPUNIT_ASSERT(b1.size() == 4);
-    CPPUNIT_ASSERT(b1["3 2"][2] == "gg");
-    CPPUNIT_ASSERT(b1.str() == block_bh);
-  }
-
-  void testSlhaLine()
-  {
-    SlhaLine l1;
-    CPPUNIT_ASSERT(l1.str() == "");
-    
-    l1.str(" 1 2 3 4 ");
-    CPPUNIT_ASSERT(l1.str() == " 1 2 3 4");
-    CPPUNIT_ASSERT(l1.size() == 4);
-    
-    l1 = "BLOCK TEST # comment";
-    CPPUNIT_ASSERT(l1.str() == "BLOCK TEST # comment");
-    CPPUNIT_ASSERT(l1[0] == "BLOCK");
-    CPPUNIT_ASSERT(l1[1] == "TEST");
-    CPPUNIT_ASSERT(l1[2] == "# comment");
-
-    l1 = "BLOCK  TEST  # comment";
-    CPPUNIT_ASSERT(l1.str() == "BLOCK  TEST  # comment");
-    CPPUNIT_ASSERT(l1[0] == "BLOCK");
-    CPPUNIT_ASSERT(l1[1] == "TEST");
-    CPPUNIT_ASSERT(l1[2] == "# comment");
-
-    l1 = "# one long comment with trailing spaces    ";
-    CPPUNIT_ASSERT(l1[0] == "# one long comment with trailing spaces");
-    CPPUNIT_ASSERT(l1.size() == 1);
-
-    l1 = "one long data line with trailing spaces    ";
-    CPPUNIT_ASSERT(l1.str() == "one long data line with trailing spaces");
-    CPPUNIT_ASSERT(l1[6] == "spaces");
-    CPPUNIT_ASSERT(l1.size() == 7);
-
-    l1 = "Hello brave new \n world!";
-    CPPUNIT_ASSERT(l1.str() == "Hello brave new");
-    CPPUNIT_ASSERT(l1.size() == 3);
-
-    l1 = "Hello stupid brave new world!";
-    CPPUNIT_ASSERT(l1.str() == "Hello stupid brave new world!");
-    l1[1] = "";
-    CPPUNIT_ASSERT(l1.str() == "Hello        brave new world!");
-    l1[1] = "dumb";
-    CPPUNIT_ASSERT(l1.str() == "Hello dumb   brave new world!");
-    l1[3] = "brand-new";
-    CPPUNIT_ASSERT(l1.str() == "Hello dumb   brave brand-new world!");
-    l1[0] = "Goodbye";
-    CPPUNIT_ASSERT(l1.str() == "Goodbye dumb brave brand-new world!");
-
-    l1 = " 23  1.123456789E+999  # some arcane value";
-    CPPUNIT_ASSERT(l1[0] == "23");
-    CPPUNIT_ASSERT(l1[1] == "1.123456789E+999");
-    CPPUNIT_ASSERT(l1[2] == "# some arcane value");
-
-    l1 = "\n 1 2 3 4 5";
-    CPPUNIT_ASSERT(l1.empty() == true);
-    CPPUNIT_ASSERT(l1.size() == 1);
-    l1 = "  \n 1 2 3 4 5  ";
-    CPPUNIT_ASSERT(l1.empty() == true);
-    CPPUNIT_ASSERT(l1.size() == 1);
-    l1 = "";
-    CPPUNIT_ASSERT(l1.empty() == true);
-    CPPUNIT_ASSERT(l1.size() == 1);
-    l1 = "   ";
-    CPPUNIT_ASSERT(l1.empty() == true);
-    CPPUNIT_ASSERT(l1.size() == 1);
-    l1 = " . ";
-    CPPUNIT_ASSERT(l1.empty() == false);
-    CPPUNIT_ASSERT(l1.size() == 1);
-
-    l1 = " 1 22 333 4444 ";
-    l1.append(" 55555 # a comment ");
-    CPPUNIT_ASSERT(l1.size() == 6);
-    CPPUNIT_ASSERT(l1[3] == "4444");
-    CPPUNIT_ASSERT(l1[4] == "55555");
-    CPPUNIT_ASSERT(l1[5] == "# a comment");
-    l1 += " 7 ";
-    CPPUNIT_ASSERT(l1[5] == "# a comment 7");
-
-    l1 = " test  str() and   strPlain() ";
-    CPPUNIT_ASSERT(l1.str() == " test  str() and   strPlain()");
-    CPPUNIT_ASSERT(l1.strPlain() == "test str() and strPlain()");
-
-    l1 = " 1 2 3 4 5 ";
-    CPPUNIT_ASSERT(l1.back() == "5");
-    l1.back() = "6";
-    CPPUNIT_ASSERT(l1.back() == "6");
-    CPPUNIT_ASSERT(l1.front() == "1");
-    l1.front() = "-1";
-    CPPUNIT_ASSERT(l1.front() == "-1");
-
-    CPPUNIT_ASSERT(l1.front() == *l1.begin());
-    CPPUNIT_ASSERT(l1.back() == *(l1.end()-1));
-    CPPUNIT_ASSERT(*(l1.end()-2) == "4");
-    *l1.begin() = "0";
-    CPPUNIT_ASSERT(l1.front() == "0");
-    *(l1.end()-1) = "7";
-    CPPUNIT_ASSERT(l1.back() == "7");
-
-    CPPUNIT_ASSERT(*l1.rbegin() == l1.back());
-    CPPUNIT_ASSERT(*(l1.rend()-1) == l1.front());
-    *l1.rbegin() = "8";
-    CPPUNIT_ASSERT(l1.back() == "8");
-    *(l1.rend()-1) = "-2";
-    CPPUNIT_ASSERT(l1.front() == "-2");
-  }*/
 
   void testSLHAKey()
   {
