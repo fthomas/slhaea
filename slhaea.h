@@ -146,6 +146,20 @@ public:
   const std::string& operator[](std::size_t n) const
   { return impl_[n]; }
 
+  template<class T> SLHALine& operator<<(const T& element)
+  {
+    const std::string rhs = to_string(element);
+    const std::string rhs_tr = boost::trim_copy(rhs);
+    if (rhs_tr.empty()) return *this;
+
+    if (empty()) front() = rhs_tr;
+    else if (back().find("#") != std::string::npos) back() += rhs;
+    else impl_.push_back(rhs_tr);
+
+    reformat();
+    return *this;
+  }
+
   std::string& at(std::size_t n)
   { return impl_.at(n); }
 
@@ -196,6 +210,35 @@ public:
   const_reverse_iterator rbegin() const
   { return impl_.rbegin(); }
 
+  SLHALine& reformat()
+  {
+    if (empty()) return *this;
+
+    std::string line;
+    const_iterator it = begin();
+
+    if (boost::iequals("BLOCK", *it) || boost::iequals("DECAY", *it))
+    {
+      line += *it;
+      if (it+1 != end()) line += " " + *++it;
+    }
+    else if (it->compare(0, 1, "#") == 0)
+    { line += *it; }
+    else
+    { line += " " + *it; }
+
+    while (++it != end())
+    {
+      // Compute the number of spaces required for proper indentation.
+      int dist = 3 - ((line.size() - 1) % 4);
+      int spaces = dist > 1 ? dist : dist + 4;
+      line.append(spaces, ' ') += *it;
+    }
+
+    str(line);
+    return *this;
+  }
+
   reverse_iterator rend()
   { return impl_.rend(); }
 
@@ -218,10 +261,7 @@ public:
       comment = boost::trim_copy(line_tr.substr(comment_pos));
 
     impl_.clear();
-    if (!data.empty())
-    {
-      boost::split(impl_, data, boost::is_space(), boost::token_compress_on);
-    }
+    if (!data.empty()) impl_ = to_string_vector(data);
     if (!comment.empty()) impl_.push_back(comment);
 
     // Construct the format string for line.

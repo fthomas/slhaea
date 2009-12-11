@@ -136,6 +136,42 @@ public:
     l1 += "\n 3";
     CPPUNIT_ASSERT(l1.size() == 2);
     CPPUNIT_ASSERT(l1.empty() == false);
+
+    SLHALine l2[8];
+    l2[0] << 1        << 2        << 3        << 4;
+    l2[1] << 11       << 22       << 33       << 44;
+    l2[2] << 111      << 222      << 333      << 444;
+    l2[3] << 1111     << 2222     << 3333     << 4444;
+    l2[4] << 11111    << 22222    << 33333    << 44444;
+    l2[5] << 111111   << 222222   << 333333   << 444444;
+    l2[6] << 1111111  << 2222222  << 3333333  << 4444444;
+    l2[7] << 11111111 << 22222222 << 33333333 << 44444444;
+
+                                // 1   2   3   4   5   6   7   8   9   0
+    CPPUNIT_ASSERT(l2[0].str() == " 1  2   3   4");
+    CPPUNIT_ASSERT(l2[1].str() == " 11     22  33  44");
+    CPPUNIT_ASSERT(l2[2].str() == " 111    222     333     444");
+    CPPUNIT_ASSERT(l2[3].str() == " 1111   2222    3333    4444");
+    CPPUNIT_ASSERT(l2[4].str() == " 11111  22222   33333   44444");
+    CPPUNIT_ASSERT(l2[5].str() == " 111111     222222  333333  444444");
+    CPPUNIT_ASSERT(l2[6].str() == " 1111111    2222222     3333333     4444444");
+    CPPUNIT_ASSERT(l2[7].str() == " 11111111   22222222    33333333    44444444");
+
+    l1 = "";
+    l1 << "BLOCK" << "MODSEL" << "# model selection";
+    CPPUNIT_ASSERT(l1.str() == "BLOCK MODSEL    # model selection");
+
+    l1 = "";
+    l1 << 1 << 1 << "# mSUGRA";
+    CPPUNIT_ASSERT(l1.str() == " 1  1   # mSUGRA");
+
+    l1 = "";
+    l1 << 2 << "-1.2345678E+01" << "# some double";
+    CPPUNIT_ASSERT(l1.str() == " 2  -1.2345678E+01  # some double");
+
+    l1 = "";
+    l1 << 2 << "1.234567E+01" << "# some double" << " here";
+    CPPUNIT_ASSERT(l1.str() == " 2  1.234567E+01    # some double here");
   }
 
   void testModifiers()
