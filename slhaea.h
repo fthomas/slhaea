@@ -32,15 +32,6 @@
 
 namespace SLHAea {
 
-inline bool to_bool(const std::string& str)
-{ return boost::lexical_cast<bool>(str); }
-
-inline int to_int(const std::string& str)
-{ return boost::lexical_cast<int>(str); }
-
-inline double to_double(const std::string& str)
-{ return boost::lexical_cast<double>(str); }
-
 template<class T> inline T to_(const std::string& str)
 { return boost::lexical_cast<T>(str); }
 
