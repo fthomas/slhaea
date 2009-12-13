@@ -1,12 +1,13 @@
 SLHAea - another SUSY Les Houches Accord input/output library
 =============================================================
 
-Source code:
-  http://github.com/fthomas/slhaea
-  git clone git://github.com/fthomas/slhaea.git
+Introduction:
+  SLHAea is an easy to use input/output C++ library for the SUSY Les
+  Houches Accord (SLHA).
 
-API Documentation:
-  http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/doc/
+Documentation:
+  The API documentation and a tutorial can be found here:
+    http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/doc/
 
 Requirements:
   To use SLHAea only the C++ Standard Library, the Standard Template
@@ -15,9 +16,33 @@ Requirements:
 
   Doxygen[2] is used for building the API documentation, CppUnit[3] is
   required to compile the unit tests and CMake[4] is used to build
-  them. This is of course all optional.
+  them. These steps are of course all optional.
 
   [1] http://www.boost.org/
   [2] http://www.doxygen.org/
   [3] http://cppunit.sourceforge.net/
   [4] http://www.cmake.org/
+
+Source code:
+  A tar/ZIP archive of the latest source code is available at:
+    http://github.com/fthomas/slhaea/archives/master
+
+  Git is used as version control system. The SLHAea Git repository can
+  be inspected and browsed online at GitHub[5] and it can be cloned
+  with[6].
+
+  [5] http://github.com/fthomas/slhaea
+  [6] git clone git://github.com/fthomas/slhaea.git
+
+Issues and feedback:
+  For bug reports, feature requests, or general feedback either use the
+  issue tracker[7] or write me an email[8].
+
+  [7] http://github.com/fthomas/slhaea/issues
+  [8] fthomas@physik.uni-wuerzburg.de
+
+License:
+  SLHAea is free software[9] and licensed under the GPLv3[10].
+
+  [ 9] http://www.gnu.org/philosophy/free-sw.html
+  [10] http://www.gnu.org/licenses/gpl-3.0.html

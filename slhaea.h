@@ -263,7 +263,7 @@ public:
       pos = line.find(*it, pos);
       line_fmt << "%|" << pos << "t|%" << i << "% ";
     }
-    mLineFormat = boost::trim_copy(line_fmt.str());
+    mLineFormat = boost::trim_right_copy(line_fmt.str());
 
     return *this;
   }
