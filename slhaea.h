@@ -319,10 +319,10 @@ public:
   }
 
   SLHALine& operator[](const std::vector<int>& intKeys)
-  { return (*this)[to_string_vector<int>(intKeys)]; }
+  { return (*this)[to_string_vector(intKeys)]; }
 
   const SLHALine& operator[](const std::vector<int>& intKeys) const
-  { return (*this)[to_string_vector<int>(intKeys)]; }
+  { return (*this)[to_string_vector(intKeys)]; }
 
   SLHALine& operator[](const std::string& keysStr)
   { return (*this)[to_string_vector(keysStr)]; }
