@@ -181,7 +181,7 @@ public:
   }
 
   bool empty() const
-  { return size() == 1 && impl_[0] == ""; }
+  { return size() == 1 && "" == impl_[0]; }
 
   iterator end()
   { return impl_.end(); }
