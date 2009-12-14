@@ -330,6 +330,12 @@ public:
   const SLHALine& operator[](const std::string& keysStr) const
   { return (*this)[to_string_vector(keysStr)]; }
 
+  SLHALine& operator[](int intKey)
+  { return (*this)[to_string_vector(to_string(intKey))]; }
+
+  const SLHALine& operator[](int intKey) const
+  { return (*this)[to_string_vector(to_string(intKey))]; }
+
   SLHALine& at(const std::string& s0 = "", const std::string& s1 = "",
                const std::string& s2 = "", const std::string& s3 = "")
   {

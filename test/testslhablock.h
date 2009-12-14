@@ -95,6 +95,11 @@ public:
 
     CPPUNIT_ASSERT(b1.front().str() == cb1.front().str());
     CPPUNIT_ASSERT(b1.back().str() == cb1.back().str());
+
+    CPPUNIT_ASSERT(b1[1].str() == b1.front().str());
+    CPPUNIT_ASSERT(cb1[1].str() == cb1.front().str());
+    CPPUNIT_ASSERT(b1[2].str() == b1.back().str());
+    CPPUNIT_ASSERT(cb1[2].str() == cb1.back().str());
   }
 
   void testModifiers()
