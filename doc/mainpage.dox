@@ -28,8 +28,8 @@
 
   For development of %SLHAea the version control system
   <a href="http://git-scm.com/">Git</a> is used. The %SLHAea repository can be
-  inspected and <a href="http://github.com/fthomas/slhaea">browsed online</a>
-  and it can be cloned with:
+  inspected and <a href="http://github.com/fthomas/slhaea">browsed online at
+  GitHub</a> and it can be cloned with:
   \code git clone git://github.com/fthomas/slhaea.git \endcode
 
 \section sec_issues Issues and feedback
