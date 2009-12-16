@@ -58,28 +58,28 @@ public:
     const SLHA cs1 = s1;
 
     CPPUNIT_ASSERT(s1["test1"].size() == 3);
-    CPPUNIT_ASSERT(cs1["test1"].size() == 3);
+    CPPUNIT_ASSERT(cs1.at("test1").size() == 3);
     CPPUNIT_ASSERT(s1.front().size() == 3);
     CPPUNIT_ASSERT(cs1.front().size() == 3);
 
     CPPUNIT_ASSERT(s1["test2"].size() == 4);
-    CPPUNIT_ASSERT(cs1["test2"].size() == 4);
+    CPPUNIT_ASSERT(cs1.at("test2").size() == 4);
     CPPUNIT_ASSERT(s1.back().size() == 4);
     CPPUNIT_ASSERT(cs1.back().size() == 4);
 
     CPPUNIT_ASSERT(s1.str() == test);
     CPPUNIT_ASSERT(cs1.str() == test);
 
-    CPPUNIT_ASSERT(cs1.at(SLHAKey("test2;4,3;1")) == "3");
-    CPPUNIT_ASSERT(cs1.at(SLHAKey("test1;2;2")) == "# 3rd comment");
-    CPPUNIT_ASSERT(cs1.at(string("test1;2;2")) == "# 3rd comment");
+    CPPUNIT_ASSERT(cs1.at_key(SLHAKey("test2;4,3;1")) == "3");
+    CPPUNIT_ASSERT(cs1.at_key(SLHAKey("test1;2;2")) == "# 3rd comment");
+    CPPUNIT_ASSERT(cs1.at_key(string("test1;2;2")) == "# 3rd comment");
 
-    CPPUNIT_ASSERT(s1.at(SLHAKey("test2;4,3;1")) == "3");
-    CPPUNIT_ASSERT(s1.at(SLHAKey("test1;2;2")) == "# 3rd comment");
-    CPPUNIT_ASSERT(s1.at(string("test1;2;2")) == "# 3rd comment");
+    CPPUNIT_ASSERT(s1.at_key(SLHAKey("test2;4,3;1")) == "3");
+    CPPUNIT_ASSERT(s1.at_key(SLHAKey("test1;2;2")) == "# 3rd comment");
+    CPPUNIT_ASSERT(s1.at_key(string("test1;2;2")) == "# 3rd comment");
 
-    s1.at(SLHAKey("test2;4,3;1")) = "3.14";
-    CPPUNIT_ASSERT(s1.at(SLHAKey("test2;4;1")) == "3.14");
+    s1.at_key(SLHAKey("test2;4,3;1")) = "3.14";
+    CPPUNIT_ASSERT(s1.at_key(SLHAKey("test2;4;1")) == "3.14");
   }
 
   void testModifiers()
@@ -125,7 +125,7 @@ public:
       " 1  1  # 2nd comment\n"
       " 2  1  # 3rd comment\n");
 
-    s1.push_back(cs1["test2"]);
+    s1.push_back(cs1.at("test2"));
     CPPUNIT_ASSERT(s1.size() == 2);
     CPPUNIT_ASSERT(s1.str() == cs1.str());
   }
@@ -240,7 +240,7 @@ public:
     CPPUNIT_ASSERT(k1.str() == "RVKAPPAIN;;1");
 
     k1.block = "";
-    k1.element = 0;
+    k1.field = 0;
     CPPUNIT_ASSERT(k1.str() == ";;0");
     CPPUNIT_ASSERT(k1.str("RVKAPPAIN;1,3;1").str() == "RVKAPPAIN;1,3;1");
 

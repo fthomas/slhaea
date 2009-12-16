@@ -81,43 +81,53 @@ struct SLHAKey
 {
   std::string block;
   std::vector<std::string> line;
-  std::size_t element;
+  std::size_t field;
 
   SLHAKey(const std::string& _block, const std::vector<std::string>& _line,
-    std::size_t _element) : block(_block), line(_line), element(_element) {}
+    std::size_t _field) : block(_block), line(_line), field(_field) {}
 
   SLHAKey(const std::string& keyStr)
   { str(keyStr); }
 
   SLHAKey& str(const std::string& keyStr)
   {
-    std::vector<std::string> v = to_string_vector(keyStr, ";");
-    if (3 != v.size())
+    std::vector<std::string> vec = to_string_vector(keyStr, ";");
+    if (3 != vec.size())
     { throw std::invalid_argument("SLHAKey::str(\"" + keyStr + "\");"); }
 
-    block = v[0];
-    line = to_string_vector(v[1], ",");
-    element = to_<std::size_t>(v[2]);
+    block = vec[0];
+    line  = to_string_vector(vec[1], ",");
+    field = to_<std::size_t>(vec[2]);
     return *this;
   }
 
   std::string str() const
   {
     std::stringstream ss("");
-    ss << block << ";" << concat_strings(line, ",") << ";" << element;
+    ss << block << ";" << concat_strings(line, ",") << ";" << field;
     return ss.str();
   }
 };
 
+inline std::ostream& operator<<(std::ostream& os, const SLHAKey& key)
+{ return os << key.str(); }
+
 
 class SLHALine
 {
+private:
+  typedef std::vector<std::string> impl_type;
+
 public:
-  typedef std::vector<std::string>::iterator iterator;
-  typedef std::vector<std::string>::const_iterator const_iterator;
-  typedef std::vector<std::string>::reverse_iterator reverse_iterator;
-  typedef std::vector<std::string>::const_reverse_iterator
-          const_reverse_iterator;
+  typedef std::string                       value_type;
+  typedef std::string&                      reference;
+  typedef const std::string&                const_reference;
+  typedef impl_type::iterator               iterator;
+  typedef impl_type::const_iterator         const_iterator;
+  typedef impl_type::reverse_iterator       reverse_iterator;
+  typedef impl_type::const_reverse_iterator const_reverse_iterator;
+  typedef impl_type::difference_type        difference_type;
+  typedef impl_type::size_type              size_type;
 
   SLHALine()
   { str(""); }
@@ -511,99 +521,52 @@ private:
   static const int nind = INT_MIN;
 };
 
+
 class SLHA
 {
-public:
-  typedef std::vector<SLHABlock>::iterator iterator;
-  typedef std::vector<SLHABlock>::const_iterator const_iterator;
-  typedef std::vector<SLHABlock>::reverse_iterator reverse_iterator;
-  typedef std::vector<SLHABlock>::const_reverse_iterator
-          const_reverse_iterator;
+private:
+  typedef std::vector<SLHABlock> impl_type;
 
+public:
+  typedef std::string                       key_type;
+  typedef SLHABlock                         value_type;
+  typedef SLHABlock&                        reference;
+  typedef const SLHABlock&                  const_reference;
+  typedef impl_type::iterator               iterator;
+  typedef impl_type::const_iterator         const_iterator;
+  typedef impl_type::reverse_iterator       reverse_iterator;
+  typedef impl_type::const_reverse_iterator const_reverse_iterator;
+  typedef impl_type::difference_type        difference_type;
+  typedef impl_type::size_type              size_type;
+
+  /** Constructs an empty %SLHA container. */
   SLHA() {}
 
+  // NOTE: The compiler-generated copy constructor and assignment
+  //       operator for this class are just fine, so we don't need to
+  //       write our own.
+  // SLHA(const SLHA&);
+  // SLHA& operator=(const SLHA&);
+
+  /**
+   * \brief Constructs %SLHA container from data provided in a file.
+   * \param filename Name of input file to read data from.
+   * \sa read_file()
+   */
   SLHA(const std::string filename)
   { read_file(filename); }
 
-  SLHABlock& operator[](const std::string& blockName)
-  {
-    iterator it = find(blockName);
-    if (end() == it)
-    { push_back(SLHABlock(blockName)); return back(); }
-    return *it;
-  }
-
-  const SLHABlock& operator[](const std::string& blockName) const
-  {
-    const_iterator it = find(blockName);
-    if (end() == it)
-    { throw std::out_of_range("SLHA::operator[](\"" + blockName + "\")"); }
-    return *it;
-  }
-
-  std::string& at(const SLHAKey& key)
-  { return (*this)[key.block][key.line].at(key.element); }
-
-  const std::string& at(const SLHAKey& key) const
-  { return (*this)[key.block][key.line].at(key.element); }
-
-  SLHABlock& back()
-  { return impl_.back(); }
-
-  const SLHABlock& back() const
-  { return impl_.back(); }
-
-  iterator begin()
-  { return impl_.begin(); }
-
-  const_iterator begin() const
-  { return impl_.begin(); }
-
-  SLHA& clear()
-  { impl_.clear(); return *this; }
-
-  bool empty() const
-  { return impl_.empty(); }
-
-  iterator end()
-  { return impl_.end(); }
-
-  const_iterator end() const
-  { return impl_.end(); }
-
-  iterator erase(iterator position)
-  { return impl_.erase(position); }
-
-  iterator erase(iterator first, iterator last)
-  { return impl_.erase(first, last); }
-
-  iterator find(const std::string& blockName)
-  {
-    for (iterator it = begin(); it != end(); ++it)
-    { if (boost::iequals(it->name(), blockName)) return it; }
-    return end();
-  }
-
-  const_iterator find(const std::string& blockName) const
-  {
-    for (const_iterator it = begin(); it != end(); ++it)
-    { if (boost::iequals(it->name(), blockName)) return it; }
-    return end();
-  }
-
-  SLHABlock& front()
-  { return impl_.front(); }
-
-  const SLHABlock& front() const
-  { return impl_.front(); }
-
-  SLHA& pop_back()
-  { impl_.pop_back(); return *this; }
-
-  SLHA& push_back(const SLHABlock& block)
-  { impl_.push_back(block); return *this; }
-
-  SLHA& read(std::istream& is)
+  /**
+   * \brief Transforms data from a stream into the %SLHA container.
+   * \param is Input stream to read data from.
+   * \returns Reference to \c *this.
+   *
+   * This function reads lines from \p is, transforms them into
+   * SLHALine objects, which are collected into the corresponding
+   * SLHABlock objects that are added to this %SLHA container.
+   */
+  SLHA&
+  read(std::istream& is)
   {
     std::string line_str, curr_name;
 
@@ -622,7 +585,14 @@ public:
     return *this;
   }
 
-  SLHA& read_file(const std::string& filename)
+  /**
+   * \brief Transforms data from a file into the %SLHA container.
+   * \param filename Name of input file to read data from.
+   * \returns Reference to \c *this.
+   * \sa read()
+   */
+  SLHA&
+  read_file(const std::string& filename)
   {
     std::ifstream fs(filename.c_str());
     if (!fs)
@@ -634,28 +604,15 @@ public:
     return read(fs);
   }
 
-  reverse_iterator rbegin()
-  { return impl_.rbegin(); }
-
-  const_reverse_iterator rbegin() const
-  { return impl_.rbegin(); }
-
-  reverse_iterator rend()
-  { return impl_.rend(); }
-
-  const_reverse_iterator rend() const
-  { return impl_.rend(); }
-
-  std::size_t size() const
-  { return impl_.size(); }
-
-  SLHA& str(const std::string& slhaStr)
-  { std::stringstream ss(""); ss << slhaStr; return read(ss); }
-
-  std::string str() const
-  { std::stringstream ss(""); ss << *this; return ss.str(); }
-
-  SLHA& write_file(const std::string& filename)
+  /**
+   * \brief Writes string representation of the %SLHA container into
+   *        a file.
+   * \param filename Name of output file the string representation is
+   *                 written to.
+   * \returns Reference to \c *this.
+   */
+  SLHA&
+  write_file(const std::string& filename)
   {
     std::ofstream fs(filename.c_str());
     if (!fs)
@@ -668,30 +625,462 @@ public:
     return *this;
   }
 
+  /**
+   * \brief Transforms data from a string into the %SLHA container.
+   * \param slhaStr String to read data from.
+   * \returns Reference to \c *this.
+   * \sa read()
+   */
+  SLHA&
+  str(const std::string& slhaStr)
+  { std::stringstream ss(""); ss << slhaStr; return read(ss); }
+
+  /** Returns a string representation of the %SLHA container. */
+  std::string
+  str() const
+  { std::stringstream ss(""); ss << *this; return ss.str(); }
+
+  // element access
+  /**
+   * \brief Subscript access to an element of the %SLHA container.
+   * \param blockName Name of the SLHABlock to be retrieved.
+   * \return Read/write reference to the SLHABlock with the name
+   *         \p blockName.
+   *
+   * This function allows for easy lookup with the subscript (\c [])
+   * operator. It returns the first SLHABlock with the name
+   * \p blockName. If no such SLHABlock is present, an empty SLHABlock
+   * with this name is added to the end of the %SLHA container, which
+   * is then returned.
+   */
+  reference
+  operator[](const key_type& blockName)
+  {
+    iterator it = find(blockName);
+    if (end() == it)
+    { push_back(SLHABlock(blockName)); return back(); }
+    return *it;
+  }
+
+  /**
+   * \brief Access to an element of the %SLHA container.
+   * \param blockName Name of the SLHABlock to be retrieved.
+   * \return Read/write reference to the SLHABlock with the name
+   *         \p blockName.
+   * \throw std::out_of_range If no such SLHABlock is present.
+   */
+  reference
+  at(const key_type& blockName)
+  {
+    iterator it = find(blockName);
+    if (end() == it)
+    { throw std::out_of_range("SLHA::at(\"" + blockName + "\")"); }
+    return *it;
+  }
+
+  /**
+   * \brief Access to an element of the %SLHA container.
+   * \param blockName Name of the SLHABlock to be retrieved.
+   * \return Read-only (constant) reference to the SLHABlock with the
+   *         name \p blockName.
+   * \throw std::out_of_range If no such SLHABlock is present.
+   */
+  const_reference
+  at(const key_type& blockName) const
+  {
+    const_iterator it = find(blockName);
+    if (end() == it)
+    { throw std::out_of_range("SLHA::at(\"" + blockName + "\")"); }
+    return *it;
+  }
+
+  /**
+   * \brief Access to a SLHALine element referenced by a SLHAKey.
+   * \param key Reference to the SLHALine element to be retrieved.
+   * \return Read/write reference to the SLHALine element \p key
+   *         refers to.
+   * \throw std::out_of_range If the in \p key referred to SLHABlock,
+   *        SLHALine, or element of the SLHALine are not present.
+   */
+  SLHALine::reference
+  at_key(const SLHAKey& key)
+  { return this->at(key.block)[key.line].at(key.field); }
+
+  /**
+   * \brief Access to a SLHALine element referenced by a SLHAKey.
+   * \param key Reference to the SLHALine element to be retrieved.
+   * \return Read-only (constant) reference to the SLHALine element
+   *         \p key refers to.
+   * \throw std::out_of_range If the in \p key referred to SLHABlock,
+   *        SLHALine, or element of the SLHALine are not present.
+   */
+  SLHALine::const_reference
+  at_key(const SLHAKey& key) const
+  { return this->at(key.block)[key.line].at(key.field); }
+
+  /**
+   * Returns a read/write reference to the %SLHABlock at the first
+   * element of the %SLHA container.
+   */
+  reference
+  front()
+  { return impl_.front(); }
+
+  /**
+   * Returns a read-only (constant) reference to the %SLHABlock at the
+   * first element of the %SLHA container.
+   */
+  const_reference
+  front() const
+  { return impl_.front(); }
+
+  /**
+   * Returns a read/write reference to the %SLHABlock at the last
+   * element of the %SLHA container.
+   */
+  reference
+  back()
+  { return impl_.back(); }
+
+  /**
+   * Returns a read-only (constant) reference to the %SLHABlock at the
+   * last element of the %SLHA container.
+   */
+  const_reference
+  back() const
+  { return impl_.back(); }
+
+  // iterators
+  /**
+   * \brief Tries to locate a SLHABlock in the %SLHA container.
+   * \param blockName Name of the SLHABlock to be located.
+   * \return Read/write iterator pointing to sought-after element, or
+   *         end() if not found.
+   *
+   * This function takes a key and tries to locate the SLHABlock whose
+   * name matches \p blockName. If successful the function returns a
+   * read/write iterator pointing to the sought after SLHABlock. If
+   * unsuccessful it returns end().
+   */
+  iterator
+  find(const key_type& blockName)
+  {
+    for (iterator it = begin(); it != end(); ++it)
+    { if (boost::iequals(it->name(), blockName)) return it; }
+    return end();
+  }
+
+  /**
+   * \brief Tries to locate a SLHABlock in the %SLHA container.
+   * \param blockName Name of the SLHABlock to be located.
+   * \return Read-only (constant) iterator pointing to sought-after
+   *         element, or end() const if not found.
+   *
+   * This function takes a key and tries to locate the SLHABlock whose
+   * name matches \p blockName. If successful the function returns a
+   * read-only (constant) iterator pointing to the sought after
+   * SLHABlock. If unsuccessful it returns end() const.
+   */
+  const_iterator
+  find(const key_type& blockName) const
+  {
+    for (const_iterator it = begin(); it != end(); ++it)
+    { if (boost::iequals(it->name(), blockName)) return it; }
+    return end();
+  }
+
+  /**
+   * Returns a read/write iterator that points to the first element
+   * in the %SLHA container. Iteration is done in ordinary element
+   * order.
+   */
+  iterator
+  begin()
+  { return impl_.begin(); }
+
+  /**
+   * Returns a read-only (constant) iterator that points to the first
+   * element in the %SLHA container. Iteration is done in ordinary
+   * element order.
+   */
+  const_iterator
+  begin() const
+  { return impl_.begin(); }
+
+  /**
+   * Returns a read-only (constant) iterator that points to the first
+   * element in the %SLHA container. Iteration is done in ordinary
+   * element order.
+   */
+  const_iterator
+  cbegin() const
+  { return impl_.begin(); }
+
+  /**
+   * Returns a read/write iterator that points one past the last
+   * element in the %SLHA container. Iteration is done in ordinary
+   * element order.
+   */
+  iterator
+  end()
+  { return impl_.end(); }
+
+  /**
+   * Returns a read-only (constant) iterator that points one past the
+   * last element in the %SLHA container. Iteration is done in
+   * ordinary element order.
+   */
+  const_iterator
+  end() const
+  { return impl_.end(); }
+
+  /**
+   * Returns a read-only (constant) iterator that points one past the
+   * last element in the %SLHA container. Iteration is done in
+   * ordinary element order.
+   */
+  const_iterator
+  cend() const
+  { return impl_.end(); }
+
+  /**
+   * Returns a read/write reverse iterator that points to the last
+   * element in the %SLHA container. Iteration is done in reverse
+   * element order.
+   */
+  reverse_iterator
+  rbegin()
+  { return impl_.rbegin(); }
+
+  /**
+   * Returns a read-only (constant) reverse iterator that points to
+   * the last element in the %SLHA container. Iteration is done in
+   * reverse element order.
+   */
+  const_reverse_iterator
+  rbegin() const
+  { return impl_.rbegin(); }
+
+  /**
+   * Returns a read-only (constant) reverse iterator that points to
+   * the last element in the %SLHA container. Iteration is done in
+   * reverse element order.
+   */
+  const_reverse_iterator
+  crbegin() const
+  { return impl_.rbegin(); }
+
+  /**
+   * Returns a read/write reverse iterator that points to one before
+   * the first element in the %SLHA container. Iteration is done in
+   * reverse element order.
+   */
+  reverse_iterator
+  rend()
+  { return impl_.rend(); }
+
+  /**
+   * Returns a read-only (constant) reverse iterator that points to
+   * one before the first element in the %SLHA container. Iteration is
+   * done in reverse element order.
+   */
+  const_reverse_iterator
+  rend() const
+  { return impl_.rend(); }
+
+  /**
+   * Returns a read-only (constant) reverse iterator that points to
+   * one before the first element in the %SLHA container. Iteration is
+   * done in reverse element order.
+   */
+  const_reverse_iterator
+  crend() const
+  { return impl_.rend(); }
+
+  // capacity
+  /** Returns the number of elements in the %SLHA container. */
+  size_type
+  size() const
+  { return impl_.size(); }
+
+  /** Returns the size() of the largest possible %SLHA container. */
+  size_type
+  max_size() const
+  { return impl_.max_size(); }
+
+  /** Returns true if the %SLHA container is empty. */
+  bool
+  empty() const
+  { return impl_.empty(); }
+
+  // modifiers
+  /**
+   * \brief Adds \p block to the end of the %SLHA container.
+   * \param block SLHABlock to be added.
+   *
+   * This function creates an element at the end of the %SLHA
+   * container and assigns the given \p block to it.
+   */
+  void
+  push_back(const value_type& block)
+  { impl_.push_back(block); }
+
+  /**
+   * Removes the last element. This function shrinks the size() of the
+   * %SLHA container by one.
+   */
+  void
+  pop_back()
+  { impl_.pop_back(); }
+
+  /**
+   * \brief Removes element at given \p position.
+   * \param position Iterator pointing to the element to be erased.
+   * \return An iterator pointing to the next element (or end()).
+   *
+   * This function erases the element at the given \p position and
+   * thus shorten the %SLHA container by one.
+   */
+  iterator
+  erase(iterator position)
+  { return impl_.erase(position); }
+
+  /**
+   * \brief Removes a range of elements.
+   * \param first Iterator pointing to the first element to be erased.
+   * \param last Iterator pointing to one past the last element to be
+   *             erased.
+   * \return An iterator pointing to the element pointed to by \p last
+   *         prior to erasing (or end()).
+   *
+   * This function will erase the elements in the range [\p first,
+   * \p last) and shorten the %SLHA container accordingly.
+   */
+  iterator
+  erase(iterator first, iterator last)
+  { return impl_.erase(first, last); }
+
+  /**
+   * \brief Swaps data with another %SLHA container.
+   * \param rhs %SLHA container to be swapped with.
+   */
+  void
+  swap(SLHA& rhs)
+  { impl_.swap(rhs.impl_); }
+
+  /** Erases all the elements in the %SLHA container. */
+  void
+  clear()
+  { impl_.clear(); }
+
 private:
-  std::vector<SLHABlock>  impl_;
+  impl_type impl_;
 };
 
 
-inline std::ostream& operator<<(std::ostream& os, const SLHA& slha)
-{
-  for (SLHA::const_iterator it = slha.begin(); it != slha.end(); ++it)
-  { os << *it; }
-  return os;
-}
+inline std::ostream&
+operator<<(std::ostream& os, const SLHALine& line)
+{ return os << line.str(); }
 
-inline std::ostream& operator<<(std::ostream& os, const SLHABlock& block)
+inline std::ostream&
+operator<<(std::ostream& os, const SLHABlock& block)
 {
   for (SLHABlock::const_iterator it = block.begin(); it != block.end(); ++it)
   { os << *it << std::endl; }
   return os;
 }
 
-inline std::ostream& operator<<(std::ostream& os, const SLHALine& line)
-{ return os << line.str(); }
+inline std::ostream&
+operator<<(std::ostream& os, const SLHA& slha)
+{
+  for (SLHA::const_iterator it = slha.begin(); it != slha.end(); ++it)
+  { os << *it; }
+  return os;
+}
 
-inline std::ostream& operator<<(std::ostream& os, const SLHAKey& key)
-{ return os << key.str(); }
+
+inline bool
+operator==(const SLHALine& a, const SLHALine& b)
+{
+  return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin())
+    && a.str() == b.str();
+}
+
+inline bool
+operator<(const SLHALine& a, const SLHALine& b)
+{
+  return std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
+}
+
+inline bool
+operator!=(const SLHALine& a, const SLHALine& b)
+{ return !(a == b); }
+
+inline bool
+operator>(const SLHALine& a, const SLHALine& b)
+{ return b < a; }
+
+inline bool
+operator<=(const SLHALine& a, const SLHALine& b)
+{ return !(b < a); }
+
+inline bool
+operator>=(const SLHALine& a, const SLHALine& b)
+{ return !(a < b); }
+
+
+inline bool
+operator==(const SLHABlock& a, const SLHABlock& b)
+{ return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin()); }
+
+inline bool
+operator<(const SLHABlock& a, const SLHABlock& b)
+{
+  return std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
+}
+
+inline bool
+operator!=(const SLHABlock& a, const SLHABlock& b)
+{ return !(a == b); }
+
+inline bool
+operator>(const SLHABlock& a, const SLHABlock& b)
+{ return b < a; }
+
+inline bool
+operator<=(const SLHABlock& a, const SLHABlock& b)
+{ return !(b < a); }
+
+inline bool
+operator>=(const SLHABlock& a, const SLHABlock& b)
+{ return !(a < b); }
+
+
+inline bool
+operator==(const SLHA& a, const SLHA& b)
+{ return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin()); }
+
+inline bool
+operator<(const SLHA& a, const SLHA& b)
+{
+  return std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
+}
+
+inline bool
+operator!=(const SLHA& a, const SLHA& b)
+{ return !(a == b); }
+
+inline bool
+operator>(const SLHA& a, const SLHA& b)
+{ return b < a; }
+
+inline bool
+operator<=(const SLHA& a, const SLHA& b)
+{ return !(b < a); }
+
+inline bool
+operator>=(const SLHA& a, const SLHA& b)
+{ return !(a < b); }
 
 } // namespace SLHAea
 
