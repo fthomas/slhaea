@@ -72,7 +72,7 @@ public:
     CPPUNIT_ASSERT(b1.back().str() == " 2 1 # 21");
     CPPUNIT_ASSERT(b1.back().str() == b1.at(2,1).str());
 
-    CPPUNIT_ASSERT(cb1["1 2"][2] == "# 12");
+    CPPUNIT_ASSERT(cb1.at("1", "2")[2] == "# 12");
     CPPUNIT_ASSERT(cb1.front().str() == " 1 1 # 11");
     CPPUNIT_ASSERT(cb1.back().str() == " 2 1 # 21");
     CPPUNIT_ASSERT(cb1.back().str() == cb1.at(2,1).str());
@@ -85,21 +85,21 @@ public:
     vi.push_back(2);
     CPPUNIT_ASSERT(b1["1 2"].str() == b1[vs].str());
     CPPUNIT_ASSERT(b1["1 2"].str() == b1[vi].str());
-    CPPUNIT_ASSERT(cb1["1 2"].str() == cb1[vs].str());
-    CPPUNIT_ASSERT(cb1["1 2"].str() == cb1[vi].str());
+    CPPUNIT_ASSERT(cb1.at("1", "2").str() == cb1.at(vs).str());
+    CPPUNIT_ASSERT(cb1.at("1", "2").str() == cb1.at(vi).str());
 
     CPPUNIT_ASSERT(b1.at("1","2").str() == b1[vs].str());
     CPPUNIT_ASSERT(b1.at(1,2).str() == b1[vs].str());
-    CPPUNIT_ASSERT(cb1.at("1","2").str() == cb1[vs].str());
-    CPPUNIT_ASSERT(cb1.at(1,2).str() == cb1[vs].str());
+    CPPUNIT_ASSERT(cb1.at("1","2").str() == cb1.at(vs).str());
+    CPPUNIT_ASSERT(cb1.at(1,2).str() == cb1.at(vs).str());
 
     CPPUNIT_ASSERT(b1.front().str() == cb1.front().str());
     CPPUNIT_ASSERT(b1.back().str() == cb1.back().str());
 
     CPPUNIT_ASSERT(b1[1].str() == b1.front().str());
-    CPPUNIT_ASSERT(cb1[1].str() == cb1.front().str());
+    CPPUNIT_ASSERT(cb1.at(1).str() == cb1.front().str());
     CPPUNIT_ASSERT(b1[2].str() == b1.back().str());
-    CPPUNIT_ASSERT(cb1[2].str() == cb1.back().str());
+    CPPUNIT_ASSERT(cb1.at(2).str() == cb1.back().str());
   }
 
   void testModifiers()
@@ -137,8 +137,8 @@ public:
     b1.pop_back();
     CPPUNIT_ASSERT(b1.size() == 2);
     CPPUNIT_ASSERT(b1.str() == " 1 1 # 11\n 1 2 # 12\n");
-    b1.push_back(" 2 1 # 21");
-    CPPUNIT_ASSERT(b1.str() == cb1.str());
+    //b1.push_back(" 2 1 # 21");
+    //CPPUNIT_ASSERT(b1.str() == cb1.str());
 
     b1.clear();
     CPPUNIT_ASSERT(b1.str() == "");
@@ -220,7 +220,7 @@ public:
     b1.at() = " 3 -1 y zzz";
     CPPUNIT_ASSERT(b1.at("3").str() == " 3 -1 y zzz");
     CPPUNIT_ASSERT(b1.at(3,-1).str() == " 3 -1 y zzz");
-    CPPUNIT_ASSERT(b1.push_back(" 4 1 f g").back().str() == " 4 1 f g");
+    //CPPUNIT_ASSERT(b1.push_back(" 4 1 f g").back().str() == " 4 1 f g");
 
     std::string block = " 1 a b c \n"
                         " 2 d e f # comment\n"
