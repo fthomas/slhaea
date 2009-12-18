@@ -47,7 +47,7 @@ public:
   {
     SLHALine l1;
     CPPUNIT_ASSERT(l1.empty() == true);
-    CPPUNIT_ASSERT(l1.size() == 1);
+    CPPUNIT_ASSERT(l1.size() == 0);
 
     SLHALine l2(" 1 2 3 4 ");
     CPPUNIT_ASSERT(l2.empty() == false);
@@ -63,15 +63,15 @@ public:
 
     const SLHALine l5(" \n 1 2 3 4 # 5 6 ");
     CPPUNIT_ASSERT(l5.empty() == true);
-    CPPUNIT_ASSERT(l5.size() == 1);
+    CPPUNIT_ASSERT(l5.size() == 0);
   }
 
   void testAccessors()
   {
-    SLHALine l1;
-    const SLHALine cl1;
-    CPPUNIT_ASSERT(l1[0] == "");
-    CPPUNIT_ASSERT(cl1[0] == "");
+    SLHALine l1("1");
+    const SLHALine cl1 = l1;
+    CPPUNIT_ASSERT(l1[0] == "1");
+    CPPUNIT_ASSERT(cl1[0] == "1");
     CPPUNIT_ASSERT(l1[0] == l1.at(0));
     CPPUNIT_ASSERT(cl1[0] == cl1.at(0));
     CPPUNIT_ASSERT(l1.front() == l1.at(0));
@@ -83,7 +83,7 @@ public:
     CPPUNIT_ASSERT(l1[0] == " 1 2 ");
     CPPUNIT_ASSERT(l1.size() == 1);
     l1.at(0) = "";
-    CPPUNIT_ASSERT(l1.empty() == true);
+    CPPUNIT_ASSERT(l1.empty() == false);
 
     try
     {
@@ -91,7 +91,7 @@ public:
     }
     catch (out_of_range ex)
     {
-      CPPUNIT_ASSERT(l1.empty() == true);
+      CPPUNIT_ASSERT(l1.empty() == false);
     }
 
     l1 = "  1  2  3  ";
@@ -122,7 +122,7 @@ public:
     CPPUNIT_ASSERT(cl1.size() == 4);
 
     l1 = "";
-    CPPUNIT_ASSERT(l1.size() == 1);
+    CPPUNIT_ASSERT(l1.size() == 0);
     CPPUNIT_ASSERT(l1.empty() == true);
 
     l1 = "1";
@@ -275,16 +275,16 @@ public:
 
     l1 = "\n 1 2 3 4 5";
     CPPUNIT_ASSERT(l1.empty() == true);
-    CPPUNIT_ASSERT(l1.size() == 1);
+    CPPUNIT_ASSERT(l1.size() == 0);
     l1 = "  \n 1 2 3 4 5  ";
     CPPUNIT_ASSERT(l1.empty() == true);
-    CPPUNIT_ASSERT(l1.size() == 1);
+    CPPUNIT_ASSERT(l1.size() == 0);
     l1 = "";
     CPPUNIT_ASSERT(l1.empty() == true);
-    CPPUNIT_ASSERT(l1.size() == 1);
+    CPPUNIT_ASSERT(l1.size() == 0);
     l1 = "   ";
     CPPUNIT_ASSERT(l1.empty() == true);
-    CPPUNIT_ASSERT(l1.size() == 1);
+    CPPUNIT_ASSERT(l1.size() == 0);
     l1 = " . ";
     CPPUNIT_ASSERT(l1.empty() == false);
     CPPUNIT_ASSERT(l1.size() == 1);

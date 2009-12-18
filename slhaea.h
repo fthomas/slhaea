@@ -32,49 +32,52 @@
 
 namespace SLHAea {
 
-template<class T> inline T to_(const std::string& str)
+// auxiliary functions
+template<class T> inline T
+to_(const std::string& str)
 { return boost::lexical_cast<T>(str); }
 
-template<class T> inline std::string to_string(const T& v)
+template<class T> inline std::string
+to_string(const T& v)
 { return boost::lexical_cast<std::string>(v); }
 
-template<class T> inline
-std::vector<std::string> to_string_vector(const std::vector<T>& vec)
+template<class T> inline std::vector<std::string>
+to_string_vector(const std::vector<T>& cont)
 {
-  std::vector<std::string> str_vec;
-  for (typename std::vector<T>::const_iterator it = vec.begin();
-       it != vec.end(); ++it) str_vec.push_back(to_string(*it));
-  return str_vec;
+  std::vector<std::string> vec;
+  for (typename std::vector<T>::const_iterator it = cont.begin();
+       it != cont.end(); ++it) vec.push_back(to_string(*it));
+  return vec;
 }
 
 inline std::vector<std::string>
-to_string_vector(const std::string& str, const std::string& sep = " ")
+to_string_vector(const std::string& str)
 {
-  std::vector<std::string> v;
-  if (" " == sep)
-  { boost::split(v, str, boost::is_space(), boost::token_compress_on); }
-  else
-  { boost::split(v, str, boost::is_any_of(sep), boost::token_compress_on); }
-  return v;
+  std::vector<std::string> vec;
+  boost::split(vec, str, boost::is_space(), boost::token_compress_on);
+  return vec;
 }
 
-inline std::string concat_strings(const std::vector<std::string>& vec,
-                                  const std::string& sep = " ")
+inline std::vector<std::string>
+to_string_vector(const std::string& str, const std::string& sep)
 {
-  std::string str;
-  for (std::vector<std::string>::const_iterator it = vec.begin();
-       it != vec.end(); ++it) str += *it + sep;
-  if (str.size() > 0) boost::erase_last(str, sep);
-  return str;
+  std::vector<std::string> vec;
+  boost::split(vec, str, boost::is_any_of(sep), boost::token_compress_on);
+  return vec;
 }
 
-class SLHALine;
-class SLHABlock;
-class SLHA;
+template<class InputIterator> inline std::string
+concat(InputIterator first, InputIterator last, const std::string& sep = " ")
+{
+  std::string retval;
+  for (; first != last; ++first) retval += to_string(*first) + sep;
+  if (retval.size() > 0) boost::erase_last(retval, sep);
+  return retval;
+}
 
-std::ostream& operator<<(std::ostream& os, const SLHALine& line);
-std::ostream& operator<<(std::ostream& os, const SLHABlock& block);
-std::ostream& operator<<(std::ostream& os, const SLHA& slha);
+template<class Container> inline std::string
+concat(const Container& cont, const std::string& sep = " ")
+{ return concat(cont.begin(), cont.end(), sep); }
 
 
 struct SLHAKey
@@ -89,7 +92,8 @@ struct SLHAKey
   SLHAKey(const std::string& keyStr)
   { str(keyStr); }
 
-  SLHAKey& str(const std::string& keyStr)
+  SLHAKey&
+  str(const std::string& keyStr)
   {
     std::vector<std::string> vec = to_string_vector(keyStr, ";");
     if (3 != vec.size())
@@ -101,16 +105,23 @@ struct SLHAKey
     return *this;
   }
 
-  std::string str() const
+  std::string
+  str() const
   {
     std::stringstream ss("");
-    ss << block << ";" << concat_strings(line, ",") << ";" << field;
+    ss << block << ";" << concat(line, ",") << ";" << field;
     return ss.str();
   }
 };
 
-inline std::ostream& operator<<(std::ostream& os, const SLHAKey& key)
-{ return os << key.str(); }
+
+class SLHALine;
+class SLHABlock;
+class SLHA;
+
+std::ostream& operator<<(std::ostream& os, const SLHALine& line);
+std::ostream& operator<<(std::ostream& os, const SLHABlock& block);
+std::ostream& operator<<(std::ostream& os, const SLHA& slha);
 
 
 class SLHALine
@@ -129,89 +140,51 @@ public:
   typedef impl_type::difference_type        difference_type;
   typedef impl_type::size_type              size_type;
 
-  SLHALine()
-  { str(""); }
+  /** Constructs an empty %SLHALine. */
+  SLHALine() {}
+
+  // NOTE: The compiler-generated copy constructor and assignment
+  //   operator for this class are just fine, so we don't need to
+  //   write our own.
+  // SLHALine(const SLHALine&);
+  // SLHALine& operator=(const SLHALine&);
 
   SLHALine(const std::string& line)
   { str(line); }
 
-  SLHALine& operator=(const std::string& line)
+  SLHALine&
+  operator=(const std::string& line)
   { return str(line); }
 
-  SLHALine& operator+=(const std::string& rhs)
+  SLHALine&
+  operator+=(const std::string& rhs)
   { return append(rhs); }
 
-  std::string& operator[](std::size_t n)
-  { return impl_[n]; }
-
-  const std::string& operator[](std::size_t n) const
-  { return impl_[n]; }
-
-  template<class T> SLHALine& operator<<(const T& element)
+  template<class T> SLHALine&
+  operator<<(const T& field)
   {
-    const std::string rhs = to_string(element);
+    const std::string rhs = to_string(field);
     const std::string rhs_tr = boost::trim_copy(rhs);
     if (rhs_tr.empty()) return *this;
 
-    if (empty()) front() = rhs_tr;
-    else if (back().find("#") != std::string::npos) back() += rhs;
+    if (!empty() && back().find("#") != std::string::npos) back() += rhs;
     else impl_.push_back(rhs_tr);
 
     reformat();
     return *this;
   }
 
-  std::string& at(std::size_t n)
-  { return impl_.at(n); }
-
-  const std::string& at(std::size_t n) const
-  { return impl_.at(n); }
-
-  SLHALine& append(const std::string& rhs)
+  /**
+   * \brief Appends string to the end of the %SLHALine.
+   * \param rhs String that is appended to the %SLHALine.
+   * \return Reference to \c *this;
+   */
+  SLHALine&
+  append(const std::string& rhs)
   { return str(str() + rhs); }
 
-  std::string& back()
-  { return impl_.back(); }
-
-  const std::string& back() const
-  { return impl_.back(); }
-
-  iterator begin()
-  { return impl_.begin(); }
-
-  const_iterator begin() const
-  { return impl_.begin(); }
-
-  SLHALine& clear()
-  {
-    impl_.clear();
-    impl_.push_back("");
-    mLineFormat = "%1%";
-    return *this;
-  }
-
-  bool empty() const
-  { return size() == 1 && "" == impl_[0]; }
-
-  iterator end()
-  { return impl_.end(); }
-
-  const_iterator end() const
-  { return impl_.end(); }
-
-  std::string& front()
-  { return impl_.front(); }
-
-  const std::string& front() const
-  { return impl_.front(); }
-
-  reverse_iterator rbegin()
-  { return impl_.rbegin(); }
-
-  const_reverse_iterator rbegin() const
-  { return impl_.rbegin(); }
-
-  SLHALine& reformat()
+  SLHALine&
+  reformat()
   {
     if (empty()) return *this;
 
@@ -240,28 +213,19 @@ public:
     return *this;
   }
 
-  reverse_iterator rend()
-  { return impl_.rend(); }
-
-  const_reverse_iterator rend() const
-  { return impl_.rend(); }
-
-  std::size_t size() const
-  { return impl_.size(); }
-
-  SLHALine& str(const std::string& line)
+  SLHALine&
+  str(const std::string& line)
   {
+    clear();
     const std::string
       line_tr = boost::trim_copy(line.substr(0, line.find("\n")));
-    if (line_tr.empty())
-    { clear(); return *this; }
+    if (line_tr.empty()) return *this;
 
     const int comment_pos = std::min(line_tr.find("#"), line_tr.length());
     const std::string
       data    = boost::trim_copy(line_tr.substr(0, comment_pos)),
       comment = boost::trim_copy(line_tr.substr(comment_pos));
 
-    impl_.clear();
     if (!data.empty()) impl_ = to_string_vector(data);
     if (!comment.empty()) impl_.push_back(comment);
 
@@ -273,28 +237,253 @@ public:
       pos = line.find(*it, pos);
       line_fmt << "%|" << pos << "t|%" << i << "% ";
     }
-    mLineFormat = boost::trim_right_copy(line_fmt.str());
+    lineFormat_ = boost::trim_right_copy(line_fmt.str());
 
     return *this;
   }
 
-  std::string str() const
+  /** Returns a formatted string representation of the %SLHALine. */
+  std::string
+  str() const
   {
-    boost::format fmter(mLineFormat);
+    boost::format fmter(lineFormat_);
     for (const_iterator it = begin(); it != end(); ++it) fmter % *it;
     return fmter.str();
   }
 
-  std::string str_plain() const
+  /** Returns all strings of the %SLHALine concatenated with a space. */
+  std::string
+  str_plain() const
+  { return concat(impl_); }
+
+  // element access
+  /**
+   * \brief Subscript access to the strings contained in the
+   *   %SLHALine.
+   * \param n The index of the string which should be accessed.
+   * \return Read/write reference to the accessed string.
+   *
+   * This operator allows for easy, array-style, data access. Note
+   * that data access with this operator is unchecked and out_of_range
+   * lookups are not defined. (For checked lookups see at().)
+   */
+  reference
+  operator[](size_type n)
+  { return impl_[n]; }
+
+  /**
+   * \brief Subscript access to the strings contained in the
+   *   %SLHALine.
+   * \param n The index of the string which should be accessed.
+   * \return Read-only (constant) reference to the accessed string.
+   *
+   * This operator allows for easy, array-style, data access. Note
+   * that data access with this operator is unchecked and out_of_range
+   * lookups are not defined. (For checked lookups see at().)
+   */
+  const_reference
+  operator[](size_type n) const
+  { return impl_[n]; }
+
+  /**
+   * \brief Provides access to the strings contained in the %SLHALine.
+   * \param n The index of the string which should be accessed.
+   * \return Read/write reference to the accessed string.
+   * \throw std::out_of_range If \p n is an invalid index.
+   */
+  reference
+  at(size_type n)
+  { return impl_.at(n); }
+
+  /**
+   * \brief Provides access to the strings contained in the %SLHALine.
+   * \param n The index of the string which should be accessed.
+   * \return Read-only (constant) reference to the accessed string.
+   * \throw std::out_of_range If \p n is an invalid index.
+   */
+  const_reference
+  at(size_type n) const
+  { return impl_.at(n); }
+
+  /**
+   * Returns a read/write reference to the string at the first element
+   * of the %SLHALine.
+   */
+  reference
+  front()
+  { return impl_.front(); }
+
+  /**
+   * Returns a read-only (constant) reference to the string at the
+   * first element of the %SLHALine.
+   */
+  const_reference
+  front() const
+  { return impl_.front(); }
+
+  /**
+   * Returns a read/write reference to the string at the last element
+   * of the %SLHALine.
+   */
+  reference
+  back()
+  { return impl_.back(); }
+
+  /**
+   * Returns a read-only (constant) reference to the string at the
+   * last element of the %SLHALine.
+   */
+  const_reference
+  back() const
+  { return impl_.back(); }
+
+  // iterators
+  /**
+   * Returns a read/write iterator that points to the first element in
+   * the %SLHALine. Iteration is done in ordinary element order.
+   */
+  iterator
+  begin()
+  { return impl_.begin(); }
+
+  /**
+   * Returns a read-only (constant) iterator that points to the first
+   * element in the %SLHALine. Iteration is done in ordinary element
+   * order.
+   */
+  const_iterator
+  begin() const
+  { return impl_.begin(); }
+
+  /**
+   * Returns a read-only (constant) iterator that points to the first
+   * element in the %SLHALine. Iteration is done in ordinary element
+   * order.
+   */
+  const_iterator
+  cbegin() const
+  { return impl_.begin(); }
+
+  /**
+   * Returns a read/write iterator that points one past the last
+   * element in the %SLHALine. Iteration is done in ordinary element
+   * order.
+   */
+  iterator
+  end()
+  { return impl_.end(); }
+
+  /**
+   * Returns a read-only (constant) iterator that points one past the
+   * last element in the %SLHALine. Iteration is done in ordinary
+   * element order.
+   */
+  const_iterator
+  end() const
+  { return impl_.end(); }
+
+  /**
+   * Returns a read-only (constant) iterator that points one past the
+   * last element in the %SLHALine. Iteration is done in ordinary
+   * element order.
+   */
+  const_iterator
+  cend() const
+  { return impl_.end(); }
+
+  /**
+   * Returns a read/write reverse iterator that points to the last
+   * element in the %SLHALine. Iteration is done in reverse element
+   * order.
+   */
+  reverse_iterator
+  rbegin()
+  { return impl_.rbegin(); }
+
+  /**
+   * Returns a read-only (constant) reverse iterator that points to
+   * the last element in the %SLHALine. Iteration is done in reverse
+   * element order.
+   */
+  const_reverse_iterator
+  rbegin() const
+  { return impl_.rbegin(); }
+
+  /**
+   * Returns a read-only (constant) reverse iterator that points to
+   * the last element in the %SLHALine. Iteration is done in reverse
+   * element order.
+   */
+  const_reverse_iterator
+  crbegin() const
+  { return impl_.rbegin(); }
+
+  /**
+   * Returns a read/write reverse iterator that points to one before
+   * the first element in the %SLHALine. Iteration is done in reverse
+   * element order.
+   */
+  reverse_iterator
+  rend()
+  { return impl_.rend(); }
+
+  /**
+   * Returns a read-only (constant) reverse iterator that points to
+   * one before the first element in the %SLHALine. Iteration is done
+   * in reverse element order.
+   */
+  const_reverse_iterator
+  rend() const
+  { return impl_.rend(); }
+
+  /**
+   * Returns a read-only (constant) reverse iterator that points to
+   * one before the first element in the %SLHALine. Iteration is done
+   * in reverse element order.
+   */
+  const_reverse_iterator
+  crend() const
+  { return impl_.rend(); }
+
+  // capacity
+  /** Returns the number of elements in the %SLHALine. */
+  size_type
+  size() const
+  { return impl_.size(); }
+
+  /** Returns the size() of the largest possible %SLHALine. */
+  size_type
+  max_size() const
+  { return impl_.max_size(); }
+
+  /** Returns true if the %SLHALine is empty. */
+  bool
+  empty() const
+  { return impl_.empty(); }
+
+  // modifiers
+  /**
+   * \brief Swaps data with another %SLHALine.
+   * \param rhs %SLHALine to be swapped with.
+   */
+  void
+  swap(SLHALine& rhs)
   {
-    std::string retval;
-    for (const_iterator it = begin(); it != end(); ++it) retval += *it + " ";
-    return boost::trim_copy(retval);
+    impl_.swap(rhs.impl_);
+    lineFormat_.swap(rhs.lineFormat_);
+  }
+
+  /** Erases all the elements in the %SLHALine. */
+  void
+  clear()
+  {
+    impl_.clear();
+    lineFormat_.clear();
   }
 
 private:
-  std::vector<std::string> impl_;
-  std::string mLineFormat;
+  impl_type impl_;
+  std::string lineFormat_;
 };
 
 
@@ -323,7 +512,7 @@ public:
     if (end() == it)
     {
       throw std::out_of_range("SLHABlock::{operator[],at}(" +
-                              concat_strings(keys) + ");");
+                              concat(keys) + ");");
     }
     return *it;
   }
@@ -543,8 +732,8 @@ public:
   SLHA() {}
 
   // NOTE: The compiler-generated copy constructor and assignment
-  //       operator for this class are just fine, so we don't need to
-  //       write our own.
+  //   operator for this class are just fine, so we don't need to
+  //   write our own.
   // SLHA(const SLHA&);
   // SLHA& operator=(const SLHA&);
 
@@ -605,10 +794,10 @@ public:
   }
 
   /**
-   * \brief Writes string representation of the %SLHA container into
-   *        a file.
+   * \brief Writes the string representation of the %SLHA container
+   *   into a file.
    * \param filename Name of output file the string representation is
-   *                 written to.
+   *   written to.
    * \returns Reference to \c *this.
    */
   SLHA&
@@ -633,19 +822,27 @@ public:
    */
   SLHA&
   str(const std::string& slhaStr)
-  { std::stringstream ss(""); ss << slhaStr; return read(ss); }
+  {
+    std::stringstream ss("");
+    ss << slhaStr;
+    return read(ss);
+  }
 
   /** Returns a string representation of the %SLHA container. */
   std::string
   str() const
-  { std::stringstream ss(""); ss << *this; return ss.str(); }
+  {
+    std::stringstream ss("");
+    ss << *this;
+    return ss.str();
+  }
 
   // element access
   /**
    * \brief Subscript access to an element of the %SLHA container.
    * \param blockName Name of the SLHABlock to be retrieved.
    * \return Read/write reference to the SLHABlock with the name
-   *         \p blockName.
+   *   \p blockName.
    *
    * This function allows for easy lookup with the subscript (\c [])
    * operator. It returns the first SLHABlock with the name
@@ -658,15 +855,18 @@ public:
   {
     iterator it = find(blockName);
     if (end() == it)
-    { push_back(SLHABlock(blockName)); return back(); }
+    {
+      push_back(SLHABlock(blockName));
+      return back();
+    }
     return *it;
   }
 
   /**
-   * \brief Access to an element of the %SLHA container.
+   * \brief Provides access to an element of the %SLHA container.
    * \param blockName Name of the SLHABlock to be retrieved.
    * \return Read/write reference to the SLHABlock with the name
-   *         \p blockName.
+   *   \p blockName.
    * \throw std::out_of_range If no such SLHABlock is present.
    */
   reference
@@ -679,10 +879,10 @@ public:
   }
 
   /**
-   * \brief Access to an element of the %SLHA container.
+   * \brief Provides access to an element of the %SLHA container.
    * \param blockName Name of the SLHABlock to be retrieved.
    * \return Read-only (constant) reference to the SLHABlock with the
-   *         name \p blockName.
+   *   name \p blockName.
    * \throw std::out_of_range If no such SLHABlock is present.
    */
   const_reference
@@ -693,30 +893,6 @@ public:
     { throw std::out_of_range("SLHA::at(\"" + blockName + "\")"); }
     return *it;
   }
-
-  /**
-   * \brief Access to a SLHALine element referenced by a SLHAKey.
-   * \param key Reference to the SLHALine element to be retrieved.
-   * \return Read/write reference to the SLHALine element \p key
-   *         refers to.
-   * \throw std::out_of_range If the in \p key referred to SLHABlock,
-   *        SLHALine, or element of the SLHALine are not present.
-   */
-  SLHALine::reference
-  at_key(const SLHAKey& key)
-  { return this->at(key.block)[key.line].at(key.field); }
-
-  /**
-   * \brief Access to a SLHALine element referenced by a SLHAKey.
-   * \param key Reference to the SLHALine element to be retrieved.
-   * \return Read-only (constant) reference to the SLHALine element
-   *         \p key refers to.
-   * \throw std::out_of_range If the in \p key referred to SLHABlock,
-   *        SLHALine, or element of the SLHALine are not present.
-   */
-  SLHALine::const_reference
-  at_key(const SLHAKey& key) const
-  { return this->at(key.block)[key.line].at(key.field); }
 
   /**
    * Returns a read/write reference to the %SLHABlock at the first
@@ -755,7 +931,7 @@ public:
    * \brief Tries to locate a SLHABlock in the %SLHA container.
    * \param blockName Name of the SLHABlock to be located.
    * \return Read/write iterator pointing to sought-after element, or
-   *         end() if not found.
+   *   end() if not found.
    *
    * This function takes a key and tries to locate the SLHABlock whose
    * name matches \p blockName. If successful the function returns a
@@ -774,7 +950,7 @@ public:
    * \brief Tries to locate a SLHABlock in the %SLHA container.
    * \param blockName Name of the SLHABlock to be located.
    * \return Read-only (constant) iterator pointing to sought-after
-   *         element, or end() const if not found.
+   *   element, or end() const if not found.
    *
    * This function takes a key and tries to locate the SLHABlock whose
    * name matches \p blockName. If successful the function returns a
@@ -790,9 +966,8 @@ public:
   }
 
   /**
-   * Returns a read/write iterator that points to the first element
-   * in the %SLHA container. Iteration is done in ordinary element
-   * order.
+   * Returns a read/write iterator that points to the first element in
+   * the %SLHA container. Iteration is done in ordinary element order.
    */
   iterator
   begin()
@@ -915,7 +1090,7 @@ public:
 
   // modifiers
   /**
-   * \brief Adds \p block to the end of the %SLHA container.
+   * \brief Adds a SLHABlock to the end of the %SLHA container.
    * \param block SLHABlock to be added.
    *
    * This function creates an element at the end of the %SLHA
@@ -949,9 +1124,9 @@ public:
    * \brief Removes a range of elements.
    * \param first Iterator pointing to the first element to be erased.
    * \param last Iterator pointing to one past the last element to be
-   *             erased.
+   *   erased.
    * \return An iterator pointing to the element pointed to by \p last
-   *         prior to erasing (or end()).
+   *   prior to erasing (or end()).
    *
    * This function will erase the elements in the range [\p first,
    * \p last) and shorten the %SLHA container accordingly.
@@ -977,6 +1152,10 @@ private:
   impl_type impl_;
 };
 
+
+inline std::ostream&
+operator<<(std::ostream& os, const SLHAKey& key)
+{ return os << key.str(); }
 
 inline std::ostream&
 operator<<(std::ostream& os, const SLHALine& line)
