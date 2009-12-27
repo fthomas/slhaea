@@ -949,6 +949,10 @@ public:
   push_back(const value_type& line)
   { impl_.push_back(line); }
 
+  void
+  push_back(const std::string& line)
+  { impl_.push_back(SLHALine(line)); }
+
   /**
    * Removes the last element. This function shrinks the size() of the
    * %SLHABlock by one.

@@ -137,8 +137,8 @@ public:
     b1.pop_back();
     CPPUNIT_ASSERT(b1.size() == 2);
     CPPUNIT_ASSERT(b1.str() == " 1 1 # 11\n 1 2 # 12\n");
-    //b1.push_back(" 2 1 # 21");
-    //CPPUNIT_ASSERT(b1.str() == cb1.str());
+    b1.push_back(" 2 1 # 21");
+    CPPUNIT_ASSERT(b1.str() == cb1.str());
 
     b1.clear();
     CPPUNIT_ASSERT(b1.str() == "");
@@ -217,10 +217,11 @@ public:
     CPPUNIT_ASSERT(b1["2 a c"].str() == " 2 a c");
     CPPUNIT_ASSERT(b1["2 a c"][2] == "c");
     CPPUNIT_ASSERT(b1.at("2", "a", "c")[2] == "c");
-    b1.at() = " 3 -1 y zzz";
+    b1[""] = " 3 -1 y zzz";
     CPPUNIT_ASSERT(b1.at("3").str() == " 3 -1 y zzz");
     CPPUNIT_ASSERT(b1.at(3,-1).str() == " 3 -1 y zzz");
-    //CPPUNIT_ASSERT(b1.push_back(" 4 1 f g").back().str() == " 4 1 f g");
+    b1.push_back(" 4 1 f g");
+    CPPUNIT_ASSERT(b1.back().str() == " 4 1 f g");
 
     std::string block = " 1 a b c \n"
                         " 2 d e f # comment\n"
