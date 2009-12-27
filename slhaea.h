@@ -161,7 +161,8 @@ public:
    * \param line String that is used as basis for the new content of
    *   the %SLHALine.
    * \return Reference to \c *this.
-   * \sa str()
+   *
+   * This function is an alias for str().
    */
   SLHALine&
   operator=(const std::string& line)
@@ -171,7 +172,8 @@ public:
    * \brief Appends a string to the end of the %SLHALine.
    * \param rhs String that is appended to the %SLHALine.
    * \return Reference to \c *this.
-   * \sa append()
+   *
+   * This function is an alias for append().
    */
   SLHALine&
   operator+=(const std::string& rhs)
