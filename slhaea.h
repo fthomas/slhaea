@@ -147,13 +147,32 @@ public:
   //   operator for this class are just fine, so we don't need to
   //   write our own.
 
+  /**
+   * \brief Constructs %SLHALine from a string.
+   * \param line String that is used as basis for the content of the
+   *   %SLHALine.
+   * \sa str()
+   */
   SLHALine(const std::string& line)
   { str(line); }
 
+  /**
+   * \brief Assigns new content to the %SLHALine based on a string.
+   * \param line String that is used as basis for the new content of
+   *   the %SLHALine.
+   * \return Reference to \c *this.
+   * \sa str()
+   */
   SLHALine&
   operator=(const std::string& line)
   { return str(line); }
 
+  /**
+   * \brief Appends a string to the end of the %SLHALine.
+   * \param rhs String that is appended to the %SLHALine.
+   * \return Reference to \c *this.
+   * \sa append()
+   */
   SLHALine&
   operator+=(const std::string& rhs)
   { return append(rhs); }
@@ -165,17 +184,24 @@ public:
     const std::string rhs_tr = boost::trim_copy(rhs);
     if (rhs_tr.empty()) return *this;
 
-    if (!empty() && back().find("#") != std::string::npos) back() += rhs;
-    else impl_.push_back(rhs_tr);
+    if (!empty() && back().find("#") != std::string::npos)
+    {
+      back() += rhs;
+      return *this;
+    }
 
+    impl_.push_back(rhs_tr);
     reformat();
     return *this;
   }
 
   /**
-   * \brief Appends string to the end of the %SLHALine.
+   * \brief Appends a string to the end of the %SLHALine.
    * \param rhs String that is appended to the %SLHALine.
-   * \return Reference to \c *this;
+   * \return Reference to \c *this.
+   *
+   * This functions appends \p rhs to output of str() const and uses
+   * this temporary string as input for str().
    */
   SLHALine&
   append(const std::string& rhs)
@@ -211,6 +237,23 @@ public:
     return *this;
   }
 
+  /**
+   * \brief Assigns new content to the %SLHALine based on a string.
+   * \param line String that is used as basis for the new content of
+   *   the %SLHALine.
+   * \return Reference to \c *this.
+   *
+   * This function parses \p line and sets the found fields as new
+   * content of the %SLHALine. If \p line contains newlines
+   * everything after the first newline is ignored. Fields in this
+   * context are whitespace-separated substrings and the comment
+   * (which may contain whitespace). For example, the string
+   * <tt>" 1 2 0.123 # a comment"</tt> contains the fields \c "1",
+   * \c "2", \c "0.123", and \c "# a comment".
+   *
+   * The exact formatting of \p line is stored internally and can be
+   * reproduced with str() const.
+   */
   SLHALine&
   str(const std::string& line)
   {
