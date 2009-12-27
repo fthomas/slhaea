@@ -177,6 +177,11 @@ public:
   operator+=(const std::string& rhs)
   { return append(rhs); }
 
+  /**
+   * \brief Adds an element to the end of the %SLHALine.
+   * \param field Element that is added to the end of the %SLHALine.
+   * \return Reference to \c *this.
+   */
   template<class T> SLHALine&
   operator<<(const T& field)
   {
@@ -207,6 +212,10 @@ public:
   append(const std::string& rhs)
   { return str(str() + rhs); }
 
+  /**
+   * \brief Reformats the string representation of the %SLHALine.
+   * \return Reference to \c *this.
+   */
   SLHALine&
   reformat()
   {
