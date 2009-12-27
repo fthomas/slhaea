@@ -212,28 +212,43 @@ public:
   {
     if (empty()) return *this;
 
-    std::string line;
+    std::stringstream line_fmt("");
+    int arg = 0, pos = 0;
     const_iterator it = begin();
 
     if (boost::iequals("BLOCK", *it) || boost::iequals("DECAY", *it))
     {
-      line += *it;
-      if (it+1 != end()) line += " " + *++it;
+      line_fmt << "%|" << pos << "t|%" << ++arg << "% ";
+      pos += it->length();
+
+      if (it+1 != end())
+      {
+        line_fmt << "%|" << ++pos << "t|%" << ++arg << "% ";
+        pos += (++it)->length();
+      }
     }
     else if (it->compare(0, 1, "#") == 0)
-    { line += *it; }
+    {
+      line_fmt << "%|" << pos << "t|%" << ++arg << "% ";
+      pos += it->length();
+    }
     else
-    { line += " " + *it; }
+    {
+      line_fmt << "%|" << ++pos << "t|%" << ++arg << "% ";
+      pos += it->length();
+    }
 
     while (++it != end())
     {
       // Compute the number of spaces required for proper indentation.
-      int dist = 3 - ((line.size() - 1) % 4);
-      int spaces = dist > 1 ? dist : dist + 4;
-      line.append(spaces, ' ') += *it;
+      int dist = 3 - ((pos - 1) % 4);
+      pos += dist > 1 ? dist : dist + 4;
+
+      line_fmt << "%|" << pos << "t|%" << ++arg << "% ";
+      pos += it->length();
     }
 
-    str(line);
+    lineFormat_ = boost::trim_right_copy(line_fmt.str());
     return *this;
   }
 
@@ -272,11 +287,11 @@ public:
 
     // Construct the format string for line.
     std::stringstream line_fmt("");
-    int i = 1, pos = 0;
-    for (const_iterator it = begin(); it != end(); ++it, ++i, ++pos)
+    int arg = 0, pos = 0;
+    for (const_iterator it = begin(); it != end(); ++it, ++pos)
     {
       pos = line.find(*it, pos);
-      line_fmt << "%|" << pos << "t|%" << i << "% ";
+      line_fmt << "%|" << pos << "t|%" << ++arg << "% ";
     }
     lineFormat_ = boost::trim_right_copy(line_fmt.str());
 
