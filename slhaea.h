@@ -124,6 +124,25 @@ std::ostream& operator<<(std::ostream& os, const SLHABlock& block);
 std::ostream& operator<<(std::ostream& os, const SLHA& slha);
 
 
+/**
+ * Container that represents a line in a %SLHA structure.
+ * This class is a container of strings that represents a line in a
+ * %SLHA structure. The elements of a %SLHALine are the so called
+ * fields of an ordinary %SLHA line, which are its
+ * whitespace-separated substrings and the comment. For example, if a
+ * %SLHALine is constructed from the line <tt>" 1 2 0.123 # a comment
+ * "</tt> its elements would be \c "1", \c "2", \c "0.123", and
+ * \c "# a comment". Array-style access to the elements with integer
+ * indicies is provided by the operator[]() and at() functions.
+ *
+ * In addition to storing the fields of a %SLHA line, a %SLHALine also
+ * stores its formatting (the exact position of the fields in the
+ * line). A formatted representation of a %SLHALine can be produced
+ * with str() const while str_plain() const produces an unformatted
+ * representation where each element is concatenated with a space.
+ * The reformat() function clears the previous formatting and indents
+ * all elements with a variable number of spaces.
+ */
 class SLHALine
 {
 private:
@@ -149,7 +168,7 @@ public:
 
   /**
    * \brief Constructs %SLHALine from a string.
-   * \param line String that is used as basis for the content of the
+   * \param line String whose fields are used as content of the
    *   %SLHALine.
    * \sa str()
    */
@@ -158,8 +177,8 @@ public:
 
   /**
    * \brief Assigns new content to the %SLHALine based on a string.
-   * \param line String that is used as basis for the new content of
-   *   the %SLHALine.
+   * \param line String whose fields are used as new content of the
+   *   %SLHALine.
    * \return Reference to \c *this.
    *
    * This function is an alias for str().
@@ -183,6 +202,10 @@ public:
    * \brief Adds an element to the end of the %SLHALine.
    * \param field Element that is added to the end of the %SLHALine.
    * \return Reference to \c *this.
+   *
+   * This function adds an element to the end of the %SLHALine. If the
+   * last element is a comment \p field is only appended to it and
+   * thus size() remains unchanged.
    */
   template<class T> SLHALine&
   operator<<(const T& field)
@@ -208,7 +231,8 @@ public:
    * \return Reference to \c *this.
    *
    * This functions appends \p rhs to output of str() const and uses
-   * this temporary string as input for str().
+   * this temporary string as input for str(). Based on the temporary
+   * string size() is increased or remains unchanged.
    */
   SLHALine&
   append(const std::string& rhs)
@@ -265,17 +289,13 @@ public:
 
   /**
    * \brief Assigns new content to the %SLHALine based on a string.
-   * \param line String that is used as basis for the new content of
-   *   the %SLHALine.
+   * \param line String whose fields are used as new content of the
+   *   %SLHALine.
    * \return Reference to \c *this.
    *
    * This function parses \p line and sets the found fields as new
    * content of the %SLHALine. If \p line contains newlines
-   * everything after the first newline is ignored. Fields in this
-   * context are whitespace-separated substrings and the comment
-   * (which may contain whitespace). For example, the string
-   * <tt>" 1 2 0.123 # a comment"</tt> contains the fields \c "1",
-   * \c "2", \c "0.123", and \c "# a comment".
+   * everything after the first newline is ignored.
    *
    * The exact formatting of \p line is stored internally and can be
    * reproduced with str() const.
@@ -373,32 +393,32 @@ public:
   { return impl_.at(n); }
 
   /**
-   * Returns a read/write reference to the string at the first element
-   * of the %SLHALine.
+   * Returns a read/write reference to the first element of the
+   * %SLHALine.
    */
   reference
   front()
   { return impl_.front(); }
 
   /**
-   * Returns a read-only (constant) reference to the string at the
-   * first element of the %SLHALine.
+   * Returns a read-only (constant) reference to the first element of
+   * the %SLHALine.
    */
   const_reference
   front() const
   { return impl_.front(); }
 
   /**
-   * Returns a read/write reference to the string at the last element
-   * of the %SLHALine.
+   * Returns a read/write reference to the last element of the
+   * %SLHALine.
    */
   reference
   back()
   { return impl_.back(); }
 
   /**
-   * Returns a read-only (constant) reference to the string at the
-   * last element of the %SLHALine.
+   * Returns a read-only (constant) reference to the last element of
+   * the %SLHALine.
    */
   const_reference
   back() const
