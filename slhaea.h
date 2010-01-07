@@ -125,8 +125,8 @@ std::ostream& operator<<(std::ostream& os, const SLHA& slha);
 
 
 /**
- * Container that represents a line in a %SLHA structure.
- * This class is a container of strings that represents a line in a
+ * Container of string that represents a line in a %SLHA structure.
+ * This class is a container of string that represents a line in a
  * %SLHA structure. The elements of a %SLHALine are the so called
  * fields of an ordinary %SLHA line, which are its
  * whitespace-separated substrings and the comment. For example, if a
@@ -141,7 +141,7 @@ std::ostream& operator<<(std::ostream& os, const SLHA& slha);
  * with str() const while str_plain() const produces an unformatted
  * representation where each element is concatenated with a space.
  * The reformat() function clears the previous formatting and indents
- * all elements with a variable number of spaces.
+ * all elements with a appropriate number of spaces.
  */
 class SLHALine
 {
@@ -237,6 +237,30 @@ public:
   SLHALine&
   append(const std::string& rhs)
   { return str(str() + rhs); }
+
+  /**
+   * Returns true if the %SLHALine begins with \c "BLOCK" or
+   * \c "DECAY". Comparison is done case-insensitive.
+   */
+  bool
+  is_block_def() const
+  {
+    return (size() > 0) &&
+      (boost::iequals("BLOCK", front()) || boost::iequals("DECAY", front()));
+  }
+
+  /** Returns true if the %SLHALine begins with \c "#". */
+  bool
+  is_comment_line() const
+  { return (size() > 0) && (front().compare(0, 1, "#") == 0); }
+
+  /**
+   * Returns true if the %SLHALine is not empty and if neither
+   * is_block_def() nor is_comment_line() returns true.
+   */
+  bool
+  is_data_line() const
+  { return !empty() && !is_block_def() && !is_comment_line(); }
 
   /**
    * \brief Reformats the string representation of the %SLHALine.
@@ -1088,8 +1112,7 @@ public:
       if (boost::trim_copy(line_str).empty()) continue;
 
       const SLHALine line_slha(line_str);
-      if ((boost::iequals("BLOCK", line_slha[0]) ||
-           boost::iequals("DECAY", line_slha[0])) && line_slha.size() > 1)
+      if (line_slha.is_block_def() && line_slha.size() > 1)
       {
         if ('#' != line_slha[1][0]) curr_name = line_slha[1];
       }

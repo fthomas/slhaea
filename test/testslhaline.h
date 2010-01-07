@@ -227,31 +227,46 @@ public:
   {
     SLHALine l1;
     CPPUNIT_ASSERT(l1.str() == "");
-    
+
     l1.str(" 1 2 3 4 ");
     CPPUNIT_ASSERT(l1.str() == " 1 2 3 4");
     CPPUNIT_ASSERT(l1.size() == 4);
-    
+    CPPUNIT_ASSERT(l1.is_block_def()    == false);
+    CPPUNIT_ASSERT(l1.is_comment_line() == false);
+    CPPUNIT_ASSERT(l1.is_data_line()    == true);
+
     l1 = "BLOCK TEST # comment";
     CPPUNIT_ASSERT(l1.str() == "BLOCK TEST # comment");
     CPPUNIT_ASSERT(l1[0] == "BLOCK");
     CPPUNIT_ASSERT(l1[1] == "TEST");
     CPPUNIT_ASSERT(l1[2] == "# comment");
+    CPPUNIT_ASSERT(l1.is_block_def()    == true);
+    CPPUNIT_ASSERT(l1.is_comment_line() == false);
+    CPPUNIT_ASSERT(l1.is_data_line()    == false);
 
     l1 = "BLOCK  TEST  # comment";
     CPPUNIT_ASSERT(l1.str() == "BLOCK  TEST  # comment");
     CPPUNIT_ASSERT(l1[0] == "BLOCK");
     CPPUNIT_ASSERT(l1[1] == "TEST");
     CPPUNIT_ASSERT(l1[2] == "# comment");
+    CPPUNIT_ASSERT(l1.is_block_def()    == true);
+    CPPUNIT_ASSERT(l1.is_comment_line() == false);
+    CPPUNIT_ASSERT(l1.is_data_line()    == false);
 
     l1 = "# one long comment with trailing spaces    ";
     CPPUNIT_ASSERT(l1[0] == "# one long comment with trailing spaces");
     CPPUNIT_ASSERT(l1.size() == 1);
+    CPPUNIT_ASSERT(l1.is_block_def()    == false);
+    CPPUNIT_ASSERT(l1.is_comment_line() == true);
+    CPPUNIT_ASSERT(l1.is_data_line()    == false);
 
     l1 = "one long data line with trailing spaces    ";
     CPPUNIT_ASSERT(l1.str() == "one long data line with trailing spaces");
     CPPUNIT_ASSERT(l1[6] == "spaces");
     CPPUNIT_ASSERT(l1.size() == 7);
+    CPPUNIT_ASSERT(l1.is_block_def()    == false);
+    CPPUNIT_ASSERT(l1.is_comment_line() == false);
+    CPPUNIT_ASSERT(l1.is_data_line()    == true);
 
     l1 = "Hello brave new \n world!";
     CPPUNIT_ASSERT(l1.str() == "Hello brave new");
