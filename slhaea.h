@@ -1,5 +1,5 @@
 // SLHAea - another SUSY Les Houches Accord input/output library
-// Copyright © 2009 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
+// Copyright © 2009-2010 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -343,10 +343,11 @@ public:
     // Construct the format string for line.
     std::stringstream line_fmt("");
     int arg = 0, pos = 0;
-    for (const_iterator it = begin(); it != end(); ++it, ++pos)
+    for (const_iterator it = begin(); it != end(); ++it)
     {
       pos = line.find(*it, pos);
       line_fmt << "%|" << pos << "t|%" << ++arg << "% ";
+      pos += it->length();
     }
     lineFormat_ = boost::trim_right_copy(line_fmt.str());
 
