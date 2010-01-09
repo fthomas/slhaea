@@ -245,14 +245,14 @@ public:
   bool
   is_block_def() const
   {
-    return (size() > 0) &&
+    return !empty() &&
       (boost::iequals("BLOCK", front()) || boost::iequals("DECAY", front()));
   }
 
   /** Returns true if the %SLHALine begins with \c "#". */
   bool
   is_comment_line() const
-  { return (size() > 0) && (front().compare(0, 1, "#") == 0); }
+  { return !empty() && (front().compare(0, 1, "#") == 0); }
 
   /**
    * Returns true if the %SLHALine is not empty and if neither
@@ -599,6 +599,13 @@ private:
 };
 
 
+/**
+ * Container of SLHALine that resembles a block in a %SLHA structure.
+ * This class is a named container of SLHALine that resembles a block
+ * in a %SLHA structure. In contrast to a block in a %SLHA structure,
+ * a %SLHABlock can contain zero, one, or more SLHALine that are
+ * block definitions or it can be completely empty.
+ */
 class SLHABlock
 {
 private:
