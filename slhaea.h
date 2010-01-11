@@ -329,7 +329,7 @@ public:
   {
     clear();
     const std::string
-      line_tr = boost::trim_copy(line.substr(0, line.find("\n")));
+      line_tr = boost::trim_copy(line.substr(0, line.find('\n')));
     if (line_tr.empty()) return *this;
 
     const int comment_pos = std::min(line_tr.find('#'), line_tr.length());
