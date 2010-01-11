@@ -214,7 +214,7 @@ public:
     const std::string rhs_tr = boost::trim_copy(rhs);
     if (rhs_tr.empty()) return *this;
 
-    if (!empty() && back().find("#") != std::string::npos)
+    if (!empty() && back().find('#') != std::string::npos)
     {
       back() += rhs;
       return *this;
@@ -332,7 +332,7 @@ public:
       line_tr = boost::trim_copy(line.substr(0, line.find("\n")));
     if (line_tr.empty()) return *this;
 
-    const int comment_pos = std::min(line_tr.find("#"), line_tr.length());
+    const int comment_pos = std::min(line_tr.find('#'), line_tr.length());
     const std::string
       data    = boost::trim_copy(line_tr.substr(0, comment_pos)),
       comment = boost::trim_copy(line_tr.substr(comment_pos));
