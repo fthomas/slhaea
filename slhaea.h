@@ -1101,6 +1101,14 @@ public:
   SLHA(const std::string filename)
   { read_file(filename); }
 
+  SLHALine::reference
+  field(const SLHAKey& key)
+  { return at(key.block).at(key.line).at(key.field); }
+
+  SLHALine::const_reference
+  field(const SLHAKey& key) const
+  { return at(key.block).at(key.line).at(key.field); }
+
   /**
    * \brief Transforms data from a stream into the %SLHA container.
    * \param is Input stream to read data from.

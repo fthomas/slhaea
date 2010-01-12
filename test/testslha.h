@@ -70,16 +70,16 @@ public:
     CPPUNIT_ASSERT(s1.str() == test);
     CPPUNIT_ASSERT(cs1.str() == test);
 
-    //CPPUNIT_ASSERT(cs1.at_key(SLHAKey("test2;4,3;1")) == "3");
-    //CPPUNIT_ASSERT(cs1.at_key(SLHAKey("test1;2;2")) == "# 3rd comment");
-    //CPPUNIT_ASSERT(cs1.at_key(string("test1;2;2")) == "# 3rd comment");
+    CPPUNIT_ASSERT(cs1.field(SLHAKey("test2;4,3;1")) == "3");
+    CPPUNIT_ASSERT(cs1.field(SLHAKey("test1;2;2")) == "# 3rd comment");
+    CPPUNIT_ASSERT(cs1.field(string("test1;2;2")) == "# 3rd comment");
 
-    //CPPUNIT_ASSERT(s1.at_key(SLHAKey("test2;4,3;1")) == "3");
-    //CPPUNIT_ASSERT(s1.at_key(SLHAKey("test1;2;2")) == "# 3rd comment");
-    //CPPUNIT_ASSERT(s1.at_key(string("test1;2;2")) == "# 3rd comment");
+    CPPUNIT_ASSERT(s1.field(SLHAKey("test2;4,3;1")) == "3");
+    CPPUNIT_ASSERT(s1.field(SLHAKey("test1;2;2")) == "# 3rd comment");
+    CPPUNIT_ASSERT(s1.field(string("test1;2;2")) == "# 3rd comment");
 
-    //s1.at_key(SLHAKey("test2;4,3;1")) = "3.14";
-    //CPPUNIT_ASSERT(s1.at_key(SLHAKey("test2;4;1")) == "3.14");
+    s1.field(SLHAKey("test2;4,3;1")) = "3.14";
+    CPPUNIT_ASSERT(s1.field(SLHAKey("test2;4;1")) == "3.14");
   }
 
   void testModifiers()
