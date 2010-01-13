@@ -1470,6 +1470,13 @@ private:
 };
 
 
+inline std::istream&
+operator>>(std::istream& is, SLHA& slha)
+{
+  slha.read(is);
+  return is;
+}
+
 inline std::ostream&
 operator<<(std::ostream& os, const SLHAKey& key)
 { return os << key.str(); }
