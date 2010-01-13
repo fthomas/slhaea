@@ -20,7 +20,6 @@
 #include <algorithm>
 #include <climits>
 #include <cstddef>
-#include <fstream>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
@@ -1093,13 +1092,8 @@ public:
   //   operator for this class are just fine, so we don't need to
   //   write our own.
 
-  /**
-   * \brief Constructs %SLHA container from data provided in a file.
-   * \param filename Name of input file to read data from.
-   * \sa read_file()
-   */
-  SLHA(const std::string filename)
-  { read_file(filename); }
+  SLHA(std::istream& is)
+  { read(is); }
 
   SLHALine::reference
   field(const SLHAKey& key)
@@ -1134,46 +1128,6 @@ public:
       }
       (*this)[curr_name].push_back(line_slha);
     }
-    return *this;
-  }
-
-  /**
-   * \brief Transforms data from a file into the %SLHA container.
-   * \param filename Name of input file to read data from.
-   * \returns Reference to \c *this.
-   * \sa read()
-   */
-  SLHA&
-  read_file(const std::string& filename)
-  {
-    std::ifstream fs(filename.c_str());
-    if (!fs)
-    {
-      std::cerr << "SLHA::read_file(\"" << filename << "\") failed"
-                << std::endl;
-      return *this;
-    }
-    return read(fs);
-  }
-
-  /**
-   * \brief Writes the string representation of the %SLHA container
-   *   into a file.
-   * \param filename Name of output file the string representation is
-   *   written to.
-   * \returns Reference to \c *this.
-   */
-  SLHA&
-  write_file(const std::string& filename)
-  {
-    std::ofstream fs(filename.c_str());
-    if (!fs)
-    {
-      std::cerr << "Error: SLHA::write_file(\"" << filename << "\") failed"
-                << std::endl;
-      return *this;
-    }
-    fs << *this;
     return *this;
   }
 
