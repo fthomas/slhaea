@@ -626,7 +626,7 @@ public:
    * \brief Constructs an empty %SLHABlock.
    * \param name Name of the %SLHABlock.
    */
-  SLHABlock(const std::string& name = "") : name_(name) {}
+  explicit SLHABlock(const std::string& name = "") : name_(name) {}
 
   // NOTE: The compiler-generated copy constructor and assignment
   //   operator for this class are just fine, so we don't need to
