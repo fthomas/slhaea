@@ -1092,7 +1092,7 @@ public:
   //   operator for this class are just fine, so we don't need to
   //   write our own.
 
-  SLHA(std::istream& is)
+  explicit SLHA(std::istream& is)
   { read(is); }
 
   SLHALine::reference
