@@ -1245,44 +1245,6 @@ public:
 
   // iterators
   /**
-   * \brief Tries to locate a SLHABlock in the %SLHA container.
-   * \param blockName Name of the SLHABlock to be located.
-   * \return Read/write iterator pointing to sought-after element, or
-   *   end() if not found.
-   *
-   * This function takes a key and tries to locate the SLHABlock whose
-   * name matches \p blockName. If successful the function returns a
-   * read/write iterator pointing to the sought after SLHABlock. If
-   * unsuccessful it returns end().
-   */
-  iterator
-  find(const key_type& blockName)
-  {
-    for (iterator it = begin(); it != end(); ++it)
-    { if (boost::iequals(it->name(), blockName)) return it; }
-    return end();
-  }
-
-  /**
-   * \brief Tries to locate a SLHABlock in the %SLHA container.
-   * \param blockName Name of the SLHABlock to be located.
-   * \return Read-only (constant) iterator pointing to sought-after
-   *   element, or end() const if not found.
-   *
-   * This function takes a key and tries to locate the SLHABlock whose
-   * name matches \p blockName. If successful the function returns a
-   * read-only (constant) iterator pointing to the sought after
-   * SLHABlock. If unsuccessful it returns end() const.
-   */
-  const_iterator
-  find(const key_type& blockName) const
-  {
-    for (const_iterator it = begin(); it != end(); ++it)
-    { if (boost::iequals(it->name(), blockName)) return it; }
-    return end();
-  }
-
-  /**
    * Returns a read/write iterator that points to the first element in
    * the %SLHA container. Iteration is done in ordinary element order.
    */
@@ -1388,6 +1350,49 @@ public:
   const_reverse_iterator
   crend() const
   { return impl_.rend(); }
+
+  // operations
+  size_type
+  count(const key_type& blockName) const
+  { return (find(blockName) != end()) ? 1 : 0; }
+
+  /**
+   * \brief Tries to locate a SLHABlock in the %SLHA container.
+   * \param blockName Name of the SLHABlock to be located.
+   * \return Read/write iterator pointing to sought-after element, or
+   *   end() if not found.
+   *
+   * This function takes a key and tries to locate the SLHABlock whose
+   * name matches \p blockName. If successful the function returns a
+   * read/write iterator pointing to the sought after SLHABlock. If
+   * unsuccessful it returns end().
+   */
+  iterator
+  find(const key_type& blockName)
+  {
+    for (iterator it = begin(); it != end(); ++it)
+    { if (boost::iequals(it->name(), blockName)) return it; }
+    return end();
+  }
+
+  /**
+   * \brief Tries to locate a SLHABlock in the %SLHA container.
+   * \param blockName Name of the SLHABlock to be located.
+   * \return Read-only (constant) iterator pointing to sought-after
+   *   element, or end() const if not found.
+   *
+   * This function takes a key and tries to locate the SLHABlock whose
+   * name matches \p blockName. If successful the function returns a
+   * read-only (constant) iterator pointing to the sought after
+   * SLHABlock. If unsuccessful it returns end() const.
+   */
+  const_iterator
+  find(const key_type& blockName) const
+  {
+    for (const_iterator it = begin(); it != end(); ++it)
+    { if (boost::iequals(it->name(), blockName)) return it; }
+    return end();
+  }
 
   // capacity
   /** Returns the number of elements in the %SLHA container. */

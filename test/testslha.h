@@ -178,6 +178,11 @@ public:
     CPPUNIT_ASSERT(s1.end()-1 == s1.find("test3"));
     CPPUNIT_ASSERT(cs1.begin() == cs1.find("test1"));
     CPPUNIT_ASSERT(cs1.end()-1 == cs1.find("test3"));
+
+    CPPUNIT_ASSERT(cs1.count("test3") == 1);
+    CPPUNIT_ASSERT(cs1.count("test4") == 0);
+    CPPUNIT_ASSERT(s1.count("test3") == 1);
+    CPPUNIT_ASSERT(s1.count("test4") == 0);
   }
 
   void testMiscellaneous()
