@@ -118,9 +118,9 @@ class SLHALine;
 class SLHABlock;
 class SLHA;
 
-std::ostream& operator<<(std::ostream& os, const SLHALine& line);
-std::ostream& operator<<(std::ostream& os, const SLHABlock& block);
-std::ostream& operator<<(std::ostream& os, const SLHA& slha);
+inline std::ostream& operator<<(std::ostream& os, const SLHALine& line);
+inline std::ostream& operator<<(std::ostream& os, const SLHABlock& block);
+inline std::ostream& operator<<(std::ostream& os, const SLHA& slha);
 
 
 /**
