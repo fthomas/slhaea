@@ -251,7 +251,7 @@ public:
   /** Returns true if the %SLHALine begins with \c "#". */
   bool
   is_comment_line() const
-  { return !empty() && (front().compare(0, 1, "#") == 0); }
+  { return !empty() && ('#' == front()[0]); }
 
   /**
    * Returns true if the %SLHALine is not empty and if neither
@@ -285,7 +285,7 @@ public:
         pos += (++it)->length();
       }
     }
-    else if (it->compare(0, 1, "#") == 0)
+    else if ('#' == (*it)[0])
     {
       line_fmt << "%|" << pos << "t|%" << ++arg << "% ";
       pos += it->length();
