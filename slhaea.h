@@ -562,6 +562,18 @@ public:
   size() const
   { return impl_.size(); }
 
+  /**
+   * Returns the number of elements without the comment in the
+   * %SLHALine.
+   */
+  size_type
+  data_count() const
+  {
+    size_t s = size();
+    if (s > 0) if ('#' == back()[0]) --s;
+    return s;
+  }
+
   /** Returns the size() of the largest possible %SLHALine. */
   size_type
   max_size() const
