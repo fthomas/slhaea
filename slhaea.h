@@ -32,13 +32,13 @@
 namespace SLHAea {
 
 // auxiliary functions
-template<class T> inline T
-to_(const std::string& str)
-{ return boost::lexical_cast<T>(str); }
+template<class Target, class Source> inline Target
+to_(const Source& arg)
+{ return boost::lexical_cast<Target>(arg); }
 
-template<class T> inline std::string
-to_string(const T& v)
-{ return boost::lexical_cast<std::string>(v); }
+template<class Source> inline std::string
+to_string(const Source& arg)
+{ return boost::lexical_cast<std::string>(arg); }
 
 template<class T> inline std::vector<std::string>
 to_string_vector(const std::vector<T>& cont)
