@@ -114,6 +114,7 @@ struct SLHAKey
 };
 
 
+// forward declarations
 class SLHALine;
 class SLHABlock;
 class SLHA;
@@ -567,10 +568,10 @@ public:
    * %SLHALine.
    */
   size_type
-  data_count() const
+  data_size() const
   {
-    size_t s = size();
-    if (s > 0) if ('#' == back()[0]) --s;
+    size_type s = size();
+    if (s > 0 && '#' == back()[0]) --s;
     return s;
   }
 
@@ -1487,6 +1488,7 @@ private:
 };
 
 
+// stream operators
 inline std::istream&
 operator>>(std::istream& is, SLHA& slha)
 {
@@ -1519,6 +1521,7 @@ operator<<(std::ostream& os, const SLHA& slha)
 }
 
 
+// relational operators for SLHALine
 inline bool
 operator==(const SLHALine& a, const SLHALine& b)
 {
@@ -1549,6 +1552,7 @@ operator>=(const SLHALine& a, const SLHALine& b)
 { return !(a < b); }
 
 
+// relational operators for SLHABlock
 inline bool
 operator==(const SLHABlock& a, const SLHABlock& b)
 { return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin()); }
@@ -1576,6 +1580,7 @@ operator>=(const SLHABlock& a, const SLHABlock& b)
 { return !(a < b); }
 
 
+// relational operators for SLHA
 inline bool
 operator==(const SLHA& a, const SLHA& b)
 { return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin()); }

@@ -114,33 +114,33 @@ public:
 
     l1 = " 1 2 three #";
     CPPUNIT_ASSERT(l1.size() == 4);
-    CPPUNIT_ASSERT(l1.data_count() == 3);
+    CPPUNIT_ASSERT(l1.data_size() == 3);
     CPPUNIT_ASSERT(l1[3] == "#");
 
     l1 += " four";
     CPPUNIT_ASSERT(l1.str() == cl1.str());
     CPPUNIT_ASSERT(l1.size() == 4);
-    CPPUNIT_ASSERT(l1.data_count() == 3);
+    CPPUNIT_ASSERT(l1.data_size() == 3);
     CPPUNIT_ASSERT(cl1.size() == 4);
 
     l1 = "";
     CPPUNIT_ASSERT(l1.size() == 0);
-    CPPUNIT_ASSERT(l1.data_count() == 0);
+    CPPUNIT_ASSERT(l1.data_size() == 0);
     CPPUNIT_ASSERT(l1.empty() == true);
 
     l1 = "1";
     CPPUNIT_ASSERT(l1.size() == 1);
-    CPPUNIT_ASSERT(l1.data_count() == 1);
+    CPPUNIT_ASSERT(l1.data_size() == 1);
     CPPUNIT_ASSERT(l1.empty() == false);
 
     l1 += " 2";
     CPPUNIT_ASSERT(l1.size() == 2);
-    CPPUNIT_ASSERT(l1.data_count() == 2);
+    CPPUNIT_ASSERT(l1.data_size() == 2);
     CPPUNIT_ASSERT(l1.empty() == false);
 
     l1 += "\n 3";
     CPPUNIT_ASSERT(l1.size() == 2);
-    CPPUNIT_ASSERT(l1.data_count() == 2);
+    CPPUNIT_ASSERT(l1.data_size() == 2);
     CPPUNIT_ASSERT(l1.empty() == false);
 
     SLHALine l2[8];
@@ -190,11 +190,11 @@ public:
 
     l1.append(" 1 2");
     CPPUNIT_ASSERT(l1.size() == 2);
-    CPPUNIT_ASSERT(l1.data_count() == 2);
+    CPPUNIT_ASSERT(l1.data_size() == 2);
 
     l1 += " three # four";
     CPPUNIT_ASSERT(l1.size() == 4);
-    CPPUNIT_ASSERT(l1.data_count() == 3);
+    CPPUNIT_ASSERT(l1.data_size() == 3);
     CPPUNIT_ASSERT(l1.str() == cl1.str());
 
     l1.clear();
@@ -239,14 +239,14 @@ public:
     l1.str(" 1 2 3 4 ");
     CPPUNIT_ASSERT(l1.str() == " 1 2 3 4");
     CPPUNIT_ASSERT(l1.size() == 4);
-    CPPUNIT_ASSERT(l1.data_count() == 4);
+    CPPUNIT_ASSERT(l1.data_size() == 4);
     CPPUNIT_ASSERT(l1.is_block_def()    == false);
     CPPUNIT_ASSERT(l1.is_comment_line() == false);
     CPPUNIT_ASSERT(l1.is_data_line()    == true);
 
     l1 = "BLOCK TEST # comment";
     CPPUNIT_ASSERT(l1.str() == "BLOCK TEST # comment");
-    CPPUNIT_ASSERT(l1.data_count() == 2);
+    CPPUNIT_ASSERT(l1.data_size() == 2);
     CPPUNIT_ASSERT(l1[0] == "BLOCK");
     CPPUNIT_ASSERT(l1[1] == "TEST");
     CPPUNIT_ASSERT(l1[2] == "# comment");
@@ -256,7 +256,7 @@ public:
 
     l1 = "BLOCK  TEST  # comment";
     CPPUNIT_ASSERT(l1.str() == "BLOCK  TEST  # comment");
-    CPPUNIT_ASSERT(l1.data_count() == 2);
+    CPPUNIT_ASSERT(l1.data_size() == 2);
     CPPUNIT_ASSERT(l1[0] == "BLOCK");
     CPPUNIT_ASSERT(l1[1] == "TEST");
     CPPUNIT_ASSERT(l1[2] == "# comment");
@@ -267,7 +267,7 @@ public:
     l1 = "# one long comment with trailing spaces    ";
     CPPUNIT_ASSERT(l1[0] == "# one long comment with trailing spaces");
     CPPUNIT_ASSERT(l1.size() == 1);
-    CPPUNIT_ASSERT(l1.data_count() == 0);
+    CPPUNIT_ASSERT(l1.data_size() == 0);
     CPPUNIT_ASSERT(l1.is_block_def()    == false);
     CPPUNIT_ASSERT(l1.is_comment_line() == true);
     CPPUNIT_ASSERT(l1.is_data_line()    == false);
@@ -276,7 +276,7 @@ public:
     CPPUNIT_ASSERT(l1.str() == "one long data line with trailing spaces");
     CPPUNIT_ASSERT(l1[6] == "spaces");
     CPPUNIT_ASSERT(l1.size() == 7);
-    CPPUNIT_ASSERT(l1.data_count() == 7);
+    CPPUNIT_ASSERT(l1.data_size() == 7);
     CPPUNIT_ASSERT(l1.is_block_def()    == false);
     CPPUNIT_ASSERT(l1.is_comment_line() == false);
     CPPUNIT_ASSERT(l1.is_data_line()    == true);
@@ -284,7 +284,7 @@ public:
     l1 = "Hello brave new \n world!";
     CPPUNIT_ASSERT(l1.str() == "Hello brave new");
     CPPUNIT_ASSERT(l1.size() == 3);
-    CPPUNIT_ASSERT(l1.data_count() == 3);
+    CPPUNIT_ASSERT(l1.data_size() == 3);
 
     l1 = "Hello stupid brave new world!";
     CPPUNIT_ASSERT(l1.str() == "Hello stupid brave new world!");
@@ -305,28 +305,28 @@ public:
     l1 = "\n 1 2 3 4 5";
     CPPUNIT_ASSERT(l1.empty() == true);
     CPPUNIT_ASSERT(l1.size() == 0);
-    CPPUNIT_ASSERT(l1.data_count() == 0);
+    CPPUNIT_ASSERT(l1.data_size() == 0);
     l1 = "  \n 1 2 3 4 5  ";
     CPPUNIT_ASSERT(l1.empty() == true);
     CPPUNIT_ASSERT(l1.size() == 0);
-    CPPUNIT_ASSERT(l1.data_count() == 0);
+    CPPUNIT_ASSERT(l1.data_size() == 0);
     l1 = "";
     CPPUNIT_ASSERT(l1.empty() == true);
     CPPUNIT_ASSERT(l1.size() == 0);
-    CPPUNIT_ASSERT(l1.data_count() == 0);
+    CPPUNIT_ASSERT(l1.data_size() == 0);
     l1 = "   ";
     CPPUNIT_ASSERT(l1.empty() == true);
     CPPUNIT_ASSERT(l1.size() == 0);
-    CPPUNIT_ASSERT(l1.data_count() == 0);
+    CPPUNIT_ASSERT(l1.data_size() == 0);
     l1 = " . ";
     CPPUNIT_ASSERT(l1.empty() == false);
     CPPUNIT_ASSERT(l1.size() == 1);
-    CPPUNIT_ASSERT(l1.data_count() == 1);
+    CPPUNIT_ASSERT(l1.data_size() == 1);
 
     l1 = " 1 22 333 4444 ";
     l1.append(" 55555 # a comment ");
     CPPUNIT_ASSERT(l1.size() == 6);
-    CPPUNIT_ASSERT(l1.data_count() == 5);
+    CPPUNIT_ASSERT(l1.data_size() == 5);
     CPPUNIT_ASSERT(l1[3] == "4444");
     CPPUNIT_ASSERT(l1[4] == "55555");
     CPPUNIT_ASSERT(l1[5] == "# a comment");
