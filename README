@@ -6,48 +6,39 @@ Introduction:
   Houches Accord (SLHA).
 
 Documentation:
-  The API documentation and a tutorial can be found here:
-    http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/
+  The API documentation can be found here:
+    http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/doc/
 
 Dependencies:
   To use SLHAea only the C++ Standard Library and some headers from the
   Boost C++ Libraries[1] are required.
 
-  Doxygen[2] is used for building the API documentation, CppUnit[3] is
-  required to compile the unit tests, and CMake[4] is used to build
-  them. But these software are not required to use SLHAea, they are only
-  used for development of SLHAea.
-
   [1] http://www.boost.org/
-  [2] http://www.doxygen.org/
-  [3] http://cppunit.sourceforge.net/
-  [4] http://www.cmake.org/
 
-Source code:
-  The latest source code is available as tar and ZIP archive:
+Download:
+  You can download SLHAea in either tar.gz or zip formats:
     http://github.com/fthomas/slhaea/tarball/master (tar.gz)
     http://github.com/fthomas/slhaea/zipball/master (zip)
 
-  For development of SLHAea the version control system Git is used. The
-  SLHAea repository can be inspected and browsed online at GitHub[5] and
-  it can be cloned with[6].
+  For development of SLHAea Git is used. The SLHAea repository can be
+  inspected and browsed online at GitHub[2] and it can be cloned by
+  running[3].
 
-  [5] http://github.com/fthomas/slhaea
-  [6] git clone git://github.com/fthomas/slhaea.git
+  [2] http://github.com/fthomas/slhaea
+  [3] git clone git://github.com/fthomas/slhaea.git
 
 Issues and feedback:
   For bug reports, feature requests, or general feedback either use the
-  issue tracker[7] or write me an email[8].
+  issue tracker[4] or write me an email[5].
 
-  [7] http://github.com/fthomas/slhaea/issues
-  [8] fthomas@physik.uni-wuerzburg.de
+  [4] http://github.com/fthomas/slhaea/issues
+  [5] fthomas@physik.uni-wuerzburg.de
 
 License:
-  SLHAea is free software[9] and licensed under the GPLv3[10].
+  SLHAea is free software[6] and licensed under the GPLv3[7].
 
-  [ 9] http://www.gnu.org/philosophy/free-sw.html
-  [10] http://www.gnu.org/licenses/gpl-3.0.html
+  [6] http://www.gnu.org/philosophy/free-sw.html
+  [7] http://www.gnu.org/licenses/gpl-3.0.html
 
 Author:
-  SLHAea was written by
-  Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>.
+  Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
