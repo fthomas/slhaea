@@ -1,5 +1,5 @@
-// SLHAea - SUSY Les Houches Accord made easy
-// Copyright © 2009 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
+// SLHAea - another SUSY Les Houches Accord input/output library
+// Copyright © 2009-2010 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,22 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <cppunit/ui/text/TestRunner.h>
+#define BOOST_TEST_MAIN
+#define BOOST_TEST_DYN_LINK
 
-#include "testslha.h"
-#include "testslhablock.h"
-#include "testslhaline.h"
+#include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/unit_test.hpp>
 
-int main()
-{
-  CppUnit::TextUi::TestRunner runner;
-
-  runner.addTest(SLHAea::TestSLHALine::suite());
-  runner.addTest(SLHAea::TestSLHABlock::suite());
-  runner.addTest(SLHAea::TestSLHA::suite());
-  runner.run();
-
-  return 0;
-}
+#include "slhaline.h"
+#include "slhablock.h"
+#include "slha.h"
 
 // vim: sw=2 tw=78
