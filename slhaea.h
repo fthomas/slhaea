@@ -68,10 +68,12 @@ to_string_vector(const std::string& str, const std::string& sep)
 template<class InputIterator> inline std::string
 concat(InputIterator first, InputIterator last, const std::string& sep = " ")
 {
-  std::string retval;
-  for (; first != last; ++first) retval += to_string(*first) + sep;
-  if (retval.size() > 0) boost::erase_last(retval, sep);
-  return retval;
+  if (first == last) return "";
+
+  std::stringstream ss;
+  for (; first != last-1; ++first) ss << *first << sep;
+  ss << *first;
+  return ss.str();
 }
 
 template<class Container> inline std::string
