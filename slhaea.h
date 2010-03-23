@@ -245,8 +245,10 @@ public:
   bool
   is_block_def() const
   {
-    return !empty() &&
-      (boost::iequals("BLOCK", front()) || boost::iequals("DECAY", front()));
+    if (empty()) return false;
+
+    value_type first = boost::to_upper_copy(front());
+    return ("BLOCK" == first) || ("DECAY" == first);
   }
 
   /** Returns true if the %SLHALine begins with \c "#". */
