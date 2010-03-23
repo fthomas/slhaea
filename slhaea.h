@@ -1129,15 +1129,16 @@ public:
   read(std::istream& is)
   {
     std::string line_str, curr_name;
+    SLHALine line_slha;
 
     while (std::getline(is, line_str))
     {
-      if (boost::trim_copy(line_str).empty()) continue;
+      if (boost::all(line_str, boost::is_space())) continue;
 
-      const SLHALine line_slha(line_str);
-      if (line_slha.is_block_def() && line_slha.size() > 1)
+      line_slha.str(line_str);
+      if (line_slha.is_block_def() && line_slha.data_size() > 1)
       {
-        if ('#' != line_slha[1][0]) curr_name = line_slha[1];
+        curr_name = line_slha[1];
       }
       (*this)[curr_name].push_back(line_slha);
     }

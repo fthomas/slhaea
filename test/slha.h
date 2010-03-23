@@ -176,6 +176,7 @@ BOOST_AUTO_TEST_CASE(testMiscellaneous)
     " 1  2  9.2\n"
     " 1  3  9.3\n"
     " 2  10.0\n"
+    "   \n \n\n"
     "# comment before second block\n"
     "BlOcK second blob # comment\n"
     "  1  11.0  # first\n"
@@ -189,6 +190,7 @@ BOOST_AUTO_TEST_CASE(testMiscellaneous)
   BOOST_CHECK(s1[""].front().str() == "# first comment");
   BOOST_CHECK(s1[""].back().str() == "# second comment");
   BOOST_CHECK(s1["fIrSt"]["2 10.0"].str() == " 2  10.0");
+  BOOST_CHECK(s1["first"].size() == 6);
   BOOST_CHECK(s1["seCONd"]["-3"][1] == "true");
   BOOST_CHECK(s1["second"].size() == 7);
   BOOST_CHECK(s1["second"].at("BlOcK")[2] == "blob");
