@@ -65,20 +65,31 @@ to_string_vector(const std::string& str, const std::string& sep)
   return vec;
 }
 
+/**
+ * \brief Joins all elements in an input range into one string.
+ * \param first, last Input iterators to the initial and final
+ *   positions of the sequence to use.
+ * \param sep String that will separate the joined elements.
+ * \return Concatenated string.
+ */
 template<class InputIterator> inline std::string
-concat(InputIterator first, InputIterator last, const std::string& sep = " ")
+join(InputIterator first, InputIterator last, const std::string& sep = " ")
 {
-  if (first == last) return "";
-
-  std::stringstream ss;
-  for (; first != last-1; ++first) ss << *first << sep;
-  ss << *first;
-  return ss.str();
+  std::stringstream result;
+  if (first != last) result << *first++;
+  for (; first != last; ++first) result << sep << *first;
+  return result.str();
 }
 
+/**
+ * \brief Joins all elements of a container into one string.
+ * \param cont Container whose elements will be joined.
+ * \param sep String that will separate the joined elements.
+ * \return Concatenated string.
+ */
 template<class Container> inline std::string
-concat(const Container& cont, const std::string& sep = " ")
-{ return concat(cont.begin(), cont.end(), sep); }
+join(const Container& cont, const std::string& sep = " ")
+{ return join(cont.begin(), cont.end(), sep); }
 
 
 struct SLHAKey
@@ -110,7 +121,7 @@ struct SLHAKey
   str() const
   {
     std::stringstream ss("");
-    ss << block << ";" << concat(line, ",") << ";" << field;
+    ss << block << ";" << join(line, ",") << ";" << field;
     return ss.str();
   }
 };
@@ -249,7 +260,7 @@ public:
   {
     if (empty()) return false;
 
-    value_type first = boost::to_upper_copy(front());
+    const value_type first = boost::to_upper_copy(front());
     return ("BLOCK" == first) || ("DECAY" == first);
   }
 
@@ -370,7 +381,7 @@ public:
   /** Returns all strings of the %SLHALine concatenated with a space. */
   std::string
   str_plain() const
-  { return concat(impl_); }
+  { return join(impl_); }
 
   // element access
   /**
@@ -710,7 +721,7 @@ public:
   {
     iterator it = find(keys);
     if (end() == it)
-    { throw std::out_of_range("SLHABlock::at(\"" + concat(keys) + "\")"); }
+    { throw std::out_of_range("SLHABlock::at(\"" + join(keys) + "\")"); }
     return *it;
   }
 
@@ -719,7 +730,7 @@ public:
   {
     const_iterator it = find(keys);
     if (end() == it)
-    { throw std::out_of_range("SLHABlock::at(\"" + concat(keys) + "\")"); }
+    { throw std::out_of_range("SLHABlock::at(\"" + join(keys) + "\")"); }
     return *it;
   }
 
