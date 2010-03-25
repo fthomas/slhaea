@@ -672,7 +672,8 @@ public:
    * \brief Constructs an empty %SLHABlock.
    * \param name Name of the %SLHABlock.
    */
-  explicit SLHABlock(const std::string& name = "") : name_(name) {}
+  explicit
+  SLHABlock(const std::string& name = "") : name_(name) {}
 
   // NOTE: The compiler-generated copy constructor and assignment
   //   operator for this class are just fine, so we don't need to
@@ -1152,7 +1153,8 @@ public:
   //   operator for this class are just fine, so we don't need to
   //   write our own.
 
-  explicit SLHA(std::istream& is)
+  explicit
+  SLHA(std::istream& is)
   { read(is); }
 
   SLHALine::reference

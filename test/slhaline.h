@@ -192,6 +192,8 @@ BOOST_AUTO_TEST_CASE(testIterators)
 {
   SLHALine l1 = string(" one two three four # five ");
   const SLHALine cl1 = l1;
+  const SLHALine cl2 = l1.str();
+  BOOST_CHECK(cl1 == cl2);
 
   BOOST_CHECK(*l1.begin() == *cl1.begin());
   BOOST_CHECK(*(l1.end()-1) == *(cl1.end()-1));
