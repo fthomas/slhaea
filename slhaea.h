@@ -863,13 +863,15 @@ public:
   find(const key_type& keys)
   {
     if (keys.empty()) return end();
-    for (iterator it = begin(); it != end(); ++it)
+
+    iterator it = begin();
+    for (; it != end(); ++it)
     {
       if (keys.size() > it->size()) continue;
       if (std::equal(keys.begin(), keys.end(), it->begin(), index_equal))
       { return it; }
     }
-    return end();
+    return it;
   }
 
   /**
@@ -888,7 +890,9 @@ public:
   find(const key_type& keys) const
   {
     if (keys.empty()) return end();
-    for (const_iterator it = begin(); it != end(); ++it)
+
+    const_iterator it = begin();
+    for (; it != end(); ++it)
     {
       if (keys.size() > it->size()) continue;
       if (std::equal(keys.begin(), keys.end(), it->begin(), index_equal))
@@ -1179,10 +1183,10 @@ public:
    * \sa read()
    */
   SLHA&
-  str(const std::string& slhaStr)
+  str(const std::string& slhaString)
   {
     std::stringstream ss("");
-    ss << slhaStr;
+    ss << slhaString;
     return read(ss);
   }
 
@@ -1411,9 +1415,10 @@ public:
   iterator
   find(const key_type& blockName)
   {
-    for (iterator it = begin(); it != end(); ++it)
+    iterator it = begin();
+    for (; it != end(); ++it)
     { if (boost::iequals(it->name(), blockName)) return it; }
-    return end();
+    return it;
   }
 
   /**
@@ -1430,9 +1435,10 @@ public:
   const_iterator
   find(const key_type& blockName) const
   {
-    for (const_iterator it = begin(); it != end(); ++it)
+    const_iterator it = begin();
+    for (; it != end(); ++it)
     { if (boost::iequals(it->name(), blockName)) return it; }
-    return end();
+    return it;
   }
 
   // capacity
