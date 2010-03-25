@@ -49,11 +49,16 @@ BOOST_AUTO_TEST_CASE(testAccessors)
   BOOST_CHECK(b1.str() == out);
 
   BOOST_CHECK(b1["1 2"][2] == "# 12");
+  BOOST_CHECK(b1["(any) 2"][2] == "# 12");
+  BOOST_CHECK(b1["(any) (any)"][2] == "# 11");
+  BOOST_CHECK(b1.at("(any)", "(any)", "# 21")[2] == "# 21");
   BOOST_CHECK(b1.front().str() == " 1 1 # 11");
   BOOST_CHECK(b1.back().str() == " 2 1 # 21");
   BOOST_CHECK(b1.back().str() == b1.at(2,1).str());
 
   BOOST_CHECK(cb1.at("1", "2")[2] == "# 12");
+  BOOST_CHECK(cb1.at("(any)", "2")[2] == "# 12");
+  BOOST_CHECK(cb1.at("(any)", "(any)", "# 21")[2] == "# 21");
   BOOST_CHECK(cb1.front().str() == " 1 1 # 11");
   BOOST_CHECK(cb1.back().str() == " 2 1 # 21");
   BOOST_CHECK(cb1.back().str() == cb1.at(2,1).str());
@@ -217,6 +222,8 @@ BOOST_AUTO_TEST_CASE(testMiscellaneous)
   b1.str(block);
   BOOST_CHECK(b1.size() == 4);
   BOOST_CHECK(b1["3 2"][2] == "gg");
+  BOOST_CHECK(b1["(any) (any) gg"][2] == "gg");
+  BOOST_CHECK(b1.at("(any)", "2")[2] == "gg");
   BOOST_CHECK(b1.str() == block_bh);
 }
 

@@ -864,7 +864,8 @@ public:
     for (iterator it = begin(); it != end(); ++it)
     {
       if (keys.size() > it->size()) continue;
-      if (std::equal(keys.begin(), keys.end(), it->begin())) return it;
+      if (std::equal(keys.begin(), keys.end(), it->begin(), index_equal))
+      { return it; }
     }
     return end();
   }
@@ -888,7 +889,8 @@ public:
     for (const_iterator it = begin(); it != end(); ++it)
     {
       if (keys.size() > it->size()) continue;
-      if (std::equal(keys.begin(), keys.end(), it->begin())) return it;
+      if (std::equal(keys.begin(), keys.end(), it->begin(), index_equal))
+      { return it; }
     }
     return end();
   }
@@ -1087,6 +1089,14 @@ public:
   {
     name_.clear();
     impl_.clear();
+  }
+
+private:
+  static bool
+  index_equal(const std::string& a, const std::string& b)
+  {
+    if ("(any)" == a || "(any)" == b) return true;
+    return a == b;
   }
 
 private:
