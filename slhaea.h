@@ -21,6 +21,7 @@
 #include <climits>
 #include <cstddef>
 #include <iostream>
+#include <iterator>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -40,29 +41,30 @@ template<class Source> inline std::string
 to_string(const Source& arg)
 { return boost::lexical_cast<std::string>(arg); }
 
-template<class T> inline std::vector<std::string>
-to_string_vector(const std::vector<T>& cont)
+template<class Container> inline std::vector<std::string>
+cont_to_string_vector(const Container& cont)
 {
-  std::vector<std::string> vec;
-  for (typename std::vector<T>::const_iterator it = cont.begin();
-       it != cont.end(); ++it) vec.push_back(to_string(*it));
-  return vec;
+  std::vector<std::string> result;
+  result.reserve(cont.size());
+  std::transform(cont.begin(), cont.end(), std::back_inserter(result),
+                 to_string<typename Container::value_type>);
+  return result;
 }
 
 inline std::vector<std::string>
-to_string_vector(const std::string& str)
+split_string(const std::string& str)
 {
-  std::vector<std::string> vec;
-  boost::split(vec, str, boost::is_space(), boost::token_compress_on);
-  return vec;
+  std::vector<std::string> result;
+  boost::split(result, str, boost::is_space(), boost::token_compress_on);
+  return result;
 }
 
 inline std::vector<std::string>
-to_string_vector(const std::string& str, const std::string& sep)
+split_string(const std::string& str, std::string sep)
 {
-  std::vector<std::string> vec;
-  boost::split(vec, str, boost::is_any_of(sep), boost::token_compress_on);
-  return vec;
+  std::vector<std::string> result;
+  boost::split(result, str, boost::is_any_of(sep), boost::token_compress_on);
+  return result;
 }
 
 /**
@@ -107,12 +109,12 @@ struct SLHAKey
   SLHAKey&
   str(const std::string& keyStr)
   {
-    std::vector<std::string> vec = to_string_vector(keyStr, ";");
+    std::vector<std::string> vec = split_string(keyStr, ";");
     if (3 != vec.size())
     { throw std::invalid_argument("SLHAKey::str(\"" + keyStr + "\");"); }
 
     block = vec[0];
-    line  = to_string_vector(vec[1], ",");
+    line  = split_string(vec[1], ",");
     field = to_<std::size_t>(vec[2]);
     return *this;
   }
@@ -352,7 +354,7 @@ public:
       data    = boost::trim_copy(line_tr.substr(0, comment_pos)),
       comment = boost::trim_copy(line_tr.substr(comment_pos));
 
-    if (!data.empty()) impl_ = to_string_vector(data);
+    if (!data.empty()) impl_ = split_string(data);
     if (!comment.empty()) impl_.push_back(comment);
 
     // Construct the format string for line.
@@ -706,15 +708,15 @@ public:
 
   reference
   operator[](const std::vector<int>& keys)
-  { return (*this)[to_string_vector(keys)]; }
+  { return (*this)[cont_to_string_vector(keys)]; }
 
   reference
   operator[](const std::string& keys)
-  { return (*this)[to_string_vector(keys)]; }
+  { return (*this)[split_string(keys)]; }
 
   reference
   operator[](int key)
-  { return (*this)[to_string_vector(to_string(key))]; }
+  { return (*this)[std::vector<std::string>(1, to_string(key))]; }
 
   reference
   at(const key_type& keys)
@@ -736,11 +738,11 @@ public:
 
   reference
   at(const std::vector<int>& keys)
-  { return at(to_string_vector(keys)); }
+  { return at(cont_to_string_vector(keys)); }
 
   const_reference
   at(const std::vector<int>& keys) const
-  { return at(to_string_vector(keys)); }
+  { return at(cont_to_string_vector(keys)); }
 
   reference
   at(const std::string& s0 = "", const std::string& s1 = "",

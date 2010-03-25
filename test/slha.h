@@ -198,7 +198,7 @@ BOOST_AUTO_TEST_CASE(testMiscellaneous)
 
 BOOST_AUTO_TEST_CASE(testSLHAKey)
 {
-  vector<string> keys = to_string_vector("1");
+  vector<string> keys = split_string("1");
   SLHAKey k1("RVKAPPAIN", keys, 1);
   BOOST_CHECK(k1.str() == "RVKAPPAIN;1;1");
 
