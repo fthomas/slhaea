@@ -41,6 +41,11 @@ template<class Source> inline std::string
 to_string(const Source& arg)
 { return boost::lexical_cast<std::string>(arg); }
 
+/**
+ * \brief Converts all elements of a container to strings.
+ * \param cont Container whose elements will be converted.
+ * \return \c std::vector that contains the converted elements.
+ */
 template<class Container> inline std::vector<std::string>
 cont_to_string_vector(const Container& cont)
 {
@@ -51,6 +56,11 @@ cont_to_string_vector(const Container& cont)
   return result;
 }
 
+/**
+ * \brief Splits a string into tokens separated by white space.
+ * \param str String that will be searched for tokens.
+ * \return \c std::vector that contains all tokens.
+ */
 inline std::vector<std::string>
 split_string(const std::string& str)
 {
@@ -59,6 +69,12 @@ split_string(const std::string& str)
   return result;
 }
 
+/**
+ * \brief Splits a string into tokens separated by a separator.
+ * \param str String that will be searched for tokens.
+ * \param sep Separator that delimits tokens.
+ * \return \c std::vector that contains all tokens.
+ */
 inline std::vector<std::string>
 split_string(const std::string& str, std::string sep)
 {
@@ -1178,7 +1194,7 @@ public:
 
   /**
    * \brief Transforms data from a string into the %SLHA container.
-   * \param slhaStr String to read data from.
+   * \param slhaString String to read data from.
    * \returns Reference to \c *this.
    * \sa read()
    */
