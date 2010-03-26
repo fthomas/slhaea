@@ -35,10 +35,12 @@ Issues and feedback:
   [5] fthomas@physik.uni-wuerzburg.de
 
 License:
-  SLHAea is free software[6] and licensed under the GPLv3[7].
+  SLHAea is free software[6] and licensed under the Boost Software
+  License 1.0[7].
 
   [6] http://www.gnu.org/philosophy/free-sw.html
-  [7] http://www.gnu.org/licenses/gpl-3.0.html
+  [7] http://www.boost.org/users/license.html
+      or see the file LICENSE_1_0.txt in SLHAea's source tree
 
 Author:
   Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
