@@ -922,7 +922,7 @@ public:
       if (std::equal(keys.begin(), keys.end(), it->begin(), index_equal))
       { return it; }
     }
-    return end();
+    return it;
   }
 
   /**

@@ -31,11 +31,13 @@ BOOST_AUTO_TEST_CASE(testAccessors)
   SLHABlock b1("test");
   b1[""] = " 1 1 # 11";
   b1[""] = " 1 2 # 12";
+  b1[""] = " 1 2 3 4 # 1234";
   b1[""] = " 2 1 # 21";
   const SLHABlock cb1 = b1;
 
   string out = " 1 1 # 11\n"
                " 1 2 # 12\n"
+               " 1 2 3 4 # 1234\n"
                " 2 1 # 21\n";
   BOOST_CHECK(b1.str() == out);
 
@@ -50,6 +52,7 @@ BOOST_AUTO_TEST_CASE(testAccessors)
   BOOST_CHECK(cb1.at("1", "2")[2] == "# 12");
   BOOST_CHECK(cb1.at("(any)", "2")[2] == "# 12");
   BOOST_CHECK(cb1.at("(any)", "(any)", "# 21")[2] == "# 21");
+  BOOST_CHECK(cb1.at(1, 2, 3, 4)[4] == "# 1234");
   BOOST_CHECK(cb1.front().str() == " 1 1 # 11");
   BOOST_CHECK(cb1.back().str() == " 2 1 # 21");
   BOOST_CHECK(cb1.back().str() == cb1.at(2,1).str());
