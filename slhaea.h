@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <climits>
 #include <cstddef>
+#include <functional>
 #include <iostream>
 #include <iterator>
 #include <sstream>
@@ -24,10 +25,25 @@
 namespace SLHAea {
 
 // auxiliary functions
+/**
+ * \brief Converts an object of type \c Source to an object of type
+ *   \c Target.
+ * \param arg Object that will be converted.
+ * \return Result of the conversion of \p arg to \c Target.
+ *
+ * This function is a wrapper for \c boost::lexical_cast().
+ */
 template<class Target, class Source> inline Target
 to_(const Source& arg)
 { return boost::lexical_cast<Target>(arg); }
 
+/**
+ * \brief Converts an object of type \c Source to a string.
+ * \param arg Object that will be converted.
+ * \return Result of the conversion of \p arg to \c std::string.
+ *
+ * This function is an alias for to_<std::string>().
+ */
 template<class Source> inline std::string
 to_string(const Source& arg)
 { return boost::lexical_cast<std::string>(arg); }
@@ -1424,10 +1440,8 @@ public:
   iterator
   find(const key_type& blockName)
   {
-    iterator it = begin();
-    for (; it != end(); ++it)
-    { if (boost::iequals(it->name(), blockName)) return it; }
-    return it;
+    name_iequals_.name = blockName;
+    return std::find_if(begin(), end(), name_iequals_);
   }
 
   /**
@@ -1444,10 +1458,8 @@ public:
   const_iterator
   find(const key_type& blockName) const
   {
-    const_iterator it = begin();
-    for (; it != end(); ++it)
-    { if (boost::iequals(it->name(), blockName)) return it; }
-    return it;
+    name_iequals_.name = blockName;
+    return std::find_if(begin(), end(), name_iequals_);
   }
 
   // capacity
@@ -1525,6 +1537,16 @@ public:
   void
   clear()
   { impl_.clear(); }
+
+private:
+  struct name_iequals : public std::unary_function<value_type, bool>
+  {
+    mutable key_type name;
+
+    bool
+    operator()(const value_type& block) const
+    { return boost::iequals(name, block.name()); }
+  } name_iequals_;
 
 private:
   impl_type impl_;
