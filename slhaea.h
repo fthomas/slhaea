@@ -790,6 +790,17 @@ public:
   operator[](int key)
   { return (*this)[std::vector<std::string>(1, to_string(key))]; }
 
+  /**
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param keys First strings of the SLHALine to be located.
+   * \return Read/write reference to sought-after SLHALine.
+   * \throw std::out_of_range If \p keys does not match any SLHALine.
+   *
+   * This function takes a key (which is a vector of strings) and
+   * locates the SLHALine whose first strings are equal to the strings
+   * in \p keys. If no such SLHALine exists, \c std::out_of_range is
+   * thrown.
+   */
   reference
   at(const key_type& keys)
   {
@@ -799,6 +810,17 @@ public:
     return *it;
   }
 
+  /**
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param keys First strings of the SLHALine to be located.
+   * \return Read-only (constant) reference to sought-after SLHALine.
+   * \throw std::out_of_range If \p keys does not match any SLHALine.
+   *
+   * This function takes a key (which is a vector of strings) and
+   * locates the SLHALine whose first strings are equal to the strings
+   * in \p keys. If no such SLHALine exists, \c std::out_of_range is
+   * thrown.
+   */
   const_reference
   at(const key_type& keys) const
   {
@@ -887,7 +909,7 @@ public:
   }
 
   /**
-   * Returns a read/write reference to the %SLHALine at the first
+   * Returns a read/write reference to the SLHALine at the first
    * element of the %SLHABlock.
    */
   reference
@@ -895,7 +917,7 @@ public:
   { return impl_.front(); }
 
   /**
-   * Returns a read-only (constant) reference to the %SLHALine at the
+   * Returns a read-only (constant) reference to the SLHALine at the
    * first element of the %SLHABlock.
    */
   const_reference
@@ -903,7 +925,7 @@ public:
   { return impl_.front(); }
 
   /**
-   * Returns a read/write reference to the %SLHALine at the last
+   * Returns a read/write reference to the SLHALine at the last
    * element of the %SLHABlock.
    */
   reference
@@ -911,7 +933,7 @@ public:
   { return impl_.back(); }
 
   /**
-   * Returns a read-only (constant) reference to the %SLHALine at the
+   * Returns a read-only (constant) reference to the SLHALine at the
    * last element of the %SLHABlock.
    */
   const_reference
@@ -1108,6 +1130,14 @@ public:
   push_back(const value_type& line)
   { impl_.push_back(line); }
 
+  /**
+   * \brief Adds a SLHALine to the end of the %SLHABlock.
+   * \param line String that is used to construct the SLHALine that
+   *   will be added.
+   *
+   * This function creates an element at the end of the %SLHABlock and
+   * assigns the SLHALine that is constructed from \p line to it.
+   */
   void
   push_back(const std::string& line)
   { impl_.push_back(SLHALine(line)); }
@@ -1173,7 +1203,7 @@ private:
   static bool
   index_equal(const std::string& a, const std::string& b)
   {
-    if ("(any)" == a || "(any)" == b) return true;
+    if ("(any)" == a) return true;
     return a == b;
   }
 
