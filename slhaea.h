@@ -766,6 +766,18 @@ public:
   }
 
   // element access
+  /**
+   * \brief Accesses a SLHALine in the %SLHABlock.
+   * \param keys First strings of the SLHALine to be accessed.
+   * \return Read/write reference to the SLHALine that matches
+   *   \p keys.
+   *
+   * This function takes a key (which is a vector of strings) and
+   * locates the SLHALine whose first strings are equal to the strings
+   * in \p keys. If no such SLHALine exists, this function creates an
+   * empty SLHALine at the end of the %SLHABlock and returns a
+   * reference to it.
+   */
   reference
   operator[](const key_type& keys)
   {
