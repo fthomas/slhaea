@@ -734,12 +734,17 @@ public:
   //   operator for this class are just fine, so we don't need to
   //   write our own.
 
-  SLHABlock&
+  /**
+   * \brief Sets the name of the %SLHABlock.
+   * \param newName New name of the %SLHABlock.
+   *
+   * Notice that this function only changes a property of the
+   * %SLHABlock. No contained SLHALine (in particular no block
+   * definition) is changed.
+   */
+  void
   name(const std::string& newName)
-  {
-    name_ = newName;
-    return *this;
-  }
+  { name_ = newName; }
 
   /** Returns the name of the %SLHABlock. */
   const std::string&
@@ -767,10 +772,9 @@ public:
 
   // element access
   /**
-   * \brief Accesses a SLHALine in the %SLHABlock.
-   * \param keys First strings of the SLHALine to be accessed.
-   * \return Read/write reference to the SLHALine that matches
-   *   \p keys.
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param keys First strings of the SLHALine to be located.
+   * \return Read/write reference to sought-after SLHALine.
    *
    * This function takes a key (which is a vector of strings) and
    * locates the SLHALine whose first strings are equal to the strings
@@ -790,6 +794,18 @@ public:
     return *it;
   }
 
+  /**
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param keys Integers that are used to locate the SLHALine.
+   * \return Read/write reference to sought-after SLHALine.
+   * \sa operator[](const key_type&)
+   *
+   * This function takes a key (which is a vector of ints) and locates
+   * the SLHALine whose first strings are equal to the to strings
+   * converted ints in \p keys. If no such SLHALine exists, this
+   * function creates an empty SLHALine at the end of the %SLHABlock
+   * and returns a reference to it.
+   */
   reference
   operator[](const std::vector<int>& keys)
   { return (*this)[cont_to_string_vector(keys)]; }
@@ -798,6 +814,18 @@ public:
   operator[](const std::string& keys)
   { return (*this)[split_string(keys)]; }
 
+  /**
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param key Integer that is used to locate the SLHALine.
+   * \return Read/write reference to sought-after SLHALine.
+   * \sa operator[](const key_type&)
+   *
+   * This function takes a key (which is an int) and locates the
+   * SLHALine whose first string is equal to the to string converted
+   * \p key. If no such SLHALine exists, this function creates an
+   * empty SLHALine at the end of the %SLHABlock and returns a
+   * reference to it.
+   */
   reference
   operator[](int key)
   { return (*this)[std::vector<std::string>(1, to_string(key))]; }
