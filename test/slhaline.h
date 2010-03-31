@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_CASE(testAccessors)
   {
     l1.at(1) = "3";
   }
-  catch (out_of_range ex)
+  catch (out_of_range)
   {
     BOOST_CHECK(l1.empty() == false);
   }
