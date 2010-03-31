@@ -262,8 +262,8 @@ public:
   { str(line); }
 
   /**
-   * \brief Assigns new content to the %SLHALine based on a string.
-   * \param line String whose fields are used as new content of the
+   * \brief Assigns content to the %SLHALine based on a string.
+   * \param line String whose fields are used as content of the
    *   %SLHALine.
    * \return Reference to \c *this.
    *
@@ -400,14 +400,14 @@ public:
   }
 
   /**
-   * \brief Assigns new content to the %SLHALine based on a string.
-   * \param line String whose fields are used as new content of the
+   * \brief Assigns content to the %SLHALine based on a string.
+   * \param line String whose fields are used as content of the
    *   %SLHALine.
    * \return Reference to \c *this.
    *
-   * This function parses \p line and sets the found fields as new
-   * content of the %SLHALine. If \p line contains newlines
-   * everything after the first newline is ignored.
+   * This function parses \p line and sets the found fields as content
+   * of the %SLHALine. If \p line contains newlines everything after
+   * the first newline is ignored.
    *
    * The exact formatting of \p line is stored internally and can be
    * reproduced with str() const.
@@ -702,9 +702,21 @@ private:
 /**
  * Container of SLHALine that resembles a block in a %SLHA structure.
  * This class is a named container of SLHALine that resembles a block
- * in a %SLHA structure. In contrast to a block in a %SLHA structure,
- * a %SLHABlock can contain zero, one, or more SLHALine that are
- * block definitions or it can be completely empty.
+ * in a %SLHA structure. Unlike to a block in a %SLHA structure, a
+ * %SLHABlock can contain any number of block definitions or it can be
+ * completely empty.
+ *
+ * Access to the elements of the %SLHABlock is
+ * provided by the operator[]() and at() functions. These take one or
+ * more strings resp. ints as argument(s) and compare them against the
+ * first strings of the contained SLHALines (the ints are converted to
+ * strings before comparison). The first SLHALine that matches the
+ * provided arguments is then returned, or if no matching SLHALine is
+ * found, an empty SLHALine is appended to the %SLHABlock
+ * (operator[]()) or \c std::out_of_range is thrown (at()). The
+ * special argument \c "(any)" will be considered equal to all strings
+ * in the SLHALines. For example, <tt>at("(any)", "2")</tt> returns
+ * the first SLHALine whose second element is \c "2".
  */
 class SLHABlock
 {
@@ -751,6 +763,15 @@ public:
   name() const
   { return name_; }
 
+  /**
+   * \brief Assigns content to the %SLHABlock based on a string.
+   * \param block String that is used as content for the %SLHABlock.
+   * \return Reference to \c *this.
+   *
+   * This functions clears the content of the %SLHABlock and adds
+   * every line found in \p block as SLHALine to the end of the
+   * %SLHABlock.
+   */
   SLHABlock&
   str(const std::string& block)
   {
@@ -762,6 +783,7 @@ public:
     return *this;
   }
 
+  /** Returns a string representation of the %SLHABlock. */
   std::string
   str() const
   {
@@ -798,7 +820,6 @@ public:
    * \brief Locates a SLHALine in the %SLHABlock.
    * \param keys Integers that are used to locate the SLHALine.
    * \return Read/write reference to sought-after SLHALine.
-   * \sa operator[](const key_type&)
    *
    * This function takes a key (which is a vector of ints) and locates
    * the SLHALine whose first strings are equal to the to strings
@@ -810,21 +831,29 @@ public:
   operator[](const std::vector<int>& keys)
   { return (*this)[cont_to_string_vector(keys)]; }
 
+  /**
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param key String that is used to locate the SLHALine.
+   * \return Read/write reference to sought-after SLHALine.
+   *
+   * This function locates the SLHALine whose first string is equal to
+   * \p key. If no such SLHALine exists, this function creates an
+   * empty SLHALine at the end of the %SLHABlock and returns a
+   * reference to it.
+   */
   reference
-  operator[](const std::string& keys)
-  { return (*this)[split_string(keys)]; }
+  operator[](const std::string& key)
+  { return (*this)[std::vector<std::string>(1, key)]; }
 
   /**
    * \brief Locates a SLHALine in the %SLHABlock.
    * \param key Integer that is used to locate the SLHALine.
    * \return Read/write reference to sought-after SLHALine.
-   * \sa operator[](const key_type&)
    *
-   * This function takes a key (which is an int) and locates the
-   * SLHALine whose first string is equal to the to string converted
-   * \p key. If no such SLHALine exists, this function creates an
-   * empty SLHALine at the end of the %SLHABlock and returns a
-   * reference to it.
+   * This function locates the SLHALine whose first string is equal to
+   * the to string converted \p key. If no such SLHALine exists, this
+   * function creates an empty SLHALine at the end of the %SLHABlock
+   * and returns a reference to it.
    */
   reference
   operator[](int key)
@@ -870,16 +899,50 @@ public:
     return *it;
   }
 
+  /**
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param keys Integers that are used to locate the SLHALine.
+   * \return Read/write reference to sought-after SLHALine.
+   * \throw std::out_of_range If \p keys does not match any SLHALine.
+   *
+   * This function takes a key (which is a vector of ints) and locates
+   * the SLHALine whose first strings are equal to the to strings
+   * converted ints in \p keys. If no such SLHALine exists,
+   * \c std::out_of_range is thrown.
+   */
   reference
   at(const std::vector<int>& keys)
   { return at(cont_to_string_vector(keys)); }
 
+  /**
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param keys Integers that are used to locate the SLHALine.
+   * \return Read-only (constant) reference to sought-after SLHALine.
+   * \throw std::out_of_range If \p keys does not match any SLHALine.
+   *
+   * This function takes a key (which is a vector of ints) and locates
+   * the SLHALine whose first strings are equal to the to strings
+   * converted ints in \p keys. If no such SLHALine exists,
+   * \c std::out_of_range is thrown.
+   */
   const_reference
   at(const std::vector<int>& keys) const
   { return at(cont_to_string_vector(keys)); }
 
+  /**
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param s0, s1, s2, s3 First strings of the SLHALine to be
+   *   located.
+   * \return Read/write reference to sought-after SLHALine.
+   * \throw std::out_of_range If provided strings do not match any
+   *   SLHALine.
+   *
+   * This function takes up to four strings and locates the SLHALine
+   * whose first strings are equal to all provided non-empty strings.
+   * If no such SLHALine exists, \c std::out_of_range is thrown.
+   */
   reference
-  at(const std::string& s0 = "", const std::string& s1 = "",
+  at(const std::string& s0,      const std::string& s1 = "",
      const std::string& s2 = "", const std::string& s3 = "")
   {
     std::vector<std::string> keys;
@@ -896,8 +959,20 @@ public:
     return at(keys);
   }
 
+  /**
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param s0, s1, s2, s3 First strings of the SLHALine to be
+   *   located.
+   * \return Read-only (constant) reference to sought-after SLHALine.
+   * \throw std::out_of_range If provided strings do not match any
+   *   SLHALine.
+   *
+   * This function takes up to four strings and locates the SLHALine
+   * whose first strings are equal to all provided non-empty strings.
+   * If no such SLHALine exists, \c std::out_of_range is thrown.
+   */
   const_reference
-  at(const std::string& s0 = "", const std::string& s1 = "",
+  at(const std::string& s0,      const std::string& s1 = "",
      const std::string& s2 = "", const std::string& s3 = "") const
   {
     std::vector<std::string> keys;
@@ -914,6 +989,18 @@ public:
     return at(keys);
   }
 
+  /**
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param i0, i1, i2, i3 Integers that are used to locate the
+   *   SLHALine.
+   * \return Read/write reference to sought-after SLHALine.
+   * \throw std::out_of_range If provided ints do not match any
+   *   SLHALine.
+   *
+   * This function takes up to four ints and locates the SLHALine
+   * whose first strings are equal to all provided to string converted
+   * ints. If no such SLHALine exists, \c std::out_of_range is thrown.
+   */
   reference
   at(int i0, int i1 = nind, int i2 = nind, int i3 = nind)
   {
@@ -931,6 +1018,18 @@ public:
     return at(keys);
   }
 
+  /**
+   * \brief Locates a SLHALine in the %SLHABlock.
+   * \param i0, i1, i2, i3 Integers that are used to locate the
+   *   SLHALine.
+   * \return Read-only (constant) reference to sought-after SLHALine.
+   * \throw std::out_of_range If provided ints do not match any
+   *   SLHALine.
+   *
+   * This function takes up to four ints and locates the SLHALine
+   * whose first strings are equal to all provided to string converted
+   * ints. If no such SLHALine exists, \c std::out_of_range is thrown.
+   */
   const_reference
   at(int i0, int i1 = nind, int i2 = nind, int i3 = nind) const
   {

@@ -41,9 +41,9 @@ BOOST_AUTO_TEST_CASE(testAccessors)
                " 2 1 # 21\n";
   BOOST_CHECK(b1.str() == out);
 
-  BOOST_CHECK(b1["1 2"][2] == "# 12");
-  BOOST_CHECK(b1["(any) 2"][2] == "# 12");
-  BOOST_CHECK(b1["(any) (any)"][2] == "# 11");
+  BOOST_CHECK(b1[split_string("1 2")][2] == "# 12");
+  BOOST_CHECK(b1[split_string("(any) 2")][2] == "# 12");
+  BOOST_CHECK(b1[split_string("(any) (any)")][2] == "# 11");
   BOOST_CHECK(b1.at("(any)", "(any)", "# 21")[2] == "# 21");
   BOOST_CHECK(b1.front().str() == " 1 1 # 11");
   BOOST_CHECK(b1.back().str() == " 2 1 # 21");
@@ -63,8 +63,8 @@ BOOST_AUTO_TEST_CASE(testAccessors)
   vs.push_back("2");
   vi.push_back(1);
   vi.push_back(2);
-  BOOST_CHECK(b1["1 2"].str() == b1[vs].str());
-  BOOST_CHECK(b1["1 2"].str() == b1[vi].str());
+  BOOST_CHECK(b1[split_string("1 2")].str() == b1[vs].str());
+  BOOST_CHECK(b1[split_string("1 2")].str() == b1[vi].str());
   BOOST_CHECK(cb1.at("1", "2").str() == cb1.at(vs).str());
   BOOST_CHECK(cb1.at("1", "2").str() == cb1.at(vi).str());
 
@@ -193,9 +193,9 @@ BOOST_AUTO_TEST_CASE(testMiscellaneous)
   vs.push_back("1");
   BOOST_CHECK(b1[vi].str() == " 1 a b c");
   BOOST_CHECK(b1[vs].str() == " 1 a b c");
-  BOOST_CHECK(b1["2 a"].str() == " 2 a b");
-  BOOST_CHECK(b1["2 a c"].str() == " 2 a c");
-  BOOST_CHECK(b1["2 a c"][2] == "c");
+  BOOST_CHECK(b1[split_string("2 a")].str() == " 2 a b");
+  BOOST_CHECK(b1[split_string("2 a c")].str() == " 2 a c");
+  BOOST_CHECK(b1[split_string("2 a c")][2] == "c");
   BOOST_CHECK(b1.at("2", "a", "c")[2] == "c");
   b1[""] = " 3 -1 y zzz";
   BOOST_CHECK(b1.at("3").str() == " 3 -1 y zzz");
@@ -215,8 +215,8 @@ BOOST_AUTO_TEST_CASE(testMiscellaneous)
 
   b1.str(block);
   BOOST_CHECK(b1.size() == 4);
-  BOOST_CHECK(b1["3 2"][2] == "gg");
-  BOOST_CHECK(b1["(any) (any) gg"][2] == "gg");
+  BOOST_CHECK(b1[split_string("3 2")][2] == "gg");
+  BOOST_CHECK(b1[split_string("(any) (any) gg")][2] == "gg");
   BOOST_CHECK(b1.at("(any)", "2")[2] == "gg");
   BOOST_CHECK(b1.str() == block_bh);
 }

@@ -180,7 +180,7 @@ BOOST_AUTO_TEST_CASE(testMiscellaneous)
   SLHA s1; s1.str(data);
   BOOST_CHECK(s1[""].front().str() == "# first comment");
   BOOST_CHECK(s1[""].back().str() == "# second comment");
-  BOOST_CHECK(s1["fIrSt"]["2 10.0"].str() == " 2  10.0");
+  BOOST_CHECK(s1["fIrSt"][split_string("2 10.0")].str() == " 2  10.0");
   BOOST_CHECK(s1["first"].size() == 6);
   BOOST_CHECK(s1["seCONd"]["-3"][1] == "true");
   BOOST_CHECK(s1["second"].size() == 7);
