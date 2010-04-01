@@ -44,13 +44,16 @@ BOOST_AUTO_TEST_CASE(testAccessors)
   BOOST_CHECK(cs1.field(SLHAKey("test2;4,3;1")) == "3");
   BOOST_CHECK(cs1.field(SLHAKey("test1;2;2")) == "# 3rd comment");
   BOOST_CHECK(cs1.field(string("test1;2;2")) == "# 3rd comment");
+  BOOST_CHECK(cs1.field("test1;2;2") == "# 3rd comment");
 
   BOOST_CHECK(s1.field(SLHAKey("test2;4,3;1")) == "3");
   BOOST_CHECK(s1.field(SLHAKey("test1;2;2")) == "# 3rd comment");
   BOOST_CHECK(s1.field(string("test1;2;2")) == "# 3rd comment");
+  BOOST_CHECK(s1.field("test1;2;2") == "# 3rd comment");
 
   s1.field(SLHAKey("test2;4,3;1")) = "3.14";
   BOOST_CHECK(s1.field(SLHAKey("test2;4;1")) == "3.14");
+  BOOST_CHECK(s1.field("test2;4;1") == "3.14");
 }
 
 BOOST_AUTO_TEST_CASE(testModifiers)

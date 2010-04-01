@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(testAccessors)
   BOOST_CHECK(cl2.size() == 3);
 
   BOOST_CHECK(cl2.str() == "  1  2  3");
-  BOOST_CHECK(cl2.str_plain() == "1 2 3");
+  BOOST_CHECK(join(cl2) == "1 2 3");
 }
 
 BOOST_AUTO_TEST_CASE(testOperators)
@@ -308,7 +308,7 @@ BOOST_AUTO_TEST_CASE(testMiscellaneous)
 
   l1 = " test  str() and   str_plain() ";
   BOOST_CHECK(l1.str() == " test  str() and   str_plain()");
-  BOOST_CHECK(l1.str_plain() == "test str() and str_plain()");
+  BOOST_CHECK(join(l1) == "test str() and str_plain()");
 
   l1 = " 1 2 3 4 5 ";
   BOOST_CHECK(l1.back() == "5");
