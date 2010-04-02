@@ -703,25 +703,23 @@ private:
 
 
 /**
- * Container of \link SLHALine SLHALines \endlink that resembles a
- * block in a %SLHA structure. This class is a named container of
- * \link SLHALine SLHALines \endlink that resembles a block in a %SLHA
- * structure. Unlike to a block in a %SLHA structure, a %SLHABlock can
- * contain any number of block definitions or it can be completely
- * empty.
+ * Container of \SLHALines that resembles a block in a %SLHA
+ * structure. This class is a named container of \SLHALines that
+ * resembles a block in a %SLHA structure. Unlike to a block in a
+ * %SLHA structure, a %SLHABlock can contain any number of block
+ * definitions or it can be completely empty.
  *
  * Access to the elements of the %SLHABlock is provided by the
  * operator[]() and at() functions. These take one or more strings
  * resp. ints as argument(s) and compare them against the first
- * strings of the contained \link SLHALine SLHALines \endlink (the
- * ints are converted to strings before comparison). The first
- * SLHALine that matches the provided arguments is then returned, or
- * if no matching SLHALine is found, an empty SLHALine is appended to
- * the %SLHABlock (operator[]()) or \c std::out_of_range is thrown
- * (at()). The special argument \c "(any)" will be considered equal to
- * all strings in the \link SLHALine SLHALines \endlink. For example,
- * <tt>at("(any)", "2")</tt> returns the first SLHALine whose second
- * element is \c "2".
+ * strings of the contained \SLHALines (the ints are converted to
+ * strings before comparison). The first SLHALine that matches the
+ * provided arguments is then returned, or if no matching SLHALine is
+ * found, an empty SLHALine is appended to the %SLHABlock
+ * (operator[]()) or \c std::out_of_range is thrown (at()). The
+ * special argument \c "(any)" will be considered equal to all strings
+ * in the \SLHALines. For example, <tt>at("(any)", "2")</tt> returns
+ * the first SLHALine whose second element is \c "2".
  */
 class SLHABlock
 {
@@ -1360,12 +1358,11 @@ private:
 
 
 /**
- * Container of \link SLHABlock SLHABlocks \endlink that resembles a
- * complete %SLHA structure. This class is a container of
- * \link SLHABlock SLHABlocks \endlink that resembles a complete %SLHA
- * structure. The elements of the SLHA objects can be accessed via
- * their names with the operator[]() and at() functions and access to
- * single fields is provided by the field() functions. To fill this
+ * Container of \SLHABlocks that resembles a complete %SLHA structure.
+ * This class is a container of \SLHABlocks that resembles a complete
+ * %SLHA structure. The elements of the SLHA objects can be accessed
+ * via their names with the operator[]() and at() functions and access
+ * to single fields is provided by the field() functions. To fill this
  * container, the functions read() or str() can be used which read
  * data from an input stream or a string, respectively.
  */
@@ -1433,8 +1430,8 @@ public:
    * \returns Reference to \c *this.
    *
    * This function reads lines from \p is, transforms them into
-   * SLHALine objects, which are collected into the corresponding
-   * SLHABlock objects that are added to the %SLHA container.
+   * \SLHALines, which are collected into the corresponding
+   * \SLHABlocks that are added to the %SLHA container.
    */
   SLHA&
   read(std::istream& is)
@@ -1704,14 +1701,12 @@ public:
 
   // introspection
   /**
-   * \brief Counts all \link SLHABlock SLHABlocks \endlink with a
-   *   given name.
-   * \param blockName Name of the \link SLHABlock SLHABlocks \endlink
-   *   that will be counted.
+   * \brief Counts all \SLHABlocks with a given name.
+   * \param blockName Name of the \SLHABlocks that will be counted.
    * \return Number of blocks whose name equals \p blockName.
    *
    * Notice that the comparison of \p blockName and the names of the
-   * \link SLHABlock SLHABlocks \endlink is case-insensitive.
+   * \SLHABlocks is case-insensitive.
    */
   size_type
   count(const key_type& blockName) const
