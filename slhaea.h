@@ -1267,7 +1267,7 @@ public:
     for (; it != end(); ++it)
     {
       if (keys.size() > it->size()) continue;
-      if (std::equal(keys.begin(), keys.end(), it->begin(), index_equal))
+      if (std::equal(keys.begin(), keys.end(), it->begin(), index_iequal))
       { return it; }
     }
     return it;
@@ -1294,7 +1294,7 @@ public:
     for (; it != end(); ++it)
     {
       if (keys.size() > it->size()) continue;
-      if (std::equal(keys.begin(), keys.end(), it->begin(), index_equal))
+      if (std::equal(keys.begin(), keys.end(), it->begin(), index_iequal))
       { return it; }
     }
     return it;
@@ -1442,10 +1442,10 @@ public:
 
 private:
   static bool
-  index_equal(const std::string& a, const std::string& b)
+  index_iequal(const std::string& a, const std::string& b)
   {
     if ("(any)" == a) return true;
-    return a == b;
+    return boost::iequals(a, b);
   }
 
 private:
