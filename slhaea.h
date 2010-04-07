@@ -767,23 +767,51 @@ public:
   { return name_; }
 
   /**
+   * \brief Assigns content from input stream to the %SLHABlock.
+   * \param is Input stream to read content from.
+   * \return Reference to \c *this.
+   *
+   * This functions clears the content of the %SLHABlock, reads
+   * non-empty lines from \p is, transforms them into \SLHALines
+   * and adds them to the end of the %SLHABlock.
+   */
+  SLHABlock&
+  read(std::istream& is)
+  {
+    std::string line_str;
+    value_type line;
+    bool nameless = true;
+
+    clear();
+    while (std::getline(is, line_str))
+    {
+      if (boost::all(line_str, boost::is_space())) continue;
+
+      line = line_str;
+      if (nameless && line.is_block_def() && line.data_size() > 1)
+      {
+        name(line[1]);
+        nameless = false;
+      }
+      push_back(line);
+    }
+    return *this;
+  }
+
+  /**
    * \brief Assigns content to the %SLHABlock based on a string.
    * \param block String that is used as content for the %SLHABlock.
    * \return Reference to \c *this.
    *
    * This functions clears the content of the %SLHABlock and adds
-   * every line found in \p block as SLHALine to the end of the
-   * %SLHABlock.
+   * every non-empty line found in \p block as SLHALine to the end of
+   * the %SLHABlock.
    */
   SLHABlock&
   str(const std::string& block)
   {
-    std::string line;
     std::stringstream ss(block);
-
-    clear();
-    while (std::getline(ss, line)) push_back(line);
-    return *this;
+    return read(ss);
   }
 
   /** Returns a string representation of the %SLHABlock. */
@@ -813,7 +841,7 @@ public:
     iterator it = find(keys);
     if (end() == it)
     {
-      push_back(SLHALine());
+      push_back(value_type());
       return back();
     }
     return *it;
@@ -1283,7 +1311,7 @@ public:
    */
   void
   push_back(const std::string& line)
-  { impl_.push_back(SLHALine(line)); }
+  { impl_.push_back(value_type(line)); }
 
   /**
    * Removes the last element. This function shrinks the size() of the
@@ -1429,8 +1457,8 @@ public:
    * \param is Input stream to read content from.
    * \returns Reference to \c *this.
    *
-   * This function reads lines from \p is, transforms them into
-   * \SLHALines, which are collected into the corresponding
+   * This function reads non-empty lines from \p is, transforms them
+   * into \SLHALines, which are collected into the corresponding
    * \SLHABlocks that are added to the %SLHA container.
    */
   SLHA&
@@ -1835,6 +1863,13 @@ private:
 
 
 // stream operators
+inline std::istream&
+operator>>(std::istream& is, SLHABlock& block)
+{
+  block.read(is);
+  return is;
+}
+
 inline std::istream&
 operator>>(std::istream& is, SLHA& slha)
 {
