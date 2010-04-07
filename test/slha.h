@@ -103,6 +103,12 @@ BOOST_AUTO_TEST_CASE(testModifiers)
   BOOST_CHECK(s1.size() == 2);
   BOOST_CHECK(s1.str() == cs1.str());
 
+  s1 = cs1;
+  s1.pop_back();
+  s1.push_back(cs1.at("test2").str());
+  BOOST_CHECK(s1.str() == cs1.str());
+
+  s1 = cs1;
   SLHABlock b1;
   b1.str("BLOCK test1.5");
   s1.insert(s1.end()-1, b1);

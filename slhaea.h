@@ -436,7 +436,7 @@ public:
   /**
    * \brief Subscript access to the strings contained in the
    *   %SLHALine.
-   * \param n The index of the string which should be accessed.
+   * \param n Index of the string which should be accessed.
    * \return Read/write reference to the accessed string.
    *
    * This operator allows for easy, array-style, data access. Note
@@ -450,7 +450,7 @@ public:
   /**
    * \brief Subscript access to the strings contained in the
    *   %SLHALine.
-   * \param n The index of the string which should be accessed.
+   * \param n Index of the string which should be accessed.
    * \return Read-only (constant) reference to the accessed string.
    *
    * This operator allows for easy, array-style, data access. Note
@@ -463,7 +463,7 @@ public:
 
   /**
    * \brief Provides access to the strings contained in the %SLHALine.
-   * \param n The index of the string which should be accessed.
+   * \param n Index of the string which should be accessed.
    * \return Read/write reference to the accessed string.
    * \throw std::out_of_range If \p n is an invalid index.
    */
@@ -473,7 +473,7 @@ public:
 
   /**
    * \brief Provides access to the strings contained in the %SLHALine.
-   * \param n The index of the string which should be accessed.
+   * \param n Index of the string which should be accessed.
    * \return Read-only (constant) reference to the accessed string.
    * \throw std::out_of_range If \p n is an invalid index.
    */
@@ -1810,6 +1810,23 @@ public:
   void
   push_back(const value_type& block)
   { impl_.push_back(block); }
+
+  /**
+   * \brief Adds a SLHABlock to the end of the %SLHA container.
+   * \param blockString String that is used to construct the SLHABlock
+   *   that will be added.
+   *
+   * This function creates an element at the end of the %SLHA
+   * container and assigns the SLHABlock that is constructed from
+   * \p blockString to it.
+   */
+  void
+  push_back(const std::string& blockString)
+  {
+    value_type block;
+    block.str(blockString);
+    impl_.push_back(block);
+  }
 
   /**
    * Removes the last element. This function shrinks the size() of the
