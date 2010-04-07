@@ -124,6 +124,18 @@ BOOST_AUTO_TEST_CASE(testModifiers)
   BOOST_CHECK(b1.str() == "");
   b1.str(" 1 1 # 11\n 1 2 # 12\n 2 1 # 21");
   BOOST_CHECK(b1.str() == cb1.str());
+
+  b1.comment();
+  BOOST_CHECK(b1.str() ==
+    "# 1 1 # 11\n"
+    "# 1 2 # 12\n"
+    "# 2 1 # 21\n");
+
+  b1.uncomment();
+  BOOST_CHECK(b1 == cb1);
+  b1.uncomment();
+  BOOST_CHECK(b1 == cb1);
+
 }
 
 BOOST_AUTO_TEST_CASE(testIterators)

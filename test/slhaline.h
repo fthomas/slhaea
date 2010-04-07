@@ -177,6 +177,14 @@ BOOST_AUTO_TEST_CASE(testModifiers)
   l1.clear();
   l1 = " 1 2 three # four";
   BOOST_CHECK(l1.str() == cl1.str());
+
+  l1.comment();
+  BOOST_CHECK(l1.str() == "# 1 2 three # four");
+
+  l1.uncomment();
+  BOOST_CHECK(l1 == cl1);
+  l1.uncomment();
+  BOOST_CHECK(l1 == cl1);
 }
 
 BOOST_AUTO_TEST_CASE(testIterators)

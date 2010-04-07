@@ -696,6 +696,33 @@ public:
     lineFormat_.clear();
   }
 
+  /**
+   * Comments the %SLHALine. This function prefixes the %SLHALine
+   * with a \c "#" and packetizes all its elements into one.
+   */
+  void
+  comment()
+  {
+    if (empty()) return;
+    str("#" + str());
+  }
+
+  /**
+   * Uncomments the %SLHALine. This function removes the first
+   * character of the %SLHALine if it is a \c "#" and splits the
+   * former comment into the corresponding number of fields.
+   */
+  void
+  uncomment()
+  {
+    if (empty()) return;
+    if ('#' == front()[0])
+    {
+      front().erase(0, 1);
+      str(str());
+    }
+  }
+
 private:
   impl_type impl_;
   std::string lineFormat_;
@@ -1369,6 +1396,22 @@ public:
     name_.clear();
     impl_.clear();
   }
+
+  /**
+   * \brief Comments all \SLHALines in the %SLHABlock.
+   * \sa SLHALine::comment()
+   */
+  void
+  comment()
+  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::comment)); }
+
+  /**
+   * \brief Uncomments all \SLHALines in the %SLHABlock.
+   * \sa SLHALine::uncomment()
+   */
+  void
+  uncomment()
+  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
 
 private:
   static bool
