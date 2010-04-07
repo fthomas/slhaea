@@ -65,8 +65,33 @@
 
     <h2>Introduction</h2>
     <p>
-      SLHAea is an easy to use input/output C++ library for the SUSY Les
-      Houches Accord (SLHA)[1-3].
+      SLHAea is an easy to use C++ library for input, output, and
+      manipulation of data in the SUSY Les Houches Accord (SLHA)[1-3]. It is
+      based on the concept that a SLHA structure is a container of blocks,
+      which are then again containers of lines, which are then again
+      containers of strings.
+    </p>
+    <p>
+      Its main features are:
+      <ul>
+        <li>reading and writing SLHA files</li>
+        <li>easy access to individual blocks, lines, and fields</li>
+        <li>
+          three containers (<code>SLHA</code>, <code>SLHABlock</code>, and
+          <code>SLHALine</code>) that mimic the STL containers and therefore
+          offer great flexibility
+        </li>
+        <li>the exact formatting of lines is preserved</li>
+        <li>
+          everything is stored as strings, so data is not restricted to
+          doubles or ints
+        </li>
+        <li>no precision is lost in read/write cycles of unmodified data</li>
+        <li>
+          blocks and lines are not restricted to the ones specified in the
+          SLHA/SLHA2
+        </li>
+      </ul>
     </p>
     <p>
       [1] P. Skands and others,
