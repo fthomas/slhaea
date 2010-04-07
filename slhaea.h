@@ -1349,6 +1349,33 @@ public:
   { impl_.pop_back(); }
 
   /**
+   * \brief Inserts a SLHALine before given \p position.
+   * \param position Iterator into the %SLHABlock.
+   * \param line SLHALine to be inserted.
+   * \return Iterator pointing to the inserted element.
+   *
+   * This function inserts a copy of \p line before the specified
+   * \p position and thus enlarges the %SLHABlock by one.
+   */
+  iterator
+  insert(iterator position, const value_type& line)
+  { return impl_.insert(position, line); }
+
+  /**
+   * \brief Inserts a range into the %SLHABlock.
+   * \param position Iterator into the %SLHABlock.
+   * \param first Input iterator.
+   * \param last Input iterator.
+   *
+   * This function inserts copies of the \SLHALines in the range
+   * [\p first, \p last) into the %SLHABlock before the specified
+   * \p position and thus enlarges the %SLHABlock accordingly.
+   */
+  template<class InputIterator> void
+  insert(iterator position, InputIterator first, InputIterator last)
+  { impl_.insert(position, first, last); }
+
+  /**
    * \brief Removes element at given \p position.
    * \param position Iterator pointing to the element to be erased.
    * \return Iterator pointing to the next element (or end()).
@@ -1856,7 +1883,7 @@ public:
    * \param last Input iterator.
    *
    * This function inserts copies of the \SLHABlocks in the range
-   * [\p firs, \p last) into the %SLHA container before the specified
+   * [\p first, \p last) into the %SLHA container before the specified
    * \p position and thus enlarges the %SLHA container accordingly.
    */
   template<class InputIterator> void

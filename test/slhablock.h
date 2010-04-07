@@ -136,6 +136,25 @@ BOOST_AUTO_TEST_CASE(testModifiers)
   b1.uncomment();
   BOOST_CHECK(b1 == cb1);
 
+  b1 = cb1;
+  b1.insert(b1.find(vs1), SLHALine(" 1 1.5 # 11.5"));
+  BOOST_CHECK(b1.str() ==
+    " 1 1 # 11\n"
+    " 1 1.5 # 11.5\n"
+    " 1 2 # 12\n"
+    " 2 1 # 21\n");
+
+  b1 = cb1;
+  vector<SLHALine> vl(2);
+  vl[0] = " 3 1 # 31";
+  vl[1] = " 3 2 # 32";
+  b1.insert(b1.find(vs1), vl.begin(), vl.end());
+  BOOST_CHECK(b1.str() ==
+    " 1 1 # 11\n"
+    " 3 1 # 31\n"
+    " 3 2 # 32\n"
+    " 1 2 # 12\n"
+    " 2 1 # 21\n");
 }
 
 BOOST_AUTO_TEST_CASE(testIterators)
