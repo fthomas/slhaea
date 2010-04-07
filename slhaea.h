@@ -1296,10 +1296,10 @@ public:
   /**
    * \brief Removes element at given \p position.
    * \param position Iterator pointing to the element to be erased.
-   * \return An iterator pointing to the next element (or end()).
+   * \return Iterator pointing to the next element (or end()).
    *
    * This function erases the element at the given \p position and
-   * thus shorten the %SLHABlock by one.
+   * thus shortens the %SLHABlock by one.
    */
   iterator
   erase(iterator position)
@@ -1310,11 +1310,11 @@ public:
    * \param first Iterator pointing to the first element to be erased.
    * \param last Iterator pointing to one past the last element to be
    *   erased.
-   * \return An iterator pointing to the element pointed to by \p last
+   * \return Iterator pointing to the element pointed to by \p last
    *   prior to erasing (or end()).
    *
-   * This function will erase the elements in the range [\p first,
-   * \p last) and shorten the %SLHABlock accordingly.
+   * This function erases the elements in the range [\p first,
+   * \p last) and shortens the %SLHABlock accordingly.
    */
   iterator
   erase(iterator first, iterator last)
@@ -1749,12 +1749,39 @@ public:
   { impl_.pop_back(); }
 
   /**
+   * \brief Inserts a SLHABlock before given \p position.
+   * \param position Iterator into the %SLHA container.
+   * \param block SLHABlock to be inserted.
+   * \return Iterator pointing to the inserted element.
+   *
+   * This function inserts a copy of \p block before the specified
+   * \p position and thus enlarges the %SLHA container by one.
+   */
+  iterator
+  insert(iterator position, const value_type& block)
+  { return impl_.insert(position, block); }
+
+  /**
+   * \brief Inserts a range into the %SLHA container.
+   * \param position Iterator into the %SLHA container.
+   * \param first Input iterator.
+   * \param last Input iterator.
+   *
+   * This function inserts copies of the \SLHABlocks in the range
+   * [\p firs, \p last) into the %SLHA container before the specified
+   * \p position and thus enlarges the %SLHA container accordingly.
+   */
+  template<class InputIterator> void
+  insert(iterator position, InputIterator first, InputIterator last)
+  { impl_.insert(position, first, last); }
+
+  /**
    * \brief Removes element at given \p position.
    * \param position Iterator pointing to the element to be erased.
-   * \return An iterator pointing to the next element (or end()).
+   * \return Iterator pointing to the next element (or end()).
    *
    * This function erases the element at the given \p position and
-   * thus shorten the %SLHA container by one.
+   * thus shortens the %SLHA container by one.
    */
   iterator
   erase(iterator position)
@@ -1765,11 +1792,11 @@ public:
    * \param first Iterator pointing to the first element to be erased.
    * \param last Iterator pointing to one past the last element to be
    *   erased.
-   * \return An iterator pointing to the element pointed to by \p last
+   * \return Iterator pointing to the element pointed to by \p last
    *   prior to erasing (or end()).
    *
-   * This function will erase the elements in the range [\p first,
-   * \p last) and shorten the %SLHA container accordingly.
+   * This function erases the elements in the range [\p first,
+   * \p last) and shortens the %SLHA container accordingly.
    */
   iterator
   erase(iterator first, iterator last)

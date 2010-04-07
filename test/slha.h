@@ -102,6 +102,37 @@ BOOST_AUTO_TEST_CASE(testModifiers)
   s1.push_back(cs1.at("test2"));
   BOOST_CHECK(s1.size() == 2);
   BOOST_CHECK(s1.str() == cs1.str());
+
+  SLHABlock b1;
+  b1.str("BLOCK test1.5");
+  s1.insert(s1.end()-1, b1);
+  BOOST_CHECK(s1.str() ==
+    "BLOCK test1 # 1st comment\n"
+    " 1  1  # 2nd comment\n"
+    " 2  1  # 3rd comment\n"
+    "BLOCK test1.5\n"
+    "Block test2 # 4th comment\n"
+    " 2  1  # 5th comment\n"
+    " 3  2  # 6th comment\n"
+    " 4  3  # 7th comment\n");
+
+  s1.erase(s1.find("test1.5"));
+  SLHABlock b2;
+  b2.str("BLOCK test1.6");
+  vector<SLHABlock> vb;
+  vb.push_back(b1);
+  vb.push_back(b2);
+  s1.insert(s1.end()-1, vb.rbegin(), vb.rend());
+  BOOST_CHECK(s1.str() ==
+    "BLOCK test1 # 1st comment\n"
+    " 1  1  # 2nd comment\n"
+    " 2  1  # 3rd comment\n"
+    "BLOCK test1.6\n"
+    "BLOCK test1.5\n"
+    "Block test2 # 4th comment\n"
+    " 2  1  # 5th comment\n"
+    " 3  2  # 6th comment\n"
+    " 4  3  # 7th comment\n");
 }
 
 BOOST_AUTO_TEST_CASE(testIterators)
