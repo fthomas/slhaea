@@ -24,6 +24,9 @@ Documentation:
   The API documentation and some examples can be found here:
     http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/doc/
 
+  The examples can also be found in the directory doc/examples/ in
+  SLHAea's source tree.
+
 Dependencies:
   To use SLHAea only the C++ Standard Library and some headers from the
   Boost C++ Libraries[1] are required.
