@@ -24,7 +24,7 @@ Documentation:
   The API documentation and some examples can be found here:
     http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/doc/
 
-  The examples can also be found in the directory doc/examples/ in
+  The examples can also be found in the doc/examples/ directory in
   SLHAea's source tree.
 
 Dependencies:
