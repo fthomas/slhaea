@@ -1,0 +1,46 @@
+/** \example 01_basic_input.cpp
+
+Here is the first of some examples that demonstrate how %SLHAea can be
+used. To compile this example with GCC, just do:
+\verbatim
+g++ -I/path/to/slhaea/ -o 01_basic_input 01_basic_input.cpp
+\endverbatim
+
+This example demonstrates how to read in a file and how to access
+individual fields, lines, and blocks:
+*/
+
+/** \example 02_basic_output.cpp
+
+In this example, a file is read in, the value of sign(mu) and the
+comment of tan(beta) in the MINPAR block are changed, and the changed
+%SLHA structure is written to a file:
+*/
+
+/** \example 03_basic_manip.cpp
+
+Since SLHA, SLHABlock, and SLHALine mimic STL containers, they can
+be used in algorithms like ordinary STL containers. This examples
+rotates all blocks until MINPAR is the first block and the order of all
+data lines in the SMINPUTS block is reversed:
+*/
+
+/** \example 04_basic_iteration.cpp
+
+Iteration over data lines in the SMINPUTS block is demonstrated in this
+example:
+*/
+
+/** \example 05_extended_input.cpp
+
+Every data that is stored in the %SLHAea containers is stored as
+string. Data that represent numbers need to be converted to numeric
+types in order to use them as numbers in your program. The conversion
+of strings to floating point numbers is demonstrated in this example:
+*/
+
+/** \example 06_extended_output.cpp
+
+This example shows two ways how a block can be constructed from
+scratch:
+*/
