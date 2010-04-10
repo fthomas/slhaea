@@ -21,8 +21,9 @@ comment of tan(beta) in the MINPAR block are changed, and the changed
 
 Since SLHA, SLHABlock, and SLHALine mimic STL containers, they can
 be used in algorithms like ordinary STL containers. This examples
-rotates all blocks until MINPAR is the first block and the order of all
-data lines in the SMINPUTS block is reversed:
+rotates all blocks until MINPAR is the first block, it reverses the
+order of all data lines in the SMINPUTS block, and comments the whole
+EXTPAR block:
 */
 
 /** \example 04_basic_iteration.cpp

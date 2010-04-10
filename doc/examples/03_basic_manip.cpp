@@ -13,6 +13,7 @@ int main(int, char* [])
 
   rotate(input.begin(), input.find("MINPAR"), input.end());
   reverse(input.at("SMINPUTS").begin()+1, input.at("SMINPUTS").end());
+  input.at("EXTPAR").comment();
 
   cout << input;
   return 0;
