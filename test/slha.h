@@ -87,6 +87,17 @@ BOOST_AUTO_TEST_CASE(testModifiers)
     " 2  1  # 3rd comment\n");
 
   s1 = cs1;
+  s1.erase("test2");
+  BOOST_CHECK(s1.size() == 1);
+  BOOST_CHECK(s1.str() ==
+    "BLOCK test1 # 1st comment\n"
+    " 1  1  # 2nd comment\n"
+    " 2  1  # 3rd comment\n");
+  s1.erase("test1");
+  BOOST_CHECK(s1.size() == 0);
+  BOOST_CHECK(s1.str() == "");
+
+  s1 = cs1;
   s1.erase(s1.begin(), s1.end());
   BOOST_CHECK(s1.size() == 0);
   BOOST_CHECK(s1.str() == "");

@@ -1918,6 +1918,25 @@ public:
   { return impl_.erase(first, last); }
 
   /**
+   * \brief Tries to erase a SLHABlock in the %SLHA container.
+   * \param blockName Name of the SLHABlock to be erased.
+   * \return Iterator pointing to the next element (or end()).
+   *
+   * This function takes a key and tries to erase the SLHABlock whose
+   * name matches \p blockName (comparison is case-insensitive). If
+   * the %SLHA container contains such SLHABlock, the function returns
+   * an iterator pointing to the next element (or end()). If no such
+   * SLHABlock exists, end() is returned.
+   */
+  iterator
+  erase(const key_type& blockName)
+  {
+    iterator it = find(blockName);
+    if (end() != it) it = erase(it);
+    return it;
+  }
+
+  /**
    * \brief Swaps data with another %SLHA container.
    * \param rhs %SLHA container to be swapped with.
    */
