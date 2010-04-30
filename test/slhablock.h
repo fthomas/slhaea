@@ -234,6 +234,16 @@ BOOST_AUTO_TEST_CASE(testMiscellaneous)
   b1.push_back(" 4 1 f g");
   BOOST_CHECK(b1.back().str() == " 4 1 f g");
 
+  BOOST_CHECK(b1.count(split_string("1")) == 1);
+  BOOST_CHECK(b1.count(split_string("2")) == 2);
+  BOOST_CHECK(b1.count(split_string("2 a")) == 2);
+  BOOST_CHECK(b1.count(split_string("2 b")) == 0);
+  BOOST_CHECK(b1.count(split_string("2 a c")) == 1);
+  BOOST_CHECK(b1.count(split_string("(any) a")) == 3);
+  BOOST_CHECK(b1.count(split_string("3 -1")) == 1);
+  BOOST_CHECK(b1.count(split_string("3 0")) == 0);
+  BOOST_CHECK(b1.count(split_string("4")) == 1);
+
   std::string block = " 1 a b c \n"
                       " 2 d e f # comment\n"
                       " 3 1 g h i   \n"

@@ -1300,6 +1300,27 @@ public:
     return it;
   }
 
+  // introspection
+  /**
+   * \brief Counts all \SLHALines that match a given key.
+   * \param keys First strings of the \SLHALines that will be counted.
+   * \return Number of lines whose first strings equal \p keys.
+   */
+  size_type
+  count(const key_type& keys) const
+  {
+    if (keys.empty()) return 0;
+
+    size_type matches = 0;
+    for (const_iterator it = begin(); it != end(); ++it)
+    {
+      if (keys.size() > it->size()) continue;
+      if (std::equal(keys.begin(), keys.end(), it->begin(), index_iequal))
+      { ++matches; }
+    }
+    return matches;
+  }
+
   // capacity
   /** Returns the number of elements in the %SLHABlock. */
   size_type
