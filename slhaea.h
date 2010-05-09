@@ -408,17 +408,7 @@ public:
 
     if (!data.empty()) impl_ = split_string(data);
     if (!comment.empty()) impl_.push_back(comment);
-
-    // Construct the format string for line.
-    std::stringstream line_fmt("");
-    int arg = 0, pos = 0;
-    for (const_iterator it = begin(); it != end(); ++it)
-    {
-      pos = line.find(*it, pos);
-      line_fmt << "%|" << pos << "t|%" << ++arg << "% ";
-      pos += it->length();
-    }
-    lineFormat_ = boost::trim_right_copy(line_fmt.str());
+    set_format(line);
 
     return *this;
   }
@@ -661,9 +651,9 @@ public:
   size_type
   data_size() const
   {
-    size_type s = size();
-    if (s > 0 && '#' == back()[0]) --s;
-    return s;
+    size_type data_size = size();
+    if (data_size > 0 && '#' == back()[0]) --data_size;
+    return data_size;
   }
 
   /** Returns the size() of the largest possible %SLHALine. */
@@ -721,6 +711,22 @@ public:
       front().erase(0, 1);
       str(str());
     }
+  }
+
+private:
+  inline void
+  set_format(const std::string& line)
+  {
+    std::stringstream line_format("");
+    int argument = 0, column = 0;
+
+    for (const_iterator field = begin(); field != end(); ++field)
+    {
+      column = line.find(*field, column);
+      line_format << "%|" << column << "t|%" << ++argument << "% ";
+      column += field->length();
+    }
+    lineFormat_ = boost::trim_right_copy(line_format.str());
   }
 
 private:
@@ -1311,14 +1317,14 @@ public:
   {
     if (keys.empty()) return 0;
 
-    size_type matches = 0;
+    size_type count = 0;
     for (const_iterator it = begin(); it != end(); ++it)
     {
       if (keys.size() > it->size()) continue;
       if (std::equal(keys.begin(), keys.end(), it->begin(), index_iequal))
-      { ++matches; }
+      { ++count; }
     }
-    return matches;
+    return count;
   }
 
   // capacity

@@ -1,0 +1,6 @@
+SLHALine:
+ - shorten/refactor: reformat()
+
+general:
+ - use proper names for iterators instead of "it"
+ - avoid cryptic names like "fmter"
