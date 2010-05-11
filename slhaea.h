@@ -417,9 +417,10 @@ public:
   std::string
   str() const
   {
-    boost::format fmter(lineFormat_);
-    for (const_iterator it = begin(); it != end(); ++it) fmter % *it;
-    return fmter.str();
+    boost::format formatter(lineFormat_);
+    for (const_iterator field = begin(); field != end(); ++field)
+    { formatter % *field; }
+    return formatter.str();
   }
 
   // element access
