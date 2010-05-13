@@ -872,13 +872,13 @@ public:
   reference
   operator[](const key_type& keys)
   {
-    iterator it = find(keys);
-    if (end() == it)
+    iterator line = find(keys);
+    if (end() == line)
     {
       push_back(value_type());
       return back();
     }
-    return *it;
+    return *line;
   }
 
   /**
@@ -938,10 +938,10 @@ public:
   reference
   at(const key_type& keys)
   {
-    iterator it = find(keys);
-    if (end() == it)
+    iterator line = find(keys);
+    if (end() == line)
     { throw std::out_of_range("SLHABlock::at(\"" + join(keys) + "\")"); }
-    return *it;
+    return *line;
   }
 
   /**
@@ -958,10 +958,10 @@ public:
   const_reference
   at(const key_type& keys) const
   {
-    const_iterator it = find(keys);
-    if (end() == it)
+    const_iterator line = find(keys);
+    if (end() == line)
     { throw std::out_of_range("SLHABlock::at(\"" + join(keys) + "\")"); }
-    return *it;
+    return *line;
   }
 
   /**
@@ -1270,14 +1270,14 @@ public:
   {
     if (keys.empty()) return end();
 
-    iterator it = begin();
-    for (; it != end(); ++it)
+    iterator line = begin();
+    for (; line != end(); ++line)
     {
-      if (keys.size() > it->size()) continue;
-      if (std::equal(keys.begin(), keys.end(), it->begin(), index_iequal))
-      { return it; }
+      if (keys.size() > line->size()) continue;
+      if (std::equal(keys.begin(), keys.end(), line->begin(), index_iequal))
+      { return line; }
     }
-    return it;
+    return line;
   }
 
   /**
@@ -1297,14 +1297,14 @@ public:
   {
     if (keys.empty()) return end();
 
-    const_iterator it = begin();
-    for (; it != end(); ++it)
+    const_iterator line = begin();
+    for (; line != end(); ++line)
     {
-      if (keys.size() > it->size()) continue;
-      if (std::equal(keys.begin(), keys.end(), it->begin(), index_iequal))
-      { return it; }
+      if (keys.size() > line->size()) continue;
+      if (std::equal(keys.begin(), keys.end(), line->begin(), index_iequal))
+      { return line; }
     }
-    return it;
+    return line;
   }
 
   // introspection
@@ -1319,10 +1319,10 @@ public:
     if (keys.empty()) return 0;
 
     size_type count = 0;
-    for (const_iterator it = begin(); it != end(); ++it)
+    for (const_iterator line = begin(); line != end(); ++line)
     {
-      if (keys.size() > it->size()) continue;
-      if (std::equal(keys.begin(), keys.end(), it->begin(), index_iequal))
+      if (keys.size() > line->size()) continue;
+      if (std::equal(keys.begin(), keys.end(), line->begin(), index_iequal))
       { ++count; }
     }
     return count;

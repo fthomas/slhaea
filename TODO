@@ -4,3 +4,4 @@ SLHALine:
 general:
  - use proper names for iterators instead of "it"
  - avoid cryptic names like "fmter"
+ - use Yoda conditions also in for loops
