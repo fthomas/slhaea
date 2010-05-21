@@ -249,6 +249,8 @@ public:
   typedef impl_type::const_iterator         const_iterator;
   typedef impl_type::reverse_iterator       reverse_iterator;
   typedef impl_type::const_reverse_iterator const_reverse_iterator;
+  typedef impl_type::pointer                pointer;
+  typedef impl_type::const_pointer          const_pointer;
   typedef impl_type::difference_type        difference_type;
   typedef impl_type::size_type              size_type;
 
@@ -769,6 +771,8 @@ public:
   typedef impl_type::const_iterator         const_iterator;
   typedef impl_type::reverse_iterator       reverse_iterator;
   typedef impl_type::const_reverse_iterator const_reverse_iterator;
+  typedef impl_type::pointer                pointer;
+  typedef impl_type::const_pointer          const_pointer;
   typedef impl_type::difference_type        difference_type;
   typedef impl_type::size_type              size_type;
 
@@ -1506,6 +1510,8 @@ public:
   typedef impl_type::const_iterator         const_iterator;
   typedef impl_type::reverse_iterator       reverse_iterator;
   typedef impl_type::const_reverse_iterator const_reverse_iterator;
+  typedef impl_type::pointer                pointer;
+  typedef impl_type::const_pointer          const_pointer;
   typedef impl_type::difference_type        difference_type;
   typedef impl_type::size_type              size_type;
 
