@@ -1578,9 +1578,7 @@ public:
   {
     std::string line_str;
     SLHALine line;
-
-    value_type nameless_block("");
-    pointer block = &nameless_block;
+    pointer block = &(*this)[""];
 
     while (std::getline(is, line_str))
     {
@@ -1591,7 +1589,7 @@ public:
       block->push_back(line);
     }
 
-    if (!nameless_block.empty()) insert(begin(), nameless_block);
+    erase_if_empty("");
     return *this;
   }
 
@@ -1978,9 +1976,9 @@ public:
   iterator
   erase(const key_type& blockName)
   {
-    iterator it = find(blockName);
-    if (end() != it) it = erase(it);
-    return it;
+    iterator block = find(blockName);
+    if (block != end()) return erase(block);
+    return block;
   }
 
   /**
@@ -2009,6 +2007,14 @@ private:
   private:
     key_type name_;
   };
+
+  inline iterator
+  erase_if_empty(const key_type& blockName)
+  {
+    iterator block = find(blockName);
+    if (block->empty()) return erase(block);
+    return block;
+  }
 
 private:
   impl_type impl_;
