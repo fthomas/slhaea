@@ -2012,7 +2012,7 @@ private:
   erase_if_empty(const key_type& blockName)
   {
     iterator block = find(blockName);
-    if (block->empty()) return erase(block);
+    if (block != end() && block->empty()) return erase(block);
     return block;
   }
 
