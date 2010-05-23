@@ -624,16 +624,15 @@ public:
   is_block_def() const
   {
     if (size() < 2) return false;
-    if (!is_block_specifier(front())) return false;
 
-    const_iterator second = begin()+1;
-    return ((*second)[0] != '#');
+    const_iterator field = begin();
+    return (is_block_specifier(*field) && ((*++field)[0] != '#'));
   }
 
   /** Returns true if the %SLHALine begins with \c "#". */
   bool
   is_comment_line() const
-  { return !empty() && ('#' == front()[0]); }
+  { return !empty() && (front()[0] == '#'); }
 
   /**
    * Returns true if the %SLHALine is not empty and if neither
