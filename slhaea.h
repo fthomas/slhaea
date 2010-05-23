@@ -346,7 +346,7 @@ public:
     int arg = 0, pos = 0;
     const_iterator it = begin();
 
-    if (boost::iequals("BLOCK", *it) || boost::iequals("DECAY", *it))
+    if (is_block_specifier(*it))
     {
       line_fmt << "%|" << pos << "t|%" << ++arg << "% ";
       pos += it->length();
@@ -617,15 +617,17 @@ public:
   // introspection
   /**
    * Returns true if the %SLHALine begins with \c "BLOCK" or
-   * \c "DECAY". Comparison is done case-insensitive.
+   * \c "DECAY" followed by a block name. Comparison is done
+   * case-insensitive.
    */
   bool
   is_block_def() const
   {
-    if (empty()) return false;
+    if (size() < 2) return false;
+    if (!is_block_specifier(front())) return false;
 
-    const value_type first = boost::to_upper_copy(front());
-    return ("BLOCK" == first) || ("DECAY" == first);
+    const_iterator second = begin()+1;
+    return ((*second)[0] != '#');
   }
 
   /** Returns true if the %SLHALine begins with \c "#". */
@@ -732,6 +734,13 @@ private:
     lineFormat_ = boost::trim_right_copy(line_format.str());
   }
 
+  inline bool
+  is_block_specifier(const value_type& field) const
+  {
+    const value_type field_upper = boost::to_upper_copy(field);
+    return (field_upper == "BLOCK") || (field_upper == "DECAY");
+  }
+
 private:
   impl_type impl_;
   std::string lineFormat_;
@@ -826,7 +835,7 @@ public:
       if (boost::all(line_str, boost::is_space())) continue;
 
       line = line_str;
-      if (nameless && line.is_block_def() && line.data_size() > 1)
+      if (nameless && line.is_block_def())
       {
         name(line[1]);
         nameless = false;
@@ -1576,7 +1585,7 @@ public:
       if (boost::all(line_str, boost::is_space())) continue;
 
       line = line_str;
-      if (line.is_block_def() && line.data_size() > 1) name = line[1];
+      if (line.is_block_def()) name = line[1];
       (*this)[name].push_back(line);
     }
     return *this;

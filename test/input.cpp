@@ -11,12 +11,13 @@
 using namespace std;
 using namespace SLHAea;
 
-int main()
+int main(int, char* [])
 {
-  ifstream ifs("input.txt");
-  SLHA input;
-  input.read(ifs);
-  ifs.close();
+  for (int i = 0; i < 100; ++i)
+  {
+    ifstream ifs("input.txt");
+    SLHA input(ifs);
+  }
 
   return 0;
 }
