@@ -1576,17 +1576,22 @@ public:
   SLHA&
   read(std::istream& is)
   {
-    std::string line_str, name;
+    std::string line_str;
     SLHALine line;
+
+    value_type nameless_block("");
+    pointer block = &nameless_block;
 
     while (std::getline(is, line_str))
     {
       if (boost::all(line_str, boost::is_space())) continue;
 
       line = line_str;
-      if (line.is_block_def()) name = line[1];
-      (*this)[name].push_back(line);
+      if (line.is_block_def()) block = &(*this)[line[1]];
+      block->push_back(line);
     }
+
+    if (!nameless_block.empty()) insert(begin(), nameless_block);
     return *this;
   }
 
@@ -1626,13 +1631,13 @@ public:
   reference
   operator[](const key_type& blockName)
   {
-    iterator it = find(blockName);
-    if (end() == it)
+    iterator block = find(blockName);
+    if (block == end())
     {
-      push_back(SLHABlock(blockName));
+      push_back(value_type(blockName));
       return back();
     }
-    return *it;
+    return *block;
   }
 
   /**
