@@ -889,7 +889,7 @@ public:
   operator[](const key_type& keys)
   {
     iterator line = find(keys);
-    if (end() == line)
+    if (line == end())
     {
       push_back(value_type());
       return back();
@@ -955,7 +955,7 @@ public:
   at(const key_type& keys)
   {
     iterator line = find(keys);
-    if (end() == line)
+    if (line == end())
     { throw std::out_of_range("SLHABlock::at(\"" + join(keys) + "\")"); }
     return *line;
   }
@@ -975,7 +975,7 @@ public:
   at(const key_type& keys) const
   {
     const_iterator line = find(keys);
-    if (end() == line)
+    if (line == end())
     { throw std::out_of_range("SLHABlock::at(\"" + join(keys) + "\")"); }
     return *line;
   }
