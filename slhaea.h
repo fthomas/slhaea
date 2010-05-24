@@ -299,7 +299,7 @@ public:
    * \return Reference to \c *this.
    *
    * This function adds an element to the end of the %SLHALine. If the
-   * last element is a comment \p field is only appended to it and
+   * last element is a comment, \p field is only appended to it and
    * thus size() remains unchanged.
    */
   template<class T> SLHALine&
@@ -389,7 +389,7 @@ public:
    * \return Reference to \c *this.
    *
    * This function parses \p line and sets the found fields as content
-   * of the %SLHALine. If \p line contains newlines everything after
+   * of the %SLHALine. If \p line contains newlines, everything after
    * the first newline is ignored.
    *
    * The exact formatting of \p line is stored internally and can be
