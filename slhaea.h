@@ -342,43 +342,43 @@ public:
   {
     if (empty()) return *this;
 
-    std::stringstream line_fmt("");
+    std::stringstream line_format("");
     int arg = 0, pos = 0;
-    const_iterator it = begin();
+    const_iterator field = begin();
 
-    if (is_block_specifier(*it))
+    if (is_block_specifier(*field))
     {
-      line_fmt << "%|" << pos << "t|%" << ++arg << "% ";
-      pos += it->length();
+      line_format << " %|" << pos << "t|%" << ++arg << "%";
+      pos += field->length();
 
-      if (it+1 != end())
+      if (field+1 != end())
       {
-        line_fmt << "%|" << ++pos << "t|%" << ++arg << "% ";
-        pos += (++it)->length();
+        line_format << " %|" << ++pos << "t|%" << ++arg << "%";
+        pos += (++field)->length();
       }
     }
-    else if ('#' == (*it)[0])
+    else if ((*field)[0] == '#')
     {
-      line_fmt << "%|" << pos << "t|%" << ++arg << "% ";
-      pos += it->length();
+      line_format << " %|" << pos << "t|%" << ++arg << "%";
+      pos += field->length();
     }
     else
     {
-      line_fmt << "%|" << ++pos << "t|%" << ++arg << "% ";
-      pos += it->length();
+      line_format << " %|" << ++pos << "t|%" << ++arg << "%";
+      pos += field->length();
     }
 
-    while (++it != end())
+    while (++field != end())
     {
       // Compute the number of spaces required for proper indentation.
       int dist = 3 - ((pos - 1) % 4);
       pos += dist > 1 ? dist : dist + 4;
 
-      line_fmt << "%|" << pos << "t|%" << ++arg << "% ";
-      pos += it->length();
+      line_format << " %|" << pos << "t|%" << ++arg << "%";
+      pos += field->length();
     }
 
-    lineFormat_ = boost::trim_right_copy(line_fmt.str());
+    lineFormat_ = line_format.str().substr(1);
     return *this;
   }
 
