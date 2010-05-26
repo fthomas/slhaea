@@ -411,7 +411,7 @@ public:
     std::stringstream line_format("");
     int argument = 0;
 
-    const std::string delimiters = " \t\v\f\r";
+    static const std::string delimiters = " \t\v\f\r";
     std::size_t pos1 = data.find_first_not_of(delimiters, 0);
     std::size_t pos2 = data.find_first_of(delimiters, pos1);
 
@@ -837,7 +837,7 @@ public:
     {
       if (boost::all(line_str, boost::is_space())) continue;
 
-      line = line_str;
+      line.str(line_str);
       if (nameless && line.is_block_def())
       {
         name(line[1]);
@@ -1588,7 +1588,7 @@ public:
     {
       if (boost::all(line_str, boost::is_space())) continue;
 
-      line = line_str;
+      line.str(line_str);
       if (line.is_block_def()) block = &(*this)[line[1]];
       block->push_back(line);
     }
