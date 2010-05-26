@@ -403,10 +403,8 @@ public:
       line_tr = boost::trim_right_copy(line.substr(0, line.find('\n')));
     if (line_tr.empty()) return *this;
 
-    const std::size_t
-      comment_pos = std::min(line_tr.find('#'), line_tr.length());
-    const std::string data    = line_tr.substr(0, comment_pos);
-    const std::string comment = line_tr.substr(comment_pos);
+    const std::size_t comment_pos = line_tr.find('#');
+    const std::string data = line_tr.substr(0, comment_pos);
 
     std::stringstream line_format("");
     int argument = 0;
@@ -424,10 +422,10 @@ public:
       pos2 = data.find_first_of(delimiters, pos1);
     }
 
-    if (!comment.empty())
+    if (comment_pos != std::string::npos)
     {
       line_format << " %|" << comment_pos << "t|%" << ++argument << "%";
-      impl_.push_back(comment);
+      impl_.push_back(line_tr.substr(comment_pos));
     }
 
     lineFormat_ = line_format.str().substr(1);
