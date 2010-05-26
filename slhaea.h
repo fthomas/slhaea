@@ -740,6 +740,9 @@ private:
   inline bool
   is_block_specifier(const value_type& field) const
   {
+    // "BLOCK" and "DECAY" are both five characters long.
+    if (field.length() != 5) return false;
+
     const value_type field_upper = boost::to_upper_copy(field);
     return (field_upper == "BLOCK") || (field_upper == "DECAY");
   }
