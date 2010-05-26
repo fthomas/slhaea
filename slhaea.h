@@ -654,12 +654,12 @@ public:
   { return !empty() && (front()[0] == '#'); }
 
   /**
-   * Returns true if the %SLHALine is not empty and if neither
-   * is_block_def() nor is_comment_line() returns true.
+   * Returns true if the %SLHALine is not empty and if it does not
+   * begin with \c "#", \c "BLOCK" or \c "DECAY".
    */
   bool
   is_data_line() const
-  { return !empty() && !is_block_def() && !is_comment_line(); }
+  { return !empty() && (front()[0] != '#') && !is_block_specifier(front()); }
 
   // capacity
   /** Returns the number of elements in the %SLHALine. */
