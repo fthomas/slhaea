@@ -713,10 +713,7 @@ public:
    */
   void
   comment()
-  {
-    if (empty()) return;
-    str("#" + str());
-  }
+  { if (!empty()) str("#" + str()); }
 
   /**
    * Uncomments the %SLHALine. This function removes the first
@@ -735,8 +732,8 @@ public:
   }
 
 private:
-  inline bool
-  is_block_specifier(const value_type& field) const
+  inline static bool
+  is_block_specifier(const value_type& field)
   {
     // "BLOCK" and "DECAY" are both five characters long.
     if (field.length() != 5) return false;
@@ -1486,12 +1483,9 @@ public:
   { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
 
 private:
-  static bool
+  inline static bool
   index_iequal(const std::string& a, const std::string& b)
-  {
-    if ("(any)" == a) return true;
-    return boost::iequals(a, b);
-  }
+  { return (a == "(any)") || boost::iequals(a, b); }
 
 private:
   std::string name_;
@@ -2007,7 +2001,7 @@ private:
 
     bool
     operator()(const value_type& block) const
-    { return boost::iequals(name_, block.name()); }
+    { return boost::iequals(block.name(), name_); }
 
   private:
     key_type name_;
