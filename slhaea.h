@@ -887,12 +887,10 @@ public:
   operator[](const key_type& keys)
   {
     iterator line = find(keys);
-    if (line == end())
-    {
-      push_back(value_type());
-      return back();
-    }
-    return *line;
+    if (line != end()) return *line;
+
+    push_back(value_type());
+    return back();
   }
 
   /**
@@ -953,9 +951,9 @@ public:
   at(const key_type& keys)
   {
     iterator line = find(keys);
-    if (line == end())
-    { throw std::out_of_range("SLHABlock::at(\"" + join(keys) + "\")"); }
-    return *line;
+    if (line != end()) return *line;
+
+    throw std::out_of_range("SLHABlock::at(\"" + join(keys) + "\")");
   }
 
   /**
@@ -973,9 +971,9 @@ public:
   at(const key_type& keys) const
   {
     const_iterator line = find(keys);
-    if (line == end())
-    { throw std::out_of_range("SLHABlock::at(\"" + join(keys) + "\")"); }
-    return *line;
+    if (line != end()) return *line;
+
+    throw std::out_of_range("SLHABlock::at(\"" + join(keys) + "\")");
   }
 
   /**
@@ -1639,12 +1637,10 @@ public:
   operator[](const key_type& blockName)
   {
     iterator block = find(blockName);
-    if (block == end())
-    {
-      push_back(value_type(blockName));
-      return back();
-    }
-    return *block;
+    if (block != end()) return *block;
+
+    push_back(value_type(blockName));
+    return back();
   }
 
   /**
@@ -1658,9 +1654,9 @@ public:
   at(const key_type& blockName)
   {
     iterator block = find(blockName);
-    if (block == end())
-    { throw std::out_of_range("SLHA::at(\"" + blockName + "\")"); }
-    return *block;
+    if (block != end()) return *block;
+
+    throw std::out_of_range("SLHA::at(\"" + blockName + "\")");
   }
 
   /**
@@ -1674,9 +1670,9 @@ public:
   at(const key_type& blockName) const
   {
     const_iterator block = find(blockName);
-    if (block == end())
-    { throw std::out_of_range("SLHA::at(\"" + blockName + "\")"); }
-    return *block;
+    if (block != end()) return *block;
+
+    throw std::out_of_range("SLHA::at(\"" + blockName + "\")");
   }
 
   /**
