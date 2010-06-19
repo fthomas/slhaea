@@ -1010,19 +1010,20 @@ public:
 
   /**
    * \brief Locates a SLHALine in the %SLHABlock.
-   * \param s0, s1, s2, s3 First strings of the SLHALine to be
+   * \param s0, s1, s2, s3, s4 First strings of the SLHALine to be
    *   located.
    * \return Read/write reference to sought-after SLHALine.
    * \throw std::out_of_range If provided strings do not match any
    *   SLHALine.
    *
-   * This function takes up to four strings and locates the SLHALine
+   * This function takes up to five strings and locates the SLHALine
    * whose first strings are equal to all provided non-empty strings.
    * If no such SLHALine exists, \c std::out_of_range is thrown.
    */
   reference
   at(const std::string& s0,      const std::string& s1 = "",
-     const std::string& s2 = "", const std::string& s3 = "")
+     const std::string& s2 = "", const std::string& s3 = "",
+     const std::string& s4 = "")
   {
     std::vector<std::string> keys;
 
@@ -1034,25 +1035,28 @@ public:
     keys.push_back(s2);
     if (s3.empty()) return at(keys);
     keys.push_back(s3);
+    if (s4.empty()) return at(keys);
+    keys.push_back(s4);
 
     return at(keys);
   }
 
   /**
    * \brief Locates a SLHALine in the %SLHABlock.
-   * \param s0, s1, s2, s3 First strings of the SLHALine to be
+   * \param s0, s1, s2, s3, s4 First strings of the SLHALine to be
    *   located.
    * \return Read-only (constant) reference to sought-after SLHALine.
    * \throw std::out_of_range If provided strings do not match any
    *   SLHALine.
    *
-   * This function takes up to four strings and locates the SLHALine
+   * This function takes up to five strings and locates the SLHALine
    * whose first strings are equal to all provided non-empty strings.
    * If no such SLHALine exists, \c std::out_of_range is thrown.
    */
   const_reference
   at(const std::string& s0,      const std::string& s1 = "",
-     const std::string& s2 = "", const std::string& s3 = "") const
+     const std::string& s2 = "", const std::string& s3 = "",
+     const std::string& s4 = "") const
   {
     std::vector<std::string> keys;
 
@@ -1064,24 +1068,26 @@ public:
     keys.push_back(s2);
     if (s3.empty()) return at(keys);
     keys.push_back(s3);
+    if (s4.empty()) return at(keys);
+    keys.push_back(s4);
 
     return at(keys);
   }
 
   /**
    * \brief Locates a SLHALine in the %SLHABlock.
-   * \param i0, i1, i2, i3 Integers that are used to locate the
+   * \param i0, i1, i2, i3, i4 Integers that are used to locate the
    *   SLHALine.
    * \return Read/write reference to sought-after SLHALine.
    * \throw std::out_of_range If provided ints do not match any
    *   SLHALine.
    *
-   * This function takes up to four ints and locates the SLHALine
+   * This function takes up to five ints and locates the SLHALine
    * whose first strings are equal to all provided to string converted
    * ints. If no such SLHALine exists, \c std::out_of_range is thrown.
    */
   reference
-  at(int i0, int i1 = nind, int i2 = nind, int i3 = nind)
+  at(int i0, int i1 = nind, int i2 = nind, int i3 = nind, int i4 = nind)
   {
     std::vector<std::string> keys;
 
@@ -1093,24 +1099,26 @@ public:
     keys.push_back(to_string(i2));
     if (nind == i3) return at(keys);
     keys.push_back(to_string(i3));
+    if (nind == i4) return at(keys);
+    keys.push_back(to_string(i4));
 
     return at(keys);
   }
 
   /**
    * \brief Locates a SLHALine in the %SLHABlock.
-   * \param i0, i1, i2, i3 Integers that are used to locate the
+   * \param i0, i1, i2, i3, i4 Integers that are used to locate the
    *   SLHALine.
    * \return Read-only (constant) reference to sought-after SLHALine.
    * \throw std::out_of_range If provided ints do not match any
    *   SLHALine.
    *
-   * This function takes up to four ints and locates the SLHALine
+   * This function takes up to five ints and locates the SLHALine
    * whose first strings are equal to all provided to string converted
    * ints. If no such SLHALine exists, \c std::out_of_range is thrown.
    */
   const_reference
-  at(int i0, int i1 = nind, int i2 = nind, int i3 = nind) const
+  at(int i0, int i1 = nind, int i2 = nind, int i3 = nind, int i4 = nind) const
   {
     std::vector<std::string> keys;
 
@@ -1122,6 +1130,8 @@ public:
     keys.push_back(to_string(i2));
     if (nind == i3) return at(keys);
     keys.push_back(to_string(i3));
+    if (nind == i4) return at(keys);
+    keys.push_back(to_string(i4));
 
     return at(keys);
   }
