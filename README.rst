@@ -21,16 +21,12 @@ Its main features are:
   or integers
 - no precision is lost in read/write cycles of unmodified data
 - blocks and lines are not restricted to the ones specified in the
-  SLHA, SLHA2 or FLHA
-
-The SUSY and Flavour Les Houches Accords are defined in
-`arXiv:hep-ph/0311123`_, `arXiv:0801.0045 [hep-ph]`_ and
-`arXiv:1008.0762 [hep-ph]`_.
+  `SLHA`_, `SLHA2`_ or `FLHA`_
 
 .. _SUSY Les Houches Accord: http://home.fnal.gov/~skands/slha/
-.. _arXiv\:hep-ph/0311123: http://arxiv.org/abs/hep-ph/0311123
-.. _arXiv\:0801.0045 [hep-ph]: http://arxiv.org/abs/0801.0045
-.. _arXiv\:1008.0762 [hep-ph]: http://arxiv.org/abs/1008.0762
+.. _SLHA:  http://arxiv.org/abs/hep-ph/0311123
+.. _SLHA2: http://arxiv.org/abs/0801.0045
+.. _FLHA:  http://arxiv.org/abs/1008.0762
 
 Documentation
 -------------
