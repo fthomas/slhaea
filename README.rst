@@ -14,23 +14,23 @@ Its main features are:
 
 - reading and writing SLHA files
 - easy access to individual blocks, lines, and fields
-- three containers (SLHA, SLHABlock, and SLHALine) that mimic the STL
-  containers and therefore offer great flexibility
+- three containers (``SLHA``, ``SLHABlock``, and ``SLHALine``) that
+  mimic the STL containers and therefore offer great flexibility
 - the exact formatting of lines is preserved
 - everything is stored as strings, so data is not restricted to floats
   or integers
 - no precision is lost in read/write cycles of unmodified data
 - blocks and lines are not restricted to the ones specified in the
-  SLHA/SLHA2 or FLHA
+  SLHA, SLHA2 or FLHA
 
-The SUSY/Flavour Les Houches Accords are defined in
+The SUSY and Flavour Les Houches Accords are defined in
 `arXiv:hep-ph/0311123`_, `arXiv:0801.0045 [hep-ph]`_ and
 `arXiv:1008.0762 [hep-ph]`_.
 
 .. _SUSY Les Houches Accord: http://home.fnal.gov/~skands/slha/
 .. _arXiv\:hep-ph/0311123: http://arxiv.org/abs/hep-ph/0311123
 .. _arXiv\:0801.0045 [hep-ph]: http://arxiv.org/abs/0801.0045
-.. _arXiv:1008.0762 [hep-ph]: http://arxiv.org/abs/1008.0762
+.. _arXiv\:1008.0762 [hep-ph]: http://arxiv.org/abs/1008.0762
 
 Documentation
 -------------
