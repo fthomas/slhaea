@@ -9,14 +9,14 @@
   <style type="text/css">
     body {
       margin-top: 1.0em;
-      background-color: #E6E6E6;
+      background-color: #EEE;
       font-family: "Helvetica,Arial,FreeSans";
       color: #585858;
     }
     #container {
       margin: 0 auto;
       width: 700px;
-      background-color: #FAFAFA;
+      background-color: #FDFDFD;
       padding: 16px;
       border-width: 1px;
       border-style: solid;
@@ -66,10 +66,11 @@
     <h2>Introduction</h2>
     <p>
       SLHAea is an easy to use C++ library for input, output, and
-      manipulation of data in the SUSY Les Houches Accord (SLHA)[1-3]. It is
-      based on the concept that a SLHA structure is a container of blocks,
-      which are then again containers of lines, which are then again
-      containers of strings.
+      manipulation of data in the
+      <a href="http://home.fnal.gov/~skands/slha/">SUSY Les Houches
+      Accord</a> (SLHA). It is based on the concept that a SLHA structure is
+      a container of blocks, which are then again containers of lines, which
+      are then again containers of strings.
     </p>
     <p>
       Its main features are:
@@ -89,19 +90,11 @@
         <li>no precision is lost in read/write cycles of unmodified data</li>
         <li>
           blocks and lines are not restricted to the ones specified in the
-          SLHA/SLHA2
+          <a href="http://arxiv.org/abs/hep-ph/0311123">SLHA</a>,
+          <a href="http://arxiv.org/abs/0801.0045">SLHA2</a> and
+          <a href="http://arxiv.org/abs/1008.0762">FLHA</a>
         </li>
       </ul>
-    </p>
-    <p>
-      [1] P. Skands and others,
-      <a href="http://arxiv.org/abs/hep-ph/0311123">arXiv:hep-ph/0311123</a>
-      <br/>
-      [2] B. Allanach and others,
-      <a href="http://arxiv.org/abs/0801.0045">arXiv:0801.0045 [hep-ph]</a>
-      <br/>
-      [3] <a href="http://home.fnal.gov/~skands/slha/"
-      >http://home.fnal.gov/~skands/slha/</a>
     </p>
 
     <h2>Documentation</h2>
@@ -110,7 +103,7 @@
       <a href="http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/doc/"
       >here</a>. The examples can also be found in the
       <a href="http://github.com/fthomas/slhaea/tree/master/doc/examples/"
-      >doc/examples/</a> directory.
+      >doc/examples/</a> directory in SLHAea's source tree.
     </p>
 
     <h2>Dependencies</h2>
@@ -128,17 +121,17 @@
     </p>
     <p>
       For development of SLHAea <a href="http://git-scm.com">Git</a> is
-      used. The SLHAea repository can be
-      <a href="http://github.com/fthomas/slhaea">inspected and browsed
-      online at GitHub</a> and it can be cloned by running:
-      <pre>$ git clone git://github.com/fthomas/slhaea</pre>
+      used. The <a href="http://github.com/fthomas/slhaea">Git repository</a>
+      can be inspected and browsed online at GitHub and it can be cloned by
+      running:
+      <pre>git clone git://github.com/fthomas/slhaea</pre>
     </p>
 
     <h2>Issues and feedback</h2>
     <p>
       For bug reports, feature requests, or general feedback either use the
       <a href="http://github.com/fthomas/slhaea/issues">issue tracker</a> or
-      write me an <a href="mailto:fthomas@physik.uni-wuerzburg.de">email</a>.
+      <a href="mailto:fthomas@physik.uni-wuerzburg.de">write me an email</a>.
     </p>
 
     <h2>License</h2>
