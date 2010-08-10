@@ -1437,7 +1437,7 @@ public:
   erase(iterator position)
   { return impl_.erase(position); }
 
- /**
+  /**
    * \brief Removes a range of elements.
    * \param first Iterator pointing to the first element to be erased.
    * \param last Iterator pointing to one past the last element to be
