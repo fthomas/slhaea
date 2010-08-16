@@ -6,14 +6,22 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <fstream>
+#include <sstream>
 #include "slhaea.h"
 
 using namespace std;
 using namespace SLHAea;
 
-int main(int, char* [])
+int main(int argc, char* argv[])
 {
-  for (int i = 0; i < 100; ++i)
+  int iters = 1;
+  if (argc > 1)
+  {
+    istringstream iss(argv[1]);
+    iss >> iters;
+  }
+
+  for (int i = 0; i < iters; ++i)
   {
     ifstream ifs("input.txt");
     SLHA input(ifs);
