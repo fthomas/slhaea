@@ -84,4 +84,5 @@ License 1.0`_. The full text of the license can be found in the file
 Author
 ------
 
-Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
+SLHAea was written by
+Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>.
