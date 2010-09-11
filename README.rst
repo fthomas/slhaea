@@ -31,11 +31,13 @@ Its main features are:
 Documentation
 -------------
 
-The API documentation and some examples can be found `here`_.
-The examples can also be found in the `doc/examples/`_ directory in
-SLHAea's source tree.
+The API documentation is `here`_. It includes some `practical
+examples`_ which can also be found in the `doc/examples/`_ directory
+in SLHAea's source tree.
 
 .. _here: http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/doc/
+.. _practical examples:
+    http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/doc/examples.html
 .. _doc/examples/: http://github.com/fthomas/slhaea/tree/master/doc/examples/
 
 Dependencies
