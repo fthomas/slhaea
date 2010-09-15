@@ -212,6 +212,41 @@ BOOST_AUTO_TEST_CASE(testIterators)
   BOOST_CHECK(l1.rbegin()+4 == l1.rend()-1);
 }
 
+BOOST_AUTO_TEST_CASE(testInEquality)
+{
+  SLHALine l1, l2;
+
+  l1 = "1 2 3";
+  l2 = l1;
+  BOOST_CHECK(l1 == l1);
+  BOOST_CHECK(l2 == l2);
+  BOOST_CHECK(l1 == l2);
+  BOOST_CHECK(l2 == l1);
+
+  l2 += " 4";
+  BOOST_CHECK(l1 == l1);
+  BOOST_CHECK(l2 == l2);
+  BOOST_CHECK(l1 != l2);
+  BOOST_CHECK(l2 != l1);
+
+  l1.clear();
+  l2.clear();
+  BOOST_CHECK(l1 == l1);
+  BOOST_CHECK(l2 == l2);
+  BOOST_CHECK(l1 == l2);
+  BOOST_CHECK(l2 == l1);
+
+  l1 = "1 2 3 4 5";
+  l2 = "1 2 3 4 5";
+  BOOST_CHECK(l1 == l2);
+  BOOST_CHECK(l2 == l1);
+
+  l1.clear();
+  l2 = "";
+  BOOST_CHECK(l1 == l2);
+  BOOST_CHECK(l2 == l1);
+}
+
 BOOST_AUTO_TEST_CASE(testMiscellaneous)
 {
   SLHALine l1;
