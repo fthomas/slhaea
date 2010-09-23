@@ -8,7 +8,7 @@ using namespace SLHAea;
 int main(int, char* [])
 {
   ifstream ifs("slha.par");
-  const SLHA in(ifs);
+  const Coll in(ifs);
 
   double alpha_em = to_<double>(in.at("SMINPUTS").at("1").at(1));
   double G_mu     = to_<double>(in.at("SMINPUTS").at("2").at(1));

@@ -14,8 +14,8 @@ Its main features are:
 
 - reading and writing SLHA files
 - easy access to individual blocks, lines, and fields
-- three containers (``SLHA``, ``SLHABlock``, and ``SLHALine``) that
-  mimic the STL containers and therefore offer great flexibility
+- three containers (``Coll``, ``Block``, and ``Line``) that mimic STL
+  containers and therefore offer great flexibility
 - the exact formatting of lines is preserved
 - everything is stored as strings, so data is not restricted to floats
   or integers

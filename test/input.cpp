@@ -9,22 +9,19 @@
 #include <sstream>
 #include "slhaea.h"
 
-using namespace std;
-using namespace SLHAea;
-
 int main(int argc, char* argv[])
 {
-  int iters = 1;
+  int iterations = 1;
   if (argc > 1)
   {
-    istringstream iss(argv[1]);
-    iss >> iters;
+    std::istringstream iss(argv[1]);
+    iss >> iterations;
   }
 
-  for (int i = 0; i < iters; ++i)
+  for (int i = 0; i < iterations; ++i)
   {
-    ifstream ifs("input.txt");
-    SLHA input(ifs);
+    std::ifstream ifs("input.txt");
+    SLHAea::Coll input(ifs);
   }
 
   return 0;

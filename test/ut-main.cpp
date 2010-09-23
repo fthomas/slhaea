@@ -11,8 +11,8 @@
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/test/unit_test.hpp>
 
-#include "slhaline.h"
-#include "slhablock.h"
-#include "slha.h"
+#include "ut-line.h"
+#include "ut-block.h"
+#include "ut-coll.h"
 
 // vim: sw=2 tw=78

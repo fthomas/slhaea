@@ -24,8 +24,8 @@ MULTILINE_CPP_IS_BRIEF = NO
 INHERIT_DOCS           = YES
 SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 2
-ALIASES                = "SLHALines=\link SLHALine SLHALines \endlink" \
-                         "SLHABlocks=\link SLHABlock SLHABlocks \endlink"
+ALIASES                = "Lines=\link Line Lines\endlink" \
+                         "Blocks=\link Block Blocks\endlink"
 OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO
 OPTIMIZE_FOR_FORTRAN   = NO
