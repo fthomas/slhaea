@@ -119,13 +119,13 @@ join(const Container& cont, const std::string& sep = " ")
 
 /**
  * Reference to a single field in a SLHA structure.
- * This struct represents a reference to a single field in a SLHA
+ * This data type represents a reference to a single field in a SLHA
  * structure, but which is independent of any concrete Coll object.
  * That means that only the keys and the index of the Coll, Block, and
  * Line containers of the corresponding field are stored. One of the
- * main purposes of this struct is the conversion to string and vice
- * versa in a way that the string representation of a %Key can be used
- * as a single field in a SLHA structure. For example, the string
+ * main purposes of this data type is the conversion to string and
+ * vice versa in a way that the string representation of a %Key can be
+ * used as a single field in a SLHA structure. For example, the string
  * representation of a %Key that refers to the entry in the first row
  * and third column of the RVHMIX matrix is \c "RVHMIX;1,3;2". Further
  * examples are \c "1000022;DECAY;2" which refers to the total decay
