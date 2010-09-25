@@ -31,10 +31,11 @@ namespace SLHAea {
  * \param arg Object that will be converted.
  * \return Result of the conversion of \p arg to \c Target.
  *
- * This function is a wrapper for \c boost::lexical_cast().
+ * This function is a wrapper for
+ * \c boost::lexical_cast<Target>().
  */
 template<class Target, class Source> inline Target
-to_(const Source& arg)
+to(const Source& arg)
 { return boost::lexical_cast<Target>(arg); }
 
 /**
@@ -42,26 +43,28 @@ to_(const Source& arg)
  * \param arg Object that will be converted.
  * \return Result of the conversion of \p arg to \c std::string.
  *
- * This function is an alias for to_<std::string>().
+ * This function is a wrapper for
+ * \c boost::lexical_cast<std::string>().
  */
 template<class Source> inline std::string
 to_string(const Source& arg)
 { return boost::lexical_cast<std::string>(arg); }
 
-/**
- * \brief Converts all elements of a container to strings.
- * \param cont Container whose elements will be converted.
- * \return \c std::vector that contains the converted elements.
- */
-template<class Container> inline std::vector<std::string>
-cont_to_string_vector(const Container& cont)
-{
-  std::vector<std::string> result;
-  result.reserve(cont.size());
-  std::transform(cont.begin(), cont.end(), std::back_inserter(result),
-                 to_string<typename Container::value_type>);
-  return result;
-}
+
+// forward declarations
+class Line;
+class Block;
+class Coll;
+class Key;
+
+inline std::ostream& operator<<(std::ostream& os, const Line& line);
+inline std::ostream& operator<<(std::ostream& os, const Block& block);
+inline std::ostream& operator<<(std::ostream& os, const Coll& coll);
+inline std::ostream& operator<<(std::ostream& os, const Key& key);
+
+
+// auxiliary functions intended for internal use
+namespace detail {
 
 /**
  * \brief Splits a string into tokens separated by white space.
@@ -95,7 +98,7 @@ split_string(const std::string& str, std::string sep)
  * \param first, last Input iterators to the initial and final
  *   positions of the sequence to use.
  * \param sep String that will separate the joined elements.
- * \return Concatenated string.
+ * \return Elements in range concatenated to one string.
  */
 template<class InputIterator> inline std::string
 join(InputIterator first, InputIterator last, const std::string& sep = " ")
@@ -110,110 +113,42 @@ join(InputIterator first, InputIterator last, const std::string& sep = " ")
  * \brief Joins all elements of a container into one string.
  * \param cont Container whose elements will be joined.
  * \param sep String that will separate the joined elements.
- * \return Concatenated string.
+ * \return Elements in \p cont concatenated to one string.
  */
 template<class Container> inline std::string
 join(const Container& cont, const std::string& sep = " ")
 { return join(cont.begin(), cont.end(), sep); }
 
-
 /**
- * Reference to a single field in a SLHA structure.
- * This data type represents a reference to a single field in a SLHA
- * structure, but which is independent of any concrete Coll object.
- * That means that only the keys and the index of the Coll, Block, and
- * Line containers of the corresponding field are stored. One of the
- * main purposes of this data type is the conversion to string and
- * vice versa in a way that the string representation of a %Key can be
- * used as a single field in a SLHA structure. For example, the string
- * representation of a %Key that refers to the entry in the first row
- * and third column of the RVHMIX matrix is \c "RVHMIX;1,3;2". Further
- * examples are \c "1000022;DECAY;2" which refers to the total decay
- * width of the lightest neutralino or \c "1000022;(any),2,11,24;0"
- * which refers to the branching ratio of the decay of the lightest
- * neutralino into an electron and a W boson.
+ * \brief Converts all elements of a container to strings.
+ * \param cont Container whose elements will be converted.
+ * \return \c std::vector that contains the converted elements.
  */
-struct Key
+template<class Container> inline std::vector<std::string>
+cont_to_string_vec(const Container& cont)
 {
-  /** Name of the Block that contains the field. */
-  std::string block;
+  std::vector<std::string> result;
+  result.reserve(cont.size());
+  std::transform(cont.begin(), cont.end(), std::back_inserter(result),
+    boost::lexical_cast<std::string, typename Container::value_type>);
+  return result;
+}
 
-  /** First field(s) of the Line that contains the field. */
-  std::vector<std::string> line;
+inline bool
+is_block_specifier(const std::string& field)
+{
+  // "BLOCK" and "DECAY" are both five characters long.
+  if (field.length() != 5) return false;
 
-  /** Index of the field in the Line. */
-  std::size_t field;
+  const std::string field_upper = boost::to_upper_copy(field);
+  return (field_upper == "BLOCK") || (field_upper == "DECAY");
+}
 
-  /**
-   * \brief Constructs a %Key from explicit key values.
-   * \param _block Name of the Block that contains the field.
-   * \param _line First field(s) of the Line that contains the field.
-   * \param _field Index of the field in the Line.
-   */
-  Key(
-    const std::string& _block,
-    const std::vector<std::string>& _line,
-    std::size_t _field)
-      : block(_block),
-        line(_line),
-        field(_field) {}
+inline bool
+index_iequals(const std::string& a, const std::string& b)
+{ return (a == "(any)") || boost::iequals(a, b); }
 
-  /**
-   * \brief Constructs a %Key from a string.
-   * \param keyString String from which the %Key is constructed.
-   * \sa str()
-   */
-  Key(const std::string& keyString)
-  { str(keyString); }
-
-  /**
-   * \brief Constructs a %Key from a string.
-   * \param keyString String from which the %Key is constructed.
-   * \sa str()
-   */
-  Key(const char* keyString)
-  { str(keyString); }
-
-  /**
-   * \brief Converts a string to a %Key.
-   * \param keyString String that represents a %Key.
-   * \return Reference to \c *this.
-   */
-  Key&
-  str(const std::string& keyString)
-  {
-    std::vector<std::string> keys = split_string(keyString, ";");
-    if (keys.size() != 3)
-    { throw std::invalid_argument("SLHAea::Key::str(‘" + keyString + "’);"); }
-
-    block = keys[0];
-    line  = split_string(keys[1], ",");
-    field = to_<std::size_t>(keys[2]);
-    return *this;
-  }
-
-  /**
-   * \brief Converts a %Key into its string representation.
-   * \return String that represents the %Key.
-   */
-  std::string
-  str() const
-  {
-    std::stringstream result("");
-    result << block << ";" << join(line, ",") << ";" << field;
-    return result.str();
-  }
-};
-
-
-// forward declarations
-class Line;
-class Block;
-class Coll;
-
-inline std::ostream& operator<<(std::ostream& os, const Line& line);
-inline std::ostream& operator<<(std::ostream& os, const Block& block);
-inline std::ostream& operator<<(std::ostream& os, const Coll& coll);
+} // namespace detail
 
 
 /**
@@ -341,7 +276,7 @@ public:
     int arg = 0, pos = 0;
     const_iterator field = begin();
 
-    if (is_block_specifier(*field))
+    if (detail::is_block_specifier(*field))
     {
       line_format << " %|" << pos << "t|%" << ++arg << "%";
       pos += field->length();
@@ -631,7 +566,7 @@ public:
     if (size() < 2) return false;
 
     const_iterator field = begin();
-    return (is_block_specifier(*field) && ((*++field)[0] != '#'));
+    return (detail::is_block_specifier(*field) && ((*++field)[0] != '#'));
   }
 
   /** Returns true if the %Line begins with \c "#". */
@@ -645,7 +580,10 @@ public:
    */
   bool
   is_data_line() const
-  { return !empty() && (front()[0] != '#') && !is_block_specifier(front()); }
+  {
+    return !empty() && (front()[0] != '#') &&
+      !detail::is_block_specifier(front());
+  }
 
   // capacity
   /** Returns the number of elements in the %Line. */
@@ -716,17 +654,6 @@ public:
       front().erase(0, 1);
       str(str());
     }
-  }
-
-private:
-  inline static bool
-  is_block_specifier(const value_type& field)
-  {
-    // "BLOCK" and "DECAY" are both five characters long.
-    if (field.length() != 5) return false;
-
-    const value_type field_upper = boost::to_upper_copy(field);
-    return (field_upper == "BLOCK") || (field_upper == "DECAY");
   }
 
 private:
@@ -891,7 +818,7 @@ public:
    */
   reference
   operator[](const std::vector<int>& keys)
-  { return (*this)[cont_to_string_vector(keys)]; }
+  { return (*this)[detail::cont_to_string_vec(keys)]; }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -904,7 +831,7 @@ public:
    */
   reference
   operator[](const std::string& key)
-  { return (*this)[std::vector<std::string>(1, key)]; }
+  { return (*this)[key_type(1, key)]; }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -918,7 +845,7 @@ public:
    */
   reference
   operator[](int key)
-  { return (*this)[std::vector<std::string>(1, to_string(key))]; }
+  { return (*this)[key_type(1, to_string(key))]; }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -936,7 +863,8 @@ public:
     iterator line = find(keys);
     if (line != end()) return *line;
 
-    throw std::out_of_range("SLHAea::Block::at(‘" + join(keys) + "’)");
+    throw std::out_of_range(
+      "SLHAea::Block::at(‘" + detail::join(keys) + "’)");
   }
 
   /**
@@ -955,7 +883,8 @@ public:
     const_iterator line = find(keys);
     if (line != end()) return *line;
 
-    throw std::out_of_range("SLHAea::Block::at(‘" + join(keys) + "’)");
+    throw std::out_of_range(
+      "SLHAea::Block::at(‘" + detail::join(keys) + "’)");
   }
 
   /**
@@ -971,7 +900,7 @@ public:
    */
   reference
   at(const std::vector<int>& keys)
-  { return at(cont_to_string_vector(keys)); }
+  { return at(detail::cont_to_string_vec(keys)); }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -986,7 +915,7 @@ public:
    */
   const_reference
   at(const std::vector<int>& keys) const
-  { return at(cont_to_string_vector(keys)); }
+  { return at(detail::cont_to_string_vec(keys)); }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -1005,20 +934,20 @@ public:
      const std::string& s2 = "", const std::string& s3 = "",
      const std::string& s4 = "")
   {
-    std::vector<std::string> keys;
+    key_type key;
 
-    if (s0.empty()) return at(keys);
-    keys.push_back(s0);
-    if (s1.empty()) return at(keys);
-    keys.push_back(s1);
-    if (s2.empty()) return at(keys);
-    keys.push_back(s2);
-    if (s3.empty()) return at(keys);
-    keys.push_back(s3);
-    if (s4.empty()) return at(keys);
-    keys.push_back(s4);
+    if (s0.empty()) return at(key);
+    key.push_back(s0);
+    if (s1.empty()) return at(key);
+    key.push_back(s1);
+    if (s2.empty()) return at(key);
+    key.push_back(s2);
+    if (s3.empty()) return at(key);
+    key.push_back(s3);
+    if (s4.empty()) return at(key);
+    key.push_back(s4);
 
-    return at(keys);
+    return at(key);
   }
 
   /**
@@ -1038,20 +967,20 @@ public:
      const std::string& s2 = "", const std::string& s3 = "",
      const std::string& s4 = "") const
   {
-    std::vector<std::string> keys;
+    key_type key;
 
-    if (s0.empty()) return at(keys);
-    keys.push_back(s0);
-    if (s1.empty()) return at(keys);
-    keys.push_back(s1);
-    if (s2.empty()) return at(keys);
-    keys.push_back(s2);
-    if (s3.empty()) return at(keys);
-    keys.push_back(s3);
-    if (s4.empty()) return at(keys);
-    keys.push_back(s4);
+    if (s0.empty()) return at(key);
+    key.push_back(s0);
+    if (s1.empty()) return at(key);
+    key.push_back(s1);
+    if (s2.empty()) return at(key);
+    key.push_back(s2);
+    if (s3.empty()) return at(key);
+    key.push_back(s3);
+    if (s4.empty()) return at(key);
+    key.push_back(s4);
 
-    return at(keys);
+    return at(key);
   }
 
   /**
@@ -1067,22 +996,23 @@ public:
    * If no such Line exists, \c std::out_of_range is thrown.
    */
   reference
-  at(int i0, int i1 = nind, int i2 = nind, int i3 = nind, int i4 = nind)
+  at(int i0, int i1 = no_ind, int i2 = no_ind, int i3 = no_ind,
+     int i4 = no_ind)
   {
-    std::vector<std::string> keys;
+    key_type key;
 
-    if (nind == i0) return at(keys);
-    keys.push_back(to_string(i0));
-    if (nind == i1) return at(keys);
-    keys.push_back(to_string(i1));
-    if (nind == i2) return at(keys);
-    keys.push_back(to_string(i2));
-    if (nind == i3) return at(keys);
-    keys.push_back(to_string(i3));
-    if (nind == i4) return at(keys);
-    keys.push_back(to_string(i4));
+    if (no_ind == i0) return at(key);
+    key.push_back(to_string(i0));
+    if (no_ind == i1) return at(key);
+    key.push_back(to_string(i1));
+    if (no_ind == i2) return at(key);
+    key.push_back(to_string(i2));
+    if (no_ind == i3) return at(key);
+    key.push_back(to_string(i3));
+    if (no_ind == i4) return at(key);
+    key.push_back(to_string(i4));
 
-    return at(keys);
+    return at(key);
   }
 
   /**
@@ -1097,22 +1027,23 @@ public:
    * If no such Line exists, \c std::out_of_range is thrown.
    */
   const_reference
-  at(int i0, int i1 = nind, int i2 = nind, int i3 = nind, int i4 = nind) const
+  at(int i0, int i1 = no_ind, int i2 = no_ind, int i3 = no_ind,
+     int i4 = no_ind) const
   {
-    std::vector<std::string> keys;
+    key_type key;
 
-    if (nind == i0) return at(keys);
-    keys.push_back(to_string(i0));
-    if (nind == i1) return at(keys);
-    keys.push_back(to_string(i1));
-    if (nind == i2) return at(keys);
-    keys.push_back(to_string(i2));
-    if (nind == i3) return at(keys);
-    keys.push_back(to_string(i3));
-    if (nind == i4) return at(keys);
-    keys.push_back(to_string(i4));
+    if (no_ind == i0) return at(key);
+    key.push_back(to_string(i0));
+    if (no_ind == i1) return at(key);
+    key.push_back(to_string(i1));
+    if (no_ind == i2) return at(key);
+    key.push_back(to_string(i2));
+    if (no_ind == i3) return at(key);
+    key.push_back(to_string(i3));
+    if (no_ind == i4) return at(key);
+    key.push_back(to_string(i4));
 
-    return at(keys);
+    return at(key);
   }
 
   /**
@@ -1257,54 +1188,54 @@ public:
   // operations
   /**
    * \brief Tries to locate a Line in the %Block.
-   * \param keys First strings of the Line to be located.
+   * \param key First strings of the Line to be located.
    * \return Read/write iterator pointing to sought-after element, or
    *   end() if not found.
    *
    * This function takes a key (which is a vector of strings) and
    * tries to locate the Line whose first strings are equal to the
-   * strings in \p keys. If successful the function returns a
+   * strings in \p key. If successful the function returns a
    * read/write iterator pointing to the sought after Line. If
    * unsuccessful it returns end().
    */
   iterator
-  find(const key_type& keys)
+  find(const key_type& key)
   {
-    if (keys.empty()) return end();
+    if (key.empty()) return end();
 
     iterator line = begin();
     for (; line != end(); ++line)
     {
-      if (keys.size() > line->size()) continue;
-      if (std::equal(keys.begin(), keys.end(), line->begin(), index_iequal))
-      { return line; }
+      if (key.size() > line->size()) continue;
+      if (std::equal(key.begin(), key.end(), line->begin(),
+                     detail::index_iequals)) return line;
     }
     return line;
   }
 
   /**
    * \brief Tries to locate a Line in the %Block.
-   * \param keys First strings of the Line to be located.
+   * \param key First strings of the Line to be located.
    * \return Read-only (constant) iterator pointing to sought-after
    *   element, or end() const if not found.
    *
    * This function takes a key (which is a vector of strings) and
    * tries to locate the Line whose first strings are equal to the
-   * strings in \p keys. If successful the function returns a
-   * read-only (constant) iterator pointing to the sought after Line.
-   * If unsuccessful it returns end() const.
+   * strings in \p key. If successful the function returns a read-only
+   * (constant) iterator pointing to the sought after Line. If
+   * unsuccessful it returns end() const.
    */
   const_iterator
-  find(const key_type& keys) const
+  find(const key_type& key) const
   {
-    if (keys.empty()) return end();
+    if (key.empty()) return end();
 
     const_iterator line = begin();
     for (; line != end(); ++line)
     {
-      if (keys.size() > line->size()) continue;
-      if (std::equal(keys.begin(), keys.end(), line->begin(), index_iequal))
-      { return line; }
+      if (key.size() > line->size()) continue;
+      if (std::equal(key.begin(), key.end(), line->begin(),
+                     detail::index_iequals)) return line;
     }
     return line;
   }
@@ -1312,20 +1243,20 @@ public:
   // introspection
   /**
    * \brief Counts all \Lines that match a given key.
-   * \param keys First strings of the \Lines that will be counted.
-   * \return Number of lines whose first strings equal \p keys.
+   * \param key First strings of the \Lines that will be counted.
+   * \return Number of lines whose first strings equal \p key.
    */
   size_type
-  count(const key_type& keys) const
+  count(const key_type& key) const
   {
-    if (keys.empty()) return 0;
+    if (key.empty()) return 0;
 
     size_type count = 0;
     for (const_iterator line = begin(); line != end(); ++line)
     {
-      if (keys.size() > line->size()) continue;
-      if (std::equal(keys.begin(), keys.end(), line->begin(), index_iequal))
-      { ++count; }
+      if (key.size() > line->size()) continue;
+      if (std::equal(key.begin(), key.end(), line->begin(),
+                     detail::index_iequals)) ++count;
     }
     return count;
   }
@@ -1471,14 +1402,9 @@ public:
   { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
 
 private:
-  inline static bool
-  index_iequal(const std::string& a, const std::string& b)
-  { return (a == "(any)") || boost::iequals(a, b); }
-
-private:
   std::string name_;
   impl_type impl_;
-  static const int nind = INT_MIN;
+  static const int no_ind = INT_MIN;
 };
 
 
@@ -1535,8 +1461,7 @@ public:
    *   field.
    */
   Line::reference
-  field(const Key& key)
-  { return at(key.block).at(key.line).at(key.field); }
+  field(const Key& key);
 
   /**
    * \brief Accesses a single field in the %Coll.
@@ -1547,8 +1472,7 @@ public:
    *   field.
    */
   Line::const_reference
-  field(const Key& key) const
-  { return at(key.block).at(key.line).at(key.field); }
+  field(const Key& key) const;
 
   /**
    * \brief Assigns content from input stream to the %Coll.
@@ -1998,6 +1922,103 @@ private:
 private:
   impl_type impl_;
 };
+
+
+/**
+ * Reference to a single field in a SLHA structure.
+ * This data type represents a reference to a single field in a SLHA
+ * structure, but which is independent of any concrete Coll object.
+ * That means that only the keys and the index of the Coll, Block, and
+ * Line containers of the corresponding field are stored. One of the
+ * main purposes of this data type is the conversion to string and
+ * vice versa in a way that the string representation of a %Key can be
+ * used as a single field in a SLHA structure. For example, the string
+ * representation of a %Key that refers to the entry in the first row
+ * and third column of the RVHMIX matrix is \c "RVHMIX;1,3;2". Further
+ * examples are \c "1000022;DECAY;2" which refers to the total decay
+ * width of the lightest neutralino or \c "1000022;(any),2,11,24;0"
+ * which refers to the branching ratio of the decay of the lightest
+ * neutralino into an electron and a W boson.
+ */
+struct Key
+{
+  /** Name of the Block that contains the field. */
+  Coll::key_type block;
+
+  /** First field(s) of the Line that contains the field. */
+  Block::key_type line;
+
+  /** Index of the field in the Line. */
+  Line::size_type field;
+
+  /**
+   * \brief Constructs a %Key from explicit key values.
+   * \param _block Name of the Block that contains the field.
+   * \param _line First field(s) of the Line that contains the field.
+   * \param _field Index of the field in the Line.
+   */
+  Key(
+    const Coll::key_type& _block,
+    const Block::key_type& _line,
+    Line::size_type _field)
+      : block(_block), line(_line), field(_field) {}
+
+  /**
+   * \brief Constructs a %Key from a string.
+   * \param keyString String from which the %Key is constructed.
+   * \sa str()
+   */
+  Key(const std::string& keyString)
+  { str(keyString); }
+
+  /**
+   * \brief Constructs a %Key from a string.
+   * \param keyString String from which the %Key is constructed.
+   * \sa str()
+   */
+  Key(const char* keyString)
+  { str(keyString); }
+
+  /**
+   * \brief Converts a string to a %Key.
+   * \param keyString String that represents a %Key.
+   * \return Reference to \c *this.
+   */
+  Key&
+  str(const std::string& keyString)
+  {
+    std::vector<std::string> keys = detail::split_string(keyString, ";");
+
+    if (keys.size() != 3)
+    { throw std::invalid_argument("SLHAea::Key::str(‘" + keyString + "’);"); }
+
+    block = keys[0];
+    line  = detail::split_string(keys[1], ",");
+    field = to<Line::size_type>(keys[2]);
+    return *this;
+  }
+
+  /**
+   * \brief Converts a %Key into its string representation.
+   * \return String that represents the %Key.
+   */
+  std::string
+  str() const
+  {
+    std::stringstream result("");
+    result << block << ";" << detail::join(line, ",") << ";" << field;
+    return result.str();
+  }
+};
+
+
+inline Line::reference
+Coll::field(const Key& key)
+{ return at(key.block).at(key.line).at(key.field); }
+
+inline Line::const_reference
+Coll::field(const Key& key) const
+{ return at(key.block).at(key.line).at(key.field); }
 
 
 // stream operators

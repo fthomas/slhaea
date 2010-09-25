@@ -15,7 +15,7 @@ int main(int, char* [])
   {
     for (int c = 0; c < 5; ++c)
     {
-      rvhmix[r][c] = to_<double>(input.at("RVHMIX").at(r+1, c+1).at(2));
+      rvhmix[r][c] = to<double>(input.at("RVHMIX").at(r+1, c+1).at(2));
       cout << (r+1) << " " << (c+1) << ": " << rvhmix[r][c] << endl;
     }
   }
