@@ -14,5 +14,6 @@
 #include "ut-line.h"
 #include "ut-block.h"
 #include "ut-coll.h"
+#include "ut-key.h"
 
 // vim: sw=2 tw=78

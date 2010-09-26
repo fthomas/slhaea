@@ -2037,10 +2037,6 @@ operator>>(std::istream& is, Coll& coll)
 }
 
 inline std::ostream&
-operator<<(std::ostream& os, const Key& key)
-{ return os << key.str(); }
-
-inline std::ostream&
 operator<<(std::ostream& os, const Line& line)
 { return os << line.str(); }
 
@@ -2059,6 +2055,10 @@ operator<<(std::ostream& os, const Coll& coll)
             std::ostream_iterator<Coll::value_type>(os));
   return os;
 }
+
+inline std::ostream&
+operator<<(std::ostream& os, const Key& key)
+{ return os << key.str(); }
 
 
 // relational operators for Line
