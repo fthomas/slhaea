@@ -67,19 +67,6 @@ inline std::ostream& operator<<(std::ostream& os, const Key& key);
 namespace detail {
 
 /**
- * \brief Splits a string into tokens separated by white space.
- * \param str String that will be searched for tokens.
- * \return \c std::vector that contains all tokens.
- */
-inline std::vector<std::string>
-split_string(const std::string& str)
-{
-  std::vector<std::string> result;
-  boost::split(result, str, boost::is_space(), boost::token_compress_on);
-  return result;
-}
-
-/**
  * \brief Splits a string into tokens separated by a separator.
  * \param str String that will be searched for tokens.
  * \param sep Separator that delimits tokens.
