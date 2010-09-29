@@ -121,6 +121,10 @@ cont_to_string_vec(const Container& cont)
   return result;
 }
 
+//inline void
+//    (const std::stringstream& format, std::size_t , std::size_t)
+//{ line_format << " %|" << ++pos << "t|%" << ++arg << "%"; }
+
 /**
  * Returns true if \p field is a block specifier (\c "BLOCK" or
  * \c "DECAY"). Comparison is done case-insensitive.
@@ -235,13 +239,12 @@ public:
     if (rhs_trimmed.empty()) return *this;
 
     if (!empty() && back().find('#') != std::string::npos)
+    { back() += rhs; }
+    else
     {
-      back() += rhs;
-      return *this;
+      impl_.push_back(rhs_trimmed);
+      reformat();
     }
-
-    impl_.push_back(rhs_trimmed);
-    reformat();
     return *this;
   }
 
