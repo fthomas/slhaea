@@ -121,6 +121,10 @@ cont_to_string_vec(const Container& cont)
   return result;
 }
 
+/**
+ * Returns true if \p field is a block specifier (\c "BLOCK" or
+ * \c "DECAY"). Comparison is done case-insensitive.
+ */
 inline bool
 is_block_specifier(const std::string& field)
 {
@@ -131,6 +135,10 @@ is_block_specifier(const std::string& field)
   return (field_upper == "BLOCK") || (field_upper == "DECAY");
 }
 
+/**
+ * Returns true if \p a equals \c "(any)" or if \p a and \p b are case
+ * insensitively equal.
+ */
 inline bool
 index_iequals(const std::string& a, const std::string& b)
 { return (a == "(any)") || boost::iequals(a, b); }
