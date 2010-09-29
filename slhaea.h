@@ -222,9 +222,9 @@ public:
   template<class T> Line&
   operator<<(const T& field)
   {
-    const std::string rhs = to_string(field);
-    const std::string rhs_tr = boost::trim_copy(rhs);
-    if (rhs_tr.empty()) return *this;
+    const std::string rhs = boost::lexical_cast<std::string>(field);
+    const std::string rhs_trimmed = boost::trim_copy(rhs);
+    if (rhs_trimmed.empty()) return *this;
 
     if (!empty() && back().find('#') != std::string::npos)
     {
@@ -232,7 +232,7 @@ public:
       return *this;
     }
 
-    impl_.push_back(rhs_tr);
+    impl_.push_back(rhs_trimmed);
     reformat();
     return *this;
   }
@@ -316,11 +316,11 @@ public:
   {
     clear();
     const std::string
-      line_tr = boost::trim_right_copy(line.substr(0, line.find('\n')));
-    if (line_tr.empty()) return *this;
+      trimmed_line = boost::trim_right_copy(line.substr(0, line.find('\n')));
+    if (trimmed_line.empty()) return *this;
 
-    const std::size_t comment_pos = line_tr.find('#');
-    const std::string data = line_tr.substr(0, comment_pos);
+    const std::size_t comment_pos = trimmed_line.find('#');
+    const std::string data = trimmed_line.substr(0, comment_pos);
 
     std::stringstream line_format("");
     int argument = 0;
@@ -341,7 +341,7 @@ public:
     if (comment_pos != std::string::npos)
     {
       line_format << " %|" << comment_pos << "t|%" << ++argument << "%";
-      impl_.push_back(line_tr.substr(comment_pos));
+      impl_.push_back(trimmed_line.substr(comment_pos));
     }
 
     lineFormat_ = line_format.str().substr(1);
