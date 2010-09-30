@@ -999,15 +999,15 @@ public:
   {
     key_type key;
 
-    if (no_ind == i0) return at(key);
+    if (i0 == no_ind) return at(key);
     key.push_back(to_string(i0));
-    if (no_ind == i1) return at(key);
+    if (i1 == no_ind) return at(key);
     key.push_back(to_string(i1));
-    if (no_ind == i2) return at(key);
+    if (i2 == no_ind) return at(key);
     key.push_back(to_string(i2));
-    if (no_ind == i3) return at(key);
+    if (i3 == no_ind) return at(key);
     key.push_back(to_string(i3));
-    if (no_ind == i4) return at(key);
+    if (i4 == no_ind) return at(key);
     key.push_back(to_string(i4));
 
     return at(key);
@@ -1030,15 +1030,15 @@ public:
   {
     key_type key;
 
-    if (no_ind == i0) return at(key);
+    if (i0 == no_ind) return at(key);
     key.push_back(to_string(i0));
-    if (no_ind == i1) return at(key);
+    if (i1 == no_ind) return at(key);
     key.push_back(to_string(i1));
-    if (no_ind == i2) return at(key);
+    if (i2 == no_ind) return at(key);
     key.push_back(to_string(i2));
-    if (no_ind == i3) return at(key);
+    if (i3 == no_ind) return at(key);
     key.push_back(to_string(i3));
-    if (no_ind == i4) return at(key);
+    if (i4 == no_ind) return at(key);
     key.push_back(to_string(i4));
 
     return at(key);
