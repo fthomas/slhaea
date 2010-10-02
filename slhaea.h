@@ -9,11 +9,12 @@
 #define SLHAEA_H
 
 #include <algorithm>
-#include <climits>
 #include <cstddef>
 #include <functional>
+#include <iomanip>
 #include <iostream>
 #include <iterator>
+#include <limits>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -120,10 +121,6 @@ cont_to_string_vec(const Container& cont)
     boost::lexical_cast<std::string, typename Container::value_type>);
   return result;
 }
-
-//inline void
-//    (const std::stringstream& format, std::size_t , std::size_t)
-//{ line_format << " %|" << ++pos << "t|%" << ++arg << "%"; }
 
 /**
  * Returns true if \p field is a block specifier (\c "BLOCK" or
@@ -655,9 +652,32 @@ public:
   }
 
 private:
+  template<class T> Line&
+  add_fp_number(const T& number)
+  {
+    std::stringstream ss;
+    static const int digits = std::numeric_limits<T>::digits10;
+
+    ss << std::setprecision(digits) << std::scientific << number;
+    return *this << ss.str();
+  }
+
+private:
   impl_type impl_;
   std::string lineFormat_;
 };
+
+template<> inline Line&
+Line::operator<< <float>(const float& number)
+{ return add_fp_number(number); }
+
+template<> inline Line&
+Line::operator<< <double>(const double& number)
+{ return add_fp_number(number); }
+
+template<> inline Line&
+Line::operator<< <long double>(const long double& number)
+{ return add_fp_number(number); }
 
 
 /**
@@ -1402,8 +1422,10 @@ public:
 private:
   std::string name_;
   impl_type impl_;
-  static const int no_ind = INT_MIN;
+  static const int no_ind;
 };
+
+const int Block::no_ind = std::numeric_limits<int>::min();
 
 
 /**
