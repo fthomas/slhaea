@@ -1,7 +1,7 @@
 include_directories(.. ${Boost_INCLUDE_DIRS})
 
-add_executable(ut ut-main.cpp ut-line.h ut-block.h ut-coll.h ut-key.h
-               ../slhaea.h)
+file(GLOB UT_SOURCES ut-*.cpp ut-*.h)
+add_executable(ut ${UT_SOURCES} ../slhaea.h)
 target_link_libraries(ut ${Boost_LIBRARIES})
 
 add_executable(input input.cpp ../slhaea.h)
