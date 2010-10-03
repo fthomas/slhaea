@@ -56,7 +56,7 @@ to_string(const Source& arg)
 class Line;
 class Block;
 class Coll;
-class Key;
+struct Key;
 
 inline std::ostream& operator<<(std::ostream& os, const Line& line);
 inline std::ostream& operator<<(std::ostream& os, const Block& block);
