@@ -1,3 +1,5 @@
+add_subdirectory(code-analysis)
+
 include_directories(.. ${Boost_INCLUDE_DIRS})
 
 file(GLOB UT_SOURCES ut-*.cpp ut-*.h)
