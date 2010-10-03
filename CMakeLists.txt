@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 2.6)
 
 project(SLHAea CXX)
 
-# Enable more warnings if g++ or icpc is used.
-if(CMAKE_COMPILER_IS_GNUCXX)
+# Enable more warnings if g++, clang or icpc is used.
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER MATCHES clang)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
 elseif(CMAKE_CXX_COMPILER MATCHES icpc)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -strict-ansi -Wall -Wcheck")
