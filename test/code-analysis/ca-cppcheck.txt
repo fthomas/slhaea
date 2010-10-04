@@ -1,2 +1,2 @@
-[/home/frank/hep/code/slhaea/trunk/slhaea.h:259]: (error) Returning reference to temporary
-[/home/frank/hep/code/slhaea/trunk/slhaea.h:208]: (style) 'operator=' should return reference to self
+[slhaea.h:259]: (error) Returning reference to temporary
+[slhaea.h:208]: (style) 'operator=' should return reference to self

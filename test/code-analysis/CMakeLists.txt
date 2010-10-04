@@ -25,8 +25,13 @@ add_custom_command(
             > ${CURR_SRC_DIR}/ca-gcc-effc++.txt 2>&1
   DEPENDS ${SLHAEA_H})
 
-add_custom_target(ca-all
-  DEPENDS ca-clang.txt
-          ca-cppcheck.txt
-          ca-flawfinder.txt
-          ca-gcc-effc++.txt)
+set(CA_RESULTS
+  ca-clang.txt
+  ca-cppcheck.txt
+  ca-flawfinder.txt
+  ca-gcc-effc++.txt)
+
+string(REPLACE "/" "\\/" ESC_SRC_DIR ${CMAKE_SOURCE_DIR}/)
+add_custom_target(ca-all DEPENDS ${CA_RESULTS}
+  COMMAND sed -i 's/${ESC_SRC_DIR}//' ${CA_RESULTS}
+  WORKING_DIRECTORY ${CURR_SRC_DIR})
