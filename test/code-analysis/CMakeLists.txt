@@ -19,7 +19,14 @@ add_custom_command(
             > ${CURR_SRC_DIR}/ca-flawfinder.txt 2>&1
   DEPENDS ${SLHAEA_H})
 
+add_custom_command(
+  OUTPUT  ${CURR_SRC_DIR}/ca-gcc-effc++.txt
+  COMMAND g++ ARGS -Weffc++ -I${CMAKE_SOURCE_DIR} ${CURR_SRC_DIR}/dummy.cpp
+            > ${CURR_SRC_DIR}/ca-gcc-effc++.txt 2>&1
+  DEPENDS ${SLHAEA_H})
+
 add_custom_target(ca-all
   DEPENDS ca-clang.txt
           ca-cppcheck.txt
-          ca-flawfinder.txt)
+          ca-flawfinder.txt
+          ca-gcc-effc++.txt)
