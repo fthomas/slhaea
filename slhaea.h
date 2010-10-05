@@ -278,55 +278,6 @@ public:
   { return str(str() + rhs); }
 
   /**
-   * \brief Reformats the string representation of the %Line.
-   * \return Reference to \c *this.
-   */
-  Line&
-  reformat()
-  {
-    if (empty()) return *this;
-
-    std::stringstream line_format("");
-    int arg = 0, pos = 0;
-    const_iterator field = begin();
-
-    if (detail::is_block_specifier(*field))
-    {
-      line_format << " %|" << pos << "t|%" << ++arg << "%";
-      pos += field->length();
-
-      if (field+1 != end())
-      {
-        line_format << " %|" << ++pos << "t|%" << ++arg << "%";
-        pos += (++field)->length();
-      }
-    }
-    else if ((*field)[0] == '#')
-    {
-      line_format << " %|" << pos << "t|%" << ++arg << "%";
-      pos += field->length();
-    }
-    else
-    {
-      line_format << " %|" << ++pos << "t|%" << ++arg << "%";
-      pos += field->length();
-    }
-
-    while (++field != end())
-    {
-      // Compute the number of spaces required for proper indentation.
-      int dist = 3 - ((pos - 1) % 4);
-      pos += dist > 1 ? dist : dist + 4;
-
-      line_format << " %|" << pos << "t|%" << ++arg << "%";
-      pos += field->length();
-    }
-
-    lineFormat_ = line_format.str().substr(1);
-    return *this;
-  }
-
-  /**
    * \brief Assigns content to the %Line based on a string.
    * \param line String whose fields are used as content of the %Line.
    * \return Reference to \c *this.
@@ -644,6 +595,51 @@ public:
   {
     impl_.clear();
     lineFormat_.clear();
+  }
+
+  /** Reformats the string representation of the %Line. */
+  void
+  reformat()
+  {
+    if (empty()) return;
+
+    std::stringstream line_format("");
+    int arg = 0, pos = 0;
+    const_iterator field = begin();
+
+    if (detail::is_block_specifier(*field))
+    {
+      line_format << " %|" << pos << "t|%" << ++arg << "%";
+      pos += field->length();
+
+      if (field+1 != end())
+      {
+        line_format << " %|" << ++pos << "t|%" << ++arg << "%";
+        pos += (++field)->length();
+      }
+    }
+    else if ((*field)[0] == '#')
+    {
+      line_format << " %|" << pos << "t|%" << ++arg << "%";
+      pos += field->length();
+    }
+    else
+    {
+      line_format << " %|" << ++pos << "t|%" << ++arg << "%";
+      pos += field->length();
+    }
+
+    while (++field != end())
+    {
+      // Compute the number of spaces required for proper indentation.
+      int dist = 3 - ((pos - 1) % 4);
+      pos += dist > 1 ? dist : dist + 4;
+
+      line_format << " %|" << pos << "t|%" << ++arg << "%";
+      pos += field->length();
+    }
+
+    lineFormat_ = line_format.str().substr(1);
   }
 
   /**
