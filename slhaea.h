@@ -51,6 +51,25 @@ template<class Source> inline std::string
 to_string(const Source& arg)
 { return boost::lexical_cast<std::string>(arg); }
 
+/**
+ * \brief Converts an object of type \c Source to a string.
+ * \param arg Object that will be converted.
+ * \param precision Precision of float values that are written in
+ *   scientific notation.
+ * \return Result of the conversion of \p arg to \c std::string.
+ *
+ * This function is equivalent to \c to_string() except that all
+ * floating-point numbers are written in scientific notation with the
+ * given precision.
+ */
+template<class Source> inline std::string
+to_string(const Source& arg, int precision)
+{
+  std::stringstream ss("");
+  ss << std::setprecision(precision) << std::scientific << arg;
+  return ss.str();
+}
+
 
 // forward declarations
 class Line;
@@ -655,7 +674,7 @@ private:
   template<class T> Line&
   add_fp_number(const T& number)
   {
-    std::stringstream ss;
+    std::stringstream ss("");
     static const int digits = std::numeric_limits<T>::digits10;
 
     ss << std::setprecision(digits) << std::scientific << number;
