@@ -345,6 +345,42 @@ BOOST_FIXTURE_TEST_CASE(testSwap, F)
   BOOST_CHECK(c2.str() == "");
 }
 
+BOOST_AUTO_TEST_CASE(testReformat)
+{
+  Coll c1;
+  c1.push_back("  Block  t1 ");
+  c1.push_back(" DECAY  t2");
+  c1.push_back("1 2 3 4");
+
+  c1.reformat();
+  BOOST_CHECK(c1.str() ==
+    "Block t1\n"
+    "DECAY t2\n"
+    " 1  2   3   4\n");
+}
+
+BOOST_FIXTURE_TEST_CASE(testUnComment, F)
+{
+  Coll c1;
+  c1.str(s1);
+
+  Coll c2;
+  c2.str(s1);
+
+  BOOST_CHECK(c1.str() == c2.str());
+  c1.comment();
+  BOOST_CHECK(c1.str() != c2.str());
+  c2.comment();
+  BOOST_CHECK(c1.str() == c2.str());
+  c1.uncomment();
+  BOOST_CHECK(c1.str() != c2.str());
+  c2.uncomment();
+  BOOST_CHECK(c1.str() == c2.str());
+  c1.uncomment();
+  c2.uncomment();
+  BOOST_CHECK(c1.str() == c2.str());
+}
+
 BOOST_FIXTURE_TEST_CASE(testInEquality, F)
 {
   Coll c1;

@@ -1944,6 +1944,30 @@ public:
   clear()
   { impl_.clear(); }
 
+  /**
+   * \brief Reformats all \Blocks in the %Coll.
+   * \sa Block::reformat()
+   */
+  void
+  reformat()
+  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::reformat)); }
+
+  /**
+   * \brief Comments all \Blocks in the %Coll.
+   * \sa Block::comment()
+   */
+  void
+  comment()
+  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::comment)); }
+
+  /**
+   * \brief Uncomments all \Blocks in the %Coll.
+   * \sa Block::uncomment()
+   */
+  void
+  uncomment()
+  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
+
 private:
   struct name_iequals : public std::unary_function<value_type, bool>
   {
