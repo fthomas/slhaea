@@ -399,6 +399,24 @@ BOOST_AUTO_TEST_CASE(testSwap)
   BOOST_CHECK(b2.str() == "");
 }
 
+BOOST_AUTO_TEST_CASE(testReformat)
+{
+  Block b1("t1");
+  b1[""] = "  BLOCK  t1";
+  b1[""] = "   DECAY  t2";
+  b1[""] = "1 1 1 1";
+  b1[""] = " 2 2 2 2";
+  b1[""] = "  # 3 3 3";
+
+  b1.reformat();
+  BOOST_CHECK(b1.str() ==
+    "BLOCK t1\n"
+    "DECAY t2\n"
+    " 1  1   1   1\n"
+    " 2  2   2   2\n"
+    "# 3 3 3\n");
+}
+
 BOOST_AUTO_TEST_CASE(testUnComment)
 {
   Block b1("t1");

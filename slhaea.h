@@ -1423,6 +1423,14 @@ public:
   }
 
   /**
+   * \brief Reformats all \Lines in the %Block.
+   * \sa Line::reformat()
+   */
+  void
+  reformat()
+  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::reformat)); }
+
+  /**
    * \brief Comments all \Lines in the %Block.
    * \sa Line::comment()
    */
