@@ -172,15 +172,15 @@ BOOST_AUTO_TEST_CASE(testFloatInserting)
 
   l1.clear();
   l1 << 1 << float(ld);
-  BOOST_CHECK(l1.str() == " 1  " + to_string(float(ld), digits_f));
+  BOOST_CHECK(l1.str() == " 1  " + to_string(ld, digits_f));
 
   l1.clear();
   l1 << 2 << double(ld);
-  BOOST_CHECK(l1.str() == " 2  " + to_string(double(ld), digits_d));
+  BOOST_CHECK(l1.str() == " 2  " + to_string(ld, digits_d));
 
   l1.clear();
   l1 << 3 << (long double)(ld);
-  BOOST_CHECK(l1.str() == " 3  " + to_string((long double)(ld), digits_ld));
+  BOOST_CHECK(l1.str() == " 3  " + to_string(ld, digits_ld));
 }
 
 BOOST_AUTO_TEST_CASE(testSubscriptAccessor)
