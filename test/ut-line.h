@@ -6,6 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <algorithm>
+#include <limits>
 #include <string>
 #include <vector>
 #include "slhaea.h"
@@ -158,6 +159,28 @@ BOOST_AUTO_TEST_CASE(testInserting)
   l2 = "1 2 3 4 5 6";
   l2.reformat();
   BOOST_CHECK(l2.str() == " 1  2   3   4   5   6");
+}
+
+BOOST_AUTO_TEST_CASE(testFloatInserting)
+{
+  const int digits_f  = std::numeric_limits<float>::digits10;
+  const int digits_d  = std::numeric_limits<double>::digits10;
+  const int digits_ld = std::numeric_limits<long double>::digits10;
+
+  const long double ld = 1.234567890123456789012345678901234567890L;
+  Line l1;
+
+  l1.clear();
+  l1 << 1 << float(ld);
+  BOOST_CHECK(l1.str() == " 1  " + to_string(float(ld), digits_f));
+
+  l1.clear();
+  l1 << 2 << double(ld);
+  BOOST_CHECK(l1.str() == " 2  " + to_string(double(ld), digits_d));
+
+  l1.clear();
+  l1 << 3 << (long double)(ld);
+  BOOST_CHECK(l1.str() == " 3  " + to_string((long double)(ld), digits_ld));
 }
 
 BOOST_AUTO_TEST_CASE(testSubscriptAccessor)
