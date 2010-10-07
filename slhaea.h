@@ -531,7 +531,7 @@ public:
     if (size() < 2) return false;
 
     const_iterator field = begin();
-    return (detail::is_block_specifier(*field) && ((*++field)[0] != '#'));
+    return detail::is_block_specifier(*field) && ((*++field)[0] != '#');
   }
 
   /** Returns true if the %Line begins with \c "#". */
@@ -966,22 +966,7 @@ public:
   at(const std::string& s0,      const std::string& s1 = "",
      const std::string& s2 = "", const std::string& s3 = "",
      const std::string& s4 = "")
-  {
-    key_type key;
-
-    if (s0.empty()) return at(key);
-    key.push_back(s0);
-    if (s1.empty()) return at(key);
-    key.push_back(s1);
-    if (s2.empty()) return at(key);
-    key.push_back(s2);
-    if (s3.empty()) return at(key);
-    key.push_back(s3);
-    if (s4.empty()) return at(key);
-    key.push_back(s4);
-
-    return at(key);
-  }
+  { return at(strings_to_key(s0, s1, s2, s3, s4)); }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -999,22 +984,7 @@ public:
   at(const std::string& s0,      const std::string& s1 = "",
      const std::string& s2 = "", const std::string& s3 = "",
      const std::string& s4 = "") const
-  {
-    key_type key;
-
-    if (s0.empty()) return at(key);
-    key.push_back(s0);
-    if (s1.empty()) return at(key);
-    key.push_back(s1);
-    if (s2.empty()) return at(key);
-    key.push_back(s2);
-    if (s3.empty()) return at(key);
-    key.push_back(s3);
-    if (s4.empty()) return at(key);
-    key.push_back(s4);
-
-    return at(key);
-  }
+  { return at(strings_to_key(s0, s1, s2, s3, s4)); }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -1031,22 +1001,7 @@ public:
   reference
   at(int i0, int i1 = no_ind, int i2 = no_ind, int i3 = no_ind,
      int i4 = no_ind)
-  {
-    key_type key;
-
-    if (i0 == no_ind) return at(key);
-    key.push_back(to_string(i0));
-    if (i1 == no_ind) return at(key);
-    key.push_back(to_string(i1));
-    if (i2 == no_ind) return at(key);
-    key.push_back(to_string(i2));
-    if (i3 == no_ind) return at(key);
-    key.push_back(to_string(i3));
-    if (i4 == no_ind) return at(key);
-    key.push_back(to_string(i4));
-
-    return at(key);
-  }
+  { return at(ints_to_key(i0, i1, i2, i3, i4)); }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -1062,22 +1017,7 @@ public:
   const_reference
   at(int i0, int i1 = no_ind, int i2 = no_ind, int i3 = no_ind,
      int i4 = no_ind) const
-  {
-    key_type key;
-
-    if (i0 == no_ind) return at(key);
-    key.push_back(to_string(i0));
-    if (i1 == no_ind) return at(key);
-    key.push_back(to_string(i1));
-    if (i2 == no_ind) return at(key);
-    key.push_back(to_string(i2));
-    if (i3 == no_ind) return at(key);
-    key.push_back(to_string(i3));
-    if (i4 == no_ind) return at(key);
-    key.push_back(to_string(i4));
-
-    return at(key);
-  }
+  { return at(ints_to_key(i0, i1, i2, i3, i4)); }
 
   /**
    * Returns a read/write reference to the first element of the
@@ -1441,6 +1381,33 @@ public:
   void
   uncomment()
   { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
+
+private:
+  key_type
+  strings_to_key(const std::string& s0, const std::string& s1,
+                 const std::string& s2, const std::string& s3,
+                 const std::string& s4) const
+  {
+    key_type key;
+    if (s0.empty()) return key; key.push_back(s0);
+    if (s1.empty()) return key; key.push_back(s1);
+    if (s2.empty()) return key; key.push_back(s2);
+    if (s3.empty()) return key; key.push_back(s3);
+    if (s4.empty()) return key; key.push_back(s4);
+    return key;
+  }
+
+  key_type
+  ints_to_key(int i0, int i1, int i2, int i3, int i4) const
+  {
+    key_type key;
+    if (i0 == no_ind) return key; key.push_back(to_string(i0));
+    if (i1 == no_ind) return key; key.push_back(to_string(i1));
+    if (i2 == no_ind) return key; key.push_back(to_string(i2));
+    if (i3 == no_ind) return key; key.push_back(to_string(i3));
+    if (i4 == no_ind) return key; key.push_back(to_string(i4));
+    return key;
+  }
 
 private:
   std::string name_;
