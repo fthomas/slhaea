@@ -159,6 +159,10 @@ BOOST_AUTO_TEST_CASE(testInserting)
   l2 = "1 2 3 4 5 6";
   l2.reformat();
   BOOST_CHECK(l2.str() == " 1  2   3   4   5   6");
+
+  l2 = "";
+  l2.reformat();
+  BOOST_CHECK(l2.str() == "");
 }
 
 BOOST_AUTO_TEST_CASE(testFloatInserting)
@@ -186,12 +190,19 @@ BOOST_AUTO_TEST_CASE(testFloatInserting)
 BOOST_AUTO_TEST_CASE(testSubscriptAccessor)
 {
   Line l1("1 2 3 # 4 5");
+  const Line cl1 = l1;
 
   BOOST_CHECK(l1[0] == "1");
   BOOST_CHECK(l1[1] == "2");
   BOOST_CHECK(l1[2] == "3");
   BOOST_CHECK(l1[3] == "# 4 5");
   BOOST_CHECK(l1.size() == 4);
+
+  BOOST_CHECK(cl1[0] == "1");
+  BOOST_CHECK(cl1[1] == "2");
+  BOOST_CHECK(cl1[2] == "3");
+  BOOST_CHECK(cl1[3] == "# 4 5");
+  BOOST_CHECK(cl1.size() == 4);
 
   l1[0] = "5";
   l1[1] = "4";
@@ -380,6 +391,13 @@ BOOST_AUTO_TEST_CASE(testIntrospection)
   BOOST_CHECK(l1.is_comment_line() == false);
   BOOST_CHECK(l1.is_data_line()    == false);
 
+  l1 = "dEcAy #TEST";
+  BOOST_CHECK(l1.size()      == 2);
+  BOOST_CHECK(l1.data_size() == 1);
+  BOOST_CHECK(l1.is_block_def()    == false);
+  BOOST_CHECK(l1.is_comment_line() == false);
+  BOOST_CHECK(l1.is_data_line()    == false);
+
   l1 = " 1 0.123 # comment ";
   BOOST_CHECK(l1.size()      == 3);
   BOOST_CHECK(l1.data_size() == 2);
@@ -393,6 +411,13 @@ BOOST_AUTO_TEST_CASE(testIntrospection)
   BOOST_CHECK(l1.is_block_def()    == false);
   BOOST_CHECK(l1.is_comment_line() == false);
   BOOST_CHECK(l1.is_data_line()    == true);
+
+  l1 = "";
+  BOOST_CHECK(l1.size()      == 0);
+  BOOST_CHECK(l1.data_size() == 0);
+  BOOST_CHECK(l1.is_block_def()    == false);
+  BOOST_CHECK(l1.is_comment_line() == false);
+  BOOST_CHECK(l1.is_data_line()    == false);
 }
 
 BOOST_AUTO_TEST_CASE(testSwap)

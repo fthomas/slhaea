@@ -59,6 +59,7 @@ BOOST_AUTO_TEST_CASE(testReadWrite)
   string s2 =
     "BLOCK test\n"
     " 1  0.1\n"
+    "       \n"
     " 2  0.2";
 
   Block b4;
@@ -74,17 +75,18 @@ BOOST_AUTO_TEST_CASE(testSubscriptAtAccessors)
   b1[""] = " 1 1 # 11";
   b1[""] = " 1 2 # 12";
   b1[""] = " 2 1 # 21";
+  b1[""] = " 10 1 2";
+  b1[""] = " 11 1 2 3";
+  b1[""] = " 12 1 2 3 4";
   const Block cb1 = b1;
 
   string s1 =
       " 1 1 # 11\n"
       " 1 2 # 12\n"
-      " 2 1 # 21\n";
-
-  BOOST_CHECK(b1.str()   == s1);
-  BOOST_CHECK(b1.size()  == 3);
-  BOOST_CHECK(cb1.str()  == s1);
-  BOOST_CHECK(cb1.size() == 3);
+      " 2 1 # 21\n"
+      " 10 1 2\n"
+      " 11 1 2 3\n"
+      " 12 1 2 3 4\n";
 
   BOOST_CHECK(b1["1"].str() == " 1 1 # 11");
   BOOST_CHECK(b1["2"].str() == " 2 1 # 21");
@@ -99,10 +101,16 @@ BOOST_AUTO_TEST_CASE(testSubscriptAtAccessors)
   BOOST_CHECK(b1.at("1", "1").str()  == " 1 1 # 11");
   BOOST_CHECK(b1.at("1", "2").str()  == " 1 2 # 12");
   BOOST_CHECK(b1.at("2", "1").str()  == " 2 1 # 21");
+  BOOST_CHECK(b1.at("10", "1", "2").str()           == " 10 1 2");
+  BOOST_CHECK(b1.at("11", "1", "2", "3").str()      == " 11 1 2 3");
+  BOOST_CHECK(b1.at("12", "1", "2", "3", "4").str() == " 12 1 2 3 4");
 
   BOOST_CHECK(b1.at(1, 1).str()      == " 1 1 # 11");
   BOOST_CHECK(b1.at(1, 2).str()      == " 1 2 # 12");
   BOOST_CHECK(b1.at(2, 1).str()      == " 2 1 # 21");
+  BOOST_CHECK(b1.at(10, 1, 2).str()       == " 10 1 2");
+  BOOST_CHECK(b1.at(11, 1, 2, 3).str()    == " 11 1 2 3");
+  BOOST_CHECK(b1.at(12, 1, 2, 3, 4).str() == " 12 1 2 3 4");
 
   BOOST_CHECK(cb1.at("1", "1").str() == " 1 1 # 11");
   BOOST_CHECK(cb1.at("1", "2").str() == " 1 2 # 12");
@@ -122,6 +130,8 @@ BOOST_AUTO_TEST_CASE(testSubscriptAtAccessors)
 
   BOOST_CHECK(b1[vs1].str() == " 1 2 # 12");
   BOOST_CHECK(b1[vi1].str() == " 1 2 # 12");
+  BOOST_CHECK(b1.at(vs1).str()  == " 1 2 # 12");
+  BOOST_CHECK(b1.at(vi1).str()  == " 1 2 # 12");
   BOOST_CHECK(cb1.at(vs1).str() == " 1 2 # 12");
   BOOST_CHECK(cb1.at(vi1).str() == " 1 2 # 12");
 
@@ -170,6 +180,10 @@ BOOST_AUTO_TEST_CASE(testIterators)
   b1[""] = " 2 1 # 2 1";
   b1[""] = " 2 2 # 2 2";
   const Block cb1 = b1;
+
+  BOOST_CHECK(b1.find(vector<string>(0))       == b1.end());
+  BOOST_CHECK(cb1.find(vector<string>(0))      == cb1.end());
+  BOOST_CHECK(cb1.find(vector<string>(4, "A")) == cb1.end());
 
   BOOST_CHECK((*(b1.begin())).str()  == (*(cb1.begin())).str());
   BOOST_CHECK((*(b1.end()-1)).str()  == (*(cb1.end()-1)).str());
@@ -286,10 +300,22 @@ BOOST_AUTO_TEST_CASE(testIntrospection)
   BOOST_CHECK(b1.count(vs2) == 1);
   BOOST_CHECK(b1.size()     == 6);
 
+  vs1.push_back("B");
+  vs2.push_back("B");
+  vs1.push_back("C");
+  vs2.push_back("C");
+
+  BOOST_CHECK(b1.count(vs1) == 0);
+  BOOST_CHECK(b1.count(vs2) == 0);
+  BOOST_CHECK(b1.size()     == 6);
+
   b1.clear();
 
   BOOST_CHECK(b1.size()  == 0);
   BOOST_CHECK(b1.empty() == true);
+
+  BOOST_CHECK(b1.count(vs1)               == 0);
+  BOOST_CHECK(b1.count(vector<string>(0)) == 0);
 }
 
 BOOST_AUTO_TEST_CASE(testPushPop)
