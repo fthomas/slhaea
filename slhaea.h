@@ -668,12 +668,12 @@ public:
 
 private:
   template<class T> Line&
-  add_fp_number(const T& number)
+  add_fundamental_type(const T& arg)
   {
     std::stringstream ss("");
     static const int digits = std::numeric_limits<T>::digits10;
 
-    ss << std::setprecision(digits) << std::scientific << number;
+    ss << std::setprecision(digits) << std::scientific << arg;
     return *this << ss.str();
   }
 
@@ -684,15 +684,15 @@ private:
 
 template<> inline Line&
 Line::operator<< <float>(const float& number)
-{ return add_fp_number(number); }
+{ return add_fundamental_type(number); }
 
 template<> inline Line&
 Line::operator<< <double>(const double& number)
-{ return add_fp_number(number); }
+{ return add_fundamental_type(number); }
 
 template<> inline Line&
 Line::operator<< <long double>(const long double& number)
-{ return add_fp_number(number); }
+{ return add_fundamental_type(number); }
 
 
 /**
