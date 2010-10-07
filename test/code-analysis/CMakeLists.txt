@@ -22,7 +22,7 @@ add_code_analyzer(cppcheck
   ca-cppcheck.txt)
 
 add_code_analyzer(flawfinder
-  "-DQ;${SLHAEA_H}"
+  "-DQ;-m;0;${SLHAEA_H}"
   ca-flawfinder.txt)
 
 add_code_analyzer(g++
