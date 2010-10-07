@@ -2,11 +2,12 @@ set(CURR_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(SLHAEA_H ${CMAKE_SOURCE_DIR}/slhaea.h)
 
 function(add_code_analyzer CMD ARGS OUTFILE)
-    find_program(${CMD}_EXEC ${CMD})
-    if(${CMD}_EXEC)
+    find_program(CODE_ANALYZER_${CMD} ${CMD})
+    if(CODE_ANALYZER_${CMD})
         add_custom_command(
           OUTPUT  ${CURR_SRC_DIR}/${OUTFILE}
-          COMMAND ${${CMD}_EXEC} ARGS ${ARGS} > ${CURR_SRC_DIR}/${OUTFILE} 2>&1
+          COMMAND ${CODE_ANALYZER_${CMD}}
+          ARGS    ${ARGS} > ${CURR_SRC_DIR}/${OUTFILE} 2>&1
           DEPENDS ${SLHAEA_H})
 
         set(CA_RESULTS ${CA_RESULTS};${OUTFILE} PARENT_SCOPE)
