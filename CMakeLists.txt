@@ -12,6 +12,7 @@ endif()
 
 find_package(Boost REQUIRED COMPONENTS unit_test_framework)
 
+enable_testing()
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
 add_subdirectory(test)
