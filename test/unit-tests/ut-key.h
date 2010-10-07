@@ -5,6 +5,7 @@
 // (See accompanying file ../../LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+#include <sstream>
 #include <string>
 #include <vector>
 #include "slhaea.h"
@@ -102,6 +103,15 @@ BOOST_AUTO_TEST_CASE(testStr)
   BOOST_CHECK(k1.block       == "A");
   BOOST_CHECK(k1.line.size() == 10);
   BOOST_CHECK(k1.field       == 0);
+
+  BOOST_CHECK_THROW(k1.str("TEST;1;1;"), invalid_argument);
+  BOOST_CHECK_THROW(k1.str("TEST;11"),   invalid_argument);
+
+  k1.str("TEST;1;1");
+  stringstream ss("");
+
+  ss << k1;
+  BOOST_CHECK(ss.str() == k1.str());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

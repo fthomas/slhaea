@@ -167,9 +167,9 @@ BOOST_AUTO_TEST_CASE(testInserting)
 
 BOOST_AUTO_TEST_CASE(testFloatInserting)
 {
-  const int digits_f  = std::numeric_limits<float>::digits10;
-  const int digits_d  = std::numeric_limits<double>::digits10;
-  const int digits_ld = std::numeric_limits<long double>::digits10;
+  const int digits_f  = numeric_limits<float>::digits10;
+  const int digits_d  = numeric_limits<double>::digits10;
+  const int digits_ld = numeric_limits<long double>::digits10;
 
   const long double ld = 1.234567890123456789012345678901234567890L;
   Line l1;
@@ -348,6 +348,7 @@ BOOST_AUTO_TEST_CASE(testIterators)
 BOOST_AUTO_TEST_CASE(testIntrospection)
 {
   Line l1;
+  BOOST_CHECK(l1.max_size() > 0);
 
   l1 = "# 1 2 3";
   BOOST_CHECK(l1.size()      == 1);
@@ -513,6 +514,31 @@ BOOST_AUTO_TEST_CASE(testInEquality)
   l2 = "";
   BOOST_CHECK(l1 == l2);
   BOOST_CHECK(l2 == l1);
+
+  l1 = "1 2 3 4";
+  l2 = "1 2 3  4";
+  BOOST_CHECK(l1 != l2);
+  BOOST_CHECK(l2 != l1);
+
+  l1 = "1 2 3 4";
+  l2 = "1 2 3 5";
+  BOOST_CHECK(l1 != l2);
+  BOOST_CHECK(l2 != l1);
+
+  l1 = "1 2 3";
+  l2 = "1 2 3";
+  BOOST_CHECK(l1 >= l2);
+  BOOST_CHECK(l2 >= l1);
+  BOOST_CHECK(l1 <= l2);
+  BOOST_CHECK(l2 <= l1);
+
+  l1 = "1 2 3";
+  l2 = "1 2 4";
+  BOOST_CHECK(l1 <  l2);
+  BOOST_CHECK(l1 <= l2);
+  BOOST_CHECK(l2 >  l1);
+  BOOST_CHECK(l2 >= l1);
+
 }
 
 BOOST_AUTO_TEST_CASE(testOrder)

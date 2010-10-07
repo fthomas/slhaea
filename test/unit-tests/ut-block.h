@@ -6,6 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <algorithm>
+#include <limits>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -142,6 +143,17 @@ BOOST_AUTO_TEST_CASE(testSubscriptAtAccessors)
   vs1[1] = "(any)";
   BOOST_CHECK(b1[vs1].str()     == " 1 1 # 11");
   BOOST_CHECK(cb1.at(vs1).str() == " 1 1 # 11");
+
+  BOOST_CHECK_THROW(b1.at(9, 8 ,7),  out_of_range);
+  BOOST_CHECK_THROW(cb1.at(9, 8 ,7), out_of_range);
+
+  BOOST_CHECK_THROW(b1.at(""),  out_of_range);
+  BOOST_CHECK_THROW(cb1.at(""), out_of_range);
+
+  int no_ind = numeric_limits<int>::min();
+
+  BOOST_CHECK_THROW(b1.at(no_ind),  out_of_range);
+  BOOST_CHECK_THROW(cb1.at(no_ind), out_of_range);
 }
 
 BOOST_AUTO_TEST_CASE(testGeneralAccessors)
@@ -261,8 +273,9 @@ BOOST_AUTO_TEST_CASE(testIntrospection)
 {
   Block b1;
 
-  BOOST_CHECK(b1.size()  == 0);
-  BOOST_CHECK(b1.empty() == true);
+  BOOST_CHECK(b1.max_size() > 0);
+  BOOST_CHECK(b1.size()     == 0);
+  BOOST_CHECK(b1.empty()    == true);
 
   b1[""] = " a A # aA";
   b1[""] = " a a # aa";
@@ -495,8 +508,15 @@ BOOST_AUTO_TEST_CASE(testInEquality)
   BOOST_CHECK(b2 == b2);
   BOOST_CHECK(b1 == b2);
   BOOST_CHECK(b2 == b1);
+  BOOST_CHECK(b1 >= b2);
+  BOOST_CHECK(b1 <= b2);
 
-  b1[""] = " 2 4 # 24";
+  b1["2"] = " 2 4 # 24";
+
+  BOOST_CHECK(b1 >= b2);
+  BOOST_CHECK(b1 >  b2);
+  BOOST_CHECK(b2 <= b1);
+  BOOST_CHECK(b2 <  b1);
 
   BOOST_CHECK(b1 == b1);
   BOOST_CHECK(b2 == b2);

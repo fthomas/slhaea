@@ -6,6 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include "slhaea.h"
 
@@ -30,6 +31,8 @@ struct F {
          "Block test2\n"
          " 2  1\n"
          " 2  2\n"
+         " \t  \n"
+         "     \n"
          "bLoCk test3\n"
          " 3  1\n"
          " 3  2\n"
@@ -143,6 +146,14 @@ BOOST_FIXTURE_TEST_CASE(testAccessors, F)
   BOOST_CHECK(c1.at("test2").back().is_data_line()   == true);
   BOOST_CHECK(cc1.at("TesT1").back().is_data_line()  == true);
   BOOST_CHECK(cc1.at("TesT2").back().is_data_line()  == true);
+
+  BOOST_CHECK(c1.front().name()  == "test1");
+  BOOST_CHECK(c1.back().name()   == "test2");
+  BOOST_CHECK(cc1.front().name() == "test1");
+  BOOST_CHECK(cc1.back().name()  == "test2");
+
+  BOOST_CHECK_THROW(c1.at("test3"),  out_of_range);
+  BOOST_CHECK_THROW(cc1.at("test3"), out_of_range);
 }
 
 BOOST_FIXTURE_TEST_CASE(testIterators, F)
@@ -207,6 +218,9 @@ BOOST_FIXTURE_TEST_CASE(testIntrospection, F)
   Coll c1;
   c1.str(s2);
   const Coll cc1 = c1;
+
+  BOOST_CHECK(c1.max_size()  > 0);
+  BOOST_CHECK(cc1.max_size() > 0);
 
   BOOST_CHECK(c1.find("test1")  == c1.begin()+0);
   BOOST_CHECK(c1.find("test2")  == c1.begin()+1);
@@ -296,6 +310,7 @@ BOOST_FIXTURE_TEST_CASE(testInsertErase, F)
 
   BOOST_CHECK(c1.size() == 4);
   BOOST_CHECK(c1.count("test1") == 3);
+  BOOST_CHECK(c1.erase("test3") == c1.end());
 
   c1.erase(c1.end()-1, c1.end());
 
