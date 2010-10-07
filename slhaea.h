@@ -65,9 +65,9 @@ to_string(const Source& arg)
 template<class Source> inline std::string
 to_string(const Source& arg, int precision)
 {
-  std::stringstream ss("");
-  ss << std::setprecision(precision) << std::scientific << arg;
-  return ss.str();
+  std::stringstream output("");
+  output << std::setprecision(precision) << std::scientific << arg;
+  return output.str();
 }
 
 
@@ -765,18 +765,16 @@ public:
    * \param is Input stream to read content from.
    * \return Reference to \c *this.
    *
-   * This functions clears the content of the %Block, reads non-empty
-   * lines from \p is, transforms them into \Lines and adds them to
-   * the end of the %Block.
+   * This functions reads non-empty lines from \p is, transforms them
+   * into \Lines and adds them to the end of the %Block.
    */
   Block&
   read(std::istream& is)
   {
     std::string line_str;
     value_type line;
-    bool nameless = true;
+    bool nameless = name().empty();
 
-    clear();
     while (std::getline(is, line_str))
     {
       if (boost::all(line_str, boost::is_space())) continue;
@@ -804,17 +802,18 @@ public:
   Block&
   str(const std::string& block)
   {
-    std::stringstream ss(block);
-    return read(ss);
+    std::stringstream input(block);
+    clear();
+    return read(input);
   }
 
   /** Returns a string representation of the %Block. */
   std::string
   str() const
   {
-    std::stringstream ss("");
-    ss << *this;
-    return ss.str();
+    std::stringstream output("");
+    output << *this;
+    return output.str();
   }
 
   // element access
@@ -1515,23 +1514,24 @@ public:
 
   /**
    * \brief Assigns content to the %Coll based on a string.
-   * \param slhaString String that is used as content for the %Coll.
+   * \param coll String that is used as content for the %Coll.
    * \returns Reference to \c *this.
    */
   Coll&
-  str(const std::string& slhaString)
+  str(const std::string& coll)
   {
-    std::stringstream ss(slhaString);
-    return read(ss);
+    std::stringstream input(coll);
+    clear();
+    return read(input);
   }
 
   /** Returns a string representation of the %Coll. */
   std::string
   str() const
   {
-    std::stringstream ss("");
-    ss << *this;
-    return ss.str();
+    std::stringstream output("");
+    output << *this;
+    return output.str();
   }
 
   // element access

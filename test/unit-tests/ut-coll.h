@@ -63,6 +63,18 @@ BOOST_FIXTURE_TEST_CASE(testReadWrite, F)
   BOOST_CHECK(c1.str() == s1);
   BOOST_CHECK(c2.str() == s1);
   BOOST_CHECK(c3.str() == s1);
+
+  string s4 =
+    "# test\n"
+    "BLOCK test\n";
+  Coll c4;
+  c4.str(s4);
+
+  BOOST_CHECK(c4.size() == 2);
+  BOOST_CHECK(c4.front().size() == 1);
+
+  c4.str("");
+  BOOST_CHECK(c4.size() == 0);
 }
 
 BOOST_FIXTURE_TEST_CASE(testField, F)
@@ -415,6 +427,12 @@ BOOST_FIXTURE_TEST_CASE(testInEquality, F)
   BOOST_CHECK(c2 == c2);
   BOOST_CHECK(c1 != c2);
   BOOST_CHECK(c2 != c1);
+
+  BOOST_CHECK(c1 >  c2);
+  BOOST_CHECK(c1 >= c2);
+  BOOST_CHECK(c2 <  c1);
+  BOOST_CHECK(c2 <= c1);
+
 
   c1.clear();
   c2.clear();
