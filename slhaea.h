@@ -562,8 +562,10 @@ public:
   size_type
   data_size() const
   {
-    size_type data_size = size();
-    if ((data_size > 0) && (back()[0] == '#')) --data_size;
+    size_type data_size = 0;
+    for (const_iterator field = begin(); field != end();
+         ++field, ++data_size)
+    { if ((*field)[0] == '#') break; }
     return data_size;
   }
 
@@ -658,8 +660,7 @@ public:
   void
   uncomment()
   {
-    if (empty()) return;
-    if (front()[0] == '#')
+    if (!empty() && front()[0] == '#')
     {
       front().erase(0, 1);
       str(str());
