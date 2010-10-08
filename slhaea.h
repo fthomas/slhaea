@@ -146,13 +146,13 @@ cont_to_string_vec(const Container& cont)
  * \c "DECAY"). Comparison is done case-insensitive.
  */
 inline bool
-is_block_specifier(const std::string& field)
+is_block_specifier(const std::string& arg)
 {
   // "BLOCK" and "DECAY" are both five characters long.
-  if (field.length() != 5) return false;
+  if (arg.length() != 5) return false;
 
-  const std::string field_upper = boost::to_upper_copy(field);
-  return (field_upper == "BLOCK") || (field_upper == "DECAY");
+  const std::string arg_upper = boost::to_upper_copy(arg);
+  return (arg_upper == "BLOCK") || (arg_upper == "DECAY");
 }
 
 /**
@@ -229,14 +229,14 @@ public:
 
   /**
    * \brief Appends a string to the end of the %Line.
-   * \param rhs String that is appended to the %Line.
+   * \param arg String that is appended to the %Line.
    * \return Reference to \c *this.
    *
    * This function is an alias for append().
    */
   Line&
-  operator+=(const std::string& rhs)
-  { return append(rhs); }
+  operator+=(const std::string& arg)
+  { return append(arg); }
 
   /**
    * \brief Adds an element to the end of the %Line.
@@ -266,16 +266,16 @@ public:
 
   /**
    * \brief Appends a string to the end of the %Line.
-   * \param rhs String that is appended to the %Line.
+   * \param arg String that is appended to the %Line.
    * \return Reference to \c *this.
    *
-   * This functions appends \p rhs to output of str() const and uses
-   * this temporary string as input for str(). Based on the temporary
-   * string size() is increased or remains unchanged.
+   * This functions appends \p arg to the output of str() const and
+   * uses this temporary string as input for str(). Based on the
+   * temporary string size() is increased or remains unchanged.
    */
   Line&
-  append(const std::string& rhs)
-  { return str(str() + rhs); }
+  append(const std::string& arg)
+  { return str(str() + arg); }
 
   /**
    * \brief Assigns content to the %Line based on a string.
@@ -563,9 +563,11 @@ public:
   data_size() const
   {
     size_type data_size = 0;
-    for (const_iterator field = begin(); field != end();
-         ++field, ++data_size)
-    { if ((*field)[0] == '#') break; }
+    for (const_iterator field = begin(); field != end(); ++field)
+    {
+      if ((*field)[0] == '#') break;
+      ++data_size;
+    }
     return data_size;
   }
 
@@ -679,11 +681,11 @@ private:
   template<class T> Line&
   add_fundamental_type(const T& arg)
   {
-    std::stringstream ss("");
+    std::stringstream input("");
     static const int digits = std::numeric_limits<T>::digits10;
 
-    ss << std::setprecision(digits) << std::scientific << arg;
-    return *this << ss.str();
+    input << std::setprecision(digits) << std::scientific << arg;
+    return *this << input.str();
   }
 
 private:
