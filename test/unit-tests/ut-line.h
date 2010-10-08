@@ -156,6 +156,14 @@ BOOST_AUTO_TEST_CASE(testInserting)
   l2 << 1 << 2 << 3 << 4 << 5 << 6;
   BOOST_CHECK(l2.str() == " 1  2   3   4   5   6");
 
+  l2.clear();
+  l2 << "" << " " << "\t \n" << "1" << 2 << "\n" << "# test" << "\r";
+  BOOST_CHECK(l2.str() == " 1  2   # test");
+
+  l2.clear();
+  l2 << "# test" << "\n \t" << "  1" << " 2" << 3 << " # more";
+  BOOST_CHECK(l2.str() == "# test  1 23 # more");
+
   l2 = "1 2 3 4 5 6";
   l2.reformat();
   BOOST_CHECK(l2.str() == " 1  2   3   4   5   6");

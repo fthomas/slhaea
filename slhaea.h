@@ -254,7 +254,7 @@ public:
     const std::string rhs_trimmed = boost::trim_copy(rhs);
     if (rhs_trimmed.empty()) return *this;
 
-    if (!empty() && back().find('#') != std::string::npos)
+    if (contains_comment())
     { back() += rhs; }
     else
     {
@@ -668,6 +668,14 @@ public:
   }
 
 private:
+  bool
+  contains_comment() const
+  {
+    for (const_reverse_iterator field = rbegin(); field != rend(); ++field)
+    { if ((*field)[0] == '#') return true; }
+    return false;
+  }
+
   template<class T> Line&
   add_fundamental_type(const T& arg)
   {
