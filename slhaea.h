@@ -1172,18 +1172,7 @@ public:
    */
   iterator
   find(const key_type& key)
-  {
-    if (key.empty()) return end();
-
-    iterator line = begin();
-    for (; line != end(); ++line)
-    {
-      if (key.size() > line->size()) continue;
-      if (std::equal(key.begin(), key.end(), line->begin(),
-                     detail::index_iequals)) return line;
-    }
-    return line;
-  }
+  { return std::find_if(begin(), end(), line_matches(key)); }
 
   /**
    * \brief Tries to locate a Line in the %Block.
@@ -1199,18 +1188,7 @@ public:
    */
   const_iterator
   find(const key_type& key) const
-  {
-    if (key.empty()) return end();
-
-    const_iterator line = begin();
-    for (; line != end(); ++line)
-    {
-      if (key.size() > line->size()) continue;
-      if (std::equal(key.begin(), key.end(), line->begin(),
-                     detail::index_iequals)) return line;
-    }
-    return line;
-  }
+  { return std::find_if(begin(), end(), line_matches(key)); }
 
   // introspection
   /**
@@ -1220,18 +1198,7 @@ public:
    */
   size_type
   count(const key_type& key) const
-  {
-    if (key.empty()) return 0;
-
-    size_type count = 0;
-    for (const_iterator line = begin(); line != end(); ++line)
-    {
-      if (key.size() > line->size()) continue;
-      if (std::equal(key.begin(), key.end(), line->begin(),
-                     detail::index_iequals)) ++count;
-    }
-    return count;
-  }
+  { return std::count_if(begin(), end(), line_matches(key)); }
 
   // capacity
   /** Returns the number of elements in the %Block. */
@@ -1407,6 +1374,24 @@ private:
     if (i4 == no_ind) return key; key.push_back(to_string(i4));
     return key;
   }
+
+  struct line_matches : public std::unary_function<value_type, bool>
+  {
+    explicit
+    line_matches(const key_type& key) : key_(key) {}
+
+    bool
+    operator()(const value_type& line) const
+    {
+      if (key_.empty() || key_.size() > line.size()) return false;
+
+      return std::equal(key_.begin(), key_.end(), line.begin(),
+                        detail::index_iequals);
+    }
+
+  private:
+    key_type key_;
+  };
 
 private:
   std::string name_;
