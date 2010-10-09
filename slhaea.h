@@ -155,14 +155,6 @@ is_block_specifier(const std::string& arg)
   return (arg_upper == "BLOCK") || (arg_upper == "DECAY");
 }
 
-/**
- * Returns true if \p a equals \c "(any)" or if \p a and \p b are case
- * insensitively equal.
- */
-inline bool
-index_iequals(const std::string& a, const std::string& b)
-{ return (a == "(any)") || boost::iequals(a, b); }
-
 } // namespace detail
 
 
@@ -1360,10 +1352,10 @@ public:
   { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
 
 private:
-  key_type
+  static key_type
   strings_to_key(const std::string& s0, const std::string& s1,
                  const std::string& s2, const std::string& s3,
-                 const std::string& s4) const
+                 const std::string& s4)
   {
     key_type key;
     if (s0.empty()) return key; key.push_back(s0);
@@ -1374,8 +1366,8 @@ private:
     return key;
   }
 
-  key_type
-  ints_to_key(int i0, int i1, int i2, int i3, int i4) const
+  static key_type
+  ints_to_key(int i0, int i1, int i2, int i3, int i4)
   {
     key_type key;
     if (i0 == no_ind) return key; key.push_back(to_string(i0));
@@ -1397,8 +1389,13 @@ private:
       if (key_.empty() || key_.size() > line.size()) return false;
 
       return std::equal(key_.begin(), key_.end(), line.begin(),
-                        detail::index_iequals);
+                        index_iequals);
     }
+
+  private:
+    static bool
+    index_iequals(const std::string& a, const std::string& b)
+    { return (a == "(any)") || boost::iequals(a, b); }
 
   private:
     key_type key_;
