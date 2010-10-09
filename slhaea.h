@@ -101,32 +101,6 @@ split_string(const std::string& str, std::string sep)
 }
 
 /**
- * \brief Joins all elements in an input range into one string.
- * \param first, last Input iterators to the initial and final
- *   positions of the sequence to use.
- * \param sep String that will separate the joined elements.
- * \return Elements in range concatenated to one string.
- */
-template<class InputIterator> inline std::string
-join(InputIterator first, InputIterator last, const std::string& sep = " ")
-{
-  std::stringstream result("");
-  if (first != last) result << *first++;
-  for (; first != last; ++first) result << sep << *first;
-  return result.str();
-}
-
-/**
- * \brief Joins all elements of a container into one string.
- * \param cont Container whose elements will be joined.
- * \param sep String that will separate the joined elements.
- * \return Elements in \p cont concatenated to one string.
- */
-template<class Container> inline std::string
-join(const Container& cont, const std::string& sep = " ")
-{ return join(cont.begin(), cont.end(), sep); }
-
-/**
  * Returns true if \p field is a block specifier (\c "BLOCK" or
  * \c "DECAY"). Comparison is done case-insensitive.
  */
@@ -884,7 +858,7 @@ public:
     if (line != end()) return *line;
 
     throw std::out_of_range(
-      "SLHAea::Block::at(‘" + detail::join(key) + "’)");
+      "SLHAea::Block::at(‘" + boost::join(key, ",") + "’)");
   }
 
   /**
@@ -904,7 +878,7 @@ public:
     if (line != end()) return *line;
 
     throw std::out_of_range(
-      "SLHAea::Block::at(‘" + detail::join(key) + "’)");
+      "SLHAea::Block::at(‘" + boost::join(key, ",") + "’)");
   }
 
   /**
@@ -2028,7 +2002,7 @@ struct Key
   str() const
   {
     std::stringstream result("");
-    result << block << ";" << detail::join(line, ",") << ";" << field;
+    result << block << ";" << boost::join(line, ",") << ";" << field;
     return result.str();
   }
 };
