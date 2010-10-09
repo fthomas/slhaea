@@ -87,20 +87,6 @@ inline std::ostream& operator<<(std::ostream& os, const Key& key);
 namespace detail {
 
 /**
- * \brief Splits a string into tokens separated by a separator.
- * \param str String that will be searched for tokens.
- * \param sep Separator that delimits tokens.
- * \return \c std::vector that contains all tokens.
- */
-inline std::vector<std::string>
-split_string(const std::string& str, std::string sep)
-{
-  std::vector<std::string> result;
-  boost::split(result, str, boost::is_any_of(sep), boost::token_compress_on);
-  return result;
-}
-
-/**
  * Returns true if \p field is a block specifier (\c "BLOCK" or
  * \c "DECAY"). Comparison is done case-insensitive.
  */
@@ -1983,14 +1969,17 @@ struct Key
   Key&
   str(const std::string& keyString)
   {
-    std::vector<std::string> keys = detail::split_string(keyString, ";");
+    std::vector<std::string> keys;
+    boost::split(keys, keyString, boost::is_any_of(";"));
 
     if (keys.size() != 3)
-    { throw std::invalid_argument("SLHAea::Key::str(‘" + keyString + "’);"); }
+    { throw std::invalid_argument("SLHAea::Key::str(‘" + keyString + "’)"); }
 
     block = keys[0];
-    line  = detail::split_string(keys[1], ",");
-    field = to<Line::size_type>(keys[2]);
+    line.clear();
+    boost::split(line, keys[1], boost::is_any_of(","));
+    field = boost::lexical_cast<Line::size_type>(keys[2]);
+
     return *this;
   }
 
@@ -2001,9 +1990,9 @@ struct Key
   std::string
   str() const
   {
-    std::stringstream result("");
-    result << block << ";" << boost::join(line, ",") << ";" << field;
-    return result.str();
+    std::stringstream output("");
+    output << block << ";" << boost::join(line, ",") << ";" << field;
+    return output.str();
   }
 };
 

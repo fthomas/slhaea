@@ -106,6 +106,7 @@ BOOST_AUTO_TEST_CASE(testStr)
 
   BOOST_CHECK_THROW(k1.str("TEST;1;1;"), invalid_argument);
   BOOST_CHECK_THROW(k1.str("TEST;11"),   invalid_argument);
+  BOOST_CHECK_THROW(k1.str("T;;11;1"),   invalid_argument);
 
   k1.str("TEST;1;1");
   stringstream ss("");
