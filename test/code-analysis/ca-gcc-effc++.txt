@@ -1,25 +1,25 @@
 In file included from test/code-analysis/dummy.cpp:1:
 slhaea.h: In constructor ‘SLHAea::Line::Line()’:
-slhaea.h:205: warning: ‘SLHAea::Line::impl_’ should be initialized in the member initialization list
-slhaea.h:205: warning: ‘SLHAea::Line::lineFormat_’ should be initialized in the member initialization list
+slhaea.h:182: warning: ‘SLHAea::Line::impl_’ should be initialized in the member initialization list
+slhaea.h:182: warning: ‘SLHAea::Line::lineFormat_’ should be initialized in the member initialization list
 slhaea.h: In constructor ‘SLHAea::Line::Line(const std::string&)’:
-slhaea.h:216: warning: ‘SLHAea::Line::impl_’ should be initialized in the member initialization list
-slhaea.h:216: warning: ‘SLHAea::Line::lineFormat_’ should be initialized in the member initialization list
+slhaea.h:193: warning: ‘SLHAea::Line::impl_’ should be initialized in the member initialization list
+slhaea.h:193: warning: ‘SLHAea::Line::lineFormat_’ should be initialized in the member initialization list
 slhaea.h: At global scope:
-slhaea.h:1379: warning: base class ‘struct std::unary_function<SLHAea::Line, bool>’ has a non-virtual destructor
+slhaea.h:1377: warning: base class ‘struct std::unary_function<SLHAea::Line, bool>’ has a non-virtual destructor
 slhaea.h: In constructor ‘SLHAea::Block::Block(const std::string&)’:
-slhaea.h:741: warning: ‘SLHAea::Block::impl_’ should be initialized in the member initialization list
+slhaea.h:729: warning: ‘SLHAea::Block::impl_’ should be initialized in the member initialization list
 slhaea.h: At global scope:
-slhaea.h:1921: warning: base class ‘struct std::unary_function<SLHAea::Block, bool>’ has a non-virtual destructor
+slhaea.h:1924: warning: base class ‘struct std::unary_function<SLHAea::Block, bool>’ has a non-virtual destructor
 slhaea.h: In constructor ‘SLHAea::Coll::Coll()’:
-slhaea.h:1435: warning: ‘SLHAea::Coll::impl_’ should be initialized in the member initialization list
+slhaea.h:1438: warning: ‘SLHAea::Coll::impl_’ should be initialized in the member initialization list
 slhaea.h: In constructor ‘SLHAea::Coll::Coll(std::istream&)’:
-slhaea.h:1447: warning: ‘SLHAea::Coll::impl_’ should be initialized in the member initialization list
+slhaea.h:1450: warning: ‘SLHAea::Coll::impl_’ should be initialized in the member initialization list
 slhaea.h: In constructor ‘SLHAea::Key::Key(const std::string&)’:
-slhaea.h:1990: warning: ‘SLHAea::Key::block’ should be initialized in the member initialization list
-slhaea.h:1990: warning: ‘SLHAea::Key::line’ should be initialized in the member initialization list
-slhaea.h:1990: warning: ‘SLHAea::Key::field’ should be initialized in the member initialization list
+slhaea.h:1993: warning: ‘SLHAea::Key::block’ should be initialized in the member initialization list
+slhaea.h:1993: warning: ‘SLHAea::Key::line’ should be initialized in the member initialization list
+slhaea.h:1993: warning: ‘SLHAea::Key::field’ should be initialized in the member initialization list
 slhaea.h: In constructor ‘SLHAea::Key::Key(const char*)’:
-slhaea.h:1998: warning: ‘SLHAea::Key::block’ should be initialized in the member initialization list
-slhaea.h:1998: warning: ‘SLHAea::Key::line’ should be initialized in the member initialization list
-slhaea.h:1998: warning: ‘SLHAea::Key::field’ should be initialized in the member initialization list
+slhaea.h:2001: warning: ‘SLHAea::Key::block’ should be initialized in the member initialization list
+slhaea.h:2001: warning: ‘SLHAea::Key::line’ should be initialized in the member initialization list
+slhaea.h:2001: warning: ‘SLHAea::Key::field’ should be initialized in the member initialization list

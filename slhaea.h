@@ -127,21 +127,6 @@ join(const Container& cont, const std::string& sep = " ")
 { return join(cont.begin(), cont.end(), sep); }
 
 /**
- * \brief Converts all elements of a container to strings.
- * \param cont Container whose elements will be converted.
- * \return \c std::vector that contains the converted elements.
- */
-template<class Container> inline std::vector<std::string>
-cont_to_string_vec(const Container& cont)
-{
-  std::vector<std::string> result;
-  result.reserve(cont.size());
-  std::transform(cont.begin(), cont.end(), std::back_inserter(result),
-    boost::lexical_cast<std::string, typename Container::value_type>);
-  return result;
-}
-
-/**
  * Returns true if \p field is a block specifier (\c "BLOCK" or
  * \c "DECAY"). Comparison is done case-insensitive.
  */
@@ -822,18 +807,18 @@ public:
   // element access
   /**
    * \brief Locates a Line in the %Block.
-   * \param keys First strings of the Line to be located.
+   * \param key First strings of the Line to be located.
    * \return Read/write reference to sought-after Line.
    *
    * This function takes a key (which is a vector of strings) and
    * locates the Line whose first strings are equal to the strings in
-   * \p keys. If no such Line exists, this function creates an empty
+   * \p key. If no such Line exists, this function creates an empty
    * Line at the end of the %Block and returns a reference to it.
    */
   reference
-  operator[](const key_type& keys)
+  operator[](const key_type& key)
   {
-    iterator line = find(keys);
+    iterator line = find(key);
     if (line != end()) return *line;
 
     push_back(value_type());
@@ -842,18 +827,18 @@ public:
 
   /**
    * \brief Locates a Line in the %Block.
-   * \param keys Integers that are used to locate the Line.
+   * \param key Integers that are used to locate the Line.
    * \return Read/write reference to sought-after Line.
    *
    * This function takes a key (which is a vector of ints) and locates
    * the Line whose first strings are equal to the to strings
-   * converted ints in \p keys. If no such Line exists, this function
+   * converted ints in \p key. If no such Line exists, this function
    * creates an empty Line at the end of the %Block and returns a
    * reference to it.
    */
   reference
-  operator[](const std::vector<int>& keys)
-  { return (*this)[detail::cont_to_string_vec(keys)]; }
+  operator[](const std::vector<int>& key)
+  { return (*this)[cont_to_key(key)]; }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -884,73 +869,73 @@ public:
 
   /**
    * \brief Locates a Line in the %Block.
-   * \param keys First strings of the Line to be located.
+   * \param key First strings of the Line to be located.
    * \return Read/write reference to sought-after Line.
-   * \throw std::out_of_range If \p keys does not match any Line.
+   * \throw std::out_of_range If \p key does not match any Line.
    *
    * This function takes a key (which is a vector of strings) and
    * locates the Line whose first strings are equal to the strings in
-   * \p keys. If no such Line exists, \c std::out_of_range is thrown.
+   * \p key. If no such Line exists, \c std::out_of_range is thrown.
    */
   reference
-  at(const key_type& keys)
+  at(const key_type& key)
   {
-    iterator line = find(keys);
+    iterator line = find(key);
     if (line != end()) return *line;
 
     throw std::out_of_range(
-      "SLHAea::Block::at(‘" + detail::join(keys) + "’)");
+      "SLHAea::Block::at(‘" + detail::join(key) + "’)");
   }
 
   /**
    * \brief Locates a Line in the %Block.
-   * \param keys First strings of the Line to be located.
+   * \param key First strings of the Line to be located.
    * \return Read-only (constant) reference to sought-after Line.
-   * \throw std::out_of_range If \p keys does not match any Line.
+   * \throw std::out_of_range If \p key does not match any Line.
    *
    * This function takes a key (which is a vector of strings) and
    * locates the Line whose first strings are equal to the strings in
-   * \p keys. If no such Line exists, \c std::out_of_range is thrown.
+   * \p key. If no such Line exists, \c std::out_of_range is thrown.
    */
   const_reference
-  at(const key_type& keys) const
+  at(const key_type& key) const
   {
-    const_iterator line = find(keys);
+    const_iterator line = find(key);
     if (line != end()) return *line;
 
     throw std::out_of_range(
-      "SLHAea::Block::at(‘" + detail::join(keys) + "’)");
+      "SLHAea::Block::at(‘" + detail::join(key) + "’)");
   }
 
   /**
    * \brief Locates a Line in the %Block.
-   * \param keys Integers that are used to locate the Line.
+   * \param key Integers that are used to locate the Line.
    * \return Read/write reference to sought-after Line.
-   * \throw std::out_of_range If \p keys does not match any Line.
+   * \throw std::out_of_range If \p key does not match any Line.
    *
    * This function takes a key (which is a vector of ints) and locates
    * the Line whose first strings are equal to the to strings
-   * converted ints in \p keys. If no such Line exists,
+   * converted ints in \p key. If no such Line exists,
    * \c std::out_of_range is thrown.
    */
   reference
-  at(const std::vector<int>& keys)
-  { return at(detail::cont_to_string_vec(keys)); }
+  at(const std::vector<int>& key)
+  { return at(cont_to_key(key)); }
 
   /**
    * \brief Locates a Line in the %Block.
-   * \param keys Integers that are used to locate the Line.
+   * \param key Integers that are used to locate the Line.
    * \return Read-only (constant) reference to sought-after Line.
-   * \throw std::out_of_range If \p keys does not match any Line.
+   * \throw std::out_of_range If \p key does not match any Line.
    *
    * This function takes a key (which is a vector of ints) and locates
    * the Line whose first strings are equal to the to strings
-   * converted ints in \p keys. If no such Line exists,
+   * converted ints in \p key. If no such Line exists,
    * \c std::out_of_range is thrown.
    */
   const_reference
-  at(const std::vector<int>& keys) const
-  { return at(detail::cont_to_string_vec(keys)); }
+  at(const std::vector<int>& key) const
+  { return at(cont_to_key(key)); }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -1352,6 +1337,16 @@ public:
   { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
 
 private:
+  template<class Container> static key_type
+  cont_to_key(const Container& cont)
+  {
+    key_type key;
+    key.reserve(cont.size());
+    std::transform(cont.begin(), cont.end(), std::back_inserter(key),
+      boost::lexical_cast<std::string, typename Container::value_type>);
+    return key;
+  }
+
   static key_type
   strings_to_key(const std::string& s0, const std::string& s1,
                  const std::string& s2, const std::string& s3,
