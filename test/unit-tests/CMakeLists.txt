@@ -1,7 +1,7 @@
 include_directories(${CMAKE_SOURCE_DIR} ${Boost_INCLUDE_DIRS})
 
-file(GLOB UT_SOURCES ut-*.cpp ut-*.h)
-add_executable(ut ${UT_SOURCES} ${CMAKE_SOURCE_DIR}/slhaea.h)
+file(GLOB UT_SOURCES *.cpp *.h)
+add_executable(ut ${UT_SOURCES} ${SLHAEA_H})
 target_link_libraries(ut ${Boost_LIBRARIES})
 
 if(CMAKE_COMPILER_IS_GNUCXX)

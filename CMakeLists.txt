@@ -16,5 +16,7 @@ find_package(Doxygen)
 enable_testing()
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
+set(SLHAEA_H ${CMAKE_SOURCE_DIR}/slhaea.h)
+
 add_subdirectory(doc)
 add_subdirectory(test)
