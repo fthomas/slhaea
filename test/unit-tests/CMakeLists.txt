@@ -11,7 +11,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 
     find_program(COVERAGE_LCOV lcov)
     find_program(COVERAGE_GENHTML genhtml)
-    if(COVERAGE_LCOV)
+    if(COVERAGE_LCOV AND COVERAGE_GENHTML)
         set(COVERAGE_OUTFILE ${CMAKE_CURRENT_BINARY_DIR}/coverage.info)
         add_custom_target(lcov
           COMMAND ut

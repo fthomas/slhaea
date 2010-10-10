@@ -541,6 +541,11 @@ BOOST_AUTO_TEST_CASE(testInEquality)
 
   BOOST_CHECK(b1 == b2);
   BOOST_CHECK(b2 == b1);
+
+  b2.push_back(" 1 2 # 12");
+
+  BOOST_CHECK(b1 != b2);
+  BOOST_CHECK(b2 != b1);
 }
 
 BOOST_AUTO_TEST_CASE(testOrder)

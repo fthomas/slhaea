@@ -547,6 +547,23 @@ BOOST_AUTO_TEST_CASE(testInEquality)
   BOOST_CHECK(l2 >  l1);
   BOOST_CHECK(l2 >= l1);
 
+  l1 = "#1 2 3";
+  l2 = "1 2 3";
+  l2[0] = "#1";
+  BOOST_CHECK(l1 != l2);
+  BOOST_CHECK(l2 != l1);
+
+  l1 = "1 2";
+  l2 = "1 2";
+  l1[0] = "  1 2";
+  l1[1] = "";
+  l2[0] = "";
+  l2[1] = "1 2 ";
+  BOOST_CHECK(l1.str()  == l2.str());
+  BOOST_CHECK(l1.size() == l2.size());
+  BOOST_CHECK(l1 != l2);
+  BOOST_CHECK(l2 != l1);
+
 }
 
 BOOST_AUTO_TEST_CASE(testOrder)
