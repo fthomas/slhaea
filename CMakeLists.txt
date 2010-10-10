@@ -11,8 +11,10 @@ elseif(CMAKE_CXX_COMPILER MATCHES icpc)
 endif()
 
 find_package(Boost REQUIRED COMPONENTS unit_test_framework)
+find_package(Doxygen)
 
 enable_testing()
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
+add_subdirectory(doc)
 add_subdirectory(test)
