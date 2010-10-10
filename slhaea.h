@@ -83,26 +83,6 @@ inline std::ostream& operator<<(std::ostream& os, const Coll& coll);
 inline std::ostream& operator<<(std::ostream& os, const Key& key);
 
 
-// auxiliary functions intended for internal use
-namespace detail {
-
-/**
- * Returns true if \p field is a block specifier (\c "BLOCK" or
- * \c "DECAY"). Comparison is done case-insensitive.
- */
-inline bool
-is_block_specifier(const std::string& arg)
-{
-  // "BLOCK" and "DECAY" are both five characters long.
-  if (arg.length() != 5) return false;
-
-  const std::string arg_upper = boost::to_upper_copy(arg);
-  return (arg_upper == "BLOCK") || (arg_upper == "DECAY");
-}
-
-} // namespace detail
-
-
 /**
  * Container of strings that represents a line in a SLHA structure.
  * This class is a container of strings that represents a line in a
@@ -468,7 +448,7 @@ public:
     if (size() < 2) return false;
 
     const_iterator field = begin();
-    return detail::is_block_specifier(*field) && ((*++field)[0] != '#');
+    return is_block_specifier(*field) && ((*++field)[0] != '#');
   }
 
   /** Returns true if the %Line begins with \c "#". */
@@ -482,10 +462,7 @@ public:
    */
   bool
   is_data_line() const
-  {
-    return !empty() && (front()[0] != '#') &&
-      !detail::is_block_specifier(front());
-  }
+  { return !empty() && (front()[0] != '#') && !is_block_specifier(front()); }
 
   // capacity
   /** Returns the number of elements in the %Line. */
@@ -548,7 +525,7 @@ public:
     int arg = 0, pos = 0;
     const_iterator field = begin();
 
-    if (detail::is_block_specifier(*field))
+    if (is_block_specifier(*field))
     {
       line_format << " %|" << pos << "t|%" << ++arg << "%";
       pos += field->length();
@@ -613,6 +590,16 @@ private:
     for (const_reverse_iterator field = rbegin(); field != rend(); ++field)
     { if ((*field)[0] == '#') return true; }
     return false;
+  }
+
+  static bool
+  is_block_specifier(const value_type& arg)
+  {
+    // "BLOCK" and "DECAY" are both five characters long.
+    if (arg.length() != 5) return false;
+
+    const value_type arg_upper = boost::to_upper_copy(arg);
+    return (arg_upper == "BLOCK") || (arg_upper == "DECAY");
   }
 
   template<class T> Line&
