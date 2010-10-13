@@ -1926,11 +1926,10 @@ struct Key
    * \param _line First field(s) of the Line that contains the field.
    * \param _field Index of the field in the Line.
    */
-  Key(
-    const Coll::key_type& _block,
-    const Block::key_type& _line,
-    Line::size_type _field)
-      : block(_block), line(_line), field(_field) {}
+  Key(const Coll::key_type& _block,
+      const Block::key_type& _line,
+      const Line::size_type& _field)
+    : block(_block), line(_line), field(_field) {}
 
   /**
    * \brief Constructs a %Key from a string.
@@ -1962,8 +1961,8 @@ struct Key
     if (keys.size() != 3)
     { throw std::invalid_argument("SLHAea::Key::str(‘" + keyString + "’)"); }
 
+    clear();
     block = keys[0];
-    line.clear();
     boost::split(line, keys[1], boost::is_any_of(","));
     field = boost::lexical_cast<Line::size_type>(keys[2]);
 
@@ -1980,6 +1979,15 @@ struct Key
     std::stringstream output("");
     output << block << ";" << boost::join(line, ",") << ";" << field;
     return output.str();
+  }
+
+private:
+  void
+  clear()
+  {
+    block.clear();
+    line.clear();
+    field = 0;
   }
 };
 
