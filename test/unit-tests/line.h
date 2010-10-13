@@ -80,6 +80,16 @@ BOOST_AUTO_TEST_CASE(testAssignmentOperator)
   BOOST_CHECK(l1.str()       == "#  aa 1 bb 1 cc 1 dd");
   BOOST_CHECK(l1.size()      == 1);
   BOOST_CHECK(l1.data_size() == 0);
+
+  l1.str("111");
+  BOOST_CHECK(l1.str()       == "111");
+  BOOST_CHECK(l1.size()      == 1);
+  BOOST_CHECK(l1.data_size() == 1);
+
+  l1.str("#111");
+  BOOST_CHECK(l1.str()       == "#111");
+  BOOST_CHECK(l1.size()      == 1);
+  BOOST_CHECK(l1.data_size() == 0);
 }
 
 BOOST_AUTO_TEST_CASE(testAppending)
