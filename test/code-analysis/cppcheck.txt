@@ -1,2 +1,0 @@
-[slhaea.h:195]: (error) Returning reference to temporary
-[slhaea.h:144]: (style) 'operator=' should return reference to self

@@ -142,7 +142,10 @@ public:
    */
   Line&
   operator=(const std::string& line)
-  { return str(line); }
+  {
+    str(line);
+    return *this;
+  }
 
   /**
    * \brief Appends a string to the end of the %Line.
@@ -153,7 +156,10 @@ public:
    */
   Line&
   operator+=(const std::string& arg)
-  { return append(arg); }
+  {
+    append(arg);
+    return *this;
+  }
 
   /**
    * \brief Adds an element to the end of the %Line.
@@ -192,7 +198,10 @@ public:
    */
   Line&
   append(const std::string& arg)
-  { return str(str() + arg); }
+  {
+    str(str() + arg);
+    return *this;
+  }
 
   /**
    * \brief Assigns content to the %Line based on a string.
@@ -739,7 +748,8 @@ public:
   {
     std::stringstream input(block);
     clear();
-    return read(input);
+    read(input);
+    return *this;
   }
 
   /** Returns a string representation of the %Block. */
@@ -1457,7 +1467,8 @@ public:
   {
     std::stringstream input(coll);
     clear();
-    return read(input);
+    read(input);
+    return *this;
   }
 
   /** Returns a string representation of the %Coll. */
