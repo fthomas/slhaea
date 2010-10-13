@@ -8,7 +8,7 @@ slhaea.h:1431:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 
 slhaea.h:1460:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 
-slhaea.h:2000:  [1] (buffer) read:
+slhaea.h:2008:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 
-slhaea.h:2007:  [1] (buffer) read:
+slhaea.h:2015:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 

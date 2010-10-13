@@ -119,7 +119,7 @@ public:
   typedef impl_type::size_type              size_type;
 
   /** Constructs an empty %Line. */
-  Line() {}
+  Line() : impl_(0), lineFormat_("") {}
 
   // NOTE: The compiler-generated copy constructor and assignment
   //   operator for this class are just fine, so we don't need to
@@ -673,7 +673,7 @@ public:
    * \param name Name of the %Block.
    */
   explicit
-  Block(const std::string& name = "") : name_(name) {}
+  Block(const std::string& name = "") : name_(name), impl_(0) {}
 
   // NOTE: The compiler-generated copy constructor and assignment
   //   operator for this class are just fine, so we don't need to
@@ -1382,7 +1382,7 @@ public:
   typedef impl_type::size_type              size_type;
 
   /** Constructs an empty %Coll. */
-  Coll() {}
+  Coll() : impl_(0) {}
 
   // NOTE: The compiler-generated copy constructor and assignment
   //   operator for this class are just fine, so we don't need to
