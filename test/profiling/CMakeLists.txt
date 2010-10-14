@@ -36,5 +36,5 @@ set(memcheck_out_ARGS --tool=memcheck --leak-check=full ./output)
 add_profiler(valgrind "${memcheck_out_ARGS}" memcheck-output.txt output)
 
 add_custom_target(profile-all DEPENDS ${PROF_RESULTS}
-  COMMAND sed -i 's/==[0-9]\+==[ ]*//' ${PROF_RESULTS}
+  COMMAND sed -i 's/==[0-9]\\+==[ ]*//' ${PROF_RESULTS}
   WORKING_DIRECTORY ${CURR_DIR})
