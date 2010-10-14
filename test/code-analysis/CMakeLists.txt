@@ -1,35 +1,25 @@
-set(CURR_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(CURR_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-function(add_code_analyzer CMD ARGS OUTFILE)
-    find_program(CODE_ANALYZER_${CMD} ${CMD})
-    if(CODE_ANALYZER_${CMD})
-        add_custom_command(
-          OUTPUT  ${CURR_SRC_DIR}/${OUTFILE}
-          COMMAND ${CODE_ANALYZER_${CMD}}
-          ARGS    ${ARGS} > ${CURR_SRC_DIR}/${OUTFILE} 2>&1
-          DEPENDS ${SLHAEA_H})
-
-        set(CA_RESULTS ${CA_RESULTS};${OUTFILE} PARENT_SCOPE)
+macro(add_code_analyzer CMD ARGS OUTFILE)
+    add_analyzer(${CMD} "${ARGS}" ${CURR_DIR}/${OUTFILE})
+    if(ANALYZER_${CMD})
+        list(APPEND CA_RESULTS ${OUTFILE})
     endif()
-endfunction()
+endmacro()
 
-add_code_analyzer(clang
-  "--analyze;-x;c++;${SLHAEA_H}"
-  clang.txt)
+set(clang_ARGS --analyze -x c++ ${SLHAEA_H})
+add_code_analyzer(clang "${clang_ARGS}" clang.txt)
 
-add_code_analyzer(cppcheck
-  "-q;--enable=all;-I${CMAKE_SOURCE_DIR};${CURR_SRC_DIR}/dummy.cpp"
-  cppcheck.txt)
+set(cppcheck_ARGS -q --enable=all -I${CMAKE_SOURCE_DIR} ${CURR_DIR}/dummy.cpp)
+add_code_analyzer(cppcheck "${cppcheck_ARGS}" cppcheck.txt)
 
-add_code_analyzer(flawfinder
-  "-DQ;-m;0;${SLHAEA_H}"
-  flawfinder.txt)
+set(flawfinder_ARGS -DQ -m 0 ${SLHAEA_H})
+add_code_analyzer(flawfinder "${flawfinder_ARGS}" flawfinder.txt)
 
-add_code_analyzer(g++
-  "-Weffc++;-I${CMAKE_SOURCE_DIR};${CURR_SRC_DIR}/dummy.cpp"
-  gcc-effc++.txt)
+set(g++_ARGS -Weffc++ -I${CMAKE_SOURCE_DIR} ${CURR_DIR}/dummy.cpp)
+add_code_analyzer(g++ "${g++_ARGS}" gcc-effc++.txt)
 
 string(REPLACE "/" "\\/" ESC_SRC_DIR ${CMAKE_SOURCE_DIR}/)
 add_custom_target(ca-all DEPENDS ${CA_RESULTS}
   COMMAND sed -i 's/${ESC_SRC_DIR}//' ${CA_RESULTS}
-  WORKING_DIRECTORY ${CURR_SRC_DIR})
+  WORKING_DIRECTORY ${CURR_DIR})
