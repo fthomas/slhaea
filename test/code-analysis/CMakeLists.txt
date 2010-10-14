@@ -1,7 +1,7 @@
 set(CURR_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 macro(add_code_analyzer CMD ARGS OUTFILE)
-    add_analyzer(${CMD} "${ARGS}" ${CURR_DIR}/${OUTFILE})
+    add_analyzer(${CMD} "${ARGS}" ${CURR_DIR}/${OUTFILE} "")
     if(ANALYZER_${CMD})
         list(APPEND CA_RESULTS ${OUTFILE})
     endif()
