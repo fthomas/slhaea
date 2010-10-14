@@ -1,11 +1,16 @@
 set(CURR_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-macro(add_code_analyzer CMD ARGS OUTFILE)
-    add_analyzer(${CMD} "${ARGS}" ${CURR_DIR}/${OUTFILE} "")
+function(add_code_analyzer CMD ARGS OUTFILE)
+    find_program(ANALYZER_${CMD} ${CMD})
     if(ANALYZER_${CMD})
-        list(APPEND CA_RESULTS ${OUTFILE})
+        add_custom_command(
+          OUTPUT  ${CURR_DIR}/${OUTFILE}
+          COMMAND ${ANALYZER_${CMD}}
+          ARGS    ${ARGS} > ${CURR_DIR}/${OUTFILE} 2>&1
+          DEPENDS ${SLHAEA_H})
+        set(CA_RESULTS ${CA_RESULTS};${OUTFILE} PARENT_SCOPE)
     endif()
-endmacro()
+endfunction()
 
 set(clang_ARGS --analyze -x c++ ${SLHAEA_H})
 add_code_analyzer(clang "${clang_ARGS}" clang.txt)

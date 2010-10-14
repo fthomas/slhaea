@@ -16,12 +16,17 @@ if(CMAKE_COMPILER_IS_GNUCXX)
       LINK_FLAGS    "-pg")
 endif()
 
-macro(add_profiler CMD ARGS OUTFILE DEPENDENCIES)
-    add_analyzer(${CMD} "${ARGS}" ${CURR_DIR}/${OUTFILE} ${DEPENDENCIES})
-    if(ANALYZER_${CMD})
-        list(APPEND PROF_RESULTS ${OUTFILE})
+function(add_profiler CMD ARGS OUTFILE DEPENDENCIES)
+    find_program(PROFILER_${CMD} ${CMD})
+    if(PROFILER_${CMD})
+        add_custom_command(
+          OUTPUT  ${CURR_DIR}/${OUTFILE}
+          COMMAND ${PROFILER_${CMD}}
+          ARGS    ${ARGS} > ${CURR_DIR}/${OUTFILE} 2>&1
+          DEPENDS ${SLHAEA_H} ${DEPENDENCIES})
+        set(PROF_RESULTS ${PROF_RESULTS};${OUTFILE} PARENT_SCOPE)
     endif()
-endmacro()
+endfunction()
 
 set(callgrind_in_ARGS --tool=callgrind ./input)
 add_profiler(valgrind "${callgrind_in_ARGS}" callgrind-input.txt input)
