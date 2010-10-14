@@ -1,11 +1,11 @@
 Callgrind, a call-graph generating cache profiler
 Copyright (C) 2002-2010, and GNU GPL'd, by Josef Weidendorfer et al.
 Using Valgrind-3.6.0.SVN-Debian and LibVEX; rerun with -h for copyright info
-Command: ./output
+Command: test/profiling/output
 
 For interactive control, run 'callgrind_control -h'.
 
 Events    : Ir
-Collected : 32401904
+Collected : 32401979
 
-I   refs:      32,401,904
+I   refs:      32,401,979
