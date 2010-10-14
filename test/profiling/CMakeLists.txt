@@ -34,11 +34,17 @@ add_profiler(valgrind "${callgrind_in_ARGS}" callgrind-input.txt input)
 set(callgrind_out_ARGS --tool=callgrind ./output)
 add_profiler(valgrind "${callgrind_out_ARGS}" callgrind-output.txt output)
 
+set(callgrind_ut_ARGS --tool=callgrind ./../unit-tests/ut)
+add_profiler(valgrind "${callgrind_ut_ARGS}" callgrind-ut.txt ut)
+
 set(memcheck_in_ARGS --tool=memcheck --leak-check=full ./input)
 add_profiler(valgrind "${memcheck_in_ARGS}" memcheck-input.txt input)
 
 set(memcheck_out_ARGS --tool=memcheck --leak-check=full ./output)
 add_profiler(valgrind "${memcheck_out_ARGS}" memcheck-output.txt output)
+
+set(memcheck_ut_ARGS --tool=memcheck --leak-check=full ./../unit-tests/ut)
+add_profiler(valgrind "${memcheck_ut_ARGS}" memcheck-ut.txt ut)
 
 add_custom_target(profile-all DEPENDS ${PROF_RESULTS}
   COMMAND sed -i 's/==[0-9]\\+==[ ]*//' ${PROF_RESULTS}
