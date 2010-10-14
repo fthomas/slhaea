@@ -2,6 +2,7 @@ include_directories(${CMAKE_SOURCE_DIR} ${Boost_INCLUDE_DIRS})
 
 add_executable(input  input.cpp  ${SLHAEA_H})
 add_executable(output output.cpp ${SLHAEA_H})
+set_target_properties(input output PROPERTIES COMPILE_FLAGS "-O2")
 
 configure_file(input.txt . COPYONLY)
 
