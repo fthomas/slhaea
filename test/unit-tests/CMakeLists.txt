@@ -14,16 +14,16 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     if(COVERAGE_LCOV AND COVERAGE_GENHTML)
         set(COVERAGE_OUTFILE ${CMAKE_CURRENT_BINARY_DIR}/coverage.info)
         add_custom_target(lcov
+          COMMAND ${COVERAGE_LCOV}
+            --zerocounters
+            --directory ${CMAKE_CURRENT_BINARY_DIR}
           COMMAND ut
           COMMAND ${COVERAGE_LCOV}
             --capture
             --directory ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/ut.dir/
             --base-directory ${CMAKE_SOURCE_DIR}
             --output-file ${COVERAGE_OUTFILE}
-          COMMAND ${COVERAGE_LCOV}
-            --zerocounters
-            --directory ${CMAKE_CURRENT_BINARY_DIR}
-          COMMAND ${COVERAGE_LCOV}
+         COMMAND ${COVERAGE_LCOV}
             --extract ${COVERAGE_OUTFILE} "\\*slhaea.h"
             --output-file ${COVERAGE_OUTFILE}
           COMMAND ${COVERAGE_GENHTML}
