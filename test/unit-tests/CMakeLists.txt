@@ -23,7 +23,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
             --directory ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/ut.dir/
             --base-directory ${CMAKE_SOURCE_DIR}
             --output-file ${COVERAGE_OUTFILE}
-         COMMAND ${COVERAGE_LCOV}
+          COMMAND ${COVERAGE_LCOV}
             --extract ${COVERAGE_OUTFILE} "\\*slhaea.h"
             --output-file ${COVERAGE_OUTFILE}
           COMMAND ${COVERAGE_GENHTML}
