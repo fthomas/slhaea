@@ -1450,7 +1450,11 @@ public:
       if (boost::all(line_str, boost::is_space())) continue;
 
       line.str(line_str);
-      if (line.is_block_def()) block = &(*this)[line[1]];
+      if (line.is_block_def())
+      {
+        push_back(value_type(line[1]));
+        block = &back();
+      }
       block->push_back(line);
     }
 

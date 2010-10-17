@@ -4,11 +4,11 @@ Using Valgrind-3.6.0.SVN-Debian and LibVEX; rerun with -h for copyright info
 Command: test/unit-tests/ut
 
 For interactive control, run 'callgrind_control -h'.
-Running 43 test cases...
+Running 44 test cases...
 
 *** No errors detected
 
 Events    : Ir
-Collected : 52055227
+Collected : 52188147
 
-I   refs:      52,055,227
+I   refs:      52,188,147
