@@ -33,13 +33,13 @@ include_directories(${CMAKE_SOURCE_DIR} ${Boost_INCLUDE_DIRS})
 
 add_executable(input  input.cpp  ${SLHAEA_H})
 add_executable(output output.cpp ${SLHAEA_H})
-set_target_properties(input output PROPERTIES COMPILE_FLAGS "-O2")
+set_target_properties(input output PROPERTIES COMPILE_FLAGS "-g -O2")
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     add_executable(input-pg  input.cpp  ${SLHAEA_H})
     add_executable(output-pg output.cpp ${SLHAEA_H})
     set_target_properties(input-pg output-pg PROPERTIES
-      COMPILE_FLAGS "-pg -O2"
+      COMPILE_FLAGS "-pg -g -O2"
       LINK_FLAGS    "-pg")
 
     run_gprof(input-pg  gprof-input.txt)
