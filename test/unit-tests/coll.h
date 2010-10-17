@@ -77,6 +77,22 @@ BOOST_FIXTURE_TEST_CASE(testReadWrite, F)
   BOOST_CHECK(c4.size() == 0);
 }
 
+BOOST_AUTO_TEST_CASE(testDuplicatedBlocks)
+{
+  string s4 =
+    "BLOCK test1\n"
+    "BLOCK test2\n"
+    "BLOCK test1\n"
+    "BLOCK test2\n";
+
+  Coll c1;
+  c1.str(s4);
+
+  BOOST_CHECK(c1.str() == s4);
+  BOOST_CHECK(c1.count("test1") == 2);
+  BOOST_CHECK(c1.count("test2") == 2);
+}
+
 BOOST_FIXTURE_TEST_CASE(testField, F)
 {
   Coll c1;
