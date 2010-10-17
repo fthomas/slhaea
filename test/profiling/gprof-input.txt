@@ -6,27 +6,25 @@ Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls  Ts/call  Ts/call  name    
   0.00      0.00     0.00     2486     0.00     0.00  SLHAea::Coll::name_iequals::operator()(SLHAea::Block const&) const
-  0.00      0.00     0.00     1732     0.00     0.00  SLHAea::Line::Line(SLHAea::Line const&)
   0.00      0.00     0.00      868     0.00     0.00  SLHAea::Line::str(std::string const&)
   0.00      0.00     0.00      868     0.00     0.00  char* std::string::_S_construct<__gnu_cxx::__normal_iterator<char const*, std::string> >(__gnu_cxx::__normal_iterator<char const*, std::string>, __gnu_cxx::__normal_iterator<char const*, std::string>, std::allocator<char> const&, std::forward_iterator_tag)
   0.00      0.00     0.00      618     0.00     0.00  SLHAea::Line* std::__uninitialized_copy_a<SLHAea::Line*, SLHAea::Line*, SLHAea::Line>(SLHAea::Line*, SLHAea::Line*, SLHAea::Line*, std::allocator<SLHAea::Line>&)
-  0.00      0.00     0.00      339     0.00     0.00  std::vector<std::string, std::allocator<std::string> >::operator=(std::vector<std::string, std::allocator<std::string> > const&)
+  0.00      0.00     0.00      309     0.00     0.00  SLHAea::Line::Line(SLHAea::Line const&)
   0.00      0.00     0.00      309     0.00     0.00  std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Line*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line const&)
-  0.00      0.00     0.00      269     0.00     0.00  SLHAea::Block::~Block()
-  0.00      0.00     0.00       72     0.00     0.00  __gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > > std::__find_if<__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Coll::name_iequals>(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, __gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Coll::name_iequals, std::random_access_iterator_tag)
+  0.00      0.00     0.00      142     0.00     0.00  SLHAea::Block::~Block()
+  0.00      0.00     0.00       72     0.00     0.00  std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*> std::__find_if<std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals>(std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals, std::random_access_iterator_tag)
   0.00      0.00     0.00       71     0.00     0.00  SLHAea::Line::Line()
   0.00      0.00     0.00       71     0.00     0.00  SLHAea::Line::~Line()
-  0.00      0.00     0.00       71     0.00     0.00  SLHAea::Block::Block(SLHAea::Block const&)
   0.00      0.00     0.00       70     0.00     0.00  char* std::string::_S_construct<boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default> >(boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, std::allocator<char> const&, std::input_iterator_tag)
-  0.00      0.00     0.00       70     0.00     0.00  std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::operator=(std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > const&)
-  0.00      0.00     0.00       64     0.00     0.00  std::string* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, std::string*, std::string>(__gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, __gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, std::string*, std::allocator<std::string>&)
-  0.00      0.00     0.00       28     0.00     0.00  SLHAea::Line* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line*, SLHAea::Line>(__gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, __gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line*, std::allocator<SLHAea::Line>&)
-  0.00      0.00     0.00       16     0.00     0.00  SLHAea::Block* std::__uninitialized_move_a<SLHAea::Block*, SLHAea::Block*, std::allocator<SLHAea::Block> >(SLHAea::Block*, SLHAea::Block*, SLHAea::Block*, std::allocator<SLHAea::Block>&)
-  0.00      0.00     0.00        8     0.00     0.00  std::vector<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Block const&)
+  0.00      0.00     0.00       67     0.00     0.00  __gnu_cxx::new_allocator<SLHAea::Block>::construct(SLHAea::Block*, SLHAea::Block const&)
   0.00      0.00     0.00        8     0.00     0.00  std::string* std::__uninitialized_copy_a<std::string*, std::string*, std::string>(std::string*, std::string*, std::string*, std::allocator<std::string>&)
+  0.00      0.00     0.00        4     0.00     0.00  std::deque<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_push_back_aux(SLHAea::Block const&)
   0.00      0.00     0.00        4     0.00     0.00  std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&)
   0.00      0.00     0.00        1     0.00     0.00  global constructors keyed to SLHAea::Block::no_ind
   0.00      0.00     0.00        1     0.00     0.00  SLHAea::Coll::read(std::istream&)
+  0.00      0.00     0.00        1     0.00     0.00  SLHAea::Coll::operator[](std::string const&)
+  0.00      0.00     0.00        1     0.00     0.00  std::_Deque_base<SLHAea::Block, std::allocator<SLHAea::Block> >::~_Deque_base()
+  0.00      0.00     0.00        1     0.00     0.00  std::deque<SLHAea::Block, std::allocator<SLHAea::Block> >::erase(std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>)
 
 			Call graph
 
@@ -34,107 +32,103 @@ Each sample counts as 0.01 seconds.
 granularity: each sample hit covers 2 byte(s) no time propagated
 
 index % time    self  children    called     name
-                0.00    0.00    2486/2486        __gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > > std::__find_if<__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Coll::name_iequals>(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, __gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Coll::name_iequals, std::random_access_iterator_tag) [15]
+                0.00    0.00    2486/2486        std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*> std::__find_if<std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals>(std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals, std::random_access_iterator_tag) [14]
 [7]      0.0    0.00    0.00    2486         SLHAea::Coll::name_iequals::operator()(SLHAea::Block const&) const [7]
 -----------------------------------------------
-                0.00    0.00     309/1732        std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Line*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line const&) [13]
-                0.00    0.00    1423/1732        SLHAea::Block* std::__uninitialized_move_a<SLHAea::Block*, SLHAea::Block*, std::allocator<SLHAea::Block> >(SLHAea::Block*, SLHAea::Block*, SLHAea::Block*, std::allocator<SLHAea::Block>&) [23]
-[8]      0.0    0.00    0.00    1732         SLHAea::Line::Line(SLHAea::Line const&) [8]
+                0.00    0.00     868/868         SLHAea::Coll::read(std::istream&) [23]
+[8]      0.0    0.00    0.00     868         SLHAea::Line::str(std::string const&) [8]
+                0.00    0.00     868/868         char* std::string::_S_construct<__gnu_cxx::__normal_iterator<char const*, std::string> >(__gnu_cxx::__normal_iterator<char const*, std::string>, __gnu_cxx::__normal_iterator<char const*, std::string>, std::allocator<char> const&, std::forward_iterator_tag) [9]
+                0.00    0.00       4/4           std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&) [21]
 -----------------------------------------------
-                0.00    0.00     868/868         SLHAea::Coll::read(std::istream&) [28]
-[9]      0.0    0.00    0.00     868         SLHAea::Line::str(std::string const&) [9]
-                0.00    0.00     868/868         char* std::string::_S_construct<__gnu_cxx::__normal_iterator<char const*, std::string> >(__gnu_cxx::__normal_iterator<char const*, std::string>, __gnu_cxx::__normal_iterator<char const*, std::string>, std::allocator<char> const&, std::forward_iterator_tag) [10]
-                0.00    0.00       4/4           std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&) [26]
+                0.00    0.00     868/868         SLHAea::Line::str(std::string const&) [8]
+[9]      0.0    0.00    0.00     868         char* std::string::_S_construct<__gnu_cxx::__normal_iterator<char const*, std::string> >(__gnu_cxx::__normal_iterator<char const*, std::string>, __gnu_cxx::__normal_iterator<char const*, std::string>, std::allocator<char> const&, std::forward_iterator_tag) [9]
 -----------------------------------------------
-                0.00    0.00     868/868         SLHAea::Line::str(std::string const&) [9]
-[10]     0.0    0.00    0.00     868         char* std::string::_S_construct<__gnu_cxx::__normal_iterator<char const*, std::string> >(__gnu_cxx::__normal_iterator<char const*, std::string>, __gnu_cxx::__normal_iterator<char const*, std::string>, std::allocator<char> const&, std::forward_iterator_tag) [10]
+                0.00    0.00     618/618         std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Line*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line const&) [12]
+[10]     0.0    0.00    0.00     618         SLHAea::Line* std::__uninitialized_copy_a<SLHAea::Line*, SLHAea::Line*, SLHAea::Line>(SLHAea::Line*, SLHAea::Line*, SLHAea::Line*, std::allocator<SLHAea::Line>&) [10]
 -----------------------------------------------
-                0.00    0.00     618/618         std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Line*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line const&) [13]
-[11]     0.0    0.00    0.00     618         SLHAea::Line* std::__uninitialized_copy_a<SLHAea::Line*, SLHAea::Line*, SLHAea::Line>(SLHAea::Line*, SLHAea::Line*, SLHAea::Line*, std::allocator<SLHAea::Line>&) [11]
+                0.00    0.00     309/309         std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Line*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line const&) [12]
+[11]     0.0    0.00    0.00     309         SLHAea::Line::Line(SLHAea::Line const&) [11]
 -----------------------------------------------
-                0.00    0.00     339/339         std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::operator=(std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > const&) [20]
-[12]     0.0    0.00    0.00     339         std::vector<std::string, std::allocator<std::string> >::operator=(std::vector<std::string, std::allocator<std::string> > const&) [12]
-                0.00    0.00      64/64          std::string* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, std::string*, std::string>(__gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, __gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, std::string*, std::allocator<std::string>&) [21]
+                0.00    0.00     309/309         SLHAea::Coll::read(std::istream&) [23]
+[12]     0.0    0.00    0.00     309         std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Line*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line const&) [12]
+                0.00    0.00     618/618         SLHAea::Line* std::__uninitialized_copy_a<SLHAea::Line*, SLHAea::Line*, SLHAea::Line>(SLHAea::Line*, SLHAea::Line*, SLHAea::Line*, std::allocator<SLHAea::Line>&) [10]
+                0.00    0.00     309/309         SLHAea::Line::Line(SLHAea::Line const&) [11]
 -----------------------------------------------
-                0.00    0.00     309/309         SLHAea::Coll::read(std::istream&) [28]
-[13]     0.0    0.00    0.00     309         std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Line*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line const&) [13]
-                0.00    0.00     618/618         SLHAea::Line* std::__uninitialized_copy_a<SLHAea::Line*, SLHAea::Line*, SLHAea::Line>(SLHAea::Line*, SLHAea::Line*, SLHAea::Line*, std::allocator<SLHAea::Line>&) [11]
-                0.00    0.00     309/1732        SLHAea::Line::Line(SLHAea::Line const&) [8]
+                0.00    0.00       1/142         SLHAea::Coll::operator[](std::string const&) [24]
+                0.00    0.00       1/142         std::deque<SLHAea::Block, std::allocator<SLHAea::Block> >::erase(std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>) [26]
+                0.00    0.00      70/142         main [6]
+                0.00    0.00      70/142         SLHAea::Coll::read(std::istream&) [23]
+[13]     0.0    0.00    0.00     142         SLHAea::Block::~Block() [13]
 -----------------------------------------------
-                0.00    0.00      70/269         main [6]
-                0.00    0.00      72/269         SLHAea::Coll::read(std::istream&) [28]
-                0.00    0.00     127/269         std::vector<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Block const&) [24]
-[14]     0.0    0.00    0.00     269         SLHAea::Block::~Block() [14]
------------------------------------------------
-                0.00    0.00      72/72          SLHAea::Coll::read(std::istream&) [28]
-[15]     0.0    0.00    0.00      72         __gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > > std::__find_if<__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Coll::name_iequals>(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, __gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Coll::name_iequals, std::random_access_iterator_tag) [15]
+                0.00    0.00       1/72          SLHAea::Coll::operator[](std::string const&) [24]
+                0.00    0.00      71/72          SLHAea::Coll::read(std::istream&) [23]
+[14]     0.0    0.00    0.00      72         std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*> std::__find_if<std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals>(std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals, std::random_access_iterator_tag) [14]
                 0.00    0.00    2486/2486        SLHAea::Coll::name_iequals::operator()(SLHAea::Block const&) const [7]
 -----------------------------------------------
-                0.00    0.00      71/71          SLHAea::Coll::read(std::istream&) [28]
-[16]     0.0    0.00    0.00      71         SLHAea::Line::Line() [16]
+                0.00    0.00       1/71          SLHAea::Coll::operator[](std::string const&) [24]
+                0.00    0.00      70/71          SLHAea::Coll::read(std::istream&) [23]
+[15]     0.0    0.00    0.00      71         SLHAea::Line::Line() [15]
 -----------------------------------------------
-                0.00    0.00      71/71          SLHAea::Coll::read(std::istream&) [28]
-[17]     0.0    0.00    0.00      71         SLHAea::Line::~Line() [17]
+                0.00    0.00       1/71          SLHAea::Coll::operator[](std::string const&) [24]
+                0.00    0.00      70/71          SLHAea::Coll::read(std::istream&) [23]
+[16]     0.0    0.00    0.00      71         SLHAea::Line::~Line() [16]
 -----------------------------------------------
-                0.00    0.00       8/71          std::vector<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Block const&) [24]
-                0.00    0.00      63/71          SLHAea::Coll::read(std::istream&) [28]
-[18]     0.0    0.00    0.00      71         SLHAea::Block::Block(SLHAea::Block const&) [18]
+                0.00    0.00      70/70          SLHAea::Coll::read(std::istream&) [23]
+[17]     0.0    0.00    0.00      70         char* std::string::_S_construct<boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default> >(boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, std::allocator<char> const&, std::input_iterator_tag) [17]
 -----------------------------------------------
-                0.00    0.00      70/70          SLHAea::Coll::read(std::istream&) [28]
-[19]     0.0    0.00    0.00      70         char* std::string::_S_construct<boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default> >(boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, std::allocator<char> const&, std::input_iterator_tag) [19]
+                0.00    0.00       1/67          SLHAea::Coll::operator[](std::string const&) [24]
+                0.00    0.00      66/67          SLHAea::Coll::read(std::istream&) [23]
+[18]     0.0    0.00    0.00      67         __gnu_cxx::new_allocator<SLHAea::Block>::construct(SLHAea::Block*, SLHAea::Block const&) [18]
 -----------------------------------------------
-                0.00    0.00      70/70          SLHAea::Coll::read(std::istream&) [28]
-[20]     0.0    0.00    0.00      70         std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::operator=(std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > const&) [20]
-                0.00    0.00     339/339         std::vector<std::string, std::allocator<std::string> >::operator=(std::vector<std::string, std::allocator<std::string> > const&) [12]
-                0.00    0.00      28/28          SLHAea::Line* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line*, SLHAea::Line>(__gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, __gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line*, std::allocator<SLHAea::Line>&) [22]
+                0.00    0.00       8/8           std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&) [21]
+[19]     0.0    0.00    0.00       8         std::string* std::__uninitialized_copy_a<std::string*, std::string*, std::string>(std::string*, std::string*, std::string*, std::allocator<std::string>&) [19]
 -----------------------------------------------
-                0.00    0.00      64/64          std::vector<std::string, std::allocator<std::string> >::operator=(std::vector<std::string, std::allocator<std::string> > const&) [12]
-[21]     0.0    0.00    0.00      64         std::string* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, std::string*, std::string>(__gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, __gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, std::string*, std::allocator<std::string>&) [21]
+                0.00    0.00       4/4           SLHAea::Coll::read(std::istream&) [23]
+[20]     0.0    0.00    0.00       4         std::deque<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_push_back_aux(SLHAea::Block const&) [20]
 -----------------------------------------------
-                0.00    0.00      28/28          std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::operator=(std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > const&) [20]
-[22]     0.0    0.00    0.00      28         SLHAea::Line* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line*, SLHAea::Line>(__gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, __gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line*, std::allocator<SLHAea::Line>&) [22]
+                0.00    0.00       4/4           SLHAea::Line::str(std::string const&) [8]
+[21]     0.0    0.00    0.00       4         std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&) [21]
+                0.00    0.00       8/8           std::string* std::__uninitialized_copy_a<std::string*, std::string*, std::string>(std::string*, std::string*, std::string*, std::allocator<std::string>&) [19]
 -----------------------------------------------
-                0.00    0.00      16/16          std::vector<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Block const&) [24]
-[23]     0.0    0.00    0.00      16         SLHAea::Block* std::__uninitialized_move_a<SLHAea::Block*, SLHAea::Block*, std::allocator<SLHAea::Block> >(SLHAea::Block*, SLHAea::Block*, SLHAea::Block*, std::allocator<SLHAea::Block>&) [23]
-                0.00    0.00    1423/1732        SLHAea::Line::Line(SLHAea::Line const&) [8]
------------------------------------------------
-                0.00    0.00       8/8           SLHAea::Coll::read(std::istream&) [28]
-[24]     0.0    0.00    0.00       8         std::vector<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Block const&) [24]
-                0.00    0.00     127/269         SLHAea::Block::~Block() [14]
-                0.00    0.00      16/16          SLHAea::Block* std::__uninitialized_move_a<SLHAea::Block*, SLHAea::Block*, std::allocator<SLHAea::Block> >(SLHAea::Block*, SLHAea::Block*, SLHAea::Block*, std::allocator<SLHAea::Block>&) [23]
-                0.00    0.00       8/71          SLHAea::Block::Block(SLHAea::Block const&) [18]
------------------------------------------------
-                0.00    0.00       8/8           std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&) [26]
-[25]     0.0    0.00    0.00       8         std::string* std::__uninitialized_copy_a<std::string*, std::string*, std::string>(std::string*, std::string*, std::string*, std::allocator<std::string>&) [25]
------------------------------------------------
-                0.00    0.00       4/4           SLHAea::Line::str(std::string const&) [9]
-[26]     0.0    0.00    0.00       4         std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&) [26]
-                0.00    0.00       8/8           std::string* std::__uninitialized_copy_a<std::string*, std::string*, std::string>(std::string*, std::string*, std::string*, std::allocator<std::string>&) [25]
------------------------------------------------
-                0.00    0.00       1/1           __do_global_ctors_aux [32]
-[27]     0.0    0.00    0.00       1         global constructors keyed to SLHAea::Block::no_ind [27]
+                0.00    0.00       1/1           __do_global_ctors_aux [35]
+[22]     0.0    0.00    0.00       1         global constructors keyed to SLHAea::Block::no_ind [22]
 -----------------------------------------------
                 0.00    0.00       1/1           main [6]
-[28]     0.0    0.00    0.00       1         SLHAea::Coll::read(std::istream&) [28]
-                0.00    0.00     868/868         SLHAea::Line::str(std::string const&) [9]
-                0.00    0.00     309/309         std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Line*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line const&) [13]
-                0.00    0.00      72/72          __gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > > std::__find_if<__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Coll::name_iequals>(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, __gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Coll::name_iequals, std::random_access_iterator_tag) [15]
-                0.00    0.00      72/269         SLHAea::Block::~Block() [14]
-                0.00    0.00      71/71          SLHAea::Line::Line() [16]
-                0.00    0.00      71/71          SLHAea::Line::~Line() [17]
-                0.00    0.00      70/70          char* std::string::_S_construct<boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default> >(boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, std::allocator<char> const&, std::input_iterator_tag) [19]
-                0.00    0.00      70/70          std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::operator=(std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > const&) [20]
-                0.00    0.00      63/71          SLHAea::Block::Block(SLHAea::Block const&) [18]
-                0.00    0.00       8/8           std::vector<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Block const&) [24]
+[23]     0.0    0.00    0.00       1         SLHAea::Coll::read(std::istream&) [23]
+                0.00    0.00     868/868         SLHAea::Line::str(std::string const&) [8]
+                0.00    0.00     309/309         std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Line*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line const&) [12]
+                0.00    0.00      71/72          std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*> std::__find_if<std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals>(std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals, std::random_access_iterator_tag) [14]
+                0.00    0.00      70/70          char* std::string::_S_construct<boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default> >(boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, std::allocator<char> const&, std::input_iterator_tag) [17]
+                0.00    0.00      70/71          SLHAea::Line::Line() [15]
+                0.00    0.00      70/71          SLHAea::Line::~Line() [16]
+                0.00    0.00      70/142         SLHAea::Block::~Block() [13]
+                0.00    0.00      66/67          __gnu_cxx::new_allocator<SLHAea::Block>::construct(SLHAea::Block*, SLHAea::Block const&) [18]
+                0.00    0.00       4/4           std::deque<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_push_back_aux(SLHAea::Block const&) [20]
+                0.00    0.00       1/1           SLHAea::Coll::operator[](std::string const&) [24]
+                0.00    0.00       1/1           std::deque<SLHAea::Block, std::allocator<SLHAea::Block> >::erase(std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>) [26]
+-----------------------------------------------
+                0.00    0.00       1/1           SLHAea::Coll::read(std::istream&) [23]
+[24]     0.0    0.00    0.00       1         SLHAea::Coll::operator[](std::string const&) [24]
+                0.00    0.00       1/72          std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*> std::__find_if<std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals>(std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals, std::random_access_iterator_tag) [14]
+                0.00    0.00       1/71          SLHAea::Line::Line() [15]
+                0.00    0.00       1/71          SLHAea::Line::~Line() [16]
+                0.00    0.00       1/67          __gnu_cxx::new_allocator<SLHAea::Block>::construct(SLHAea::Block*, SLHAea::Block const&) [18]
+                0.00    0.00       1/142         SLHAea::Block::~Block() [13]
+-----------------------------------------------
+                0.00    0.00       1/1           main [6]
+[25]     0.0    0.00    0.00       1         std::_Deque_base<SLHAea::Block, std::allocator<SLHAea::Block> >::~_Deque_base() [25]
+-----------------------------------------------
+                0.00    0.00       1/1           SLHAea::Coll::read(std::istream&) [23]
+[26]     0.0    0.00    0.00       1         std::deque<SLHAea::Block, std::allocator<SLHAea::Block> >::erase(std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>) [26]
+                0.00    0.00       1/142         SLHAea::Block::~Block() [13]
 -----------------------------------------------
 
 Index by function name
 
-  [27] global constructors keyed to SLHAea::Block::no_ind [7] SLHAea::Coll::name_iequals::operator()(SLHAea::Block const&) const [22] SLHAea::Line* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line*, SLHAea::Line>(__gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, __gnu_cxx::__normal_iterator<SLHAea::Line const*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line*, std::allocator<SLHAea::Line>&)
-  [28] SLHAea::Coll::read(std::istream&) [19] char* std::string::_S_construct<boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default> >(boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, std::allocator<char> const&, std::input_iterator_tag) [21] std::string* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, std::string*, std::string>(__gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, __gnu_cxx::__normal_iterator<std::string const*, std::vector<std::string, std::allocator<std::string> > >, std::string*, std::allocator<std::string>&)
-   [9] SLHAea::Line::str(std::string const&) [10] char* std::string::_S_construct<__gnu_cxx::__normal_iterator<char const*, std::string> >(__gnu_cxx::__normal_iterator<char const*, std::string>, __gnu_cxx::__normal_iterator<char const*, std::string>, std::allocator<char> const&, std::forward_iterator_tag) [11] SLHAea::Line* std::__uninitialized_copy_a<SLHAea::Line*, SLHAea::Line*, SLHAea::Line>(SLHAea::Line*, SLHAea::Line*, SLHAea::Line*, std::allocator<SLHAea::Line>&)
-   [8] SLHAea::Line::Line(SLHAea::Line const&) [13] std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Line*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line const&) [25] std::string* std::__uninitialized_copy_a<std::string*, std::string*, std::string>(std::string*, std::string*, std::string*, std::allocator<std::string>&)
-  [16] SLHAea::Line::Line()   [20] std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::operator=(std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > const&) [23] SLHAea::Block* std::__uninitialized_move_a<SLHAea::Block*, SLHAea::Block*, std::allocator<SLHAea::Block> >(SLHAea::Block*, SLHAea::Block*, SLHAea::Block*, std::allocator<SLHAea::Block>&)
-  [17] SLHAea::Line::~Line()  [24] std::vector<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Block const&) [15] __gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > > std::__find_if<__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Coll::name_iequals>(__gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, __gnu_cxx::__normal_iterator<SLHAea::Block*, std::vector<SLHAea::Block, std::allocator<SLHAea::Block> > >, SLHAea::Coll::name_iequals, std::random_access_iterator_tag)
-  [18] SLHAea::Block::Block(SLHAea::Block const&) [26] std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&)
-  [14] SLHAea::Block::~Block() [12] std::vector<std::string, std::allocator<std::string> >::operator=(std::vector<std::string, std::allocator<std::string> > const&)
+  [22] global constructors keyed to SLHAea::Block::no_ind [13] SLHAea::Block::~Block() [26] std::deque<SLHAea::Block, std::allocator<SLHAea::Block> >::erase(std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>)
+  [23] SLHAea::Coll::read(std::istream&) [18] __gnu_cxx::new_allocator<SLHAea::Block>::construct(SLHAea::Block*, SLHAea::Block const&) [12] std::vector<SLHAea::Line, std::allocator<SLHAea::Line> >::_M_insert_aux(__gnu_cxx::__normal_iterator<SLHAea::Line*, std::vector<SLHAea::Line, std::allocator<SLHAea::Line> > >, SLHAea::Line const&)
+  [24] SLHAea::Coll::operator[](std::string const&) [7] SLHAea::Coll::name_iequals::operator()(SLHAea::Block const&) const [21] std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&)
+   [8] SLHAea::Line::str(std::string const&) [17] char* std::string::_S_construct<boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default> >(boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, std::allocator<char> const&, std::input_iterator_tag) [10] SLHAea::Line* std::__uninitialized_copy_a<SLHAea::Line*, SLHAea::Line*, SLHAea::Line>(SLHAea::Line*, SLHAea::Line*, SLHAea::Line*, std::allocator<SLHAea::Line>&)
+  [11] SLHAea::Line::Line(SLHAea::Line const&) [9] char* std::string::_S_construct<__gnu_cxx::__normal_iterator<char const*, std::string> >(__gnu_cxx::__normal_iterator<char const*, std::string>, __gnu_cxx::__normal_iterator<char const*, std::string>, std::allocator<char> const&, std::forward_iterator_tag) [19] std::string* std::__uninitialized_copy_a<std::string*, std::string*, std::string>(std::string*, std::string*, std::string*, std::allocator<std::string>&)
+  [15] SLHAea::Line::Line()   [25] std::_Deque_base<SLHAea::Block, std::allocator<SLHAea::Block> >::~_Deque_base() [14] std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*> std::__find_if<std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals>(std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, std::_Deque_iterator<SLHAea::Block, SLHAea::Block&, SLHAea::Block*>, SLHAea::Coll::name_iequals, std::random_access_iterator_tag)
+  [16] SLHAea::Line::~Line()  [20] std::deque<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_push_back_aux(SLHAea::Block const&)

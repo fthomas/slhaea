@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <deque>
 #include <functional>
 #include <iomanip>
 #include <iostream>
@@ -1375,7 +1376,7 @@ const int Block::no_ind = std::numeric_limits<int>::min();
 class Coll
 {
 private:
-  typedef std::vector<Block> impl_type;
+  typedef std::deque<Block> impl_type;
 
 public:
   typedef std::string                       key_type;
