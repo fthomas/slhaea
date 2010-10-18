@@ -88,9 +88,20 @@ BOOST_AUTO_TEST_CASE(testDuplicatedBlocks)
   Coll c1;
   c1.str(s4);
 
-  BOOST_CHECK(c1.str() == s4);
-  BOOST_CHECK(c1.count("test1") == 2);
-  BOOST_CHECK(c1.count("test2") == 2);
+  BOOST_CHECK_EQUAL(c1.str(), s4);
+  BOOST_CHECK_EQUAL(c1.count("test1"), 2);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 2);
+
+  stringstream ss1, ss2;
+  ss1 << "# test1\n" << "BLOCK test1\n";
+  ss2 << "# test1\n" << "BLOCK test1\n";
+  string s5 = ss1.str() + ss2.str();
+
+  c1.clear();
+  c1.read(ss1);
+  c1.read(ss2);
+
+  BOOST_CHECK_EQUAL(c1.str(), s5);
 }
 
 BOOST_FIXTURE_TEST_CASE(testField, F)
