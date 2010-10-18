@@ -1311,6 +1311,7 @@ private:
                  const std::string& s4)
   {
     key_type key;
+    key.reserve(5);
     if (s0.empty()) return key; key.push_back(s0);
     if (s1.empty()) return key; key.push_back(s1);
     if (s2.empty()) return key; key.push_back(s2);
@@ -1323,6 +1324,7 @@ private:
   ints_to_key(int i0, int i1, int i2, int i3, int i4)
   {
     key_type key;
+    key.reserve(5);
     if (i0 == no_ind) return key; key.push_back(to_string(i0));
     if (i1 == no_ind) return key; key.push_back(to_string(i1));
     if (i2 == no_ind) return key; key.push_back(to_string(i2));
