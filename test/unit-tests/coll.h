@@ -91,6 +91,7 @@ BOOST_AUTO_TEST_CASE(testDuplicatedBlocks)
   BOOST_CHECK_EQUAL(c1.str(), s1);
   BOOST_CHECK_EQUAL(c1.count("test1"), 2);
   BOOST_CHECK_EQUAL(c1.count("test2"), 2);
+  BOOST_CHECK_EQUAL(c1.size(), 4);
 
   stringstream ss1, ss2;
   ss1 << "# test1\n" << "BLOCK test1\n";
@@ -102,6 +103,20 @@ BOOST_AUTO_TEST_CASE(testDuplicatedBlocks)
   c1.read(ss2);
 
   BOOST_CHECK_EQUAL(c1.str(), s2);
+  BOOST_CHECK_EQUAL(c1.size(), 4);
+
+  ss1.clear();
+  ss2.clear();
+  ss1.str("# test 1\nBLOCK test1\n");
+  ss2.str("BLOCK test1\n");
+  s2 = ss1.str() + ss2.str();
+
+  c1.clear();
+  c1.read(ss1);
+  c1.read(ss2);
+
+  BOOST_CHECK_EQUAL(c1.str(), s2);
+  BOOST_CHECK_EQUAL(c1.size(), 3);
 }
 
 BOOST_FIXTURE_TEST_CASE(testField, F)
