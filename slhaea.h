@@ -1443,22 +1443,20 @@ public:
   {
     std::string line_str;
     Line line;
-    pointer block = &(*this)[""];
+
+    const size_type orig_size = size();
+    pointer block = push_back_named_block("");
 
     while (std::getline(is, line_str))
     {
       if (boost::all(line_str, boost::is_space())) continue;
 
       line.str(line_str);
-      if (line.is_block_def())
-      {
-        push_back(value_type(line[1]));
-        block = &back();
-      }
+      if (line.is_block_def()) block = push_back_named_block(line[1]);
       block->push_back(line);
     }
 
-    erase_if_empty("");
+    erase_if_empty("", orig_size);
     return *this;
   }
 
@@ -1896,10 +1894,18 @@ private:
     key_type name_;
   };
 
-  inline iterator
-  erase_if_empty(const key_type& blockName)
+  pointer
+  push_back_named_block(const key_type& blockName)
   {
-    iterator block = find(blockName);
+    push_back(value_type(blockName));
+    return &back();
+  }
+
+  iterator
+  erase_if_empty(const key_type& blockName, const size_type& offset = 0)
+  {
+    iterator block =
+        std::find_if(begin() + offset, end(), name_iequals(blockName));
     if (block != end() && block->empty()) return erase(block);
     return block;
   }
@@ -1927,6 +1933,7 @@ private:
  */
 struct Key
 {
+public:
   /** Name of the Block that contains the field. */
   Coll::key_type block;
 
