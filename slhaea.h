@@ -615,11 +615,8 @@ private:
   template<class T> Line&
   add_fundamental_type(const T& arg)
   {
-    std::stringstream input("");
     static const int digits = std::numeric_limits<T>::digits10;
-
-    input << std::setprecision(digits) << std::scientific << arg;
-    return *this << input.str();
+    return *this << to_string(arg, digits);
   }
 
 private:
