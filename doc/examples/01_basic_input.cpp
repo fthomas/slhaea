@@ -2,16 +2,17 @@
 #include <iostream>
 #include <slhaea.h>
 
+using namespace std;
+using namespace SLHAea;
+
 int main(int, char* [])
 {
-  std::ifstream ifs("slha.par");
-  SLHAea::Coll input(ifs);
+  ifstream ifs("slha1.txt");
+  Coll input(ifs);
 
-  std::cout << "tan(beta) = "        << input["MINPAR"][3][1] << std::endl
-    << std::endl;
-  std::cout << "m_top(pole) line:\n" << input["SMINPUTS"][6]  << std::endl
-    << std::endl;
-  std::cout << "SMINPUTS block:\n"   << input["SMINPUTS"]     << std::endl;
+  cout << "tan(beta) = "        << input["MINPAR"][3][1] << endl << endl;
+  cout << "m_top(pole) line:\n" << input["SMINPUTS"][6]  << endl << endl;
+  cout << "SMINPUTS block:\n"   << input["SMINPUTS"];
 
   return 0;
 }

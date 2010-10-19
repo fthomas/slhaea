@@ -1,18 +1,21 @@
 #include <fstream>
 #include <slhaea.h>
 
+using namespace std;
+using namespace SLHAea;
+
 int main(int, char* [])
 {
-  SLHAea::Coll input;
+  Coll input;
 
-  std::ifstream ifs("slha.par");
+  ifstream ifs("slha1.txt");
   ifs >> input;
   ifs.close();
 
   input["MINPAR"][4][1] = "-1.0";
   input["MINPAR"][3][2] = "# tan(beta)";
 
-  std::ofstream ofs("slha.par");
+  ofstream ofs("slha1.txt");
   ofs << input;
   ofs.close();
 

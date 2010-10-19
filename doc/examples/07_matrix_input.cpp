@@ -7,7 +7,7 @@ using namespace SLHAea;
 
 int main(int, char* [])
 {
-  ifstream ifs("slha.par2");
+  ifstream ifs("slha2.txt");
   Coll input(ifs);
   double rvhmix[5][5];
 

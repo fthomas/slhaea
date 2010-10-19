@@ -38,7 +38,6 @@ int main(int, char* [])
      << " 5  " << m_b      << "  # m_b\n"
      << " 6  " << m_t      << "  # m_t\n"
      << " 7  " << m_tau    << "  # m_tau\n";
-
   Coll out2(ss);
 
   cout << out1;

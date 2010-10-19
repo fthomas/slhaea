@@ -1,6 +1,6 @@
 # Example input in Les Houches format
 Block MODSEL                # Select model
-    1    1                  # sugra
+    1   1                   # sugra
 Block SMINPUTS              # Standard Model inputs
     1   1.279340000e+02     # alpha^(-1) SM MSbar(MZ)
     2   1.166370000e-05     # G_Fermi

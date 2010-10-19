@@ -3,15 +3,18 @@
 #include <iostream>
 #include <slhaea.h>
 
+using namespace std;
+using namespace SLHAea;
+
 int main(int, char* [])
 {
-  std::ifstream ifs("slha.par");
-  SLHAea::Coll input(ifs);
+  ifstream ifs("slha1.txt");
+  Coll input(ifs);
 
-  std::rotate(input.begin(), input.find("MINPAR"), input.end());
-  std::reverse(input.at("SMINPUTS").begin()+1, input.at("SMINPUTS").end());
+  rotate(input.begin(), input.find("MINPAR"), input.end());
+  reverse(input.at("SMINPUTS").begin()+1, input.at("SMINPUTS").end());
   input.at("EXTPAR").comment();
 
-  std::cout << input;
+  cout << input;
   return 0;
 }
