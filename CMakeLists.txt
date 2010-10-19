@@ -12,10 +12,12 @@ endif()
 
 find_package(Boost REQUIRED COMPONENTS unit_test_framework)
 find_package(Doxygen)
+find_package(LATEX)
 
 enable_testing()
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
+set(CMAKE_COPY ${CMAKE_COMMAND} -E copy)
 set(SLHAEA_H ${CMAKE_SOURCE_DIR}/slhaea.h)
 
 add_subdirectory(doc)
