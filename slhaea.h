@@ -629,15 +629,24 @@ private:
 
 template<> inline Line&
 Line::operator<< <float>(const float& number)
-{ return add_fundamental_type(number); }
+{
+  add_fundamental_type(number);
+  return *this;
+}
 
 template<> inline Line&
 Line::operator<< <double>(const double& number)
-{ return add_fundamental_type(number); }
+{
+  add_fundamental_type(number);
+  return *this;
+}
 
 template<> inline Line&
 Line::operator<< <long double>(const long double& number)
-{ return add_fundamental_type(number); }
+{
+  add_fundamental_type(number);
+  return *this;
+}
 
 
 /**
