@@ -9,9 +9,9 @@ if(PDFLATEX_COMPILER AND BIBTEX_COMPILER)
       COMMAND ${BIBTEX_COMPILER}   slhaea
       COMMAND ${PDFLATEX_COMPILER} slhaea
       COMMAND ${PDFLATEX_COMPILER} slhaea
+      COMMAND ${CMAKE_COPY} slhaea.pdf ${CURR_SRC_DIR}/
       DEPENDS ${CURR_SRC_DIR}/slhaea.tex
               ${CURR_SRC_DIR}/slhaea.bib)
 
-    add_custom_target(manual DEPENDS ${CURR_BIN_DIR}/slhaea.pdf
-      COMMAND ${CMAKE_COPY} slhaea.pdf ${CURR_SRC_DIR}/)
+    add_custom_target(manual DEPENDS ${CURR_BIN_DIR}/slhaea.pdf)
 endif()

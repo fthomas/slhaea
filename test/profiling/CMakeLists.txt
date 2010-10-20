@@ -1,16 +1,19 @@
-set(CURR_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(CURR_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(CURR_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
+string(REPLACE "/" "\\/" ESC_BIN_DIR ${CMAKE_BINARY_DIR}/)
 
 function(run_gprof BINARY OUTFILE)
     find_program(PROFILER_gprof gprof)
     if(PROFILER_gprof)
         get_target_property(BIN_LOC ${BINARY} LOCATION)
         add_custom_command(
-          OUTPUT  ${CURR_DIR}/${OUTFILE}
+          OUTPUT  ${CURR_BIN_DIR}/${OUTFILE}
           COMMAND ${BIN_LOC}
-          COMMAND ${PROFILER_gprof}
-          ARGS    -b ${BIN_LOC} > ${CURR_DIR}/${OUTFILE} 2>&1
+          COMMAND ${PROFILER_gprof} -b ${BIN_LOC} > ${OUTFILE} 2>&1
+          COMMAND ${CMAKE_COPY} ${OUTFILE} ${CURR_SRC_DIR}/
           DEPENDS ${SLHAEA_H} ${BINARY})
-        set(GPROF_RESULTS ${GPROF_RESULTS};${OUTFILE} PARENT_SCOPE)
+        set(GPROF_RESULTS ${GPROF_RESULTS};${CURR_BIN_DIR}/${OUTFILE}
+          PARENT_SCOPE)
     endif()
 endfunction()
 
@@ -19,11 +22,14 @@ function(run_valgrind TOOL BINARY OUTFILE)
     if(PROFILER_valg)
         get_target_property(BIN_LOC ${BINARY} LOCATION)
         add_custom_command(
-          OUTPUT  ${CURR_DIR}/${OUTFILE}
-          COMMAND ${PROFILER_valg}
-          ARGS    --tool=${TOOL} ${BIN_LOC} > ${CURR_DIR}/${OUTFILE} 2>&1
+          OUTPUT  ${CURR_BIN_DIR}/${OUTFILE}
+          COMMAND ${PROFILER_valg} --tool=${TOOL} ${BIN_LOC} > ${OUTFILE} 2>&1
+          COMMAND sed -i 's/==[0-9]\\+==[ ]*//' ${OUTFILE}
+          COMMAND sed -i 's/${ESC_BIN_DIR}//' ${OUTFILE}
+          COMMAND ${CMAKE_COPY} ${OUTFILE} ${CURR_SRC_DIR}/
           DEPENDS ${SLHAEA_H} ${BINARY})
-        set(VALG_RESULTS ${VALG_RESULTS};${OUTFILE} PARENT_SCOPE)
+        set(VALG_RESULTS ${VALG_RESULTS};${CURR_BIN_DIR}/${OUTFILE}
+          PARENT_SCOPE)
     endif()
 endfunction()
 
@@ -54,9 +60,4 @@ run_valgrind(memcheck input  memcheck-input.txt)
 run_valgrind(memcheck output memcheck-output.txt)
 run_valgrind(memcheck ut     memcheck-ut.txt)
 
-string(REPLACE "/" "\\/" ESC_BIN_DIR ${CMAKE_BINARY_DIR}/)
-add_custom_target(profiles
-  DEPENDS ${GPROF_RESULTS} ${VALG_RESULTS}
-  COMMAND sed -i 's/==[0-9]\\+==[ ]*//' ${VALG_RESULTS}
-  COMMAND sed -i 's/${ESC_BIN_DIR}//' ${VALG_RESULTS}
-  WORKING_DIRECTORY ${CURR_DIR})
+add_custom_target(profiles DEPENDS ${GPROF_RESULTS} ${VALG_RESULTS})
