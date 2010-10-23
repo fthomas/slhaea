@@ -19,6 +19,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
@@ -120,7 +121,7 @@ public:
   typedef impl_type::size_type              size_type;
 
   /** Constructs an empty %Line. */
-  Line() : impl_(0), lineFormat_("") {}
+  Line() : impl_(0), bounds_(0), format_("") {}
 
   // NOTE: The compiler-generated copy constructor and assignment
   //   operator for this class are just fine, so we don't need to
@@ -195,7 +196,7 @@ public:
    *
    * This functions appends \p arg to the output of str() const and
    * uses this temporary string as input for str(). Based on the
-   * temporary string size() is increased or remains unchanged.
+   * temporary string, size() is increased or remains unchanged.
    */
   Line&
   append(const std::string& arg)
@@ -227,29 +228,25 @@ public:
     const std::size_t comment_pos = trimmed_line.find('#');
     const std::string data = trimmed_line.substr(0, comment_pos);
 
-    std::stringstream line_format("");
-    int argument = 0;
-
     static const std::string delimiters = " \t\v\f\r";
     std::size_t pos1 = data.find_first_not_of(delimiters, 0);
     std::size_t pos2 = data.find_first_of(delimiters, pos1);
 
     while (pos1 != std::string::npos)
     {
-      line_format << " %|" << pos1 << "t|%" << ++argument << "%";
-
       impl_.push_back(data.substr(pos1, pos2 - pos1));
+      bounds_.push_back(std::make_pair(pos1, pos2));
+
       pos1 = data.find_first_not_of(delimiters, pos2);
       pos2 = data.find_first_of(delimiters, pos1);
     }
 
     if (comment_pos != std::string::npos)
     {
-      line_format << " %|" << comment_pos << "t|%" << ++argument << "%";
       impl_.push_back(trimmed_line.substr(comment_pos));
+      bounds_.push_back(std::make_pair(comment_pos, trimmed_line.length()));
     }
 
-    lineFormat_ = line_format.str().substr(1);
     return *this;
   }
 
@@ -257,7 +254,9 @@ public:
   std::string
   str() const
   {
-    boost::format formatter(lineFormat_);
+    if (format_.empty()) build_format_str();
+
+    boost::format formatter(format_);
     for (const_iterator field = begin(); field != end(); ++field)
     { formatter % *field; }
     return formatter.str();
@@ -514,7 +513,8 @@ public:
   swap(Line& line)
   {
     impl_.swap(line.impl_);
-    lineFormat_.swap(line.lineFormat_);
+    bounds_.swap(line.bounds_);
+    format_.swap(line.format_);
   }
 
   /** Erases all the elements in the %Line. */
@@ -522,7 +522,8 @@ public:
   clear()
   {
     impl_.clear();
-    lineFormat_.clear();
+    bounds_.clear();
+    format_.clear();
   }
 
   /** Reformats the string representation of the %Line. */
@@ -531,43 +532,44 @@ public:
   {
     if (empty()) return;
 
-    std::stringstream line_format("");
-    int arg = 0, pos = 0;
+    bounds_.clear();
+    format_.clear();
+
     const_iterator field = begin();
+    std::size_t pos1 = 0, pos2 = 0;
 
     if (is_block_specifier(*field))
     {
-      line_format << " %|" << pos << "t|%" << ++arg << "%";
-      pos += field->length();
+      pos1 = 0;
+      pos2 = pos1 + field->length();
+      bounds_.push_back(std::make_pair(pos1, pos2));
 
       if (field+1 != end())
       {
-        line_format << " %|" << ++pos << "t|%" << ++arg << "%";
-        pos += (++field)->length();
+        pos1 = pos2 + 1;
+        pos2 = pos1 + (++field)->length();
+        bounds_.push_back(std::make_pair(pos1, pos2));
       }
     }
     else if ((*field)[0] == '#')
     {
-      line_format << " %|" << pos << "t|%" << ++arg << "%";
-      pos += field->length();
+      pos1 = 0;
+      pos2 = pos1 + field->length();
+      bounds_.push_back(std::make_pair(pos1, pos2));
     }
     else
     {
-      line_format << " %|" << ++pos << "t|%" << ++arg << "%";
-      pos += field->length();
+      pos1 = 1;
+      pos2 = pos1 + field->length();
+      bounds_.push_back(std::make_pair(pos1, pos2));
     }
 
     while (++field != end())
     {
-      // Compute the number of spaces required for proper indentation.
-      int dist = 3 - ((pos - 1) % 4);
-      pos += dist > 1 ? dist : dist + 4;
-
-      line_format << " %|" << pos << "t|%" << ++arg << "%";
-      pos += field->length();
+      pos1 = pos2 + calc_spaces_for_indent(pos2);
+      pos2 = pos1 + field->length();
+      bounds_.push_back(std::make_pair(pos1, pos2));
     }
-
-    lineFormat_ = line_format.str().substr(1);
   }
 
   /**
@@ -594,12 +596,30 @@ public:
   }
 
 private:
+  void
+  build_format_str() const
+  {
+    if (empty()) return;
+
+    std::stringstream format("");
+    for (std::size_t i = 0; i < bounds_.size(); ++i)
+    { format << " %|" << bounds_[i].first << "t|%" << (i+1) << "%"; }
+    format_ = format.str().substr(1);
+  }
+
   bool
   contains_comment() const
   {
     for (const_reverse_iterator field = rbegin(); field != rend(); ++field)
     { if ((*field)[0] == '#') return true; }
     return false;
+  }
+
+  static std::size_t
+  calc_spaces_for_indent(const std::size_t& pos)
+  {
+    int dist = 3 - ((pos - 1) % 4);
+    return dist > 1 ? dist : dist + 4;
   }
 
   static bool
@@ -613,7 +633,7 @@ private:
   }
 
   template<class T> Line&
-  add_fundamental_type(const T& arg)
+  insert_fundamental_type(const T& arg)
   {
     static const int digits = std::numeric_limits<T>::digits10;
     return *this << to_string(arg, digits);
@@ -621,27 +641,28 @@ private:
 
 private:
   impl_type impl_;
-  std::string lineFormat_;
+  std::vector<std::pair<std::size_t, std::size_t> > bounds_;
+  mutable std::string format_;
 };
 
 template<> inline Line&
 Line::operator<< <float>(const float& number)
 {
-  add_fundamental_type(number);
+  insert_fundamental_type(number);
   return *this;
 }
 
 template<> inline Line&
 Line::operator<< <double>(const double& number)
 {
-  add_fundamental_type(number);
+  insert_fundamental_type(number);
   return *this;
 }
 
 template<> inline Line&
 Line::operator<< <long double>(const long double& number)
 {
-  add_fundamental_type(number);
+  insert_fundamental_type(number);
   return *this;
 }
 
