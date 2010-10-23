@@ -135,15 +135,15 @@ BOOST_AUTO_TEST_CASE(testInserting)
   l1[6] << 1111111  << 2222222  << 3333333  << 4444444;
   l1[7] << 11111111 << 22222222 << 33333333 << 44444444;
 
-                              // "1   2   3   4   5   6   7   8   9   0"
-  BOOST_CHECK_EQUAL(l1[0].str(), " 1  2   3   4");
-  BOOST_CHECK_EQUAL(l1[1].str(), " 11     22  33  44");
-  BOOST_CHECK_EQUAL(l1[2].str(), " 111    222     333     444");
-  BOOST_CHECK_EQUAL(l1[3].str(), " 1111   2222    3333    4444");
-  BOOST_CHECK_EQUAL(l1[4].str(), " 11111  22222   33333   44444");
-  BOOST_CHECK_EQUAL(l1[5].str(), " 111111     222222  333333  444444");
-  BOOST_CHECK_EQUAL(l1[6].str(), " 1111111    2222222     3333333     4444444");
-  BOOST_CHECK_EQUAL(l1[7].str(), " 11111111   22222222    33333333    44444444");
+                              // "    1   2   3   4   5   6   7   8   9   0"
+  BOOST_CHECK_EQUAL(l1[0].str(), "    1   2   3   4");
+  BOOST_CHECK_EQUAL(l1[1].str(), "    11  22  33  44");
+  BOOST_CHECK_EQUAL(l1[2].str(), "    111     222     333     444");
+  BOOST_CHECK_EQUAL(l1[3].str(), "    1111    2222    3333    4444");
+  BOOST_CHECK_EQUAL(l1[4].str(), "    11111   22222   33333   44444");
+  BOOST_CHECK_EQUAL(l1[5].str(), "    111111  222222  333333  444444");
+  BOOST_CHECK_EQUAL(l1[6].str(), "    1111111     2222222     3333333     4444444");
+  BOOST_CHECK_EQUAL(l1[7].str(), "    11111111    22222222    33333333    44444444");
 
   Line l2;
 
@@ -152,23 +152,23 @@ BOOST_AUTO_TEST_CASE(testInserting)
 
   l2.clear();
   l2 << 1 << 1 << "# mSUGRA";
-  BOOST_CHECK_EQUAL(l2.str(), " 1  1   # mSUGRA");
+  BOOST_CHECK_EQUAL(l2.str(), "    1   1   # mSUGRA");
 
   l2.clear();
   l2 << 2 << "-1.2345678E+01" << "# some double";
-  BOOST_CHECK_EQUAL(l2.str(), " 2  -1.2345678E+01  # some double");
+  BOOST_CHECK_EQUAL(l2.str(), "    2   -1.2345678E+01  # some double");
 
   l2.clear();
   l2 << 2 << "1.234567E+01" << "# some double" << " here";
-  BOOST_CHECK_EQUAL(l2.str(), " 2  1.234567E+01    # some double here");
+  BOOST_CHECK_EQUAL(l2.str(), "    2   1.234567E+01    # some double here");
 
   l2.clear();
   l2 << 1 << 2 << 3 << 4 << 5 << 6;
-  BOOST_CHECK_EQUAL(l2.str(), " 1  2   3   4   5   6");
+  BOOST_CHECK_EQUAL(l2.str(), "    1   2   3   4   5   6");
 
   l2.clear();
   l2 << "" << " " << "\t \n" << "1" << 2 << "\n" << "# test" << "\r";
-  BOOST_CHECK_EQUAL(l2.str(), " 1  2   # test");
+  BOOST_CHECK_EQUAL(l2.str(), "    1   2   # test");
 
   l2.clear();
   l2 << "# test" << "\n \t" << "  1" << " 2" << 3 << " # more";
@@ -176,7 +176,7 @@ BOOST_AUTO_TEST_CASE(testInserting)
 
   l2 = "1 2 3 4 5 6";
   l2.reformat();
-  BOOST_CHECK_EQUAL(l2.str(), " 1  2   3   4   5   6");
+  BOOST_CHECK_EQUAL(l2.str(), "    1   2   3   4   5   6");
 
   l2 = "";
   l2.reformat();
@@ -194,15 +194,15 @@ BOOST_AUTO_TEST_CASE(testFloatInserting)
 
   l1.clear();
   l1 << 1 << float(ld);
-  BOOST_CHECK_EQUAL(l1.str(), " 1  " + to_string(ld, digits_f));
+  BOOST_CHECK_EQUAL(l1.str(), "    1   " + to_string(ld, digits_f));
 
   l1.clear();
   l1 << 2 << double(ld);
-  BOOST_CHECK_EQUAL(l1.str(), " 2  " + to_string(ld, digits_d));
+  BOOST_CHECK_EQUAL(l1.str(), "    2   " + to_string(ld, digits_d));
 
   l1.clear();
   l1 << 3 << (long double)(ld);
-  BOOST_CHECK_EQUAL(l1.str(), " 3  " + to_string(ld, digits_ld));
+  BOOST_CHECK_EQUAL(l1.str(), "    3   " + to_string(ld, digits_ld));
 }
 
 BOOST_AUTO_TEST_CASE(testSubscriptAccessor)

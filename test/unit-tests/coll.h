@@ -18,27 +18,27 @@ BOOST_AUTO_TEST_SUITE(TestColl)
 struct F {
   F() {
     fs1 = "BLOCK test1 # 1st comment\n"
-         " 1  1       # 2nd comment\n"
-         " 2  1       # 3rd comment\n"
-         "Block test2 # 4th comment\n"
-         " 2  1       # 5th comment\n"
-         " 3  2       # 6th comment\n"
-         " 4  3       # 7th comment\n";
+          " 1  1       # 2nd comment\n"
+          " 2  1       # 3rd comment\n"
+          "Block test2 # 4th comment\n"
+          " 2  1       # 5th comment\n"
+          " 3  2       # 6th comment\n"
+          " 4  3       # 7th comment\n";
 
     fs2 = "BLOCK test1\n"
-         " 1  1\n"
-         " 1  2\n"
-         "Block test2\n"
-         " 2  1\n"
-         " 2  2\n"
-         " \t  \n"
-         "     \n"
-         "bLoCk test3\n"
-         " 3  1\n"
-         " 3  2\n"
-         "BlOcK test4\n"
-         " 4  1\n"
-         " 4  2\n";
+          " 1  1\n"
+          " 1  2\n"
+          "Block test2\n"
+          " 2  1\n"
+          " 2  2\n"
+          " \t  \n"
+          "     \n"
+          "bLoCk test3\n"
+          " 3  1\n"
+          " 3  2\n"
+          "BlOcK test4\n"
+          " 4  1\n"
+          " 4  2\n";
   }
 
   ~F() {}
@@ -425,7 +425,7 @@ BOOST_AUTO_TEST_CASE(testReformat)
   BOOST_CHECK_EQUAL(c1.str(),
     "Block t1\n"
     "DECAY t2\n"
-    " 1  2   3   4\n");
+    "    1   2   3   4\n");
 }
 
 BOOST_FIXTURE_TEST_CASE(testUnComment, F)

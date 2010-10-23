@@ -559,7 +559,7 @@ public:
     }
     else
     {
-      pos1 = 1;
+      pos1 = 4;
       pos2 = pos1 + field->length();
       bounds_.push_back(std::make_pair(pos1, pos2));
     }

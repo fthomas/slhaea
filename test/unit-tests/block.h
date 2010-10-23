@@ -451,8 +451,8 @@ BOOST_AUTO_TEST_CASE(testReformat)
   BOOST_CHECK_EQUAL(b1.str(),
     "BLOCK t1\n"
     "DECAY t2\n"
-    " 1  1   1   1\n"
-    " 2  2   2   2\n"
+    "    1   1   1   1\n"
+    "    2   2   2   2\n"
     "# 3 3 3\n");
 }
 
