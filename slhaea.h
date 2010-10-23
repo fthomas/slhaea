@@ -618,8 +618,12 @@ private:
   static std::size_t
   calc_spaces_for_indent(const std::size_t& pos)
   {
-    int dist = 3 - ((pos - 1) % 4);
-    return dist > 1 ? dist : dist + 4;
+    static const std::size_t shift_width = 4;
+    static const std::size_t min_width   = 2;
+
+    std::size_t width = shift_width - (pos % shift_width);
+    if (width < min_width) width += shift_width;
+    return width;
   }
 
   static bool
