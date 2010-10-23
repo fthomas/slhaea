@@ -174,13 +174,10 @@ BOOST_AUTO_TEST_CASE(testInserting)
   l2 << "# test" << "\n \t" << "  1" << " 2" << 3 << " # more";
   BOOST_CHECK_EQUAL(l2.str(), "# test  1 23 # more");
 
-  l2 = "1 2 3 4 5 6";
-  l2.reformat();
-  BOOST_CHECK_EQUAL(l2.str(), "    1   2   3   4   5   6");
+  l2.clear();
+  l2 << "# Hello " << " world " << "! ";
+  BOOST_CHECK_EQUAL(l2.str(), "# Hello world!");
 
-  l2 = "";
-  l2.reformat();
-  BOOST_CHECK_EQUAL(l2.str(), "");
 }
 
 BOOST_AUTO_TEST_CASE(testFloatInserting)
@@ -457,6 +454,25 @@ BOOST_AUTO_TEST_CASE(testSwap)
   l2.swap(l1);
   BOOST_CHECK_EQUAL(l1, cl1);
   BOOST_CHECK_EQUAL(l2, cl2);
+}
+
+BOOST_AUTO_TEST_CASE(testReformat)
+{
+  Line l1;
+  l1.reformat();
+  BOOST_CHECK_EQUAL(l1.str(), "");
+
+  l1 = "1 2 3 4 5 6";
+  l1.reformat();
+  BOOST_CHECK_EQUAL(l1.str(), "    1   2   3   4   5   6");
+
+  l1 = "   BLOCK   test1  ";
+  l1.reformat();
+  BOOST_CHECK_EQUAL(l1.str(), "BLOCK test1");
+
+  l1 = " 1 1.23456 # comment  ";
+  l1.reformat();
+  BOOST_CHECK_EQUAL(l1.str(), "    1   1.23456     # comment");
 }
 
 BOOST_AUTO_TEST_CASE(testUnComment)
