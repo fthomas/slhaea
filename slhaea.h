@@ -246,7 +246,6 @@ public:
       impl_.push_back(trimmed_line.substr(comment_pos));
       bounds_.push_back(std::make_pair(comment_pos, trimmed_line.length()));
     }
-
     return *this;
   }
 

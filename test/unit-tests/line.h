@@ -177,7 +177,6 @@ BOOST_AUTO_TEST_CASE(testInserting)
   l2.clear();
   l2 << "# Hello " << " world " << "! ";
   BOOST_CHECK_EQUAL(l2.str(), "# Hello world!");
-
 }
 
 BOOST_AUTO_TEST_CASE(testFloatInserting)
