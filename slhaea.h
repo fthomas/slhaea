@@ -558,7 +558,7 @@ public:
     }
     else
     {
-      pos1 = 4;
+      pos1 = shift_width_;
       pos2 = pos1 + field->length();
       bounds_.push_back(std::make_pair(pos1, pos2));
     }
@@ -617,11 +617,8 @@ private:
   static std::size_t
   calc_spaces_for_indent(const std::size_t& pos)
   {
-    static const std::size_t shift_width = 4;
-    static const std::size_t min_width   = 2;
-
-    std::size_t width = shift_width - (pos % shift_width);
-    if (width < min_width) width += shift_width;
+    std::size_t width = shift_width_ - (pos % shift_width_);
+    if (width < min_width_) width += shift_width_;
     return width;
   }
 
@@ -646,6 +643,9 @@ private:
   impl_type impl_;
   std::vector<std::pair<std::size_t, std::size_t> > bounds_;
   mutable std::string format_;
+
+  static const std::size_t shift_width_ = 4;
+  static const std::size_t min_width_   = 2;
 };
 
 template<> inline Line&
