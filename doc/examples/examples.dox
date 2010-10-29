@@ -49,3 +49,10 @@ scratch:
 
 This example shows how to read in a matrix in a simple way:
 */
+
+/** \example 08_decay_input.cpp
+
+Reading of the decay width and some branching ratios is demonstrated
+in this example. It also shows how individual fields can be accessed
+with a SLHAea::Key via the SLHAea::Coll::field() method:
+*/
