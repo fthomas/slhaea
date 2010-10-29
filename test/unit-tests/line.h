@@ -392,6 +392,26 @@ BOOST_AUTO_TEST_CASE(testIntrospection)
   BOOST_CHECK_EQUAL(l1.is_comment_line(), false);
   BOOST_CHECK_EQUAL(l1.is_data_line(),    false);
 
+  l1 = "BLÖC TEST";
+  BOOST_CHECK_EQUAL(l1[0].size(), 5);
+  BOOST_CHECK_EQUAL(l1.is_block_def(), false);
+
+  l1 = "BLÖCK TEST";
+  BOOST_CHECK_EQUAL(l1[0].size(), 6);
+  BOOST_CHECK_EQUAL(l1.is_block_def(), false);
+
+  l1 = "ßLOC TEST";
+  BOOST_CHECK_EQUAL(l1[0].size(), 5);
+  BOOST_CHECK_EQUAL(l1.is_block_def(), false);
+
+  l1 = "ßLOCK TEST";
+  BOOST_CHECK_EQUAL(l1[0].size(), 6);
+  BOOST_CHECK_EQUAL(l1.is_block_def(), false);
+
+  l1 = "ßLÖ TEST";
+  BOOST_CHECK_EQUAL(l1[0].size(), 5);
+  BOOST_CHECK_EQUAL(l1.is_block_def(), false);
+
   l1 = "DeCaY";
   BOOST_CHECK_EQUAL(l1.size(),      1);
   BOOST_CHECK_EQUAL(l1.data_size(), 1);
