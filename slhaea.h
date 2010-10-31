@@ -534,29 +534,27 @@ public:
     format_.clear();
 
     const_iterator field = begin();
-    std::size_t pos1 = 0, pos2 = 0;
+    std::size_t second = 0;
 
-    auto store_bounds = [&](std::size_t begin, std::size_t length)
+    auto store_bounds = [&](std::size_t first)
     {
-      pos1 = begin;
-      pos2 = begin + length;
-      bounds_.push_back(std::make_pair(pos1, pos2));
+      second = first + field->length();
+      bounds_.push_back(std::make_pair(first, second));
     };
 
     if (is_block_specifier(*field))
     {
-      store_bounds(0, field->length());
-
-      if (field+1 != end())
-      { store_bounds(pos2 + 1, (++field)->length()); }
+      store_bounds(0);
+      if (++field == end()) return;
+      store_bounds(second + 1);
     }
     else if ((*field)[0] == '#')
-    { store_bounds(0, field->length()); }
+    { store_bounds(0); }
     else
-    { store_bounds(shift_width_, field->length()); }
+    { store_bounds(shift_width_); }
 
     while (++field != end())
-    { store_bounds(pos2 + calc_spaces_for_indent(pos2), field->length()); }
+    { store_bounds(second + calc_spaces_for_indent(second)); }
   }
 
   /**
