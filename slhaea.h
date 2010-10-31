@@ -362,7 +362,7 @@ public:
    */
   const_iterator
   cbegin() const
-  { return impl_.begin(); }
+  { return impl_.cbegin(); }
 
   /**
    * Returns a read/write iterator that points one past the last
@@ -389,7 +389,7 @@ public:
    */
   const_iterator
   cend() const
-  { return impl_.end(); }
+  { return impl_.cend(); }
 
   /**
    * Returns a read/write reverse iterator that points to the last
@@ -415,7 +415,7 @@ public:
    */
   const_reverse_iterator
   crbegin() const
-  { return impl_.rbegin(); }
+  { return impl_.crbegin(); }
 
   /**
    * Returns a read/write reverse iterator that points to one before
@@ -442,7 +442,7 @@ public:
    */
   const_reverse_iterator
   crend() const
-  { return impl_.rend(); }
+  { return impl_.crend(); }
 
   // introspection
   /**
@@ -484,9 +484,9 @@ public:
   data_size() const
   {
     size_type data_size = 0;
-    for (auto field = cbegin(); field != cend(); ++field)
+    for (auto& field : *this)
     {
-      if ((*field)[0] == '#') break;
+      if (field[0] == '#') break;
       ++data_size;
     }
     return data_size;
@@ -1036,7 +1036,7 @@ public:
    */
   const_iterator
   cbegin() const
-  { return impl_.begin(); }
+  { return impl_.cbegin(); }
 
   /**
    * Returns a read/write iterator that points one past the last
@@ -1063,7 +1063,7 @@ public:
    */
   const_iterator
   cend() const
-  { return impl_.end(); }
+  { return impl_.cend(); }
 
   /**
    * Returns a read/write reverse iterator that points to the last
@@ -1090,7 +1090,7 @@ public:
    */
   const_reverse_iterator
   crbegin() const
-  { return impl_.rbegin(); }
+  { return impl_.crbegin(); }
 
   /**
    * Returns a read/write reverse iterator that points to one before
@@ -1117,7 +1117,7 @@ public:
    */
   const_reverse_iterator
   crend() const
-  { return impl_.rend(); }
+  { return impl_.crend(); }
 
   // operations
   /**
@@ -1609,7 +1609,7 @@ public:
    */
   const_iterator
   cbegin() const
-  { return impl_.begin(); }
+  { return impl_.cbegin(); }
 
   /**
    * Returns a read/write iterator that points one past the last
@@ -1636,7 +1636,7 @@ public:
    */
   const_iterator
   cend() const
-  { return impl_.end(); }
+  { return impl_.cend(); }
 
   /**
    * Returns a read/write reverse iterator that points to the last
@@ -1662,7 +1662,7 @@ public:
    */
   const_reverse_iterator
   crbegin() const
-  { return impl_.rbegin(); }
+  { return impl_.crbegin(); }
 
   /**
    * Returns a read/write reverse iterator that points to one before
@@ -1689,7 +1689,7 @@ public:
    */
   const_reverse_iterator
   crend() const
-  { return impl_.rend(); }
+  { return impl_.crend(); }
 
   // operations
   /**
