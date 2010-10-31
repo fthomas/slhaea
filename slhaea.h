@@ -256,7 +256,7 @@ public:
     if (format_.empty()) build_format_str();
 
     boost::format formatter(format_);
-    for (auto& field : *this) { formatter % field; }
+    for (auto& field : *this) formatter % field;
     return formatter.str();
   }
 
