@@ -640,7 +640,7 @@ private:
 
 private:
   impl_type impl_;
-  std::vector<std::pair<std::size_t, std::size_t> > bounds_;
+  std::vector<std::pair<std::size_t, std::size_t>> bounds_;
   mutable std::string format_;
 
   static const std::size_t shift_width_ = 4;
