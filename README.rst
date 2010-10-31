@@ -34,12 +34,14 @@ Documentation
 
 The API documentation is `here`_. It includes some `practical
 examples`_ which can also be found in the `doc/examples/`_ directory
-in SLHAea's source tree.
+in SLHAea's source tree. There is also the `manual`_ (which is still
+work in progress).
 
 .. _here: http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/doc/
 .. _practical examples:
     http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/doc/examples.html
 .. _doc/examples/: http://github.com/fthomas/slhaea/tree/master/doc/examples/
+.. _manual: http://www.physik.uni-wuerzburg.de/~fthomas/slhaea/slhaea.pdf
 
 Dependencies
 ------------
