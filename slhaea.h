@@ -608,7 +608,7 @@ private:
   bool
   contains_comment() const
   {
-    for (const_reverse_iterator field = rbegin(); field != rend(); ++field)
+    for (auto field = rbegin(); field != rend(); ++field)
     { if ((*field)[0] == '#') return true; }
     return false;
   }
