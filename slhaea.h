@@ -484,7 +484,7 @@ public:
   data_size() const
   {
     size_type data_size = 0;
-    for (const_iterator field = begin(); field != end(); ++field)
+    for (auto field = cbegin(); field != cend(); ++field)
     {
       if ((*field)[0] == '#') break;
       ++data_size;
@@ -536,38 +536,27 @@ public:
     const_iterator field = begin();
     std::size_t pos1 = 0, pos2 = 0;
 
+    auto store_bounds = [&](std::size_t begin, std::size_t length)
+    {
+      pos1 = begin;
+      pos2 = begin + length;
+      bounds_.push_back(std::make_pair(pos1, pos2));
+    };
+
     if (is_block_specifier(*field))
     {
-      pos1 = 0;
-      pos2 = pos1 + field->length();
-      bounds_.push_back(std::make_pair(pos1, pos2));
+      store_bounds(0, field->length());
 
       if (field+1 != end())
-      {
-        pos1 = pos2 + 1;
-        pos2 = pos1 + (++field)->length();
-        bounds_.push_back(std::make_pair(pos1, pos2));
-      }
+      { store_bounds(pos2 + 1, (++field)->length()); }
     }
     else if ((*field)[0] == '#')
-    {
-      pos1 = 0;
-      pos2 = pos1 + field->length();
-      bounds_.push_back(std::make_pair(pos1, pos2));
-    }
+    { store_bounds(0, field->length()); }
     else
-    {
-      pos1 = shift_width_;
-      pos2 = pos1 + field->length();
-      bounds_.push_back(std::make_pair(pos1, pos2));
-    }
+    { store_bounds(shift_width_, field->length()); }
 
     while (++field != end())
-    {
-      pos1 = pos2 + calc_spaces_for_indent(pos2);
-      pos2 = pos1 + field->length();
-      bounds_.push_back(std::make_pair(pos1, pos2));
-    }
+    { store_bounds(pos2 + calc_spaces_for_indent(pos2), field->length()); }
   }
 
   /**
@@ -608,7 +597,7 @@ private:
   bool
   contains_comment() const
   {
-    for (auto field = rbegin(); field != rend(); ++field)
+    for (auto field = crbegin(); field != crend(); ++field)
     { if ((*field)[0] == '#') return true; }
     return false;
   }
