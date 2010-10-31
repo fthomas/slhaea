@@ -543,12 +543,11 @@ public:
       pos2 = pos1 + field->length();
       bounds_.push_back(std::make_pair(pos1, pos2));
 
-      if (field+1 != end())
-      {
-        pos1 = pos2 + 1;
-        pos2 = pos1 + (++field)->length();
-        bounds_.push_back(std::make_pair(pos1, pos2));
-      }
+      if (++field == end()) return;
+
+      pos1 = pos2 + 1;
+      pos2 = pos1 + field->length();
+      bounds_.push_back(std::make_pair(pos1, pos2));
     }
     else if ((*field)[0] == '#')
     {
