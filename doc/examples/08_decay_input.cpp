@@ -14,9 +14,9 @@ int main(int, char* [])
   cout << "chi_10 decay width: " << chi10_decay.at("DECAY").at(2) << endl;
 
   cout << "BR(chi_10 -> mu- W+):  "
-       << chi10_decay.at("(any)", "2", "13", "24").at(0) << endl;
+       << chi10_decay.at({"(any)", "2", "13", "24"}).at(0) << endl;
   cout << "BR(chi_10 -> tau- W+): "
-       << chi10_decay.at("(any)", "2", "15", "24").at(0) << endl;
+       << chi10_decay.at({"(any)", "2", "15", "24"}).at(0) << endl;
 
   cout << "BR(chi_10 -> mu+ W-):  "
        << input.field("1000022;(any),2,-13,-24;0") << endl;
@@ -24,12 +24,11 @@ int main(int, char* [])
        << input.field("1000022;(any),2,-15,-24;0") << endl;
 
   double sum = 0.;
-  for (Block::const_iterator line = chi10_decay.begin();
-       line != chi10_decay.end(); ++line)
+  for (auto& line : chi10_decay)
   {
-    if (!line->is_data_line()) continue;
+    if (!line.is_data_line()) continue;
 
-    sum += to<double>(line->at(0));
+    sum += to<double>(line.at(0));
   }
 
   cout << "Sum of all chi_10 BRs: " << sum << endl;
