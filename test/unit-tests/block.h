@@ -99,27 +99,27 @@ BOOST_AUTO_TEST_CASE(testSubscriptAtAccessors)
   BOOST_CHECK_EQUAL(cb1.at(1).str(), " 1 1 # 11");
   BOOST_CHECK_EQUAL(cb1.at(2).str(), " 2 1 # 21");
 
-  BOOST_CHECK_EQUAL(b1.at("1", "1").str(), " 1 1 # 11");
-  BOOST_CHECK_EQUAL(b1.at("1", "2").str(), " 1 2 # 12");
-  BOOST_CHECK_EQUAL(b1.at("2", "1").str(), " 2 1 # 21");
-  BOOST_CHECK_EQUAL(b1.at("10", "1", "2").str(), " 10 1 2");
-  BOOST_CHECK_EQUAL(b1.at("11", "1", "2", "3").str(), " 11 1 2 3");
-  BOOST_CHECK_EQUAL(b1.at("12", "1", "2", "3", "4").str(), " 12 1 2 3 4");
+  BOOST_CHECK_EQUAL(b1.at({"1", "1"}).str(), " 1 1 # 11");
+  BOOST_CHECK_EQUAL(b1.at({"1", "2"}).str(), " 1 2 # 12");
+  BOOST_CHECK_EQUAL(b1.at({"2", "1"}).str(), " 2 1 # 21");
+  BOOST_CHECK_EQUAL(b1.at({"10", "1", "2"}).str(), " 10 1 2");
+  BOOST_CHECK_EQUAL(b1.at({"11", "1", "2", "3"}).str(), " 11 1 2 3");
+  BOOST_CHECK_EQUAL(b1.at({"12", "1", "2", "3", "4"}).str(), " 12 1 2 3 4");
 
-  BOOST_CHECK_EQUAL(b1.at(1, 1).str(), " 1 1 # 11");
-  BOOST_CHECK_EQUAL(b1.at(1, 2).str(), " 1 2 # 12");
-  BOOST_CHECK_EQUAL(b1.at(2, 1).str(), " 2 1 # 21");
-  BOOST_CHECK_EQUAL(b1.at(10, 1, 2).str(), " 10 1 2");
-  BOOST_CHECK_EQUAL(b1.at(11, 1, 2, 3).str(), " 11 1 2 3");
-  BOOST_CHECK_EQUAL(b1.at(12, 1, 2, 3, 4).str(), " 12 1 2 3 4");
+  BOOST_CHECK_EQUAL(b1.at({1, 1}).str(), " 1 1 # 11");
+  BOOST_CHECK_EQUAL(b1.at({1, 2}).str(), " 1 2 # 12");
+  BOOST_CHECK_EQUAL(b1.at({2, 1}).str(), " 2 1 # 21");
+  BOOST_CHECK_EQUAL(b1.at({10, 1, 2}).str(), " 10 1 2");
+  BOOST_CHECK_EQUAL(b1.at({11, 1, 2, 3}).str(), " 11 1 2 3");
+  BOOST_CHECK_EQUAL(b1.at({12, 1, 2, 3, 4}).str(), " 12 1 2 3 4");
 
-  BOOST_CHECK_EQUAL(cb1.at("1", "1").str(), " 1 1 # 11");
-  BOOST_CHECK_EQUAL(cb1.at("1", "2").str(), " 1 2 # 12");
-  BOOST_CHECK_EQUAL(cb1.at("2", "1").str(), " 2 1 # 21");
+  BOOST_CHECK_EQUAL(cb1.at({"1", "1"}).str(), " 1 1 # 11");
+  BOOST_CHECK_EQUAL(cb1.at({"1", "2"}).str(), " 1 2 # 12");
+  BOOST_CHECK_EQUAL(cb1.at({"2", "1"}).str(), " 2 1 # 21");
 
-  BOOST_CHECK_EQUAL(cb1.at(1, 1).str(), " 1 1 # 11");
-  BOOST_CHECK_EQUAL(cb1.at(1, 2).str(), " 1 2 # 12");
-  BOOST_CHECK_EQUAL(cb1.at(2, 1).str(), " 2 1 # 21");
+  BOOST_CHECK_EQUAL(cb1.at({1, 1}).str(), " 1 1 # 11");
+  BOOST_CHECK_EQUAL(cb1.at({1, 2}).str(), " 1 2 # 12");
+  BOOST_CHECK_EQUAL(cb1.at({2, 1}).str(), " 2 1 # 21");
 
   vector<string> vs1(2);
   vs1[0] = "1";
@@ -144,8 +144,8 @@ BOOST_AUTO_TEST_CASE(testSubscriptAtAccessors)
   BOOST_CHECK_EQUAL(b1[vs1].str(),     " 1 1 # 11");
   BOOST_CHECK_EQUAL(cb1.at(vs1).str(), " 1 1 # 11");
 
-  BOOST_CHECK_THROW(b1.at(9, 8 ,7),  out_of_range);
-  BOOST_CHECK_THROW(cb1.at(9, 8 ,7), out_of_range);
+  BOOST_CHECK_THROW(b1.at({9, 8 ,7}),  out_of_range);
+  BOOST_CHECK_THROW(cb1.at({9, 8 ,7}), out_of_range);
 
   BOOST_CHECK_THROW(b1.at(""),  out_of_range);
   BOOST_CHECK_THROW(cb1.at(""), out_of_range);
@@ -180,8 +180,8 @@ BOOST_AUTO_TEST_CASE(testGeneralAccessors)
   BOOST_CHECK_EQUAL(b1.front().str(), " 1 1 # 11");
   BOOST_CHECK_EQUAL(b1.back().str(),  " 2 1 # 21");
 
-  BOOST_CHECK_EQUAL(b1.front(), b1.at(1, 1));
-  BOOST_CHECK_EQUAL(b1.back(),  b1.at(2, 1));
+  BOOST_CHECK_EQUAL(b1.front(), b1.at({1, 1}));
+  BOOST_CHECK_EQUAL(b1.back(),  b1.at({2, 1}));
 }
 
 BOOST_AUTO_TEST_CASE(testIterators)

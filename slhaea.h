@@ -12,6 +12,7 @@
 #include <cstddef>
 #include <deque>
 #include <functional>
+#include <initializer_list>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
@@ -801,6 +802,34 @@ public:
 
   /**
    * \brief Locates a Line in the %Block.
+   * \param key First strings of the Line to be located.
+   * \return Read/write reference to sought-after Line.
+   *
+   * This function takes a key (which is an initializer list of
+   * strings) and locates the Line whose first strings are equal to
+   * the strings in \p key. If no such Line exists, this function
+   * creates an empty Line at the end of the %Block and returns a
+   * reference to it.
+   */
+  reference
+  operator[](const std::initializer_list<std::string>& key)
+  { return (*this)[key_type(key)]; }
+
+  /**
+   * \brief Locates a Line in the %Block.
+   * \param key String that is used to locate the Line.
+   * \return Read/write reference to sought-after Line.
+   *
+   * This function locates the Line whose first string is equal to
+   * \p key. If no such Line exists, this function creates an empty
+   * Line at the end of the %Block and returns a reference to it.
+   */
+  reference
+  operator[](const std::string& key)
+  { return (*this)[key_type({key})]; }
+
+  /**
+   * \brief Locates a Line in the %Block.
    * \param key Integers that are used to locate the Line.
    * \return Read/write reference to sought-after Line.
    *
@@ -816,16 +845,18 @@ public:
 
   /**
    * \brief Locates a Line in the %Block.
-   * \param key String that is used to locate the Line.
+   * \param key Integers that are used to locate the Line.
    * \return Read/write reference to sought-after Line.
    *
-   * This function locates the Line whose first string is equal to
-   * \p key. If no such Line exists, this function creates an empty
-   * Line at the end of the %Block and returns a reference to it.
+   * This function takes a key (which is an initializer list of ints)
+   * and locates the Line whose first strings are equal to the to
+   * strings converted ints in \p key. If no such Line exists, this
+   * function creates an empty Line at the end of the %Block and
+   * returns a reference to it.
    */
   reference
-  operator[](const std::string& key)
-  { return (*this)[key_type(1, key)]; }
+  operator[](const std::initializer_list<int>& key)
+  { return (*this)[std::vector<int>(key)]; }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -839,7 +870,7 @@ public:
    */
   reference
   operator[](int key)
-  { return (*this)[key_type(1, to_string(key))]; }
+  { return (*this)[key_type({to_string(key)})]; }
 
   /**
    * \brief Locates a Line in the %Block.
@@ -883,6 +914,62 @@ public:
 
   /**
    * \brief Locates a Line in the %Block.
+   * \param key First strings of the Line to be located.
+   * \return Read/write reference to sought-after Line.
+   * \throw std::out_of_range If \p key does not match any Line.
+   *
+   * This function takes a key (which is an initializer list of
+   * strings) and locates the Line whose first strings are equal to
+   * the strings in \p key. If no such Line exists,
+   * \c std::out_of_range is thrown.
+   */
+  reference
+  at(const std::initializer_list<std::string>& key)
+  { return at(key_type(key)); }
+
+  /**
+   * \brief Locates a Line in the %Block.
+   * \param key First strings of the Line to be located.
+   * \return Read-only (constant) reference to sought-after Line.
+   * \throw std::out_of_range If \p key does not match any Line.
+   *
+   * This function takes a key (which is an initializer list of
+   * strings) and locates the Line whose first strings are equal to
+   * the strings in \p key. If no such Line exists,
+   * \c std::out_of_range is thrown.
+   */
+  const_reference
+  at(const std::initializer_list<std::string>& key) const
+  { return at(key_type(key)); }
+
+  /**
+   * \brief Locates a Line in the %Block.
+   * \param key String that is used to locate the Line.
+   * \return Read/write reference to sought-after Line.
+   * \throw std::out_of_range If \p key does not match any Line.
+   *
+   * This function locates the Line whose first string is equal to
+   * \p key. If no such Line exists, \c std::out_of_range is thrown.
+   */
+  reference
+  at(const std::string& key)
+  { return at(key_type({key})); }
+
+  /**
+   * \brief Locates a Line in the %Block.
+   * \param key String that is used to locate the Line.
+   * \return Read-only (constant) reference to sought-after Line.
+   * \throw std::out_of_range If \p key does not match any Line.
+   *
+   * This function locates the Line whose first string is equal to
+   * \p key. If no such Line exists, \c std::out_of_range is thrown.
+   */
+  const_reference
+  at(const std::string& key) const
+  { return at(key_type({key})); }
+
+  /**
+   * \brief Locates a Line in the %Block.
    * \param key Integers that are used to locate the Line.
    * \return Read/write reference to sought-after Line.
    * \throw std::out_of_range If \p key does not match any Line.
@@ -913,72 +1000,61 @@ public:
 
   /**
    * \brief Locates a Line in the %Block.
-   * \param s0, s1, s2, s3, s4 First strings of the Line to be
-   *   located.
+   * \param key Integers that are used to locate the Line.
    * \return Read/write reference to sought-after Line.
-   * \throw std::out_of_range If provided strings do not match any
-   *   Line.
+   * \throw std::out_of_range If \p key does not match any Line.
    *
-   * This function takes up to five strings and locates the Line whose
-   * first strings are equal to all provided non-empty strings. If no
-   * such Line exists, \c std::out_of_range is thrown.
+   * This function takes a key (which is an initializer list of ints)
+   * and locates the Line whose first strings are equal to the to
+   * strings converted ints in \p key. If no such Line exists,
+   * \c std::out_of_range is thrown.
    */
   reference
-  at(const std::string& s0,      const std::string& s1 = "",
-     const std::string& s2 = "", const std::string& s3 = "",
-     const std::string& s4 = "")
-  { return at(strings_to_key(s0, s1, s2, s3, s4)); }
+  at(const std::initializer_list<int>& key)
+  { return at(std::vector<int>(key)); }
 
   /**
    * \brief Locates a Line in the %Block.
-   * \param s0, s1, s2, s3, s4 First strings of the Line to be
-   *   located.
+   * \param key Integers that are used to locate the Line.
    * \return Read-only (constant) reference to sought-after Line.
-   * \throw std::out_of_range If provided strings do not match any
-   *   Line.
+   * \throw std::out_of_range If \p key does not match any Line.
    *
-   * This function takes up to five strings and locates the Line whose
-   * first strings are equal to all provided non-empty strings. If no
-   * such Line exists, \c std::out_of_range is thrown.
+   * This function takes a key (which is an initializer list of ints)
+   * and locates the Line whose first strings are equal to the to
+   * strings converted ints in \p key. If no such Line exists,
+   * \c std::out_of_range is thrown.
    */
   const_reference
-  at(const std::string& s0,      const std::string& s1 = "",
-     const std::string& s2 = "", const std::string& s3 = "",
-     const std::string& s4 = "") const
-  { return at(strings_to_key(s0, s1, s2, s3, s4)); }
+  at(const std::initializer_list<int>& key) const
+  { return at(std::vector<int>(key)); }
 
   /**
    * \brief Locates a Line in the %Block.
-   * \param i0, i1, i2, i3, i4 Integers that are used to locate the
-   *   Line.
+   * \param key Integer that is used to locate the Line.
    * \return Read/write reference to sought-after Line.
-   * \throw std::out_of_range If provided ints do not match any
-   *   Line.
+   * \throw std::out_of_range If \p key does not match any Line.
    *
-   * This function takes up to five ints and locates the Line whose
-   * first strings are equal to all provided to string converted ints.
-   * If no such Line exists, \c std::out_of_range is thrown.
+   * This function locates the Line whose first string is equal to the
+   * to string converted \p key. If no such Line exists,
+   * \c std::out_of_range is thrown.
    */
   reference
-  at(int i0, int i1 = no_ind, int i2 = no_ind, int i3 = no_ind,
-     int i4 = no_ind)
-  { return at(ints_to_key(i0, i1, i2, i3, i4)); }
+  at(int key)
+  { return at(key_type({to_string(key)})); }
 
   /**
    * \brief Locates a Line in the %Block.
-   * \param i0, i1, i2, i3, i4 Integers that are used to locate the
-   *   Line.
+   * \param key Integer that is used to locate the Line.
    * \return Read-only (constant) reference to sought-after Line.
-   * \throw std::out_of_range If provided ints do not match any Line.
+   * \throw std::out_of_range If \p key does not match any Line.
    *
-   * This function takes up to five ints and locates the Line whose
-   * first strings are equal to all provided to string converted ints.
-   * If no such Line exists, \c std::out_of_range is thrown.
+   * This function locates the Line whose first string is equal to the
+   * to string converted \p key. If no such Line exists,
+   * \c std::out_of_range is thrown.
    */
   const_reference
-  at(int i0, int i1 = no_ind, int i2 = no_ind, int i3 = no_ind,
-     int i4 = no_ind) const
-  { return at(ints_to_key(i0, i1, i2, i3, i4)); }
+  at(int key) const
+  { return at(key_type({to_string(key)})); }
 
   /**
    * Returns a read/write reference to the first element of the
@@ -1321,34 +1397,6 @@ private:
     return key;
   }
 
-  static key_type
-  strings_to_key(const std::string& s0, const std::string& s1,
-                 const std::string& s2, const std::string& s3,
-                 const std::string& s4)
-  {
-    key_type key;
-    key.reserve(5);
-    if (s0.empty()) return key; key.push_back(s0);
-    if (s1.empty()) return key; key.push_back(s1);
-    if (s2.empty()) return key; key.push_back(s2);
-    if (s3.empty()) return key; key.push_back(s3);
-    if (s4.empty()) return key; key.push_back(s4);
-    return key;
-  }
-
-  static key_type
-  ints_to_key(int i0, int i1, int i2, int i3, int i4)
-  {
-    key_type key;
-    key.reserve(5);
-    if (i0 == no_ind) return key; key.push_back(to_string(i0));
-    if (i1 == no_ind) return key; key.push_back(to_string(i1));
-    if (i2 == no_ind) return key; key.push_back(to_string(i2));
-    if (i3 == no_ind) return key; key.push_back(to_string(i3));
-    if (i4 == no_ind) return key; key.push_back(to_string(i4));
-    return key;
-  }
-
   struct line_matches : public std::unary_function<value_type, bool>
   {
     explicit
@@ -1375,10 +1423,7 @@ private:
 private:
   std::string name_;
   impl_type impl_;
-  static const int no_ind;
 };
-
-const int Block::no_ind = std::numeric_limits<int>::min();
 
 
 /**
