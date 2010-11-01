@@ -47,9 +47,6 @@ BOOST_AUTO_TEST_CASE(testToString)
   BOOST_CHECK_EQUAL(to_string(0), "0");
   BOOST_CHECK_EQUAL(to_string(1), "1");
 
-  BOOST_CHECK_EQUAL(to_string(0.0), "0");
-  BOOST_CHECK_EQUAL(to_string(1.0), "1");
-
   BOOST_CHECK_EQUAL(to_string(1.0, 0), "1e+00");
   BOOST_CHECK_EQUAL(to_string(1.0, 1), "1.0e+00");
   BOOST_CHECK_EQUAL(to_string(1.0, 2), "1.00e+00");
