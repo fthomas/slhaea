@@ -556,7 +556,11 @@ public:
     { store_bounds(shift_width_); }
 
     while (++field != end())
-    { store_bounds(second + calc_spaces_for_indent(second)); }
+    {
+      auto first = second + calc_spaces_for_indent(second);
+      if ((*field)[0] == '-' || (*field)[0] == '+') --first;
+      store_bounds(first);
+    }
   }
 
   /**
