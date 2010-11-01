@@ -488,6 +488,8 @@ BOOST_FIXTURE_TEST_CASE(testInEquality, F)
 
   BOOST_CHECK_NE(c1, c2);
   BOOST_CHECK_NE(c2, c1);
+  BOOST_CHECK(c1 != c2);
+  BOOST_CHECK(c2 != c1);
 
   c2.clear();
   c2.push_back("BLOCK test1");

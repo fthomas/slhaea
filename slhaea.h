@@ -164,26 +164,27 @@ public:
   }
 
   /**
-   * \brief Adds an element to the end of the %Line.
-   * \param field Element that is added to the end of the %Line.
+   * \brief Inserts an element at the end of the %Line.
+   * \param field Element that is inserted at the end of the %Line.
    * \return Reference to \c *this.
    *
-   * This function adds an element to the end of the %Line. If the
-   * last element is a comment, \p field is only appended to it and
-   * thus size() remains unchanged.
+   * This function inserts an element at the end of the %Line. If the
+   * the %Line contains a comment, \p field is only appended to the
+   * last element and thus size() remains unchanged.
    */
   template<class T> Line&
   operator<<(const T& field)
   {
-    const std::string rhs = boost::lexical_cast<std::string>(field);
-    const std::string rhs_trimmed = boost::trim_copy(rhs);
-    if (rhs_trimmed.empty()) return *this;
+    std::string field_str = boost::lexical_cast<std::string>(field);
+    boost::trim_right(field_str);
+    if (field_str.empty()) return *this;
 
     if (contains_comment())
-    { back() += rhs; }
+    { back() += field_str; }
     else
     {
-      impl_.push_back(rhs_trimmed);
+      boost::trim_left(field_str);
+      impl_.push_back(field_str);
       reformat();
     }
     return *this;

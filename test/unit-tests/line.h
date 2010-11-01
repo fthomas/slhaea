@@ -572,6 +572,8 @@ BOOST_AUTO_TEST_CASE(testInEquality)
   l2 = "1 2 3  4";
   BOOST_CHECK_NE(l1, l2);
   BOOST_CHECK_NE(l2, l1);
+  BOOST_CHECK(l1 != l2);
+  BOOST_CHECK(l2 != l1);
 
   l1 = "1 2 3 4";
   l2 = "1 2 3 5";
