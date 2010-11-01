@@ -536,6 +536,8 @@ BOOST_AUTO_TEST_CASE(testInEquality)
 
   BOOST_CHECK_NE(b1, b2);
   BOOST_CHECK_NE(b2, b1);
+  BOOST_CHECK(b1 != b2);
+  BOOST_CHECK(b2 != b1);
 
   b2.name("test1");
 

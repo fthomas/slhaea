@@ -13,5 +13,6 @@ if(PDFLATEX_COMPILER AND BIBTEX_COMPILER)
       DEPENDS ${CURR_SRC_DIR}/slhaea.tex
               ${CURR_SRC_DIR}/slhaea.bib)
 
-    add_custom_target(manual DEPENDS ${CURR_BIN_DIR}/slhaea.pdf)
+    add_custom_target(manual DEPENDS ${CURR_BIN_DIR}/slhaea.pdf
+      SOURCES slhaea.tex slhaea.bib)
 endif()
