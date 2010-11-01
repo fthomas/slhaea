@@ -235,7 +235,7 @@ public:
     while (pos1 != std::string::npos)
     {
       impl_.push_back(data.substr(pos1, pos2 - pos1));
-      bounds_.push_back(std::make_pair(pos1, pos2));
+      bounds_.push_back({pos1, pos2});
 
       pos1 = data.find_first_not_of(delimiters, pos2);
       pos2 = data.find_first_of(delimiters, pos1);
@@ -244,7 +244,7 @@ public:
     if (comment_pos != std::string::npos)
     {
       impl_.push_back(trimmed_line.substr(comment_pos));
-      bounds_.push_back(std::make_pair(comment_pos, trimmed_line.length()));
+      bounds_.push_back({comment_pos, trimmed_line.length()});
     }
     return *this;
   }
@@ -539,7 +539,7 @@ public:
     auto store_bounds = [&](std::size_t first)
     {
       second = first + field->length();
-      bounds_.push_back(std::make_pair(first, second));
+      bounds_.push_back({first, second});
     };
 
     if (is_block_specifier(*field))
