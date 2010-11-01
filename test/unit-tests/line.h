@@ -156,7 +156,7 @@ BOOST_AUTO_TEST_CASE(testInserting)
 
   l2.clear();
   l2 << 2 << "-1.2345678E+01" << "# some double";
-  BOOST_CHECK_EQUAL(l2.str(), "    2   -1.2345678E+01  # some double");
+  BOOST_CHECK_EQUAL(l2.str(), "    2  -1.2345678E+01   # some double");
 
   l2.clear();
   l2 << 2 << "1.234567E+01" << "# some double" << " here";
@@ -177,6 +177,15 @@ BOOST_AUTO_TEST_CASE(testInserting)
   l2.clear();
   l2 << "# Hello " << " world " << "! ";
   BOOST_CHECK_EQUAL(l2.str(), "# Hello world!");
+
+  Line l3;
+  l2.clear();
+  l3.clear();
+
+  l2 << 1 << -1 << "# test";
+  l3 << 2 << -2 << "# test";
+  BOOST_CHECK_EQUAL(l2.str(), "    1  -1   # test");
+  BOOST_CHECK_EQUAL(l3.str(), "    2  -2   # test");
 }
 
 BOOST_AUTO_TEST_CASE(testFloatInserting)
