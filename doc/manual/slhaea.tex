@@ -15,6 +15,12 @@
 \usepackage[babel=true]{microtype}
 \usepackage{lmodern}
 \linespread{1.05}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+}
+\lstloadlanguages{[ISO]C++}
 
 
 \begin{document}
@@ -32,6 +38,18 @@
 
 \maketitle
 \tableofcontents
+
+
+\begin{lstlisting}
+#include <fstream>
+#include <slhaea.h>
+
+int main()
+{
+  std::ifstream ifs("SLHA.par");
+  SLHAea::Coll input(ifs);
+}
+\end{lstlisting}
 
 
 \bibliographystyle{apsrev4-1long}
