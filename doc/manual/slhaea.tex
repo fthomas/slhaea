@@ -18,6 +18,8 @@
 \usepackage{listings}
 \lstset{
   basicstyle=\ttfamily,
+  xleftmargin=.06\linewidth,
+  xrightmargin=.06\linewidth,
   columns=fullflexible,
 }
 \lstloadlanguages{[ISO]C++}
@@ -46,8 +48,8 @@
 
 int main()
 {
-  std::ifstream ifs("SLHA.par");
-  SLHAea::Coll input(ifs);
+  std::ifstream ifs("SLHA.par"); // comment
+  SLHAea::Coll input(ifs); /* comment */
 }
 \end{lstlisting}
 
