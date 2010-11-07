@@ -17,7 +17,7 @@ Each sample counts as 0.01 seconds.
   0.00      0.00     0.00        4     0.00     0.00  std::deque<SLHAea::Block, std::allocator<SLHAea::Block> >::_M_push_back_aux(SLHAea::Block const&)
   0.00      0.00     0.00        4     0.00     0.00  std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&)
   0.00      0.00     0.00        4     0.00     0.00  std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::pair<unsigned long, unsigned long>*, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > > >, std::pair<unsigned long, unsigned long> const&)
-  0.00      0.00     0.00        1     0.00     0.00  global constructors keyed to SLHAea::Block::no_ind
+  0.00      0.00     0.00        1     0.00     0.00  global constructors keyed to main
   0.00      0.00     0.00        1     0.00     0.00  SLHAea::Coll::push_back_named_block(std::string const&)
   0.00      0.00     0.00        1     0.00     0.00  SLHAea::Coll::read(std::istream&)
   0.00      0.00     0.00        1     0.00     0.00  SLHAea::Coll::name_iequals::operator()(SLHAea::Block const&) const
@@ -79,7 +79,7 @@ index % time    self  children    called     name
 [17]     0.0    0.00    0.00       4         std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::pair<unsigned long, unsigned long>*, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > > >, std::pair<unsigned long, unsigned long> const&) [17]
 -----------------------------------------------
                 0.00    0.00       1/1           __do_global_ctors_aux [32]
-[18]     0.0    0.00    0.00       1         global constructors keyed to SLHAea::Block::no_ind [18]
+[18]     0.0    0.00    0.00       1         global constructors keyed to main [18]
 -----------------------------------------------
                 0.00    0.00       1/1           SLHAea::Coll::read(std::istream&) [20]
 [19]     0.0    0.00    0.00       1         SLHAea::Coll::push_back_named_block(std::string const&) [19]
@@ -114,7 +114,7 @@ index % time    self  children    called     name
 
 Index by function name
 
-  [18] global constructors keyed to SLHAea::Block::no_ind (input.cpp) [21] SLHAea::Coll::name_iequals::operator()(SLHAea::Block const&) const [16] std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&)
+  [18] global constructors keyed to main (input.cpp) [21] SLHAea::Coll::name_iequals::operator()(SLHAea::Block const&) const [16] std::vector<std::string, std::allocator<std::string> >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::string*, std::vector<std::string, std::allocator<std::string> > >, std::string const&)
   [19] SLHAea::Coll::push_back_named_block(std::string const&) [13] char* std::string::_S_construct<boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default> >(boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, boost::transform_iterator<boost::algorithm::detail::to_upperF<char>, __gnu_cxx::__normal_iterator<char const*, std::string>, boost::use_default, boost::use_default>, std::allocator<char> const&, std::input_iterator_tag) [17] std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >::_M_insert_aux(__gnu_cxx::__normal_iterator<std::pair<unsigned long, unsigned long>*, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > > >, std::pair<unsigned long, unsigned long> const&)
   [20] SLHAea::Coll::read(std::istream&) [8] char* std::string::_S_construct<__gnu_cxx::__normal_iterator<char const*, std::string> >(__gnu_cxx::__normal_iterator<char const*, std::string>, __gnu_cxx::__normal_iterator<char const*, std::string>, std::allocator<char> const&, std::forward_iterator_tag) [9] SLHAea::Line* std::__uninitialized_copy_a<SLHAea::Line*, SLHAea::Line*, SLHAea::Line>(SLHAea::Line*, SLHAea::Line*, SLHAea::Line*, std::allocator<SLHAea::Line>&)
    [7] SLHAea::Line::str(std::string const&) [22] std::_Deque_base<SLHAea::Block, std::allocator<SLHAea::Block> >::~_Deque_base() [14] std::string* std::__uninitialized_copy_a<std::string*, std::string*, std::string>(std::string*, std::string*, std::string*, std::allocator<std::string>&)
