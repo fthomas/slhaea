@@ -15,12 +15,22 @@
 \usepackage[babel=true]{microtype}
 \usepackage{lmodern}
 \linespread{1.05}
+\usepackage{listings}
+\lstloadlanguages{[ISO]C++}
+\lstset{
+  language=[ISO]C++,
+  basicstyle=\ttfamily,
+  commentstyle=\rmfamily,
+  xleftmargin=.06\linewidth,
+  xrightmargin=.06\linewidth,
+  columns=fullflexible,
+}
 
 
 \begin{document}
 
 \title{SLHAea - another SUSY Les Houches Accord input/output library}
-%\date{\today}
+\date{\today}
 
 \author{F. S. Thomas}
 \email{fthomas@physik.uni-wuerzburg.de}
@@ -32,6 +42,48 @@
 
 \maketitle
 \tableofcontents
+
+\section{Introduction\label{sec:introduction}}
+
+\section{Data structures\label{sec:data_structures}}
+
+\subsection{Line\label{ssec:line}}
+
+\subsection{Block\label{ssec:block}}
+
+\subsection{Coll\label{ssec:coll}}
+
+\subsection{Key\label{ssec:key}}
+
+\section{Examples\label{sec:examples}}
+
+\section{Summary\label{sec:summary}}
+
+<introducing example>
+<data structures (or containers)>
+ <similarity to STL containers>
+ <Line>
+ <Block>
+ <Coll>
+ <Key>
+
+<real world examples>
+
+<compiling, compiling examples, tested with different compilers,
+std conformance>
+
+<summary>
+
+\begin{lstlisting}
+#include <fstream>
+#include <slhaea.h>
+
+int main()
+{
+  std::ifstream ifs("SLHA.par"); // comment
+  SLHAea::Coll input(ifs); /* comment */
+}
+\end{lstlisting}
 
 
 \bibliographystyle{apsrev4-1long}
