@@ -1390,10 +1390,8 @@ private:
 private:
   std::string name_;
   impl_type impl_;
-  static const int no_ind;
+  static const int no_ind = -32768;
 };
-
-const int Block::no_ind = std::numeric_limits<int>::min();
 
 
 /**
