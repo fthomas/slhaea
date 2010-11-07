@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE(testSubscriptAtAccessors)
   BOOST_CHECK_THROW(b1.at(""),  out_of_range);
   BOOST_CHECK_THROW(cb1.at(""), out_of_range);
 
-  int no_ind = numeric_limits<int>::min();
+  int no_ind = -32768;
 
   BOOST_CHECK_THROW(b1.at(no_ind),  out_of_range);
   BOOST_CHECK_THROW(cb1.at(no_ind), out_of_range);
