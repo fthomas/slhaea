@@ -1167,6 +1167,30 @@ public:
   find(const key_type& key) const
   { return std::find_if(begin(), end(), line_matches(key)); }
 
+  /**
+   * Returns a read/write iterator that points to the first line in
+   * the %Block which is a block definition. If the %Block does not
+   * contain a block definition, end() is returned.
+   */
+  iterator
+  find_block_def()
+  {
+    return std::find_if(begin(), end(),
+      std::mem_fun_ref(&value_type::is_block_def));
+  }
+
+  /**
+   * Returns a read-only (constant) iterator that points to the first
+   * line in the %Block which is a block definition. If the %Block
+   * does not contain a block definition, end() const is returned.
+   */
+  const_iterator
+  find_block_def() const
+  {
+    return std::find_if(begin(), end(),
+      std::mem_fun_ref(&value_type::is_block_def));
+  }
+
   // introspection
   /**
    * \brief Counts all \Lines that match a given key.
