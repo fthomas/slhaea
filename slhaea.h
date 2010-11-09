@@ -1233,6 +1233,30 @@ public:
   find(const key_type& key) const
   { return std::find_if(begin(), end(), line_matches(key)); }
 
+  /**
+   * Returns a read/write iterator that points to the first line in
+   * the %Block which is a block definition. If the %Block does not
+   * contain a block definition, end() is returned.
+   */
+  iterator
+  find_block_def()
+  {
+    return std::find_if(begin(), end(),
+      std::mem_fun_ref(&value_type::is_block_def));
+  }
+
+  /**
+   * Returns a read-only (constant) iterator that points to the first
+   * line in the %Block which is a block definition. If the %Block
+   * does not contain a block definition, end() const is returned.
+   */
+  const_iterator
+  find_block_def() const
+  {
+    return std::find_if(begin(), end(),
+      std::mem_fun_ref(&value_type::is_block_def));
+  }
+
   // introspection
   /**
    * \brief Counts all \Lines that match a given key.
@@ -1307,8 +1331,8 @@ public:
   /**
    * \brief Inserts a range into the %Block.
    * \param position Iterator into the %Block.
-   * \param first Input iterator.
-   * \param last Input iterator.
+   * \param first, last Input iterators to the initial and final
+   *   positions in a sequence.
    *
    * This function inserts copies of the \Lines in the range
    * [\p first, \p last) into the %Block before the specified
@@ -1773,6 +1797,24 @@ public:
   find(const key_type& blockName) const
   { return std::find_if(begin(), end(), name_iequals(blockName)); }
 
+  /**
+   * \brief Tries to locate a Block in a range.
+   * \param blockName Name of the Block to be located.
+   * \param first, last Input iterators to the initial and final
+   *   positions in a sequence.
+   * \return Iterator pointing to sought-after element, or \p last if
+   *   not found.
+   *
+   * This function takes a key and tries to locate in the range
+   * [\p first, \p last) the Block whose name matches \p blockName
+   * (comparison is case-insensitive). If successful the function
+   * returns an iterator pointing to the sought after Block. If
+   * unsuccessful it returns \p last.
+   */
+  template<class InputIterator> static InputIterator
+  find(const key_type& blockName, InputIterator first, InputIterator last)
+  { return std::find_if(first, last, name_iequals(blockName)); }
+
   // introspection
   /**
    * \brief Counts all \Blocks with a given name.
@@ -1854,8 +1896,8 @@ public:
   /**
    * \brief Inserts a range into the %Coll.
    * \param position Iterator into the %Coll.
-   * \param first Input iterator.
-   * \param last Input iterator.
+   * \param first, last Input iterators to the initial and final
+   *   positions in a sequence.
    *
    * This function inserts copies of the \Blocks in the range
    * [\p first, \p last) into the %Coll before the specified
@@ -1972,8 +2014,7 @@ private:
   iterator
   erase_if_empty(const key_type& blockName, const size_type& offset = 0)
   {
-    iterator block =
-        std::find_if(begin() + offset, end(), name_iequals(blockName));
+    iterator block = find(blockName, begin() + offset, end());
     if (block != end() && block->empty()) return erase(block);
     return block;
   }

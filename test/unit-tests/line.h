@@ -183,9 +183,9 @@ BOOST_AUTO_TEST_CASE(testInserting)
   l3.clear();
 
   l2 << 1 << -1 << "# test";
-  l3 << 2 << -2 << "# test";
+  l3 << 2 << "+2" << "# test";
   BOOST_CHECK_EQUAL(l2.str(), "    1  -1   # test");
-  BOOST_CHECK_EQUAL(l3.str(), "    2  -2   # test");
+  BOOST_CHECK_EQUAL(l3.str(), "    2  +2   # test");
 }
 
 BOOST_AUTO_TEST_CASE(testFloatInserting)

@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE(testSubscriptAtAccessors)
   BOOST_CHECK_THROW(b1.at(""),  out_of_range);
   BOOST_CHECK_THROW(cb1.at(""), out_of_range);
 
-  int no_ind = numeric_limits<int>::min();
+  int no_ind = -32768;
 
   BOOST_CHECK_THROW(b1.at(no_ind),  out_of_range);
   BOOST_CHECK_THROW(cb1.at(no_ind), out_of_range);
@@ -267,6 +267,30 @@ BOOST_AUTO_TEST_CASE(testIterators)
   BOOST_CHECK_EQUAL((*(b1.rend()-3)).str(),    (*b1.find(vs3)).str());
   BOOST_CHECK_EQUAL((*(cb1.rbegin()+1)).str(), (*cb1.find(vs3)).str());
   BOOST_CHECK_EQUAL((*(cb1.rend()-3)).str(),   (*cb1.find(vs3)).str());
+}
+
+BOOST_AUTO_TEST_CASE(testFindBlockDef)
+{
+  Block b1;
+  b1[""] = "# a comment";
+  b1[""] = "BLOCK test Q= 10 # block def";
+  b1[""] = " 1 123  # comment";
+  b1[""] = " 2 234  # comment";
+  b1[""] = "BLOCK foo # another block def";
+  const Block cb1 = b1;
+
+  BOOST_CHECK_EQUAL(b1.find_block_def()->at(1),  "test");
+  BOOST_CHECK_EQUAL(cb1.find_block_def()->at(1), "test");
+  BOOST_CHECK_EQUAL(b1.find_block_def()->at(3),  "10");
+  BOOST_CHECK_EQUAL(cb1.find_block_def()->at(3), "10");
+
+  Block b2;
+  BOOST_CHECK(b2.find_block_def() == b2.end());
+
+  b2[""] = " 1 2 3";
+  b2[""] = " 4 5 6";
+  b2[""] = "# comment";
+  BOOST_CHECK(b2.find_block_def() == b2.end());
 }
 
 BOOST_AUTO_TEST_CASE(testIntrospection)

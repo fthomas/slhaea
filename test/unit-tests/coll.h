@@ -305,6 +305,19 @@ BOOST_FIXTURE_TEST_CASE(testIntrospection, F)
 
   BOOST_CHECK_EQUAL(c1.size(),  0);
   BOOST_CHECK_EQUAL(cc1.size(), 4);
+
+  Coll c2;
+  c2.push_back("BLOCK test 10");
+  c2.push_back("BLOCK test 20");
+  c2.push_back("BLOCK test 30");
+
+  Line l1 =    *c2.find("test")->begin();
+  Line l2 = *Coll::find("test", c2.begin()+1, c2.end())->begin();
+  Line l3 = *Coll::find("test", c2.rbegin(), c2.rend())->begin();
+
+  BOOST_CHECK_EQUAL(l1.at(2), "10");
+  BOOST_CHECK_EQUAL(l2.at(2), "20");
+  BOOST_CHECK_EQUAL(l3.at(2), "30");
 }
 
 BOOST_FIXTURE_TEST_CASE(testPushPop, F)
