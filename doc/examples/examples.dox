@@ -56,3 +56,11 @@ Reading of the decay width and some branching ratios is demonstrated
 in this example. It also shows how individual fields can be accessed
 with a SLHAea::Key via the SLHAea::Coll::field() method:
 */
+
+/** \example 09_blocks_of_the_same_name.cpp
+
+The SLHA allows to have several blocks with the same name but at
+different Q scales. This examples shows two ways to access such
+blocks based on their Q value. Notice that the first way is more
+efficient since it only iterates over blocks with the given name.
+*/
