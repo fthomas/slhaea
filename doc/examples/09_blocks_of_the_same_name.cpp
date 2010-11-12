@@ -29,7 +29,7 @@ int main(int, char* [])
 
   for (; first != last; first = Coll::find("test", ++first, last))
   {
-    Block::iterator block_def = first->find_block_def();
+    auto block_def = first->find_block_def();
     if (block_def != first->end() &&
         block_def->size() >= 4 &&
         block_def->at(3) == "2000")
@@ -44,11 +44,7 @@ int main(int, char* [])
   cout <<  q2k.at(2).at(1) << " == 5.42" << endl;
 
 
-  Block::key_type q1k_key;
-  q1k_key.push_back("BLOCK");
-  q1k_key.push_back("test");
-  q1k_key.push_back("Q=");
-  q1k_key.push_back("1000");
+  Block::key_type q1k_key = {"BLOCK", "test", "Q=", "1000"};
 
   first = input.begin();
   last  = input.end();
