@@ -1,5 +1,6 @@
 \documentclass[
   11pt,
+  showkeys,
   ]{revtex4-1}
 
 \usepackage[utf8x]{inputenc}
@@ -26,6 +27,8 @@
   columns=fullflexible,
 }
 
+\newcommand{\SLHAeaVersion}{@SLHAea_VERSION@}
+
 
 \begin{document}
 
@@ -39,6 +42,8 @@
 
 \begin{abstract}
 \end{abstract}
+
+\keywords{SLHA, input/output, C++ library}
 
 \maketitle
 \tableofcontents
