@@ -22,7 +22,7 @@ Its main features are:
   or integers
 - no precision is lost in read/write cycles of unmodified data
 - blocks and lines are not restricted to the ones specified in the
-  `SLHA`_, `SLHA2`_ and `FLHA`_ or later accords that use the same
+  `SLHA`_, `SLHA2`_, and `FLHA`_ or later accords that use the same
   syntax
 
 .. _SUSY Les Houches Accord: http://home.fnal.gov/~skands/slha/
