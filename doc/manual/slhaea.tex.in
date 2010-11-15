@@ -27,6 +27,9 @@
   columns=fullflexible,
 }
 
+\newcommand{\Cpp}{C%
+  \protect\nolinebreak\hspace{-.05em}\protect\raisebox{.4ex}{\tiny\bf +}%
+  \protect\nolinebreak\hspace{-.10em}\protect\raisebox{.4ex}{\tiny\bf +}}
 \newcommand{\SLHAeaVersion}{@SLHAea_VERSION@}
 
 
@@ -44,7 +47,7 @@
 \begin{abstract}
 \end{abstract}
 
-\keywords{SLHA, input/output, C++ library}
+\keywords{SLHA, input/output, \Cpp{} library}
 
 \maketitle
 \tableofcontents
