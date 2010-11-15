@@ -742,7 +742,9 @@ public:
    * \return Reference to \c *this.
    *
    * This functions reads non-empty lines from \p is, transforms them
-   * into \Lines and adds them to the end of the %Block.
+   * into \Lines and adds them to the end of the %Block. If \p is
+   * contains a block definition, the %Block's name is changed
+   * accordingly.
    */
   Block&
   read(std::istream& is)
