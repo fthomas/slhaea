@@ -1,5 +1,6 @@
 \documentclass[
   11pt,
+  showkeys,
   ]{revtex4-1}
 
 \usepackage[utf8x]{inputenc}
@@ -26,19 +27,27 @@
   columns=fullflexible,
 }
 
+\newcommand{\Cpp}{C%
+  \protect\nolinebreak\hspace{-.05em}\protect\raisebox{.4ex}{\tiny\bf +}%
+  \protect\nolinebreak\hspace{-.10em}\protect\raisebox{.4ex}{\tiny\bf +}}
+\newcommand{\SLHAeaVersion}{@SLHAea_VERSION@}
+
 
 \begin{document}
 
 \title{SLHAea - another SUSY Les Houches Accord input/output library}
 \date{\today}
 
-\author{F. S. Thomas}
+\author{Frank S. Thomas}
 \email{fthomas@physik.uni-wuerzburg.de}
+\homepage{http://www.physik.uni-wuerzburg.de/~fthomas/}
 \affiliation{Institut für Theoretische Physik und Astrophysik,
   Universität Würzburg, Am Hubland, 97074 Würzburg, Germany}
 
 \begin{abstract}
 \end{abstract}
+
+\keywords{SLHA, input/output, \Cpp{} library}
 
 \maketitle
 \tableofcontents

@@ -733,7 +733,9 @@ public:
    * \return Reference to \c *this.
    *
    * This functions reads non-empty lines from \p is, transforms them
-   * into \Lines and adds them to the end of the %Block.
+   * into \Lines and adds them to the end of the %Block. If \p is
+   * contains a block definition, the %Block's name is changed
+   * accordingly.
    */
   Block&
   read(std::istream& is)
@@ -762,9 +764,10 @@ public:
    * \param block String that is used as content for the %Block.
    * \return Reference to \c *this.
    *
-   * This functions clears the content of the %Block and adds every
-   * non-empty line found in \p block as Line to the end of the
-   * %Block.
+   * This functions clears the name and content of the %Block and adds
+   * every non-empty line found in \p block as Line to the end of the
+   * %Block. If \p block contains a block definition, the %Block's
+   * name is set accordingly.
    */
   Block&
   str(const std::string& block)

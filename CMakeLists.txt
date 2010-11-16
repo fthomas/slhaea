@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 2.6)
 
 project(SLHAea CXX)
 
+set(SLHAea_VERSION_MAJOR "0")
+set(SLHAea_VERSION_MINOR "0")
+set(SLHAea_VERSION "${SLHAea_VERSION_MAJOR}.${SLHAea_VERSION_MINOR}")
+
 # Enable more warnings if g++, clang or icpc is used.
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER MATCHES clang)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -std=c++0x -pedantic")

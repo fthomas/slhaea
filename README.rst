@@ -14,15 +14,16 @@ Its main features are:
 
 - reading and writing SLHA files
 - easy access to individual blocks, lines, and fields
-- three containers (``Coll``, ``Block``, and ``Line``) that mimic STL
-  containers and therefore offer great flexibility
+- three containers (``Coll``, ``Block``, and ``Line``) that mimic the
+  containers of the C++ Standard Library and therefore offer great
+  flexibility
 - the exact formatting of lines is preserved
 - everything is stored as strings, so data is not restricted to floats
   or integers
 - no precision is lost in read/write cycles of unmodified data
 - blocks and lines are not restricted to the ones specified in the
-  `SLHA`_, `SLHA2`_ and `FLHA`_ or later accords that use the same
-  structure
+  `SLHA`_, `SLHA2`_, and `FLHA`_ or later accords that use the same
+  syntax
 
 .. _SUSY Les Houches Accord: http://home.fnal.gov/~skands/slha/
 .. _SLHA:  http://arxiv.org/abs/hep-ph/0311123
