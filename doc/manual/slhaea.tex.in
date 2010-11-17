@@ -45,6 +45,7 @@
   Universität Würzburg, Am Hubland, 97074 Würzburg, Germany}
 
 \begin{abstract}
+This manual refers to SLHAea version \SLHAeaVersion{}.
 \end{abstract}
 
 \keywords{SLHA, input/output, \Cpp{} library}

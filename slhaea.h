@@ -1488,6 +1488,25 @@ public:
   field(const Key& key) const;
 
   /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read/write reference to the Line referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::reference
+  line(const Key& key);
+
+  /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read-only (constant) reference to the Line referred to by
+   *   \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::const_reference
+  line(const Key& key) const;
+
+  /**
    * \brief Assigns content from input stream to the %Coll.
    * \param is Input stream to read content from.
    * \returns Reference to \c *this.
@@ -1905,18 +1924,32 @@ public:
    * \param blockName Name of the Block to be erased.
    * \return Iterator pointing to the next element (or end()).
    *
-   * This function takes a key and tries to erase the Block whose
-   * name matches \p blockName (comparison is case-insensitive). If
-   * the %Coll contains such Block, the function returns an iterator
-   * pointing to the next element (or end()). If no such Block exists,
-   * end() is returned.
+   * This function takes a key and tries to erase the first Block
+   * whose name matches \p blockName (comparison is case-insensitive).
+   * If the %Coll contains such Block, the function returns an
+   * iterator pointing to the next element (or end()). If no such
+   * Block exists, end() is returned.
    */
   iterator
   erase(const key_type& blockName)
   {
     iterator block = find(blockName);
-    if (block != end()) return erase(block);
-    return block;
+    return (block != end()) ? erase(block) : block;
+  }
+
+  /**
+   * \brief Tries to erase \Blocks in the %Coll.
+   * \param blockName Name of the \Blocks to be erased.
+   *
+   * This function takes a key and tries to erase all \Blocks whose
+   * name matches \p blockName (comparison is case-insensitive).
+   */
+  void
+  erase_all(const key_type& blockName)
+  {
+    name_iequals pred(blockName);
+    for (iterator block = begin(); block != end();)
+    { pred(*block) ? block = erase(block) : ++block; }
   }
 
   /**
@@ -2097,6 +2130,14 @@ Coll::field(const Key& key)
 inline Line::const_reference
 Coll::field(const Key& key) const
 { return at(key.block).at(key.line).at(key.field); }
+
+inline Block::reference
+Coll::line(const Key& key)
+{ return at(key.block).at(key.line); }
+
+inline Block::const_reference
+Coll::line(const Key& key) const
+{ return at(key.block).at(key.line); }
 
 
 // stream operators

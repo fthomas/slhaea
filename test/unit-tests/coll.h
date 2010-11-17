@@ -148,6 +148,21 @@ BOOST_FIXTURE_TEST_CASE(testField, F)
   BOOST_CHECK_EQUAL(c1.field("test2;4;1"),         "4.15");
 }
 
+BOOST_FIXTURE_TEST_CASE(testLine, F)
+{
+  Coll c1;
+  c1.str(fs1);
+  const Coll cc1 = c1;
+
+  Key k1("TEST2;4,3;1");
+  Key k2("test1;2;2");
+
+  BOOST_CHECK_EQUAL( c1.line(k1),  c1.at(k1.block).at(k1.line));
+  BOOST_CHECK_EQUAL(cc1.line(k1), cc1.at(k1.block).at(k1.line));
+  BOOST_CHECK_EQUAL( c1.line(k2),  c1.at(k2.block).at(k2.line));
+  BOOST_CHECK_EQUAL(cc1.line(k2), cc1.at(k2.block).at(k2.line));
+}
+
 BOOST_FIXTURE_TEST_CASE(testSubscriptAccessor, F)
 {
   stringstream ss1(fs1);
@@ -393,6 +408,39 @@ BOOST_FIXTURE_TEST_CASE(testInsertErase, F)
   c1.erase(c1.begin(), c1.end());
 
   BOOST_CHECK_NE(c1, cc1);
+  BOOST_CHECK_EQUAL(c1.empty(), true);
+}
+
+BOOST_AUTO_TEST_CASE(testEraseAll)
+{
+  Coll c1;
+  string s1 =
+    "BLOCK test1\n"
+    "BLOCK test2\n"
+    "BLOCK test3\n"
+    "BLOCK test1\n"
+    "BLOCK test2\n"
+    "BLOCK test1\n";
+  c1.str(s1);
+
+  BOOST_CHECK_EQUAL(c1.count("test1"), 3);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 2);
+  BOOST_CHECK_EQUAL(c1.count("test3"), 1);
+
+  c1.erase_all("test1");
+  BOOST_CHECK_EQUAL(c1.count("test1"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 2);
+  BOOST_CHECK_EQUAL(c1.count("test3"), 1);
+
+  c1.erase_all("test2");
+  BOOST_CHECK_EQUAL(c1.count("test1"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test3"), 1);
+
+  c1.erase_all("test3");
+  BOOST_CHECK_EQUAL(c1.count("test1"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test3"), 0);
   BOOST_CHECK_EQUAL(c1.empty(), true);
 }
 
