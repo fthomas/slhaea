@@ -2014,8 +2014,7 @@ private:
   erase_if_empty(const key_type& blockName, const size_type& offset = 0)
   {
     iterator block = find(blockName, begin() + offset, end());
-    if (block != end() && block->empty()) return erase(block);
-    return block;
+    return (block != end() && block->empty()) ? erase(block) : block;
   }
 
 private:
