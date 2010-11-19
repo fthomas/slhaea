@@ -3,13 +3,13 @@ Copyright (C) 2002-2010, and GNU GPL'd, by Julian Seward et al.
 Using Valgrind-3.6.0.SVN-Debian and LibVEX; rerun with -h for copyright info
 Command: test/unit-tests/ut
 
-Running 45 test cases...
+Running 52 test cases...
 
 *** No errors detected
 
 HEAP SUMMARY:
 in use at exit: 0 bytes in 0 blocks
-total heap usage: 15,161 allocs, 15,161 frees, 1,273,778 bytes allocated
+total heap usage: 15,857 allocs, 15,857 frees, 1,292,360 bytes allocated
 
 All heap blocks were freed -- no leaks are possible
 
