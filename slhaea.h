@@ -1171,6 +1171,24 @@ public:
   { return std::find_if(begin(), end(), line_matches(key)); }
 
   /**
+   * \brief Tries to locate a Line in a range.
+   * \param key First strings of the Line to be located.
+   * \param first, last Input iterators to the initial and final
+   *   positions in a sequence.
+   * \return Iterator pointing to sought-after element, or \p last if
+   *   not found.
+   *
+   * This function takes a key (which is a vector of strings) and
+   * tries to locate in the range [\p first, \p last) the Line whose
+   * first strings are equal to the strings in \p key. If successful
+   * the function returns an iterator pointing to the sought after
+   * Line. If unsuccessful it returns \p last.
+   */
+  template<class InputIterator> static InputIterator
+  find(const key_type& key, InputIterator first, InputIterator last)
+  { return std::find_if(first, last, line_matches(key)); }
+
+  /**
    * Returns a read/write iterator that points to the first line in
    * the %Block which is a block definition. If the %Block does not
    * contain a block definition, end() is returned.

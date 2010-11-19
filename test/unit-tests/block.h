@@ -269,6 +269,28 @@ BOOST_AUTO_TEST_CASE(testIterators)
   BOOST_CHECK_EQUAL((*(cb1.rend()-3)).str(),   (*cb1.find(vs3)).str());
 }
 
+BOOST_AUTO_TEST_CASE(testStaticFind)
+{
+  Block b1;
+  b1[""] = "test 10";
+  b1[""] = "test 20";
+  b1[""] = "test 30";
+  vector<string> v1(1, "test"), v2(1, "foo");
+
+  Line l1 = *Block::find(v1, b1.begin(),   b1.end());
+  Line l2 = *Block::find(v1, b1.begin()+1, b1.end());
+  Line l3 = *Block::find(v1, b1.rbegin(),  b1.rend());
+
+  BOOST_CHECK_EQUAL(l1.at(1), "10");
+  BOOST_CHECK_EQUAL(l2.at(1), "20");
+  BOOST_CHECK_EQUAL(l3.at(1), "30");
+
+  Block::iterator it = Block::find(v2, b1.begin(), b1.end());
+  Block::const_iterator cit = Block::find(v2, b1.cbegin(), b1.cend());
+  BOOST_CHECK(it  == b1.end());
+  BOOST_CHECK(cit == b1.cend());
+}
+
 BOOST_AUTO_TEST_CASE(testFindBlockDef)
 {
   Block b1;
