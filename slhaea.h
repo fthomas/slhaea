@@ -1920,36 +1920,47 @@ public:
   { return impl_.erase(first, last); }
 
   /**
-   * \brief Tries to erase a Block in the %Coll.
+   * \brief Erases first Block with a given name.
    * \param blockName Name of the Block to be erased.
    * \return Iterator pointing to the next element (or end()).
    *
-   * This function takes a key and tries to erase the first Block
-   * whose name matches \p blockName (comparison is case-insensitive).
-   * If the %Coll contains such Block, the function returns an
-   * iterator pointing to the next element (or end()). If no such
-   * Block exists, end() is returned.
+   * This function takes a key and erases the first Block whose name
+   * matches \p blockName (comparison is case-insensitive). If the
+   * %Coll contains such Block, the function returns an iterator
+   * pointing to the next element (or end()). If no such Block exists,
+   * end() is returned.
    */
   iterator
-  erase(const key_type& blockName)
+  erase_first(const key_type& blockName)
   {
     iterator block = find(blockName);
     return (block != end()) ? erase(block) : block;
   }
 
   /**
-   * \brief Tries to erase \Blocks in the %Coll.
+   * \brief Erases all \Blocks with a given name.
    * \param blockName Name of the \Blocks to be erased.
+   * \return The number of \Blocks erased.
    *
-   * This function takes a key and tries to erase all \Blocks whose
-   * name matches \p blockName (comparison is case-insensitive).
+   * This function takes a key and erases all \Blocks whose name
+   * matches \p blockName (comparison is case-insensitive).
    */
-  void
-  erase_all(const key_type& blockName)
+  size_type
+  erase(const key_type& blockName)
   {
     name_iequals pred(blockName);
+    size_type erased_count = 0;
+
     for (iterator block = begin(); block != end();)
-    { pred(*block) ? block = erase(block) : ++block; }
+    {
+      if (pred(*block))
+      {
+        block = erase(block);
+        ++erased_count;
+      }
+      else ++block;
+    }
+    return erased_count;
   }
 
   /**
