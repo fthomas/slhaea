@@ -1280,7 +1280,7 @@ public:
   { impl_.insert(position, first, last); }
 
   /**
-   * \brief Removes element at given \p position.
+   * \brief Erases element at given \p position.
    * \param position Iterator pointing to the element to be erased.
    * \return Iterator pointing to the next element (or end()).
    *
@@ -1292,7 +1292,7 @@ public:
   { return impl_.erase(position); }
 
   /**
-   * \brief Removes a range of elements.
+   * \brief Erases a range of elements.
    * \param first Iterator pointing to the first element to be erased.
    * \param last Iterator pointing to one past the last element to be
    *   erased.
@@ -1893,7 +1893,7 @@ public:
   { impl_.insert(position, first, last); }
 
   /**
-   * \brief Removes element at given \p position.
+   * \brief Erases element at given \p position.
    * \param position Iterator pointing to the element to be erased.
    * \return Iterator pointing to the next element (or end()).
    *
@@ -1905,7 +1905,7 @@ public:
   { return impl_.erase(position); }
 
   /**
-   * \brief Removes a range of elements.
+   * \brief Erases a range of elements.
    * \param first Iterator pointing to the first element to be erased.
    * \param last Iterator pointing to one past the last element to be
    *   erased.
