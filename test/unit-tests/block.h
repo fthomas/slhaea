@@ -429,6 +429,85 @@ BOOST_AUTO_TEST_CASE(testInsertErase)
   BOOST_CHECK_EQUAL(b1.size(), 2);
 }
 
+BOOST_AUTO_TEST_CASE(testEraseFirst)
+{
+  Block b1;
+  b1[""] = " 1 1";
+  b1[""] = " 2 1";
+  b1[""] = " 2 2";
+  b1[""] = " 1 1";
+  Block::iterator it;
+
+  vector<string> v0(1, "0"), v1(1, "1"), v2(1, "2");
+
+  it = b1.erase_first(v0);
+  BOOST_CHECK(it == b1.end());
+  BOOST_CHECK_EQUAL(b1.count(v1), 2);
+  BOOST_CHECK_EQUAL(b1.count(v2), 2);
+  BOOST_CHECK_EQUAL(b1.size(),    4);
+
+  it = b1.erase_first(v2);
+  BOOST_CHECK(it == b1.end()-2);
+  BOOST_CHECK_EQUAL(b1.count(v1), 2);
+  BOOST_CHECK_EQUAL(b1.count(v2), 1);
+  BOOST_CHECK_EQUAL(b1.size(),    3);
+
+  it = b1.erase_first(v1);
+  BOOST_CHECK(it == b1.begin());
+  BOOST_CHECK_EQUAL(b1.count(v1), 1);
+  BOOST_CHECK_EQUAL(b1.count(v2), 1);
+  BOOST_CHECK_EQUAL(b1.size(),    2);
+
+  it = b1.erase_first(v2);
+  BOOST_CHECK(it == b1.begin());
+  BOOST_CHECK_EQUAL(b1.count(v1), 1);
+  BOOST_CHECK_EQUAL(b1.count(v2), 0);
+  BOOST_CHECK_EQUAL(b1.size(),    1);
+
+  it = b1.erase_first(v1);
+  BOOST_CHECK(it == b1.end());
+  BOOST_CHECK_EQUAL(b1.count(v1), 0);
+  BOOST_CHECK_EQUAL(b1.count(v2), 0);
+  BOOST_CHECK_EQUAL(b1.size(),    0);
+
+  it = b1.erase_first(v1);
+  BOOST_CHECK(it == b1.end());
+  BOOST_CHECK_EQUAL(b1.count(v1), 0);
+  BOOST_CHECK_EQUAL(b1.count(v2), 0);
+  BOOST_CHECK_EQUAL(b1.size(),    0);
+}
+
+BOOST_AUTO_TEST_CASE(testErase)
+{
+  Block b1;
+  b1[""] = " 1 1";
+  b1[""] = " 2 1";
+  b1[""] = " 2 2";
+  b1[""] = " 1 1";
+
+  vector<string> v0(1, "0"), v1(1, "1"), v2(1, "2");
+
+  BOOST_CHECK_EQUAL(b1.erase(v0), 0);
+  BOOST_CHECK_EQUAL(b1.count(v1), 2);
+  BOOST_CHECK_EQUAL(b1.count(v2), 2);
+  BOOST_CHECK_EQUAL(b1.size(),    4);
+
+  BOOST_CHECK_EQUAL(b1.erase(v2), 2);
+  BOOST_CHECK_EQUAL(b1.count(v1), 2);
+  BOOST_CHECK_EQUAL(b1.count(v2), 0);
+  BOOST_CHECK_EQUAL(b1.size(),    2);
+
+  BOOST_CHECK_EQUAL(b1.erase(v1), 2);
+  BOOST_CHECK_EQUAL(b1.count(v1), 0);
+  BOOST_CHECK_EQUAL(b1.count(v2), 0);
+  BOOST_CHECK_EQUAL(b1.size(),    0);
+
+  BOOST_CHECK_EQUAL(b1.erase(v1), 0);
+  BOOST_CHECK_EQUAL(b1.count(v1), 0);
+  BOOST_CHECK_EQUAL(b1.count(v2), 0);
+  BOOST_CHECK_EQUAL(b1.size(),    0);
+}
+
 BOOST_AUTO_TEST_CASE(testSwap)
 {
   Block b1("t1");

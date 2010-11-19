@@ -1307,6 +1307,51 @@ public:
   { return impl_.erase(first, last); }
 
   /**
+   * \brief Erases first Line that matches the provided key.
+   * \param key First strings of the Line to be erased.
+   * \return Iterator pointing to the next element (or end()).
+   *
+   * This function takes a key (which is a vector of strings) and
+   * erases the first Line whose first strings are equal to the strings
+   * in \p key. If the %Block contains such Line, the function returns
+   * an iterator pointing to the next element (or end()). If no such
+   * Line exists, end() is returned.
+   */
+  iterator
+  erase_first(const key_type& key)
+  {
+    iterator line = find(key);
+    return (line != end()) ? erase(line) : line;
+  }
+
+  /**
+   * \brief Erases all \Lines that match the provided key.
+   * \param key First strings of the \Lines to be erased.
+   * \return The number of \Lines erased.
+   *
+   * This function takes a key (which is a vector of strings) and
+   * erases all \Lines whose first strings are equal to the strings
+   * in \p key.
+   */
+  size_type
+  erase(const key_type& key)
+  {
+    line_matches pred(key);
+    size_type erased_count = 0;
+
+    for (iterator line = begin(); line != end();)
+    {
+      if (pred(*line))
+      {
+        line = erase(line);
+        ++erased_count;
+      }
+      else ++line;
+    }
+    return erased_count;
+  }
+
+  /**
    * \brief Swaps data with another %Block.
    * \param block %Block to be swapped with.
    */
