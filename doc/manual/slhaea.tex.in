@@ -82,6 +82,8 @@ This manual refers to SLHAea version \SLHAeaVersion{}.
 <compiling, compiling examples, tested with different compilers,
 std conformance>
 
+- random access iterators
+- iterators are always invalidated when containers are changed (or no guarantee)
 <summary>
 
 \begin{lstlisting}

@@ -11,9 +11,20 @@
 #include "slhaea.h"
 
 using namespace std;
+using namespace boost;
 using namespace SLHAea;
 
 BOOST_AUTO_TEST_SUITE(TestColl)
+
+BOOST_AUTO_TEST_CASE(assertConcepts)
+{
+  BOOST_CONCEPT_ASSERT((Mutable_ReversibleContainer<Coll>));
+
+  BOOST_CONCEPT_ASSERT((Mutable_RandomAccessIterator<Coll::iterator>));
+  BOOST_CONCEPT_ASSERT((Mutable_RandomAccessIterator<Coll::reverse_iterator>));
+  BOOST_CONCEPT_ASSERT((RandomAccessIterator<Coll::const_iterator>));
+  BOOST_CONCEPT_ASSERT((RandomAccessIterator<Coll::const_reverse_iterator>));
+}
 
 struct F {
   F() {
