@@ -1354,7 +1354,7 @@ public:
   size_type
   erase(const key_type& key)
   {
-    line_matches pred(key);
+    const line_matches pred(key);
     size_type erased_count = 0;
 
     for (iterator line = begin(); line != end();)
@@ -2011,7 +2011,7 @@ public:
   size_type
   erase(const key_type& blockName)
   {
-    name_iequals pred(blockName);
+    const name_iequals pred(blockName);
     size_type erased_count = 0;
 
     for (iterator block = begin(); block != end();)
