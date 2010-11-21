@@ -1172,20 +1172,19 @@ public:
 
   /**
    * \brief Tries to locate a Line in a range.
-   * \param key First strings of the Line to be located.
    * \param first, last Input iterators to the initial and final
    *   positions in a sequence.
+   * \param key First strings of the Line to be located.
    * \return Iterator pointing to sought-after element, or \p last if
    *   not found.
    *
-   * This function takes a key (which is a vector of strings) and
-   * tries to locate in the range [\p first, \p last) the Line whose
-   * first strings are equal to the strings in \p key. If successful
-   * the function returns an iterator pointing to the sought after
-   * Line. If unsuccessful it returns \p last.
+   * This function tries to locate in the range [\p first, \p last)
+   * the Line whose first strings are equal to the strings in \p key.
+   * If successful the function returns an iterator pointing to the
+   * sought after Line. If unsuccessful it returns \p last.
    */
   template<class InputIterator> static InputIterator
-  find(const key_type& key, InputIterator first, InputIterator last)
+  find(InputIterator first, InputIterator last, const key_type& key)
   { return std::find_if(first, last, line_matches(key)); }
 
   /**
@@ -1847,20 +1846,20 @@ public:
 
   /**
    * \brief Tries to locate a Block in a range.
-   * \param blockName Name of the Block to be located.
    * \param first, last Input iterators to the initial and final
    *   positions in a sequence.
+   * \param blockName Name of the Block to be located.
    * \return Iterator pointing to sought-after element, or \p last if
    *   not found.
    *
-   * This function takes a key and tries to locate in the range
-   * [\p first, \p last) the Block whose name matches \p blockName
-   * (comparison is case-insensitive). If successful the function
-   * returns an iterator pointing to the sought after Block. If
-   * unsuccessful it returns \p last.
+   * This function tries to locate in the range [\p first, \p last)
+   * the Block whose name matches \p blockName (comparison is
+   * case-insensitive). If successful the function returns an iterator
+   * pointing to the sought after Block. If unsuccessful it returns
+   * \p last.
    */
   template<class InputIterator> static InputIterator
-  find(const key_type& blockName, InputIterator first, InputIterator last)
+  find(InputIterator first, InputIterator last, const key_type& blockName)
   { return std::find_if(first, last, name_iequals(blockName)); }
 
   // introspection
@@ -2087,7 +2086,7 @@ private:
   iterator
   erase_if_empty(const key_type& blockName, const size_type& offset = 0)
   {
-    iterator block = find(blockName, begin() + offset, end());
+    iterator block = find(begin() + offset, end(), blockName);
     return (block != end() && block->empty()) ? erase(block) : block;
   }
 

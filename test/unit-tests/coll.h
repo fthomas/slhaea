@@ -338,8 +338,8 @@ BOOST_FIXTURE_TEST_CASE(testIntrospection, F)
   c2.push_back("BLOCK test 30");
 
   Line l1 =    *c2.find("test")->begin();
-  Line l2 = *Coll::find("test", c2.begin()+1, c2.end())->begin();
-  Line l3 = *Coll::find("test", c2.rbegin(), c2.rend())->begin();
+  Line l2 = *Coll::find(c2.begin()+1, c2.end(), "test")->begin();
+  Line l3 = *Coll::find(c2.rbegin(), c2.rend(), "test")->begin();
 
   BOOST_CHECK_EQUAL(l1.at(2), "10");
   BOOST_CHECK_EQUAL(l2.at(2), "20");

@@ -27,7 +27,7 @@ int main(int, char* [])
   Coll::iterator first = input.find("test");
   Coll::iterator last  = input.end();
 
-  for (; first != last; first = Coll::find("test", ++first, last))
+  for (; first != last; first = Coll::find(++first, last, "test"))
   {
     Block::iterator block_def = first->find_block_def();
     if (block_def != first->end() &&
