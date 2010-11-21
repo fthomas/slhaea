@@ -2200,8 +2200,8 @@ public:
     if (keys.size() != 3)
     { throw std::invalid_argument("SLHAea::Key::str(‘" + keyString + "’)"); }
 
-    clear();
     block = keys[0];
+    line.clear();
     boost::split(line, keys[1], boost::is_any_of(","));
     field = boost::lexical_cast<Line::size_type>(keys[2]);
 
@@ -2218,15 +2218,6 @@ public:
     std::stringstream output("");
     output << block << ";" << boost::join(line, ",") << ";" << field;
     return output.str();
-  }
-
-private:
-  void
-  clear()
-  {
-    block.clear();
-    line.clear();
-    field = 0;
   }
 };
 
