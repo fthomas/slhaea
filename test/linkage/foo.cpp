@@ -1,4 +1,5 @@
 #include "slhaea.h"
+#include "foobar.h"
 
 SLHAea::Line foo()
 {

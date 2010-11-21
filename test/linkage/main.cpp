@@ -1,8 +1,6 @@
 #include <iostream>
 #include "slhaea.h"
-
-SLHAea::Line bar();
-SLHAea::Line foo();
+#include "foobar.h"
 
 int main(int, char* [])
 {
