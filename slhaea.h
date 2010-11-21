@@ -1474,7 +1474,7 @@ private:
     { return (a == "(any)") || boost::iequals(a, b); }
 
   private:
-    key_type key_;
+    const key_type key_;
   };
 
 private:
@@ -2074,7 +2074,7 @@ private:
     { return boost::iequals(block.name(), name_); }
 
   private:
-    key_type name_;
+    const key_type name_;
   };
 
   pointer
