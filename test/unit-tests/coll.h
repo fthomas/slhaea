@@ -457,6 +457,41 @@ BOOST_AUTO_TEST_CASE(testEraseFirst)
   BOOST_CHECK_EQUAL(c1.empty(), true);
 }
 
+BOOST_AUTO_TEST_CASE(testEraseLast)
+{
+  string s1 =
+    "BLOCK test1\n"
+    "BLOCK test2\n"
+    "BLOCK test2\n";
+  Coll c1;
+  c1.str(s1);
+  Coll::iterator it;
+
+  it = c1.erase_last("test0");
+  BOOST_CHECK(it == c1.end());
+  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 2);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  it = c1.erase_last("test2");
+  BOOST_CHECK(it == c1.end());
+  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 1);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  it = c1.erase_last("test2");
+  BOOST_CHECK(it == c1.end());
+  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  it = c1.erase_last("test1");
+  BOOST_CHECK(it == c1.end());
+  BOOST_CHECK_EQUAL(c1.count("test1"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
+  BOOST_CHECK_EQUAL(c1.empty(), true);
+}
+
 BOOST_AUTO_TEST_CASE(testErase)
 {
   string s1 =

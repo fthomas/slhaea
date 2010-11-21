@@ -1342,6 +1342,24 @@ public:
   }
 
   /**
+   * \brief Erases last Line that matches the provided key.
+   * \param key First strings of the Line to be erased.
+   * \return Iterator pointing to the next element (or end()).
+   *
+   * This function takes a key (which is a vector of strings) and
+   * erases the last Line whose first strings are equal to the strings
+   * in \p key. If the %Block contains such Line, the function returns
+   * an iterator pointing to the next element (or end()). If no such
+   * Line exists, end() is returned.
+   */
+  iterator
+  erase_last(const key_type& key)
+  {
+    reverse_iterator line = find(rbegin(), rend(), key);
+    return (line != rend()) ? erase((++line).base()) : end();
+  }
+
+  /**
    * \brief Erases all \Lines that match the provided key.
    * \param key First strings of the \Lines to be erased.
    * \return The number of \Lines erased.
@@ -1997,6 +2015,24 @@ public:
   {
     iterator block = find(blockName);
     return (block != end()) ? erase(block) : block;
+  }
+
+  /**
+   * \brief Erases last Block with a given name.
+   * \param blockName Name of the Block to be erased.
+   * \return Iterator pointing to the next element (or end()).
+   *
+   * This function takes a key and erases the last Block whose name
+   * matches \p blockName (comparison is case-insensitive). If the
+   * %Coll contains such Block, the function returns an iterator
+   * pointing to the next element (or end()). If no such Block exists,
+   * end() is returned.
+   */
+  iterator
+  erase_last(const key_type& blockName)
+  {
+    reverse_iterator block = find(rbegin(), rend(), blockName);
+    return (block != rend()) ? erase((++block).base()) : end();
   }
 
   /**
