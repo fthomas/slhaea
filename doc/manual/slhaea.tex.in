@@ -45,6 +45,7 @@
   Universität Würzburg, Am Hubland, 97074 Würzburg, Germany}
 
 \begin{abstract}
+This manual refers to SLHAea version \SLHAeaVersion{}.
 \end{abstract}
 
 \keywords{SLHA, input/output, \Cpp{} library}
@@ -81,6 +82,8 @@
 <compiling, compiling examples, tested with different compilers,
 std conformance>
 
+- random access iterators
+- iterators are always invalidated when containers are changed (or no guarantee)
 <summary>
 
 \begin{lstlisting}

@@ -1237,6 +1237,24 @@ public:
   { return std::find_if(begin(), end(), line_matches(key)); }
 
   /**
+   * \brief Tries to locate a Line in a range.
+   * \param key First strings of the Line to be located.
+   * \param first, last Input iterators to the initial and final
+   *   positions in a sequence.
+   * \return Iterator pointing to sought-after element, or \p last if
+   *   not found.
+   *
+   * This function takes a key (which is a vector of strings) and
+   * tries to locate in the range [\p first, \p last) the Line whose
+   * first strings are equal to the strings in \p key. If successful
+   * the function returns an iterator pointing to the sought after
+   * Line. If unsuccessful it returns \p last.
+   */
+  template<class InputIterator> static InputIterator
+  find(const key_type& key, InputIterator first, InputIterator last)
+  { return std::find_if(first, last, line_matches(key)); }
+
+  /**
    * Returns a read/write iterator that points to the first line in
    * the %Block which is a block definition. If the %Block does not
    * contain a block definition, end() is returned.
@@ -1346,7 +1364,7 @@ public:
   { impl_.insert(position, first, last); }
 
   /**
-   * \brief Removes element at given \p position.
+   * \brief Erases element at given \p position.
    * \param position Iterator pointing to the element to be erased.
    * \return Iterator pointing to the next element (or end()).
    *
@@ -1358,7 +1376,7 @@ public:
   { return impl_.erase(position); }
 
   /**
-   * \brief Removes a range of elements.
+   * \brief Erases a range of elements.
    * \param first Iterator pointing to the first element to be erased.
    * \param last Iterator pointing to one past the last element to be
    *   erased.
@@ -1371,6 +1389,51 @@ public:
   iterator
   erase(iterator first, iterator last)
   { return impl_.erase(first, last); }
+
+  /**
+   * \brief Erases first Line that matches the provided key.
+   * \param key First strings of the Line to be erased.
+   * \return Iterator pointing to the next element (or end()).
+   *
+   * This function takes a key (which is a vector of strings) and
+   * erases the first Line whose first strings are equal to the strings
+   * in \p key. If the %Block contains such Line, the function returns
+   * an iterator pointing to the next element (or end()). If no such
+   * Line exists, end() is returned.
+   */
+  iterator
+  erase_first(const key_type& key)
+  {
+    iterator line = find(key);
+    return (line != end()) ? erase(line) : line;
+  }
+
+  /**
+   * \brief Erases all \Lines that match the provided key.
+   * \param key First strings of the \Lines to be erased.
+   * \return The number of \Lines erased.
+   *
+   * This function takes a key (which is a vector of strings) and
+   * erases all \Lines whose first strings are equal to the strings
+   * in \p key.
+   */
+  size_type
+  erase(const key_type& key)
+  {
+    const line_matches pred(key);
+    size_type erased_count = 0;
+
+    for (iterator line = begin(); line != end();)
+    {
+      if (pred(*line))
+      {
+        line = erase(line);
+        ++erased_count;
+      }
+      else ++line;
+    }
+    return erased_count;
+  }
 
   /**
    * \brief Swaps data with another %Block.
@@ -1523,6 +1586,25 @@ public:
    */
   Line::const_reference
   field(const Key& key) const;
+
+  /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read/write reference to the Line referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::reference
+  line(const Key& key);
+
+  /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read-only (constant) reference to the Line referred to by
+   *   \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::const_reference
+  line(const Key& key) const;
 
   /**
    * \brief Assigns content from input stream to the %Coll.
@@ -1911,7 +1993,7 @@ public:
   { impl_.insert(position, first, last); }
 
   /**
-   * \brief Removes element at given \p position.
+   * \brief Erases element at given \p position.
    * \param position Iterator pointing to the element to be erased.
    * \return Iterator pointing to the next element (or end()).
    *
@@ -1923,7 +2005,7 @@ public:
   { return impl_.erase(position); }
 
   /**
-   * \brief Removes a range of elements.
+   * \brief Erases a range of elements.
    * \param first Iterator pointing to the first element to be erased.
    * \param last Iterator pointing to one past the last element to be
    *   erased.
@@ -1938,22 +2020,47 @@ public:
   { return impl_.erase(first, last); }
 
   /**
-   * \brief Tries to erase a Block in the %Coll.
+   * \brief Erases first Block with a given name.
    * \param blockName Name of the Block to be erased.
    * \return Iterator pointing to the next element (or end()).
    *
-   * This function takes a key and tries to erase the Block whose
-   * name matches \p blockName (comparison is case-insensitive). If
-   * the %Coll contains such Block, the function returns an iterator
+   * This function takes a key and erases the first Block whose name
+   * matches \p blockName (comparison is case-insensitive). If the
+   * %Coll contains such Block, the function returns an iterator
    * pointing to the next element (or end()). If no such Block exists,
    * end() is returned.
    */
   iterator
-  erase(const key_type& blockName)
+  erase_first(const key_type& blockName)
   {
     iterator block = find(blockName);
-    if (block != end()) return erase(block);
-    return block;
+    return (block != end()) ? erase(block) : block;
+  }
+
+  /**
+   * \brief Erases all \Blocks with a given name.
+   * \param blockName Name of the \Blocks to be erased.
+   * \return The number of \Blocks erased.
+   *
+   * This function takes a key and erases all \Blocks whose name
+   * matches \p blockName (comparison is case-insensitive).
+   */
+  size_type
+  erase(const key_type& blockName)
+  {
+    const name_iequals pred(blockName);
+    size_type erased_count = 0;
+
+    for (iterator block = begin(); block != end();)
+    {
+      if (pred(*block))
+      {
+        block = erase(block);
+        ++erased_count;
+      }
+      else ++block;
+    }
+    return erased_count;
   }
 
   /**
@@ -2018,8 +2125,7 @@ private:
   erase_if_empty(const key_type& blockName, const size_type& offset = 0)
   {
     iterator block = find(blockName, begin() + offset, end());
-    if (block != end() && block->empty()) return erase(block);
-    return block;
+    return (block != end() && block->empty()) ? erase(block) : block;
   }
 
 private:
@@ -2134,6 +2240,14 @@ Coll::field(const Key& key)
 inline Line::const_reference
 Coll::field(const Key& key) const
 { return at(key.block).at(key.line).at(key.field); }
+
+inline Block::reference
+Coll::line(const Key& key)
+{ return at(key.block).at(key.line); }
+
+inline Block::const_reference
+Coll::line(const Key& key) const
+{ return at(key.block).at(key.line); }
 
 
 // stream operators

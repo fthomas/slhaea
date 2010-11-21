@@ -11,9 +11,20 @@
 #include "slhaea.h"
 
 using namespace std;
+using namespace boost;
 using namespace SLHAea;
 
 BOOST_AUTO_TEST_SUITE(TestColl)
+
+BOOST_AUTO_TEST_CASE(assertConcepts)
+{
+  BOOST_CONCEPT_ASSERT((Mutable_ReversibleContainer<Coll>));
+
+  BOOST_CONCEPT_ASSERT((Mutable_RandomAccessIterator<Coll::iterator>));
+  BOOST_CONCEPT_ASSERT((Mutable_RandomAccessIterator<Coll::reverse_iterator>));
+  BOOST_CONCEPT_ASSERT((RandomAccessIterator<Coll::const_iterator>));
+  BOOST_CONCEPT_ASSERT((RandomAccessIterator<Coll::const_reverse_iterator>));
+}
 
 struct F {
   F() {
@@ -146,6 +157,21 @@ BOOST_FIXTURE_TEST_CASE(testField, F)
   BOOST_CHECK_EQUAL(c1.field(Key("test2;4;1")),    "4.15");
   BOOST_CHECK_EQUAL(c1.field(string("test2;4;1")), "4.15");
   BOOST_CHECK_EQUAL(c1.field("test2;4;1"),         "4.15");
+}
+
+BOOST_FIXTURE_TEST_CASE(testLine, F)
+{
+  Coll c1;
+  c1.str(fs1);
+  const Coll cc1 = c1;
+
+  Key k1("TEST2;4,3;1");
+  Key k2("test1;2;2");
+
+  BOOST_CHECK_EQUAL( c1.line(k1),  c1.at(k1.block).at(k1.line));
+  BOOST_CHECK_EQUAL(cc1.line(k1), cc1.at(k1.block).at(k1.line));
+  BOOST_CHECK_EQUAL( c1.line(k2),  c1.at(k2.block).at(k2.line));
+  BOOST_CHECK_EQUAL(cc1.line(k2), cc1.at(k2.block).at(k2.line));
 }
 
 BOOST_FIXTURE_TEST_CASE(testSubscriptAccessor, F)
@@ -355,44 +381,122 @@ BOOST_FIXTURE_TEST_CASE(testPushPop, F)
 
 BOOST_FIXTURE_TEST_CASE(testInsertErase, F)
 {
+  string s1 =
+    "BLOCK test1\n"
+    "BLOCK test2\n";
   Coll c1;
-  c1.str(fs1);
+  c1.str(s1);
   const Coll cc1 = c1;
+  Coll::iterator it;
 
   BOOST_CHECK_EQUAL(c1.size(), 2);
   BOOST_CHECK_EQUAL(c1.count("test1"), 1);
 
-  c1.insert(c1.begin(), c1.front());
-
+  it = c1.insert(c1.begin(), c1.front());
+  BOOST_CHECK(it == c1.begin());
   BOOST_CHECK_EQUAL(c1.size(), 3);
   BOOST_CHECK_EQUAL(c1.count("test1"), 2);
 
   c1.insert(c1.end(), c1.begin(), c1.begin()+2);
-
   BOOST_CHECK_EQUAL(c1.size(), 5);
   BOOST_CHECK_EQUAL(c1.count("test1"), 4);
 
-  c1.back().name("test3");
-  c1.erase("test3");
-
+  it = c1.erase(c1.end()-1, c1.end());
+  BOOST_CHECK(it == c1.end());
   BOOST_CHECK_EQUAL(c1.size(), 4);
   BOOST_CHECK_EQUAL(c1.count("test1"), 3);
-  BOOST_CHECK(c1.erase("test3") == c1.end());
 
-  c1.erase(c1.end()-1, c1.end());
-
+  it = c1.erase(c1.begin()+1);
+  BOOST_CHECK(it == c1.begin()+1);
   BOOST_CHECK_EQUAL(c1.size(), 3);
   BOOST_CHECK_EQUAL(c1.count("test1"), 2);
 
-  c1.erase(c1.begin()+1);
-
+  it = c1.erase(c1.begin()+2);
+  BOOST_CHECK(it == c1.end());
   BOOST_CHECK_EQUAL(c1.size(), 2);
   BOOST_CHECK_EQUAL(c1.count("test1"), 1);
   BOOST_CHECK_EQUAL(c1, cc1);
 
-  c1.erase(c1.begin(), c1.end());
-
+  it = c1.erase(c1.begin(), c1.end());
   BOOST_CHECK_NE(c1, cc1);
+  BOOST_CHECK_EQUAL(c1.empty(), true);
+}
+
+BOOST_AUTO_TEST_CASE(testEraseFirst)
+{
+  string s1 =
+    "BLOCK test1\n"
+    "BLOCK test2\n"
+    "BLOCK test2\n";
+  Coll c1;
+  c1.str(s1);
+  Coll::iterator it;
+
+  it = c1.erase_first("test0");
+  BOOST_CHECK(it == c1.end());
+  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 2);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  it = c1.erase_first("test2");
+  BOOST_CHECK(it == c1.begin()+1);
+  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 1);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  it = c1.erase_first("test2");
+  BOOST_CHECK(it == c1.end());
+  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  it = c1.erase_first("test1");
+  BOOST_CHECK(it == c1.end());
+  BOOST_CHECK_EQUAL(c1.count("test1"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
+  BOOST_CHECK_EQUAL(c1.empty(), true);
+}
+
+BOOST_AUTO_TEST_CASE(testErase)
+{
+  string s1 =
+    "BLOCK test1\n"
+    "BLOCK test2\n"
+    "BLOCK test3\n"
+    "BLOCK test2\n"
+    "BLOCK test3\n"
+    "BLOCK test3\n";
+  Coll c1;
+  c1.str(s1);
+
+  BOOST_CHECK_EQUAL(c1.erase("test0"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 2);
+  BOOST_CHECK_EQUAL(c1.count("test3"), 3);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  BOOST_CHECK_EQUAL(c1.erase("test1"), 1);
+  BOOST_CHECK_EQUAL(c1.count("test1"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 2);
+  BOOST_CHECK_EQUAL(c1.count("test3"), 3);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  BOOST_CHECK_EQUAL(c1.erase("test2"), 2);
+  BOOST_CHECK_EQUAL(c1.count("test1"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test3"), 3);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  BOOST_CHECK_EQUAL(c1.erase("test3"), 3);
+  BOOST_CHECK_EQUAL(c1.count("test1"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test3"), 0);
+  BOOST_CHECK_EQUAL(c1.empty(), true);
+
+  BOOST_CHECK_EQUAL(c1.erase("test0"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test1"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test3"), 0);
   BOOST_CHECK_EQUAL(c1.empty(), true);
 }
 
