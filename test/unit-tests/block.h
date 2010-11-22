@@ -288,16 +288,16 @@ BOOST_AUTO_TEST_CASE(testStaticFind)
   b1[""] = "test 30";
   vector<string> v1(1, "test"), v2(1, "foo");
 
-  Line l1 = *Block::find(v1, b1.begin(),   b1.end());
-  Line l2 = *Block::find(v1, b1.begin()+1, b1.end());
-  Line l3 = *Block::find(v1, b1.rbegin(),  b1.rend());
+  Line l1 = *Block::find(b1.begin(),   b1.end(),  v1);
+  Line l2 = *Block::find(b1.begin()+1, b1.end(),  v1);
+  Line l3 = *Block::find(b1.rbegin(),  b1.rend(), v1);
 
   BOOST_CHECK_EQUAL(l1.at(1), "10");
   BOOST_CHECK_EQUAL(l2.at(1), "20");
   BOOST_CHECK_EQUAL(l3.at(1), "30");
 
-  Block::iterator it = Block::find(v2, b1.begin(), b1.end());
-  Block::const_iterator cit = Block::find(v2, b1.cbegin(), b1.cend());
+  Block::iterator it = Block::find(b1.begin(), b1.end(), v2);
+  Block::const_iterator cit = Block::find(b1.cbegin(), b1.cend(), v2);
   BOOST_CHECK(it  == b1.end());
   BOOST_CHECK(cit == b1.cend());
 }
@@ -504,6 +504,54 @@ BOOST_AUTO_TEST_CASE(testEraseFirst)
   BOOST_CHECK_EQUAL(b1.size(),    0);
 
   it = b1.erase_first(v1);
+  BOOST_CHECK(it == b1.end());
+  BOOST_CHECK_EQUAL(b1.count(v1), 0);
+  BOOST_CHECK_EQUAL(b1.count(v2), 0);
+  BOOST_CHECK_EQUAL(b1.size(),    0);
+}
+
+BOOST_AUTO_TEST_CASE(testEraseLast)
+{
+  Block b1;
+  b1[""] = " 1 1";
+  b1[""] = " 2 1";
+  b1[""] = " 2 2";
+  b1[""] = " 1 1";
+  Block::iterator it;
+
+  vector<string> v0(1, "0"), v1(1, "1"), v2(1, "2");
+
+  it = b1.erase_last(v0);
+  BOOST_CHECK(it == b1.end());
+  BOOST_CHECK_EQUAL(b1.count(v1), 2);
+  BOOST_CHECK_EQUAL(b1.count(v2), 2);
+  BOOST_CHECK_EQUAL(b1.size(),    4);
+
+  it = b1.erase_last(v2);
+  BOOST_CHECK(it == b1.end()-1);
+  BOOST_CHECK_EQUAL(b1.count(v1), 2);
+  BOOST_CHECK_EQUAL(b1.count(v2), 1);
+  BOOST_CHECK_EQUAL(b1.size(),    3);
+
+  it = b1.erase_last(v1);
+  BOOST_CHECK(it == b1.end());
+  BOOST_CHECK_EQUAL(b1.count(v1), 1);
+  BOOST_CHECK_EQUAL(b1.count(v2), 1);
+  BOOST_CHECK_EQUAL(b1.size(),    2);
+
+  it = b1.erase_last(v2);
+  BOOST_CHECK(it == b1.end());
+  BOOST_CHECK_EQUAL(b1.count(v1), 1);
+  BOOST_CHECK_EQUAL(b1.count(v2), 0);
+  BOOST_CHECK_EQUAL(b1.size(),    1);
+
+  it = b1.erase_last(v1);
+  BOOST_CHECK(it == b1.end());
+  BOOST_CHECK_EQUAL(b1.count(v1), 0);
+  BOOST_CHECK_EQUAL(b1.count(v2), 0);
+  BOOST_CHECK_EQUAL(b1.size(),    0);
+
+  it = b1.erase_last(v1);
   BOOST_CHECK(it == b1.end());
   BOOST_CHECK_EQUAL(b1.count(v1), 0);
   BOOST_CHECK_EQUAL(b1.count(v2), 0);

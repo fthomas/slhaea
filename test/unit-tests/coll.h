@@ -338,8 +338,8 @@ BOOST_FIXTURE_TEST_CASE(testIntrospection, F)
   c2.push_back("BLOCK test 30");
 
   Line l1 =    *c2.find("test")->begin();
-  Line l2 = *Coll::find("test", c2.begin()+1, c2.end())->begin();
-  Line l3 = *Coll::find("test", c2.rbegin(), c2.rend())->begin();
+  Line l2 = *Coll::find(c2.begin()+1, c2.end(), "test")->begin();
+  Line l3 = *Coll::find(c2.rbegin(), c2.rend(), "test")->begin();
 
   BOOST_CHECK_EQUAL(l1.at(2), "10");
   BOOST_CHECK_EQUAL(l2.at(2), "20");
@@ -451,6 +451,41 @@ BOOST_AUTO_TEST_CASE(testEraseFirst)
   BOOST_CHECK_EQUAL(c1.empty(), false);
 
   it = c1.erase_first("test1");
+  BOOST_CHECK(it == c1.end());
+  BOOST_CHECK_EQUAL(c1.count("test1"), 0);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
+  BOOST_CHECK_EQUAL(c1.empty(), true);
+}
+
+BOOST_AUTO_TEST_CASE(testEraseLast)
+{
+  string s1 =
+    "BLOCK test1\n"
+    "BLOCK test2\n"
+    "BLOCK test2\n";
+  Coll c1;
+  c1.str(s1);
+  Coll::iterator it;
+
+  it = c1.erase_last("test0");
+  BOOST_CHECK(it == c1.end());
+  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 2);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  it = c1.erase_last("test2");
+  BOOST_CHECK(it == c1.end());
+  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 1);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  it = c1.erase_last("test2");
+  BOOST_CHECK(it == c1.end());
+  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
+  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
+  BOOST_CHECK_EQUAL(c1.empty(), false);
+
+  it = c1.erase_last("test1");
   BOOST_CHECK(it == c1.end());
   BOOST_CHECK_EQUAL(c1.count("test1"), 0);
   BOOST_CHECK_EQUAL(c1.count("test2"), 0);

@@ -457,13 +457,13 @@ public:
     if (size() < 2) return false;
 
     const_iterator field = begin();
-    return is_block_specifier(*field) && ((*++field)[0] != '#');
+    return is_block_specifier(*field) && !is_comment(*++field);
   }
 
   /** Returns true if the %Line begins with \c "#". */
   bool
   is_comment_line() const
-  { return !empty() && (front()[0] == '#'); }
+  { return !empty() && is_comment(front()); }
 
   /**
    * Returns true if the %Line is not empty and if it does not begin
@@ -471,7 +471,7 @@ public:
    */
   bool
   is_data_line() const
-  { return !empty() && (front()[0] != '#') && !is_block_specifier(front()); }
+  { return !empty() && !is_comment(front()) && !is_block_specifier(front()); }
 
   // capacity
   /** Returns the number of elements in the %Line. */
@@ -484,15 +484,7 @@ public:
    */
   size_type
   data_size() const
-  {
-    size_type data_size = 0;
-    for (auto& field : *this)
-    {
-      if (field[0] == '#') break;
-      ++data_size;
-    }
-    return data_size;
-  }
+  { return std::distance(begin(), std::find_if(begin(), end(), is_comment)); }
 
   /** Returns the size() of the largest possible %Line. */
   size_type
@@ -550,7 +542,7 @@ public:
       if (++field == end()) return;
       store_bounds(second + 1);
     }
-    else if ((*field)[0] == '#')
+    else if (is_comment(*field))
     { store_bounds(0); }
     else
     { store_bounds(shift_width_); }
@@ -579,7 +571,7 @@ public:
   void
   uncomment()
   {
-    if (!empty() && front()[0] == '#')
+    if (!empty() && is_comment(front()))
     {
       front().erase(0, 1);
       str(str());
@@ -600,11 +592,7 @@ private:
 
   bool
   contains_comment() const
-  {
-    for (auto field = crbegin(); field != crend(); ++field)
-    { if ((*field)[0] == '#') return true; }
-    return false;
-  }
+  { return std::find_if(rbegin(), rend(), is_comment) != rend(); }
 
   static std::size_t
   calc_spaces_for_indent(const std::size_t& pos)
@@ -615,14 +603,18 @@ private:
   }
 
   static bool
-  is_block_specifier(const value_type& arg)
+  is_block_specifier(const value_type& field)
   {
     // "BLOCK" and "DECAY" are both five characters long.
-    if (arg.length() != 5) return false;
+    if (field.length() != 5) return false;
 
-    const value_type arg_upper = boost::to_upper_copy(arg);
-    return (arg_upper == "BLOCK") || (arg_upper == "DECAY");
+    const value_type field_upper = boost::to_upper_copy(field);
+    return (field_upper == "BLOCK") || (field_upper == "DECAY");
   }
+
+  static bool
+  is_comment(const value_type& field)
+  { return field[0] == '#'; }
 
   template<class T> Line&
   insert_fundamental_type(const T& arg)
@@ -1238,20 +1230,19 @@ public:
 
   /**
    * \brief Tries to locate a Line in a range.
-   * \param key First strings of the Line to be located.
    * \param first, last Input iterators to the initial and final
    *   positions in a sequence.
+   * \param key First strings of the Line to be located.
    * \return Iterator pointing to sought-after element, or \p last if
    *   not found.
    *
-   * This function takes a key (which is a vector of strings) and
-   * tries to locate in the range [\p first, \p last) the Line whose
-   * first strings are equal to the strings in \p key. If successful
-   * the function returns an iterator pointing to the sought after
-   * Line. If unsuccessful it returns \p last.
+   * This function tries to locate in the range [\p first, \p last)
+   * the Line whose first strings are equal to the strings in \p key.
+   * If successful the function returns an iterator pointing to the
+   * sought after Line. If unsuccessful it returns \p last.
    */
   template<class InputIterator> static InputIterator
-  find(const key_type& key, InputIterator first, InputIterator last)
+  find(InputIterator first, InputIterator last, const key_type& key)
   { return std::find_if(first, last, line_matches(key)); }
 
   /**
@@ -1409,6 +1400,24 @@ public:
   }
 
   /**
+   * \brief Erases last Line that matches the provided key.
+   * \param key First strings of the Line to be erased.
+   * \return Iterator pointing to the next element (or end()).
+   *
+   * This function takes a key (which is a vector of strings) and
+   * erases the last Line whose first strings are equal to the strings
+   * in \p key. If the %Block contains such Line, the function returns
+   * an iterator pointing to the next element (or end()). If no such
+   * Line exists, end() is returned.
+   */
+  iterator
+  erase_last(const key_type& key)
+  {
+    reverse_iterator line = find(rbegin(), rend(), key);
+    return (line != rend()) ? erase((++line).base()) : end();
+  }
+
+  /**
    * \brief Erases all \Lines that match the provided key.
    * \param key First strings of the \Lines to be erased.
    * \return The number of \Lines erased.
@@ -1512,7 +1521,7 @@ private:
     { return (a == "(any)") || boost::iequals(a, b); }
 
   private:
-    key_type key_;
+    const key_type key_;
   };
 
 private:
@@ -1525,11 +1534,11 @@ private:
  * Container of \Blocks that resembles a complete SLHA structure.
  * This class is a container of \Blocks that resembles a complete
  * SLHA structure. Its name is an abbreviation of "collection". The
- * elements of Coll objects can be accessed via their names with the
- * operator[]() and at() functions and access to single fields is
- * provided by the field() functions. To fill this container, the
- * functions read() or str() can be used which read data from an input
- * stream or a string, respectively.
+ * elements of %Coll objects can be accessed via their names with the
+ * operator[]() and at() functions and access to single fields and
+ * \Lines is provided by the field() and line() functions. To fill
+ * this container, the functions read() or str() can be used which
+ * read data from an input stream or a string, respectively.
  */
 class Coll
 {
@@ -1884,20 +1893,20 @@ public:
 
   /**
    * \brief Tries to locate a Block in a range.
-   * \param blockName Name of the Block to be located.
    * \param first, last Input iterators to the initial and final
    *   positions in a sequence.
+   * \param blockName Name of the Block to be located.
    * \return Iterator pointing to sought-after element, or \p last if
    *   not found.
    *
-   * This function takes a key and tries to locate in the range
-   * [\p first, \p last) the Block whose name matches \p blockName
-   * (comparison is case-insensitive). If successful the function
-   * returns an iterator pointing to the sought after Block. If
-   * unsuccessful it returns \p last.
+   * This function tries to locate in the range [\p first, \p last)
+   * the Block whose name matches \p blockName (comparison is
+   * case-insensitive). If successful the function returns an iterator
+   * pointing to the sought after Block. If unsuccessful it returns
+   * \p last.
    */
   template<class InputIterator> static InputIterator
-  find(const key_type& blockName, InputIterator first, InputIterator last)
+  find(InputIterator first, InputIterator last, const key_type& blockName)
   { return std::find_if(first, last, name_iequals(blockName)); }
 
   // introspection
@@ -2038,6 +2047,24 @@ public:
   }
 
   /**
+   * \brief Erases last Block with a given name.
+   * \param blockName Name of the Block to be erased.
+   * \return Iterator pointing to the next element (or end()).
+   *
+   * This function takes a key and erases the last Block whose name
+   * matches \p blockName (comparison is case-insensitive). If the
+   * %Coll contains such Block, the function returns an iterator
+   * pointing to the next element (or end()). If no such Block exists,
+   * end() is returned.
+   */
+  iterator
+  erase_last(const key_type& blockName)
+  {
+    reverse_iterator block = find(rbegin(), rend(), blockName);
+    return (block != rend()) ? erase((++block).base()) : end();
+  }
+
+  /**
    * \brief Erases all \Blocks with a given name.
    * \param blockName Name of the \Blocks to be erased.
    * \return The number of \Blocks erased.
@@ -2111,7 +2138,7 @@ private:
     { return boost::iequals(block.name(), name_); }
 
   private:
-    key_type name_;
+    const key_type name_;
   };
 
   pointer
@@ -2124,7 +2151,7 @@ private:
   iterator
   erase_if_empty(const key_type& blockName, const size_type& offset = 0)
   {
-    iterator block = find(blockName, begin() + offset, end());
+    iterator block = find(begin() + offset, end(), blockName);
     return (block != end() && block->empty()) ? erase(block) : block;
   }
 
@@ -2202,8 +2229,8 @@ public:
     if (keys.size() != 3)
     { throw std::invalid_argument("SLHAea::Key::str(‘" + keyString + "’)"); }
 
-    clear();
     block = keys[0];
+    line.clear();
     boost::split(line, keys[1], boost::is_any_of(","));
     field = boost::lexical_cast<Line::size_type>(keys[2]);
 
@@ -2220,15 +2247,6 @@ public:
     std::stringstream output("");
     output << block << ";" << boost::join(line, ",") << ";" << field;
     return output.str();
-  }
-
-private:
-  void
-  clear()
-  {
-    block.clear();
-    line.clear();
-    field = 0;
   }
 };
 
