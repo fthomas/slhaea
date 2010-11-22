@@ -457,13 +457,13 @@ public:
     if (size() < 2) return false;
 
     const_iterator field = begin();
-    return is_block_specifier(*field) && ((*++field)[0] != '#');
+    return is_block_specifier(*field) && !is_comment(*++field);
   }
 
   /** Returns true if the %Line begins with \c "#". */
   bool
   is_comment_line() const
-  { return !empty() && (front()[0] == '#'); }
+  { return !empty() && is_comment(front()); }
 
   /**
    * Returns true if the %Line is not empty and if it does not begin
@@ -471,7 +471,7 @@ public:
    */
   bool
   is_data_line() const
-  { return !empty() && (front()[0] != '#') && !is_block_specifier(front()); }
+  { return !empty() && !is_comment(front()) && !is_block_specifier(front()); }
 
   // capacity
   /** Returns the number of elements in the %Line. */
@@ -484,15 +484,7 @@ public:
    */
   size_type
   data_size() const
-  {
-    size_type data_size = 0;
-    for (const_iterator field = begin(); field != end(); ++field)
-    {
-      if ((*field)[0] == '#') break;
-      ++data_size;
-    }
-    return data_size;
-  }
+  { return std::distance(begin(), std::find_if(begin(), end(), is_comment)); }
 
   /** Returns the size() of the largest possible %Line. */
   size_type
@@ -550,7 +542,7 @@ public:
       pos2 = pos1 + field->length();
       bounds_.push_back(std::make_pair(pos1, pos2));
     }
-    else if ((*field)[0] == '#')
+    else if (is_comment(*field))
     {
       pos1 = 0;
       pos2 = pos1 + field->length();
@@ -588,7 +580,7 @@ public:
   void
   uncomment()
   {
-    if (!empty() && front()[0] == '#')
+    if (!empty() && is_comment(front()))
     {
       front().erase(0, 1);
       str(str());
@@ -609,11 +601,7 @@ private:
 
   bool
   contains_comment() const
-  {
-    for (const_reverse_iterator field = rbegin(); field != rend(); ++field)
-    { if ((*field)[0] == '#') return true; }
-    return false;
-  }
+  { return std::find_if(rbegin(), rend(), is_comment) != rend(); }
 
   static std::size_t
   calc_spaces_for_indent(const std::size_t& pos)
@@ -624,14 +612,18 @@ private:
   }
 
   static bool
-  is_block_specifier(const value_type& arg)
+  is_block_specifier(const value_type& field)
   {
     // "BLOCK" and "DECAY" are both five characters long.
-    if (arg.length() != 5) return false;
+    if (field.length() != 5) return false;
 
-    const value_type arg_upper = boost::to_upper_copy(arg);
-    return (arg_upper == "BLOCK") || (arg_upper == "DECAY");
+    const value_type field_upper = boost::to_upper_copy(field);
+    return (field_upper == "BLOCK") || (field_upper == "DECAY");
   }
+
+  static bool
+  is_comment(const value_type& field)
+  { return field[0] == '#'; }
 
   template<class T> Line&
   insert_fundamental_type(const T& arg)
