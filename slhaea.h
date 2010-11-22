@@ -1505,7 +1505,7 @@ private:
  * Container of \Blocks that resembles a complete SLHA structure.
  * This class is a container of \Blocks that resembles a complete
  * SLHA structure. Its name is an abbreviation of "collection". The
- * elements of Coll objects can be accessed via their names with the
+ * elements of %Coll objects can be accessed via their names with the
  * operator[]() and at() functions and access to single fields and
  * \Lines is provided by the field() and line() functions. To fill
  * this container, the functions read() or str() can be used which
