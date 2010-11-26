@@ -1539,46 +1539,6 @@ public:
   { read(is); }
 
   /**
-   * \brief Accesses a single field in the %Coll.
-   * \param key Key that refers to the field that should be accessed.
-   * \return Read/write reference to the field referred to by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing
-   *   field.
-   */
-  Line::reference
-  field(const Key& key);
-
-  /**
-   * \brief Accesses a single field in the %Coll.
-   * \param key Key that refers to the field that should be accessed.
-   * \return Read-only (constant) reference to the field referred to
-   *   by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing
-   *   field.
-   */
-  Line::const_reference
-  field(const Key& key) const;
-
-  /**
-   * \brief Accesses a single Line in the %Coll.
-   * \param key Key that refers to the Line that should be accessed.
-   * \return Read/write reference to the Line referred to by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing Line.
-   */
-  Block::reference
-  line(const Key& key);
-
-  /**
-   * \brief Accesses a single Line in the %Coll.
-   * \param key Key that refers to the Line that should be accessed.
-   * \return Read-only (constant) reference to the Line referred to by
-   *   \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing Line.
-   */
-  Block::const_reference
-  line(const Key& key) const;
-
-  /**
    * \brief Assigns content from input stream to the %Coll.
    * \param is Input stream to read content from.
    * \returns Reference to \c *this.
@@ -1631,6 +1591,47 @@ public:
     output << *this;
     return output.str();
   }
+
+  // nested element access
+  /**
+   * \brief Accesses a single field in the %Coll.
+   * \param key Key that refers to the field that should be accessed.
+   * \return Read/write reference to the field referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   field.
+   */
+  Line::reference
+  field(const Key& key);
+
+  /**
+   * \brief Accesses a single field in the %Coll.
+   * \param key Key that refers to the field that should be accessed.
+   * \return Read-only (constant) reference to the field referred to
+   *   by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   field.
+   */
+  Line::const_reference
+  field(const Key& key) const;
+
+  /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read/write reference to the Line referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::reference
+  line(const Key& key);
+
+  /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read-only (constant) reference to the Line referred to by
+   *   \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::const_reference
+  line(const Key& key) const;
 
   // element access
   /**
