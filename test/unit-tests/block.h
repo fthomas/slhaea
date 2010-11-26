@@ -26,6 +26,8 @@ BOOST_AUTO_TEST_CASE(assertConcepts)
   BOOST_CONCEPT_ASSERT((Mutable_RandomAccessIterator<Block::reverse_iterator>));
   BOOST_CONCEPT_ASSERT((RandomAccessIterator<Block::const_iterator>));
   BOOST_CONCEPT_ASSERT((RandomAccessIterator<Block::const_reverse_iterator>));
+
+  BOOST_CONCEPT_ASSERT((UnaryPredicate<Block::key_matches, Block::value_type>));
 }
 
 BOOST_AUTO_TEST_CASE(testName)
