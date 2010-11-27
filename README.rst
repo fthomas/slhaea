@@ -1,5 +1,5 @@
-SLHAea - another SUSY Les Houches Accord input/output library
-=============================================================
+SLHAea - containers for SUSY Les Houches Accord input/output
+============================================================
 
 Introduction
 ------------

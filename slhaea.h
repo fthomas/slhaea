@@ -1,4 +1,4 @@
-// SLHAea - another SUSY Les Houches Accord input/output library
+// SLHAea - containers for SUSY Les Houches Accord input/output
 // Copyright © 2009-2010 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
 //
 // Distributed under the Boost Software License, Version 1.0.
@@ -1284,6 +1284,14 @@ public:
   size_type
   size() const
   { return impl_.size(); }
+
+  /** Returns the number of data lines in the %Block. */
+  size_type
+  data_size() const
+  {
+    return std::count_if(begin(), end(),
+      std::mem_fun_ref(&value_type::is_data_line));
+  }
 
   /** Returns the size() of the largest possible %Block. */
   size_type

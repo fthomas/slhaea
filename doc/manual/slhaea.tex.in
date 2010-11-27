@@ -35,8 +35,8 @@
 
 \begin{document}
 
-\title{SLHAea - another SUSY Les Houches Accord input/output library}
-\date{\today}
+\title{SLHAea - containers for SUSY Les Houches Accord input/output}
+%\date{\today}
 
 \author{Frank S. Thomas}
 \email{fthomas@physik.uni-wuerzburg.de}
@@ -48,7 +48,7 @@
 This manual refers to SLHAea version \SLHAeaVersion{}.
 \end{abstract}
 
-\keywords{SLHA, input/output, \Cpp{} library}
+\keywords{SLHA, input/output, containers, \Cpp{} library}
 
 \maketitle
 \tableofcontents

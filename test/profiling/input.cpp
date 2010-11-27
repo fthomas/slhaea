@@ -1,4 +1,4 @@
-// SLHAea - another SUSY Les Houches Accord input/output library
+// SLHAea - containers for SUSY Les Houches Accord input/output
 // Copyright © 2010 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
 //
 // Distributed under the Boost Software License, Version 1.0.
