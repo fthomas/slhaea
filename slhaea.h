@@ -1180,7 +1180,7 @@ public:
   { return std::find_if(first, last, key_matches(key)); }
 
   /**
-   * Returns a read/write iterator that points to the first line in
+   * Returns a read/write iterator that points to the first Line in
    * the %Block which is a block definition. If the %Block does not
    * contain a block definition, end() is returned.
    */
@@ -1193,7 +1193,7 @@ public:
 
   /**
    * Returns a read-only (constant) iterator that points to the first
-   * line in the %Block which is a block definition. If the %Block
+   * Line in the %Block which is a block definition. If the %Block
    * does not contain a block definition, end() const is returned.
    */
   const_iterator
@@ -1219,7 +1219,7 @@ public:
   size() const
   { return impl_.size(); }
 
-  /** Returns the number of data lines in the %Block. */
+  /** Returns the number of data \Lines in the %Block. */
   size_type
   data_size() const
   {
