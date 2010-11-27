@@ -6,6 +6,6 @@ Command: test/profiling/output
 For interactive control, run 'callgrind_control -h'.
 
 Events    : Ir
-Collected : 31026936
+Collected : 30989834
 
-I   refs:      31,026,936
+I   refs:      30,989,834
