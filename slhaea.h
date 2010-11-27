@@ -2297,14 +2297,10 @@ operator==(const Line& a, const Line& b)
 inline bool
 operator<(const Line& a, const Line& b)
 {
-  bool a_is_block_def = a.is_block_def();
+  const bool a_is_block_def = a.is_block_def();
 
-  if (a_is_block_def == b.is_block_def())
-  {
-    return std::lexicographical_compare(a.begin(), a.end(),
-                                        b.begin(), b.end());
-  }
-  return a_is_block_def;
+  return (a_is_block_def != b.is_block_def()) ? a_is_block_def :
+    std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 }
 
 inline bool
@@ -2335,10 +2331,8 @@ operator==(const Block& a, const Block& b)
 inline bool
 operator<(const Block& a, const Block& b)
 {
-  if (a.name() != b.name()) return a.name() < b.name();
-
-  return std::lexicographical_compare(a.begin(), a.end(),
-                                      b.begin(), b.end());
+  return (a.name() != b.name()) ? a.name() < b.name() :
+    std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 }
 
 inline bool
