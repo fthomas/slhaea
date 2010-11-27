@@ -1219,6 +1219,14 @@ public:
   size() const
   { return impl_.size(); }
 
+  /** Returns the number of data lines in the %Block. */
+  size_type
+  data_size() const
+  {
+    return std::count_if(begin(), end(),
+      std::mem_fun_ref(&value_type::is_data_line));
+  }
+
   /** Returns the size() of the largest possible %Block. */
   size_type
   max_size() const

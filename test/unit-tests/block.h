@@ -390,6 +390,32 @@ BOOST_AUTO_TEST_CASE(testIntrospection)
   BOOST_CHECK_EQUAL(b1.count(vector<string>(0)), 0);
 }
 
+BOOST_AUTO_TEST_CASE(tesDataSize)
+{
+  Block b1;
+  BOOST_CHECK_EQUAL(b1.size(),      0);
+  BOOST_CHECK_EQUAL(b1.data_size(), 0);
+
+  b1[""] = "# comment";
+  b1[""] = "BLOCK test1";
+  b1[""] = "    1   1.2";
+  b1[""] = "    2   3.4";
+  BOOST_CHECK_EQUAL(b1.size(),      4);
+  BOOST_CHECK_EQUAL(b1.data_size(), 2);
+
+  b1[""] = "    3   5.6";
+  BOOST_CHECK_EQUAL(b1.size(),      5);
+  BOOST_CHECK_EQUAL(b1.data_size(), 3);
+
+  b1[""] = "#   4   7.8";
+  BOOST_CHECK_EQUAL(b1.size(),      6);
+  BOOST_CHECK_EQUAL(b1.data_size(), 3);
+
+  b1.clear();
+  BOOST_CHECK_EQUAL(b1.size(),      0);
+  BOOST_CHECK_EQUAL(b1.data_size(), 0);
+}
+
 BOOST_AUTO_TEST_CASE(testPushPop)
 {
   Block b1;
