@@ -1210,7 +1210,7 @@ public:
    */
   iterator
   find(const key_type& key)
-  { return std::find_if(begin(), end(), line_matches(key)); }
+  { return std::find_if(begin(), end(), key_matches(key)); }
 
   /**
    * \brief Tries to locate a Line in the %Block.
@@ -1226,7 +1226,7 @@ public:
    */
   const_iterator
   find(const key_type& key) const
-  { return std::find_if(begin(), end(), line_matches(key)); }
+  { return std::find_if(begin(), end(), key_matches(key)); }
 
   /**
    * \brief Tries to locate a Line in a range.
@@ -1243,7 +1243,7 @@ public:
    */
   template<class InputIterator> static InputIterator
   find(InputIterator first, InputIterator last, const key_type& key)
-  { return std::find_if(first, last, line_matches(key)); }
+  { return std::find_if(first, last, key_matches(key)); }
 
   /**
    * Returns a read/write iterator that points to the first line in
@@ -1277,7 +1277,7 @@ public:
    */
   size_type
   count(const key_type& key) const
-  { return std::count_if(begin(), end(), line_matches(key)); }
+  { return std::count_if(begin(), end(), key_matches(key)); }
 
   // capacity
   /** Returns the number of elements in the %Block. */
@@ -1429,7 +1429,7 @@ public:
   size_type
   erase(const key_type& key)
   {
-    const line_matches pred(key);
+    const key_matches pred(key);
     size_type erased_count = 0;
 
     for (iterator line = begin(); line != end();)
@@ -1490,6 +1490,31 @@ public:
   uncomment()
   { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
 
+  struct key_matches : public std::unary_function<value_type, bool>
+  {
+    explicit
+    key_matches(const key_type& key) : key_(key) {}
+
+    bool
+    operator()(const value_type& line) const
+    {
+      if (key_.empty() || key_.size() > line.size()) return false;
+      return std::equal(key_.begin(), key_.end(), line.begin(), parts_equal);
+    }
+
+    void
+    set_key(const key_type& key)
+    { key_ = key; }
+
+  private:
+    static bool
+    parts_equal(const std::string& key_part, const std::string& field)
+    { return (key_part == "(any)") || boost::iequals(key_part, field); }
+
+  private:
+    key_type key_;
+  };
+
 private:
   template<class Container> static key_type
   cont_to_key(const Container& cont)
@@ -1500,29 +1525,6 @@ private:
       boost::lexical_cast<std::string, typename Container::value_type>);
     return key;
   }
-
-  struct line_matches : public std::unary_function<value_type, bool>
-  {
-    explicit
-    line_matches(const key_type& key) : key_(key) {}
-
-    bool
-    operator()(const value_type& line) const
-    {
-      if (key_.empty() || key_.size() > line.size()) return false;
-
-      return std::equal(key_.begin(), key_.end(), line.begin(),
-                        index_iequals);
-    }
-
-  private:
-    static bool
-    index_iequals(const std::string& a, const std::string& b)
-    { return (a == "(any)") || boost::iequals(a, b); }
-
-  private:
-    const key_type key_;
-  };
 
 private:
   std::string name_;
@@ -1574,46 +1576,6 @@ public:
   explicit
   Coll(std::istream& is)
   { read(is); }
-
-  /**
-   * \brief Accesses a single field in the %Coll.
-   * \param key Key that refers to the field that should be accessed.
-   * \return Read/write reference to the field referred to by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing
-   *   field.
-   */
-  Line::reference
-  field(const Key& key);
-
-  /**
-   * \brief Accesses a single field in the %Coll.
-   * \param key Key that refers to the field that should be accessed.
-   * \return Read-only (constant) reference to the field referred to
-   *   by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing
-   *   field.
-   */
-  Line::const_reference
-  field(const Key& key) const;
-
-  /**
-   * \brief Accesses a single Line in the %Coll.
-   * \param key Key that refers to the Line that should be accessed.
-   * \return Read/write reference to the Line referred to by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing Line.
-   */
-  Block::reference
-  line(const Key& key);
-
-  /**
-   * \brief Accesses a single Line in the %Coll.
-   * \param key Key that refers to the Line that should be accessed.
-   * \return Read-only (constant) reference to the Line referred to by
-   *   \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing Line.
-   */
-  Block::const_reference
-  line(const Key& key) const;
 
   /**
    * \brief Assigns content from input stream to the %Coll.
@@ -1668,6 +1630,47 @@ public:
     output << *this;
     return output.str();
   }
+
+  // nested element access
+  /**
+   * \brief Accesses a single field in the %Coll.
+   * \param key Key that refers to the field that should be accessed.
+   * \return Read/write reference to the field referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   field.
+   */
+  Line::reference
+  field(const Key& key);
+
+  /**
+   * \brief Accesses a single field in the %Coll.
+   * \param key Key that refers to the field that should be accessed.
+   * \return Read-only (constant) reference to the field referred to
+   *   by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   field.
+   */
+  Line::const_reference
+  field(const Key& key) const;
+
+  /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read/write reference to the Line referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::reference
+  line(const Key& key);
+
+  /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read-only (constant) reference to the Line referred to by
+   *   \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::const_reference
+  line(const Key& key) const;
 
   // element access
   /**
@@ -1873,7 +1876,7 @@ public:
    */
   iterator
   find(const key_type& blockName)
-  { return std::find_if(begin(), end(), name_iequals(blockName)); }
+  { return std::find_if(begin(), end(), key_matches(blockName)); }
 
   /**
    * \brief Tries to locate a Block in the %Coll.
@@ -1889,7 +1892,7 @@ public:
    */
   const_iterator
   find(const key_type& blockName) const
-  { return std::find_if(begin(), end(), name_iequals(blockName)); }
+  { return std::find_if(begin(), end(), key_matches(blockName)); }
 
   /**
    * \brief Tries to locate a Block in a range.
@@ -1907,7 +1910,7 @@ public:
    */
   template<class InputIterator> static InputIterator
   find(InputIterator first, InputIterator last, const key_type& blockName)
-  { return std::find_if(first, last, name_iequals(blockName)); }
+  { return std::find_if(first, last, key_matches(blockName)); }
 
   // introspection
   /**
@@ -1920,7 +1923,7 @@ public:
    */
   size_type
   count(const key_type& blockName) const
-  { return std::count_if(begin(), end(), name_iequals(blockName)); }
+  { return std::count_if(begin(), end(), key_matches(blockName)); }
 
   // capacity
   /** Returns the number of elements in the %Coll. */
@@ -2075,7 +2078,7 @@ public:
   size_type
   erase(const key_type& blockName)
   {
-    const name_iequals pred(blockName);
+    const key_matches pred(blockName);
     size_type erased_count = 0;
 
     for (iterator block = begin(); block != end();)
@@ -2127,20 +2130,24 @@ public:
   uncomment()
   { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
 
-private:
-  struct name_iequals : public std::unary_function<value_type, bool>
+  struct key_matches : public std::unary_function<value_type, bool>
   {
     explicit
-    name_iequals(const key_type& blockName) : name_(blockName) {}
+    key_matches(const key_type& blockName) : name_(blockName) {}
 
     bool
     operator()(const value_type& block) const
-    { return boost::iequals(block.name(), name_); }
+    { return boost::iequals(name_, block.name()); }
+
+    void
+    set_key(const key_type& blockName)
+    { name_ = blockName; }
 
   private:
-    const key_type name_;
+    key_type name_;
   };
 
+private:
   pointer
   push_back_named_block(const key_type& blockName)
   {
