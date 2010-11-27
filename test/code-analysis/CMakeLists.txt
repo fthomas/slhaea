@@ -25,7 +25,8 @@ run_code_analyzer(cppcheck "${cppcheck_ARGS}" cppcheck.txt)
 set(flawfinder_ARGS -DQ -m 0 ${SLHAEA_H})
 run_code_analyzer(flawfinder "${flawfinder_ARGS}" flawfinder.txt)
 
-set(g++_ARGS -Weffc++ -I${CMAKE_SOURCE_DIR} ${CURR_SRC_DIR}/dummy.cpp)
+set(g++_ARGS -std=c++0x -Weffc++ -I${CMAKE_SOURCE_DIR}
+  ${CURR_SRC_DIR}/dummy.cpp)
 run_code_analyzer(g++ "${g++_ARGS}" gcc-effc++.txt)
 
 add_custom_target(code-analyses DEPENDS ${CA_RESULTS})
