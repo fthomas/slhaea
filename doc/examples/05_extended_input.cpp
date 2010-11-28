@@ -25,6 +25,5 @@ int main(int, char* [])
   cout << "1/m_b:      " << 1./m_b      << endl;
   cout << "1/m_t:      " << 1./m_t      << endl;
   cout << "1/m_tau:    " << 1./m_tau    << endl;
-
   return 0;
 }

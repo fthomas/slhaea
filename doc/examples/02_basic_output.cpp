@@ -18,6 +18,5 @@ int main(int, char* [])
   ofstream ofs("slha1.txt");
   ofs << input;
   ofs.close();
-
   return 0;
 }
