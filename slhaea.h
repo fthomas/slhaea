@@ -100,7 +100,7 @@ inline std::ostream& operator<<(std::ostream& os, const Key& key);
  * stores its formatting (the exact position of the fields in the
  * line). A formatted representation of a %Line can be produced with
  * str() const. The reformat() function clears the previous formatting
- * and indents all elements with a appropriate number of spaces.
+ * and indents all elements with an appropriate number of spaces.
  */
 class Line
 {
