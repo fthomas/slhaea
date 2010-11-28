@@ -12,17 +12,18 @@ individual fields, lines, and blocks:
 
 /** \example 02_basic_output.cpp
 
-In this example, a file is read in, the value of sign(mu) and the
+In this example, a %file is read in, the value of sign(mu) and the
 comment of tan(beta) in the MINPAR block are changed, and the changed
-SLHA structure is written to a file:
+SLHA structure is written to a %file:
 */
 
 /** \example 03_basic_manip.cpp
 
-Since Coll, Block, and Line mimic STL containers, they can be used in
-algorithms like ordinary STL containers. This examples rotates all
-blocks until MINPAR is the first block, it reverses the order of all
-data lines in the SMINPUTS block, and comments the whole EXTPAR block:
+Since SLHAea::Coll, SLHAea::Block, and SLHAea::Line mimic STL
+containers, they can be used in algorithms like ordinary STL
+containers. This examples rotates all blocks until MINPAR is the first
+block, it reverses the order of all data lines in the SMINPUTS block,
+and comments the whole EXTPAR block:
 */
 
 /** \example 04_basic_iteration.cpp
@@ -31,7 +32,7 @@ Iteration over data lines in the SMINPUTS block is demonstrated in
 this example:
 */
 
-/** \example 05_extended_input.cpp
+/** \example 05_advanced_input.cpp
 
 Every data that is stored in the %SLHAea containers is stored as
 string. Data that represent numbers need to be converted to numeric
@@ -39,25 +40,32 @@ types in order to use them as numbers in your program. The conversion
 of strings to floating point numbers is demonstrated in this example:
 */
 
-/** \example 06_extended_output.cpp
+/** \example 06_advanced_output.cpp
 
 This example shows two ways how a block can be constructed from
 scratch:
 */
 
-/** \example 07_matrix_input.cpp
+/** \example 07_advanced_manip.cpp
+
+In this example all but the three named blocks are erased from the
+SLHAea::Coll with the help of the unary function object
+SLHAea::Coll::key_matches:
+*/
+
+/** \example 08_matrix_input.cpp
 
 This example shows how to read in a matrix in a simple way:
 */
 
-/** \example 08_decay_input.cpp
+/** \example 09_decay_input.cpp
 
 Reading of the decay width and some branching ratios is demonstrated
 in this example. It also shows how individual fields can be accessed
 with a SLHAea::Key via the SLHAea::Coll::field() method:
 */
 
-/** \example 09_blocks_of_the_same_name.cpp
+/** \example 10_blocks_of_the_same_name.cpp
 
 The SLHA allows to have several blocks with the same name but at
 different Q scales. This examples shows two ways to access such
