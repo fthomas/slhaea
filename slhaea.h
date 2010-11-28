@@ -1432,6 +1432,7 @@ public:
   uncomment()
   { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
 
+  /** Unary predicate that checks if a provided key matches a Line. */
   struct key_matches : public std::unary_function<value_type, bool>
   {
     explicit
@@ -1440,8 +1441,8 @@ public:
     bool
     operator()(const value_type& line) const
     {
-      if (key_.empty() || key_.size() > line.size()) return false;
-      return std::equal(key_.begin(), key_.end(), line.begin(), parts_equal);
+      return (key_.empty() || key_.size() > line.size()) ? false :
+        std::equal(key_.begin(), key_.end(), line.begin(), parts_equal);
     }
 
     void
@@ -2101,6 +2102,10 @@ public:
   uncomment()
   { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
 
+  /**
+   * Unary predicate that checks if a provided name matches the name
+   * of a Block.
+   */
   struct key_matches : public std::unary_function<value_type, bool>
   {
     explicit
