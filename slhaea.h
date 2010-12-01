@@ -175,7 +175,7 @@ public:
   template<class T> Line&
   operator<<(const T& field)
   {
-    std::string field_str = boost::lexical_cast<std::string>(field);
+    std::string field_str = to_string(field);
     boost::trim_right(field_str);
     if (field_str.empty()) return *this;
 
@@ -1465,7 +1465,7 @@ private:
     key_type key;
     key.reserve(cont.size());
     std::transform(cont.begin(), cont.end(), std::back_inserter(key),
-      boost::lexical_cast<std::string, typename Container::value_type>);
+      to_string<typename Container::value_type>);
     return key;
   }
 
@@ -2215,7 +2215,7 @@ public:
     block = keys[0];
     line.clear();
     boost::split(line, keys[1], boost::is_any_of(","));
-    field = boost::lexical_cast<Line::size_type>(keys[2]);
+    field = to<Line::size_type>(keys[2]);
 
     return *this;
   }
