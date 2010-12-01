@@ -970,8 +970,8 @@ public:
    * If no such Line exists, \c std::out_of_range is thrown.
    */
   reference
-  at(int i0, int i1 = no_ind, int i2 = no_ind, int i3 = no_ind,
-     int i4 = no_ind)
+  at(int i0, int i1 = no_index_, int i2 = no_index_,
+             int i3 = no_index_, int i4 = no_index_)
   { return at(ints_to_key(i0, i1, i2, i3, i4)); }
 
   /**
@@ -986,8 +986,8 @@ public:
    * If no such Line exists, \c std::out_of_range is thrown.
    */
   const_reference
-  at(int i0, int i1 = no_ind, int i2 = no_ind, int i3 = no_ind,
-     int i4 = no_ind) const
+  at(int i0, int i1 = no_index_, int i2 = no_index_,
+             int i3 = no_index_, int i4 = no_index_) const
   { return at(ints_to_key(i0, i1, i2, i3, i4)); }
 
   /**
@@ -1489,18 +1489,18 @@ private:
   {
     key_type key;
     key.reserve(5);
-    if (i0 == no_ind) return key; key.push_back(to_string(i0));
-    if (i1 == no_ind) return key; key.push_back(to_string(i1));
-    if (i2 == no_ind) return key; key.push_back(to_string(i2));
-    if (i3 == no_ind) return key; key.push_back(to_string(i3));
-    if (i4 == no_ind) return key; key.push_back(to_string(i4));
+    if (i0 == no_index_) return key; key.push_back(to_string(i0));
+    if (i1 == no_index_) return key; key.push_back(to_string(i1));
+    if (i2 == no_index_) return key; key.push_back(to_string(i2));
+    if (i3 == no_index_) return key; key.push_back(to_string(i3));
+    if (i4 == no_index_) return key; key.push_back(to_string(i4));
     return key;
   }
 
 private:
   std::string name_;
   impl_type impl_;
-  static const int no_ind = -32768;
+  static const int no_index_ = -32768;
 };
 
 
