@@ -42,6 +42,5 @@ int main(int, char* [])
 
   cout << out1;
   cout << out2;
-
   return 0;
 }

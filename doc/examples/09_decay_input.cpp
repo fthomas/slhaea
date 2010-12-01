@@ -32,6 +32,5 @@ int main(int, char* [])
   }
 
   cout << "Sum of all chi_10 BRs: " << sum << endl;
-
   return 0;
 }

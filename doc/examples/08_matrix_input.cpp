@@ -19,6 +19,5 @@ int main(int, char* [])
       cout << (r+1) << " " << (c+1) << ": " << rvhmix[r][c] << endl;
     }
   }
-
   return 0;
 }

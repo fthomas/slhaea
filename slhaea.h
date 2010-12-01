@@ -101,7 +101,7 @@ inline std::ostream& operator<<(std::ostream& os, const Key& key);
  * stores its formatting (the exact position of the fields in the
  * line). A formatted representation of a %Line can be produced with
  * str() const. The reformat() function clears the previous formatting
- * and indents all elements with a appropriate number of spaces.
+ * and indents all elements with an appropriate number of spaces.
  */
 class Line
 {
@@ -176,7 +176,7 @@ public:
   template<class T> Line&
   operator<<(const T& field)
   {
-    std::string field_str = boost::lexical_cast<std::string>(field);
+    std::string field_str = to_string(field);
     boost::trim_right(field_str);
     if (field_str.empty()) return *this;
 
@@ -605,8 +605,8 @@ private:
   static bool
   is_block_specifier(const value_type& field)
   {
-    // "BLOCK" and "DECAY" are both five characters long.
-    if (field.length() != 5) return false;
+    static const std::size_t specifier_length = 5;
+    if (field.length() != specifier_length) return false;
 
     const value_type field_upper = boost::to_upper_copy(field);
     return (field_upper == "BLOCK") || (field_upper == "DECAY");
@@ -1246,7 +1246,7 @@ public:
   { return std::find_if(first, last, key_matches(key)); }
 
   /**
-   * Returns a read/write iterator that points to the first line in
+   * Returns a read/write iterator that points to the first Line in
    * the %Block which is a block definition. If the %Block does not
    * contain a block definition, end() is returned.
    */
@@ -1259,7 +1259,7 @@ public:
 
   /**
    * Returns a read-only (constant) iterator that points to the first
-   * line in the %Block which is a block definition. If the %Block
+   * Line in the %Block which is a block definition. If the %Block
    * does not contain a block definition, end() const is returned.
    */
   const_iterator
@@ -1285,7 +1285,7 @@ public:
   size() const
   { return impl_.size(); }
 
-  /** Returns the number of data lines in the %Block. */
+  /** Returns the number of data \Lines in the %Block. */
   size_type
   data_size() const
   {
@@ -1498,6 +1498,7 @@ public:
   uncomment()
   { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
 
+  /** Unary predicate that checks if a provided key matches a Line. */
   struct key_matches : public std::unary_function<value_type, bool>
   {
     explicit
@@ -1506,8 +1507,8 @@ public:
     bool
     operator()(const value_type& line) const
     {
-      if (key_.empty() || key_.size() > line.size()) return false;
-      return std::equal(key_.begin(), key_.end(), line.begin(), parts_equal);
+      return (key_.empty() || key_.size() > line.size()) ? false :
+        std::equal(key_.begin(), key_.end(), line.begin(), parts_equal);
     }
 
     void
@@ -1530,7 +1531,7 @@ private:
     key_type key;
     key.reserve(cont.size());
     std::transform(cont.begin(), cont.end(), std::back_inserter(key),
-      boost::lexical_cast<std::string, typename Container::value_type>);
+      to_string<typename Container::value_type>);
     return key;
   }
 
@@ -2138,6 +2139,10 @@ public:
   uncomment()
   { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
 
+  /**
+   * Unary predicate that checks if a provided name matches the name
+   * of a Block.
+   */
   struct key_matches : public std::unary_function<value_type, bool>
   {
     explicit
@@ -2247,7 +2252,7 @@ public:
     block = keys[0];
     line.clear();
     boost::split(line, keys[1], boost::is_any_of(","));
-    field = boost::lexical_cast<Line::size_type>(keys[2]);
+    field = to<Line::size_type>(keys[2]);
 
     return *this;
   }
@@ -2334,14 +2339,10 @@ operator==(const Line& a, const Line& b)
 inline bool
 operator<(const Line& a, const Line& b)
 {
-  bool a_is_block_def = a.is_block_def();
+  const bool a_is_block_def = a.is_block_def();
 
-  if (a_is_block_def == b.is_block_def())
-  {
-    return std::lexicographical_compare(a.begin(), a.end(),
-                                        b.begin(), b.end());
-  }
-  return a_is_block_def;
+  return (a_is_block_def != b.is_block_def()) ? a_is_block_def :
+    std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 }
 
 inline bool
@@ -2372,10 +2373,8 @@ operator==(const Block& a, const Block& b)
 inline bool
 operator<(const Block& a, const Block& b)
 {
-  if (a.name() != b.name()) return a.name() < b.name();
-
-  return std::lexicographical_compare(a.begin(), a.end(),
-                                      b.begin(), b.end());
+  return (a.name() != b.name()) ? a.name() < b.name() :
+    std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 }
 
 inline bool

@@ -18,6 +18,5 @@ int main(int, char* [])
          << "value: "   << line[1] << ",  "
          << "comment: " << line[2] << endl;
   }
-
   return 0;
 }
