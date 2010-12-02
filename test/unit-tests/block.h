@@ -69,6 +69,11 @@ BOOST_AUTO_TEST_CASE(testRename)
   b1.rename("foo bar");
   BOOST_CHECK_EQUAL(b1.name(),     "foo bar");
   BOOST_CHECK_EQUAL(b1.front()[1], "foo bar");
+
+  b1.clear();
+  b1.rename("foo");
+  BOOST_CHECK_EQUAL(b1.name(),  "foo");
+  BOOST_CHECK_EQUAL(b1.empty(), true);
 }
 
 BOOST_AUTO_TEST_CASE(testReadWrite)
