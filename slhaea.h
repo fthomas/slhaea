@@ -1618,47 +1618,6 @@ public:
     return output.str();
   }
 
-  // nested element access
-  /**
-   * \brief Accesses a single field in the %Coll.
-   * \param key Key that refers to the field that should be accessed.
-   * \return Read/write reference to the field referred to by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing
-   *   field.
-   */
-  Line::reference
-  field(const Key& key);
-
-  /**
-   * \brief Accesses a single field in the %Coll.
-   * \param key Key that refers to the field that should be accessed.
-   * \return Read-only (constant) reference to the field referred to
-   *   by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing
-   *   field.
-   */
-  Line::const_reference
-  field(const Key& key) const;
-
-  /**
-   * \brief Accesses a single Line in the %Coll.
-   * \param key Key that refers to the Line that should be accessed.
-   * \return Read/write reference to the Line referred to by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing Line.
-   */
-  Block::reference
-  line(const Key& key);
-
-  /**
-   * \brief Accesses a single Line in the %Coll.
-   * \param key Key that refers to the Line that should be accessed.
-   * \return Read-only (constant) reference to the Line referred to by
-   *   \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing Line.
-   */
-  Block::const_reference
-  line(const Key& key) const;
-
   // element access
   /**
    * \brief Locates a Block in the %Coll.
@@ -1741,6 +1700,68 @@ public:
   const_reference
   back() const
   { return impl_.back(); }
+
+  // (nested) element access via Key
+  /**
+   * \brief Accesses a Block in the %Coll.
+   * \param key Key that refers to the Block that should be accessed.
+   * \return Read/write reference to the Block referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   Block.
+   */
+  reference
+  block(const Key& key);
+
+  /**
+   * \brief Accesses a Block in the %Coll.
+   * \param key Key that refers to the Block that should be accessed.
+   * \return Read-only (constant) reference to the Block referred to
+   *   by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   Block.
+   */
+  const_reference
+  block(const Key& key) const;
+
+  /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read/write reference to the Line referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::reference
+  line(const Key& key);
+
+  /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read-only (constant) reference to the Line referred to by
+   *   \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::const_reference
+  line(const Key& key) const;
+
+  /**
+   * \brief Accesses a single field in the %Coll.
+   * \param key Key that refers to the field that should be accessed.
+   * \return Read/write reference to the field referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   field.
+   */
+  Line::reference
+  field(const Key& key);
+
+  /**
+   * \brief Accesses a single field in the %Coll.
+   * \param key Key that refers to the field that should be accessed.
+   * \return Read-only (constant) reference to the field referred to
+   *   by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   field.
+   */
+  Line::const_reference
+  field(const Key& key) const;
 
   // iterators
   /**
@@ -2249,21 +2270,29 @@ public:
 };
 
 
-inline Line::reference
-Coll::field(const Key& key)
-{ return at(key.block).at(key.line).at(key.field); }
+inline Coll::reference
+Coll::block(const Key& key)
+{ return at(key.block); }
 
-inline Line::const_reference
-Coll::field(const Key& key) const
-{ return at(key.block).at(key.line).at(key.field); }
+inline Coll::const_reference
+Coll::block(const Key& key) const
+{ return at(key.block); }
 
 inline Block::reference
 Coll::line(const Key& key)
-{ return at(key.block).at(key.line); }
+{ return block(key).at(key.line); }
 
 inline Block::const_reference
 Coll::line(const Key& key) const
-{ return at(key.block).at(key.line); }
+{ return block(key).at(key.line); }
+
+inline Line::reference
+Coll::field(const Key& key)
+{ return line(key).at(key.field); }
+
+inline Line::const_reference
+Coll::field(const Key& key) const
+{ return line(key).at(key.field); }
 
 
 // stream operators
