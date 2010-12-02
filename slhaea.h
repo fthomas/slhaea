@@ -195,7 +195,7 @@ public:
    * \param arg String that is appended to the %Line.
    * \return Reference to \c *this.
    *
-   * This functions appends \p arg to the output of str() const and
+   * This function appends \p arg to the output of str() const and
    * uses this temporary string as input for str(). Based on the
    * temporary string, size() is increased or remains unchanged.
    */
@@ -780,7 +780,7 @@ public:
    * \param block String that is used as content for the %Block.
    * \return Reference to \c *this.
    *
-   * This functions clears the name and content of the %Block and adds
+   * This function clears the name and content of the %Block and adds
    * every non-empty line found in \p block as Line to the end of the
    * %Block. If \p block contains a block definition, the %Block's
    * name is set accordingly.
