@@ -49,6 +49,28 @@ BOOST_AUTO_TEST_CASE(testName)
   BOOST_CHECK_EQUAL(b2.name(), "test");
 }
 
+BOOST_AUTO_TEST_CASE(testRename)
+{
+  string s1 = "BLOCK test\n";
+  Block b1;
+  b1.str(s1);
+
+  BOOST_CHECK_EQUAL(b1.name(),     "test");
+  BOOST_CHECK_EQUAL(b1.front()[1], "test");
+
+  b1.rename("");
+  BOOST_CHECK_EQUAL(b1.name(),     "");
+  BOOST_CHECK_EQUAL(b1.front()[1], "");
+
+  b1.rename("foo");
+  BOOST_CHECK_EQUAL(b1.name(),     "foo");
+  BOOST_CHECK_EQUAL(b1.front()[1], "foo");
+
+  b1.rename("foo bar");
+  BOOST_CHECK_EQUAL(b1.name(),     "foo bar");
+  BOOST_CHECK_EQUAL(b1.front()[1], "foo bar");
+}
+
 BOOST_AUTO_TEST_CASE(testReadWrite)
 {
   string s1 =

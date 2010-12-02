@@ -729,6 +729,21 @@ public:
   { return name_; }
 
   /**
+   * \brief Changes the name and definition of the %Block.
+   * \param newName New name of the %Block.
+   *
+   * In contrast to name() this function changes the name of the
+   * %Block and its first block definition (if it exists).
+   */
+  void
+  rename(const std::string& newName)
+  {
+    name(newName);
+    iterator block_def = find_block_def();
+    if (block_def != end()) (*block_def)[1] = newName;
+  }
+
+  /**
    * \brief Assigns content from input stream to the %Block.
    * \param is Input stream to read content from.
    * \return Reference to \c *this.
