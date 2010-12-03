@@ -108,6 +108,24 @@ BOOST_AUTO_TEST_CASE(testReadWrite)
 
   BOOST_CHECK_EQUAL(b1, b4);
   BOOST_CHECK_NE(s1, s2);
+
+  string s3 =
+    "BLOCK test1\n" " 1  123\n"
+    "BLOCK test2\n" " 2  234\n"
+    "BLOCK test3\n" " 3  345\n";
+  stringstream ss3(s3);
+  Block b5(ss3), b6(ss3), b7("testNOT3");
+  b7.read(ss3);
+
+  BOOST_CHECK_EQUAL(b5.name(), "test1");
+  BOOST_CHECK_EQUAL(b6.name(), "test2");
+  BOOST_CHECK_EQUAL(b7.name(), "testNOT3");
+  BOOST_CHECK_EQUAL(b5.size(), 2);
+  BOOST_CHECK_EQUAL(b6.size(), 2);
+  BOOST_CHECK_EQUAL(b7.size(), 2);
+  BOOST_CHECK_EQUAL(b5.str(),  "BLOCK test1\n" " 1  123\n");
+  BOOST_CHECK_EQUAL(b6.str(),  "BLOCK test2\n" " 2  234\n");
+  BOOST_CHECK_EQUAL(b7.str(),  "BLOCK test3\n" " 3  345\n");
 }
 
 BOOST_AUTO_TEST_CASE(testSubscriptAtAccessors)

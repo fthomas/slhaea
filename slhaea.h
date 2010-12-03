@@ -120,12 +120,12 @@ public:
   typedef impl_type::difference_type        difference_type;
   typedef impl_type::size_type              size_type;
 
-  /** Constructs an empty %Line. */
-  Line() : impl_(0), bounds_(0), format_("") {}
-
   // NOTE: The compiler-generated copy constructor and assignment
   //   operator for this class are just fine, so we don't need to
   //   write our own.
+
+  /** Constructs an empty %Line. */
+  Line() : impl_(0), bounds_(0), format_("") {}
 
   /**
    * \brief Constructs a %Line from a string.
@@ -136,7 +136,7 @@ public:
   { str(line); }
 
   /**
-   * \brief Assigns content to the %Line based on a string.
+   * \brief Assigns content from a string to the %Line.
    * \param line String whose fields are used as content of the %Line.
    * \return Reference to \c *this.
    *
@@ -701,6 +701,10 @@ public:
   typedef impl_type::difference_type        difference_type;
   typedef impl_type::size_type              size_type;
 
+  // NOTE: The compiler-generated copy constructor and assignment
+  //   operator for this class are just fine, so we don't need to
+  //   write our own.
+
   /**
    * \brief Constructs an empty %Block.
    * \param name Name of the %Block.
@@ -708,9 +712,14 @@ public:
   explicit
   Block(const std::string& name = "") : name_(name), impl_(0) {}
 
-  // NOTE: The compiler-generated copy constructor and assignment
-  //   operator for this class are just fine, so we don't need to
-  //   write our own.
+  /**
+   * \brief Constructs a %Block with content from an input stream.
+   * \param is Input stream to read content from.
+   * \sa read()
+   */
+  explicit
+  Block(std::istream& is)
+  { read(is); }
 
   /**
    * \brief Sets the name of the %Block.
@@ -744,20 +753,24 @@ public:
   }
 
   /**
-   * \brief Assigns content from input stream to the %Block.
+   * \brief Assigns content from an input stream to the %Block.
    * \param is Input stream to read content from.
    * \return Reference to \c *this.
    *
-   * This functions reads non-empty lines from \p is, transforms them
-   * into \Lines and adds them to the end of the %Block. If \p is
-   * contains a block definition, the %Block's name is changed
-   * accordingly.
+   * This function reads non-empty lines from \p is, transforms them
+   * into \Lines and adds them to the end of the %Block. Lines from
+   * \p is are read until the second block definition is encountered
+   * or until the end of the stream, whatever comes first. If \p is
+   * contains a block definition and the current name of the %Block is
+   * empty, it is changed accordingly.
    */
   Block&
   read(std::istream& is)
   {
     std::string line_str;
     value_type line;
+
+    std::size_t def_count = 0;
     bool nameless = name().empty();
 
     while (std::getline(is, line_str))
@@ -765,10 +778,18 @@ public:
       if (boost::all(line_str, boost::is_space())) continue;
 
       line.str(line_str);
-      if (nameless && line.is_block_def())
+      if (line.is_block_def())
       {
-        name(line[1]);
-        nameless = false;
+        if (++def_count > 1)
+        {
+          is.seekg(-line_str.length()-1, std::ios_base::cur);
+          break;
+        }
+        if (nameless)
+        {
+          name(line[1]);
+          nameless = false;
+        }
       }
       push_back(line);
     }
@@ -776,14 +797,16 @@ public:
   }
 
   /**
-   * \brief Assigns content to the %Block based on a string.
+   * \brief Assigns content from a string to the %Block.
    * \param block String that is used as content for the %Block.
    * \return Reference to \c *this.
    *
    * This function clears the name and content of the %Block and adds
    * every non-empty line found in \p block as Line to the end of the
-   * %Block. If \p block contains a block definition, the %Block's
-   * name is set accordingly.
+   * %Block. If \p block contains a block definition, the name of the
+   * %Block is set accordingly. If \p block contains more than two
+   * block definitions, only the lines before the second block
+   * definition are added to the %Block.
    */
   Block&
   str(const std::string& block)
@@ -1548,15 +1571,15 @@ public:
   typedef impl_type::difference_type        difference_type;
   typedef impl_type::size_type              size_type;
 
-  /** Constructs an empty %Coll. */
-  Coll() : impl_(0) {}
-
   // NOTE: The compiler-generated copy constructor and assignment
   //   operator for this class are just fine, so we don't need to
   //   write our own.
 
+  /** Constructs an empty %Coll. */
+  Coll() : impl_(0) {}
+
   /**
-   * \brief Constructs a %Coll with content from input stream.
+   * \brief Constructs a %Coll with content from an input stream.
    * \param is Input stream to read content from.
    * \sa read()
    */
@@ -1565,7 +1588,7 @@ public:
   { read(is); }
 
   /**
-   * \brief Assigns content from input stream to the %Coll.
+   * \brief Assigns content from an input stream to the %Coll.
    * \param is Input stream to read content from.
    * \returns Reference to \c *this.
    *
@@ -1596,7 +1619,7 @@ public:
   }
 
   /**
-   * \brief Assigns content to the %Coll based on a string.
+   * \brief Assigns content from a string to the %Coll.
    * \param coll String that is used as content for the %Coll.
    * \returns Reference to \c *this.
    */
