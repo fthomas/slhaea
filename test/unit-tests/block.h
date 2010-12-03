@@ -733,6 +733,50 @@ BOOST_AUTO_TEST_CASE(testUnComment)
   BOOST_CHECK_EQUAL(b1.back().str(),  " 2 3 # 23");
 }
 
+BOOST_AUTO_TEST_CASE(testKeyMatches)
+{
+  Line l1("one TWO 3");
+  vector<string> key;
+  key.push_back("oNe");
+  Block::key_matches pred(key);
+
+  BOOST_CHECK_EQUAL(pred(l1), true);
+
+  l1[0] = "1";
+  BOOST_CHECK_EQUAL(pred(l1), false);
+
+  key[0] = "1";
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), true);
+
+  key[0] = "(any)";
+  key.push_back("two");
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), true);
+
+  key[0] = "(any)";
+  key[1] = "(any)";
+  key.push_back("(any)");
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), true);
+
+  key.push_back("(any)");
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), false);
+
+  l1 = "1 2 3 4";
+  key[0] = "1";
+  key[1] = "2";
+  key[2] = "3";
+  key[3] = "4";
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), true);
+
+  key.clear();
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), false);
+}
+
 BOOST_AUTO_TEST_CASE(testInEquality)
 {
   Block b1("t1");
