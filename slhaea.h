@@ -125,7 +125,7 @@ public:
   //   write our own.
 
   /** Constructs an empty %Line. */
-  Line() : impl_(0), bounds_(0), format_("") {}
+  Line() : impl_(), bounds_(), format_() {}
 
   /**
    * \brief Constructs a %Line from a string.
@@ -710,7 +710,7 @@ public:
    * \param name Name of the %Block.
    */
   explicit
-  Block(const std::string& name = "") : name_(name), impl_(0) {}
+  Block(const std::string& name = "") : name_(name), impl_() {}
 
   /**
    * \brief Constructs a %Block with content from an input stream.
@@ -1167,7 +1167,7 @@ public:
   crend() const
   { return impl_.rend(); }
 
-  // operations
+  // lookup
   /**
    * \brief Tries to locate a Line in the %Block.
    * \param key First strings of the Line to be located.
@@ -1576,7 +1576,7 @@ public:
   //   write our own.
 
   /** Constructs an empty %Coll. */
-  Coll() : impl_(0) {}
+  Coll() : impl_() {}
 
   /**
    * \brief Constructs a %Coll with content from an input stream.
@@ -1893,7 +1893,7 @@ public:
   crend() const
   { return impl_.rend(); }
 
-  // operations
+  // lookup
   /**
    * \brief Tries to locate a Block in the %Coll.
    * \param blockName Name of the Block to be located.
