@@ -132,7 +132,7 @@ public:
    * \param line String whose fields are used as content of the %Line.
    * \sa str()
    */
-  Line(const std::string& line)
+  Line(const std::string& line) : impl_(), bounds_(), format_()
   { str(line); }
 
   /**
@@ -718,7 +718,7 @@ public:
    * \sa read()
    */
   explicit
-  Block(std::istream& is)
+  Block(std::istream& is) : name_(), impl_()
   { read(is); }
 
   /**
@@ -1584,7 +1584,7 @@ public:
    * \sa read()
    */
   explicit
-  Coll(std::istream& is)
+  Coll(std::istream& is) : impl_()
   { read(is); }
 
   /**
