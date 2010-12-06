@@ -5,7 +5,7 @@
 using namespace std;
 using namespace SLHAea;
 
-int main(int, char* [])
+int main()
 {
   ifstream ifs("slha2.txt");
   Coll input(ifs);
@@ -19,5 +19,4 @@ int main(int, char* [])
       cout << (r+1) << " " << (c+1) << ": " << rvhmix[r][c] << endl;
     }
   }
-  return 0;
 }

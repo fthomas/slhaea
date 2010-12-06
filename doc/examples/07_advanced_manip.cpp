@@ -5,7 +5,7 @@
 using namespace std;
 using namespace SLHAea;
 
-int main(int, char* [])
+int main()
 {
   ifstream ifs("slha2.txt");
   Coll input(ifs);
@@ -24,5 +24,4 @@ int main(int, char* [])
   }
 
   cout << "Size after  erasing blocks: " << input.size() << endl;
-  return 0;
 }

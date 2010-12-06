@@ -5,7 +5,7 @@
 using namespace std;
 using namespace SLHAea;
 
-int main(int, char* [])
+int main()
 {
   ifstream ifs("slha1.txt");
   Coll input(ifs);
@@ -13,5 +13,4 @@ int main(int, char* [])
   cout << "tan(beta) = "        << input["MINPAR"][3][1] << endl << endl;
   cout << "m_top(pole) line:\n" << input["SMINPUTS"][6]  << endl << endl;
   cout << "SMINPUTS block:\n"   << input["SMINPUTS"];
-  return 0;
 }
