@@ -5,7 +5,7 @@
 using namespace std;
 using namespace SLHAea;
 
-int main(int, char* [])
+int main()
 {
   stringstream some_blocks(
     "BLOCK foo  Q= 2000 \n"
@@ -61,5 +61,4 @@ int main(int, char* [])
   cout << *q1k.find_block_def() << endl;
   cout <<  q1k.at(1).at(1) << " == 3.14" << endl;
   cout <<  q1k.at(2).at(1) << " == 6.28" << endl;
-  return 0;
 }

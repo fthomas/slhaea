@@ -5,7 +5,7 @@
 using namespace std;
 using namespace SLHAea;
 
-int main(int, char* [])
+int main()
 {
   ifstream ifs("slha1.txt");
   Coll input(ifs);
@@ -18,5 +18,4 @@ int main(int, char* [])
          << "value: "   << line[1] << ",  "
          << "comment: " << line[2] << endl;
   }
-  return 0;
 }

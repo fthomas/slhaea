@@ -49,6 +49,33 @@ BOOST_AUTO_TEST_CASE(testName)
   BOOST_CHECK_EQUAL(b2.name(), "test");
 }
 
+BOOST_AUTO_TEST_CASE(testRename)
+{
+  string s1 = "BLOCK test\n";
+  Block b1;
+  b1.str(s1);
+
+  BOOST_CHECK_EQUAL(b1.name(),     "test");
+  BOOST_CHECK_EQUAL(b1.front()[1], "test");
+
+  b1.rename("");
+  BOOST_CHECK_EQUAL(b1.name(),     "");
+  BOOST_CHECK_EQUAL(b1.front()[1], "");
+
+  b1.rename("foo");
+  BOOST_CHECK_EQUAL(b1.name(),     "foo");
+  BOOST_CHECK_EQUAL(b1.front()[1], "foo");
+
+  b1.rename("foo bar");
+  BOOST_CHECK_EQUAL(b1.name(),     "foo bar");
+  BOOST_CHECK_EQUAL(b1.front()[1], "foo bar");
+
+  b1.clear();
+  b1.rename("foo");
+  BOOST_CHECK_EQUAL(b1.name(),  "foo");
+  BOOST_CHECK_EQUAL(b1.empty(), true);
+}
+
 BOOST_AUTO_TEST_CASE(testReadWrite)
 {
   string s1 =
@@ -81,6 +108,24 @@ BOOST_AUTO_TEST_CASE(testReadWrite)
 
   BOOST_CHECK_EQUAL(b1, b4);
   BOOST_CHECK_NE(s1, s2);
+
+  string s3 =
+    "BLOCK test1\n" " 1  123\n"
+    "BLOCK test2\n" " 2  234\n"
+    "BLOCK test3\n" " 3  345\n";
+  stringstream ss3(s3);
+  Block b5(ss3), b6(ss3), b7("testNOT3");
+  b7.read(ss3);
+
+  BOOST_CHECK_EQUAL(b5.name(), "test1");
+  BOOST_CHECK_EQUAL(b6.name(), "test2");
+  BOOST_CHECK_EQUAL(b7.name(), "testNOT3");
+  BOOST_CHECK_EQUAL(b5.size(), 2);
+  BOOST_CHECK_EQUAL(b6.size(), 2);
+  BOOST_CHECK_EQUAL(b7.size(), 2);
+  BOOST_CHECK_EQUAL(b5.str(),  "BLOCK test1\n" " 1  123\n");
+  BOOST_CHECK_EQUAL(b6.str(),  "BLOCK test2\n" " 2  234\n");
+  BOOST_CHECK_EQUAL(b7.str(),  "BLOCK test3\n" " 3  345\n");
 }
 
 BOOST_AUTO_TEST_CASE(testSubscriptAtAccessors)
@@ -704,6 +749,50 @@ BOOST_AUTO_TEST_CASE(testUnComment)
   BOOST_CHECK(b1.find(vs1) == b1.begin());
   BOOST_CHECK_EQUAL(b1.front().str(), " 1 2 # 12");
   BOOST_CHECK_EQUAL(b1.back().str(),  " 2 3 # 23");
+}
+
+BOOST_AUTO_TEST_CASE(testKeyMatches)
+{
+  Line l1("one TWO 3");
+  vector<string> key;
+  key.push_back("oNe");
+  Block::key_matches pred(key);
+
+  BOOST_CHECK_EQUAL(pred(l1), true);
+
+  l1[0] = "1";
+  BOOST_CHECK_EQUAL(pred(l1), false);
+
+  key[0] = "1";
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), true);
+
+  key[0] = "(any)";
+  key.push_back("two");
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), true);
+
+  key[0] = "(any)";
+  key[1] = "(any)";
+  key.push_back("(any)");
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), true);
+
+  key.push_back("(any)");
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), false);
+
+  l1 = "1 2 3 4";
+  key[0] = "1";
+  key[1] = "2";
+  key[2] = "3";
+  key[3] = "4";
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), true);
+
+  key.clear();
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(l1), false);
 }
 
 BOOST_AUTO_TEST_CASE(testInEquality)

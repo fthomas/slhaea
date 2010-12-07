@@ -29,7 +29,6 @@ int main(int argc, char* argv[])
     stringstream out("");
     out << input;
   }
-  return 0;
 }
 
 // vim: sw=2 tw=78

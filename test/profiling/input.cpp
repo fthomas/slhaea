@@ -26,7 +26,6 @@ int main(int argc, char* argv[])
     ifstream ifs("input.txt");
     Coll input(ifs);
   }
-  return 0;
 }
 
 // vim: sw=2 tw=78

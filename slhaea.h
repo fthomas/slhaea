@@ -121,23 +121,23 @@ public:
   typedef impl_type::difference_type        difference_type;
   typedef impl_type::size_type              size_type;
 
-  /** Constructs an empty %Line. */
-  Line() : impl_(0), bounds_(0), format_("") {}
-
   // NOTE: The compiler-generated copy constructor and assignment
   //   operator for this class are just fine, so we don't need to
   //   write our own.
+
+  /** Constructs an empty %Line. */
+  Line() : impl_(), bounds_(), format_() {}
 
   /**
    * \brief Constructs a %Line from a string.
    * \param line String whose fields are used as content of the %Line.
    * \sa str()
    */
-  Line(const std::string& line)
+  Line(const std::string& line) : impl_(), bounds_(), format_()
   { str(line); }
 
   /**
-   * \brief Assigns content to the %Line based on a string.
+   * \brief Assigns content from a string to the %Line.
    * \param line String whose fields are used as content of the %Line.
    * \return Reference to \c *this.
    *
@@ -196,7 +196,7 @@ public:
    * \param arg String that is appended to the %Line.
    * \return Reference to \c *this.
    *
-   * This functions appends \p arg to the output of str() const and
+   * This function appends \p arg to the output of str() const and
    * uses this temporary string as input for str(). Based on the
    * temporary string, size() is increased or remains unchanged.
    */
@@ -692,16 +692,25 @@ public:
   typedef impl_type::difference_type        difference_type;
   typedef impl_type::size_type              size_type;
 
+  // NOTE: The compiler-generated copy constructor and assignment
+  //   operator for this class are just fine, so we don't need to
+  //   write our own.
+
   /**
    * \brief Constructs an empty %Block.
    * \param name Name of the %Block.
    */
   explicit
-  Block(const std::string& name = "") : name_(name), impl_(0) {}
+  Block(const std::string& name = "") : name_(name), impl_() {}
 
-  // NOTE: The compiler-generated copy constructor and assignment
-  //   operator for this class are just fine, so we don't need to
-  //   write our own.
+  /**
+   * \brief Constructs a %Block with content from an input stream.
+   * \param is Input stream to read content from.
+   * \sa read()
+   */
+  explicit
+  Block(std::istream& is) : name_(), impl_()
+  { read(is); }
 
   /**
    * \brief Sets the name of the %Block.
@@ -720,20 +729,39 @@ public:
   { return name_; }
 
   /**
-   * \brief Assigns content from input stream to the %Block.
+   * \brief Changes the name and definition of the %Block.
+   * \param newName New name of the %Block.
+   *
+   * In contrast to name() this function changes the name of the
+   * %Block and its first block definition (if it exists).
+   */
+  void
+  rename(const std::string& newName)
+  {
+    name(newName);
+    iterator block_def = find_block_def();
+    if (block_def != end()) (*block_def)[1] = newName;
+  }
+
+  /**
+   * \brief Assigns content from an input stream to the %Block.
    * \param is Input stream to read content from.
    * \return Reference to \c *this.
    *
-   * This functions reads non-empty lines from \p is, transforms them
-   * into \Lines and adds them to the end of the %Block. If \p is
-   * contains a block definition, the %Block's name is changed
-   * accordingly.
+   * This function reads non-empty lines from \p is, transforms them
+   * into \Lines and adds them to the end of the %Block. Lines from
+   * \p is are read until the second block definition is encountered
+   * or until the end of the stream, whatever comes first. If \p is
+   * contains a block definition and the current name of the %Block is
+   * empty, it is changed accordingly.
    */
   Block&
   read(std::istream& is)
   {
     std::string line_str;
     value_type line;
+
+    std::size_t def_count = 0;
     bool nameless = name().empty();
 
     while (std::getline(is, line_str))
@@ -741,10 +769,18 @@ public:
       if (boost::all(line_str, boost::is_space())) continue;
 
       line.str(line_str);
-      if (nameless && line.is_block_def())
+      if (line.is_block_def())
       {
-        name(line[1]);
-        nameless = false;
+        if (++def_count > 1)
+        {
+          is.seekg(-line_str.length()-1, std::ios_base::cur);
+          break;
+        }
+        if (nameless)
+        {
+          name(line[1]);
+          nameless = false;
+        }
       }
       push_back(line);
     }
@@ -752,14 +788,16 @@ public:
   }
 
   /**
-   * \brief Assigns content to the %Block based on a string.
+   * \brief Assigns content from a string to the %Block.
    * \param block String that is used as content for the %Block.
    * \return Reference to \c *this.
    *
-   * This functions clears the name and content of the %Block and adds
+   * This function clears the name and content of the %Block and adds
    * every non-empty line found in \p block as Line to the end of the
-   * %Block. If \p block contains a block definition, the %Block's
-   * name is set accordingly.
+   * %Block. If \p block contains a block definition, the name of the
+   * %Block is set accordingly. If \p block contains more than two
+   * block definitions, only the lines before the second block
+   * definition are added to the %Block.
    */
   Block&
   str(const std::string& block)
@@ -1195,7 +1233,7 @@ public:
   crend() const
   { return impl_.crend(); }
 
-  // operations
+  // lookup
   /**
    * \brief Tries to locate a Line in the %Block.
    * \param key First strings of the Line to be located.
@@ -1531,7 +1569,7 @@ private:
     key_type key;
     key.reserve(cont.size());
     std::transform(cont.begin(), cont.end(), std::back_inserter(key),
-      to_string<typename Container::value_type>);
+      boost::lexical_cast<std::string, typename Container::value_type>);
     return key;
   }
 
@@ -1570,24 +1608,24 @@ public:
   typedef impl_type::difference_type        difference_type;
   typedef impl_type::size_type              size_type;
 
-  /** Constructs an empty %Coll. */
-  Coll() : impl_(0) {}
-
   // NOTE: The compiler-generated copy constructor and assignment
   //   operator for this class are just fine, so we don't need to
   //   write our own.
 
+  /** Constructs an empty %Coll. */
+  Coll() : impl_() {}
+
   /**
-   * \brief Constructs a %Coll with content from input stream.
+   * \brief Constructs a %Coll with content from an input stream.
    * \param is Input stream to read content from.
    * \sa read()
    */
   explicit
-  Coll(std::istream& is)
+  Coll(std::istream& is) : impl_()
   { read(is); }
 
   /**
-   * \brief Assigns content from input stream to the %Coll.
+   * \brief Assigns content from an input stream to the %Coll.
    * \param is Input stream to read content from.
    * \returns Reference to \c *this.
    *
@@ -1618,7 +1656,7 @@ public:
   }
 
   /**
-   * \brief Assigns content to the %Coll based on a string.
+   * \brief Assigns content from a string to the %Coll.
    * \param coll String that is used as content for the %Coll.
    * \returns Reference to \c *this.
    */
@@ -1639,47 +1677,6 @@ public:
     output << *this;
     return output.str();
   }
-
-  // nested element access
-  /**
-   * \brief Accesses a single field in the %Coll.
-   * \param key Key that refers to the field that should be accessed.
-   * \return Read/write reference to the field referred to by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing
-   *   field.
-   */
-  Line::reference
-  field(const Key& key);
-
-  /**
-   * \brief Accesses a single field in the %Coll.
-   * \param key Key that refers to the field that should be accessed.
-   * \return Read-only (constant) reference to the field referred to
-   *   by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing
-   *   field.
-   */
-  Line::const_reference
-  field(const Key& key) const;
-
-  /**
-   * \brief Accesses a single Line in the %Coll.
-   * \param key Key that refers to the Line that should be accessed.
-   * \return Read/write reference to the Line referred to by \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing Line.
-   */
-  Block::reference
-  line(const Key& key);
-
-  /**
-   * \brief Accesses a single Line in the %Coll.
-   * \param key Key that refers to the Line that should be accessed.
-   * \return Read-only (constant) reference to the Line referred to by
-   *   \p key.
-   * \throw std::out_of_range If \p key refers to a non-existing Line.
-   */
-  Block::const_reference
-  line(const Key& key) const;
 
   // element access
   /**
@@ -1763,6 +1760,68 @@ public:
   const_reference
   back() const
   { return impl_.back(); }
+
+  // (nested) element access via Key
+  /**
+   * \brief Accesses a Block in the %Coll.
+   * \param key Key that refers to the Block that should be accessed.
+   * \return Read/write reference to the Block referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   Block.
+   */
+  reference
+  block(const Key& key);
+
+  /**
+   * \brief Accesses a Block in the %Coll.
+   * \param key Key that refers to the Block that should be accessed.
+   * \return Read-only (constant) reference to the Block referred to
+   *   by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   Block.
+   */
+  const_reference
+  block(const Key& key) const;
+
+  /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read/write reference to the Line referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::reference
+  line(const Key& key);
+
+  /**
+   * \brief Accesses a single Line in the %Coll.
+   * \param key Key that refers to the Line that should be accessed.
+   * \return Read-only (constant) reference to the Line referred to by
+   *   \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing Line.
+   */
+  Block::const_reference
+  line(const Key& key) const;
+
+  /**
+   * \brief Accesses a single field in the %Coll.
+   * \param key Key that refers to the field that should be accessed.
+   * \return Read/write reference to the field referred to by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   field.
+   */
+  Line::reference
+  field(const Key& key);
+
+  /**
+   * \brief Accesses a single field in the %Coll.
+   * \param key Key that refers to the field that should be accessed.
+   * \return Read-only (constant) reference to the field referred to
+   *   by \p key.
+   * \throw std::out_of_range If \p key refers to a non-existing
+   *   field.
+   */
+  Line::const_reference
+  field(const Key& key) const;
 
   // iterators
   /**
@@ -1871,7 +1930,7 @@ public:
   crend() const
   { return impl_.crend(); }
 
-  // operations
+  // lookup
   /**
    * \brief Tries to locate a Block in the %Coll.
    * \param blockName Name of the Block to be located.
@@ -2271,21 +2330,29 @@ public:
 };
 
 
-inline Line::reference
-Coll::field(const Key& key)
-{ return at(key.block).at(key.line).at(key.field); }
+inline Coll::reference
+Coll::block(const Key& key)
+{ return at(key.block); }
 
-inline Line::const_reference
-Coll::field(const Key& key) const
-{ return at(key.block).at(key.line).at(key.field); }
+inline Coll::const_reference
+Coll::block(const Key& key) const
+{ return at(key.block); }
 
 inline Block::reference
 Coll::line(const Key& key)
-{ return at(key.block).at(key.line); }
+{ return block(key).at(key.line); }
 
 inline Block::const_reference
 Coll::line(const Key& key) const
-{ return at(key.block).at(key.line); }
+{ return block(key).at(key.line); }
+
+inline Line::reference
+Coll::field(const Key& key)
+{ return line(key).at(key.field); }
+
+inline Line::const_reference
+Coll::field(const Key& key) const
+{ return line(key).at(key.field); }
 
 
 // stream operators

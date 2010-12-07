@@ -6,7 +6,7 @@
 using namespace std;
 using namespace SLHAea;
 
-int main(int, char* [])
+int main()
 {
   ifstream ifs("slha1.txt");
   Coll input(ifs);
@@ -16,5 +16,4 @@ int main(int, char* [])
   input.at("EXTPAR").comment();
 
   cout << input;
-  return 0;
 }

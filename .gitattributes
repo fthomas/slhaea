@@ -1,7 +1,8 @@
-test/code-analysis/clang.txt        merge=ours
-test/code-analysis/cppcheck.txt     merge=ours
-test/code-analysis/flawfinder.txt   merge=ours
-test/code-analysis/gcc-effc++.txt   merge=ours
-test/profiling/callgrind-*.txt      merge=ours
-test/profiling/gprof-*.txt          merge=ours
-test/profiling/memcheck-*.txt       merge=ours
+.gitattributes  export-ignore
+test/code-analysis/clang.txt        export-ignore  merge=ours
+test/code-analysis/cppcheck.txt     export-ignore  merge=ours
+test/code-analysis/flawfinder.txt   export-ignore  merge=ours
+test/code-analysis/gcc-effc++.txt   export-ignore  merge=ours
+test/profiling/callgrind-*.txt      export-ignore  merge=ours
+test/profiling/gprof-*.txt          export-ignore  merge=ours
+test/profiling/memcheck-*.txt       export-ignore  merge=ours

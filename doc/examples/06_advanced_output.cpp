@@ -6,7 +6,7 @@
 using namespace std;
 using namespace SLHAea;
 
-int main(int, char* [])
+int main()
 {
   double alpha_em = 127.934;
   double G_mu     = 1.16637e-05;
@@ -42,5 +42,4 @@ int main(int, char* [])
 
   cout << out1;
   cout << out2;
-  return 0;
 }

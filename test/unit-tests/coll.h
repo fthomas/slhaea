@@ -604,6 +604,23 @@ BOOST_FIXTURE_TEST_CASE(testUnComment, F)
   BOOST_CHECK_EQUAL(c1.str(), c2.str());
 }
 
+BOOST_AUTO_TEST_CASE(testKeyMatches)
+{
+  Block b1("TEST1");
+  Coll::key_matches pred("test1");
+
+  BOOST_CHECK_EQUAL(pred(b1), true);
+
+  b1.name("TesT2");
+  BOOST_CHECK_EQUAL(pred(b1), false);
+
+  pred.set_key("tESt2");
+  BOOST_CHECK_EQUAL(pred(b1), true);
+
+  pred.set_key("");
+  BOOST_CHECK_EQUAL(pred(b1), false);
+}
+
 BOOST_FIXTURE_TEST_CASE(testInEquality, F)
 {
   Coll c1;

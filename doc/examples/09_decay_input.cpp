@@ -5,7 +5,7 @@
 using namespace std;
 using namespace SLHAea;
 
-int main(int, char* [])
+int main()
 {
   ifstream ifs("slha2.txt");
   const Coll input(ifs);
@@ -32,5 +32,4 @@ int main(int, char* [])
   }
 
   cout << "Sum of all chi_10 BRs: " << sum << endl;
-  return 0;
 }
