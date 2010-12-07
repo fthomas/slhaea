@@ -1,0 +1,7 @@
+test/code-analysis/clang.txt        export-ignore
+test/code-analysis/cppcheck.txt     export-ignore
+test/code-analysis/flawfinder.txt   export-ignore
+test/code-analysis/gcc-effc++.txt   export-ignore
+test/profiling/callgrind-*.txt      export-ignore
+test/profiling/gprof-*.txt          export-ignore
+test/profiling/memcheck-*.txt       export-ignore
