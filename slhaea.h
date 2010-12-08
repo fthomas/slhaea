@@ -1693,6 +1693,52 @@ public:
   }
 
   /**
+   * \brief Locates a Block in the %Coll.
+   * \param key First strings of the block definition of the Block
+   *   to be located.
+   * \return Read/write reference to sought-after Block.
+   * \throw std::out_of_range If \p key does not match any block
+   *   definition.
+   *
+   * This functions takes a vector of strings and locates the Block
+   * whose first strings of the block definition are equal to the
+   * strings in \p key. If no such Block exists, \c std::out_of_range
+   * is thrown.
+   */
+  reference
+  at(const value_type::key_type& key)
+  {
+    iterator block = find(key);
+    if (block != end()) return *block;
+
+    throw std::out_of_range(
+      "SLHAea::Coll::at(‘" + boost::join(key, ",") + "’)");
+  }
+
+  /**
+   * \brief Locates a Block in the %Coll.
+   * \param key First strings of the block definition of the Block
+   *   to be located.
+   * \return Read-only (constant) reference to sought-after Block.
+   * \throw std::out_of_range If \p key does not match any block
+   *   definition.
+   *
+   * This functions takes a vector of strings and locates the Block
+   * whose first strings of the block definition are equal to the
+   * strings in \p key. If no such Block exists, \c std::out_of_range
+   * is thrown.
+   */
+  const_reference
+  at(const value_type::key_type& key) const
+  {
+    const_iterator block = find(key);
+    if (block != end()) return *block;
+
+    throw std::out_of_range(
+      "SLHAea::Coll::at(‘" + boost::join(key, ",") + "’)");
+  }
+
+  /**
    * Returns a read/write reference to the first element of the %Coll.
    */
   reference
@@ -1941,6 +1987,60 @@ public:
   find(InputIterator first, InputIterator last, const key_type& blockName)
   { return std::find_if(first, last, key_matches(blockName)); }
 
+  /**
+   * \brief Tries to locate a Block in the %Coll.
+   * \param key First strings of the block definition of the Block
+   *   to be located.
+   * \return Read/write iterator pointing to sought-after element, or
+   *   end() if not found.
+   *
+   * This functions takes a vector of strings and tries to locate the
+   * Block whose first strings of the block definition are equal to
+   * the strings in \p key. If successful the function returns a
+   * read/write iterator pointing to the sought after Block. If
+   * unsuccessful it returns end().
+   */
+  iterator
+  find(const value_type::key_type& key)
+  { return std::find_if(begin(), end(), key_matches_block_def(key)); }
+
+  /**
+   * \brief Tries to locate a Block in the %Coll.
+   * \param key First strings of the block definition of the Block
+   *   to be located.
+   * \return Read-only (constant) iterator pointing to sought-after
+   *   element, or end() const if not found.
+   *
+   * This functions takes a vector of strings and tries to locate the
+   * Block whose first strings of the block definition are equal to
+   * the strings in \p key. If successful the function returns a
+   * read-only (constant) iterator pointing to the sought after Block.
+   * If unsuccessful it returns end() const.
+   */
+  const_iterator
+  find(const value_type::key_type& key) const
+  { return std::find_if(begin(), end(), key_matches_block_def(key)); }
+
+  /**
+   * \brief Tries to locate a Block in a range.
+   * \param first, last Input iterators to the initial and final
+   *   positions in a sequence.
+   * \param key First strings of the block definition of the Block
+   *   to be located.
+   * \return Iterator pointing to sought-after element, or \p last if
+   *   not found.
+   *
+   * This function tries to locate in the range [\p first, \p last)
+   * the Block whose first strings of the block definition are equal
+   * to the strings in \p key. If successful the function returns an
+   * iterator pointing to the sought after Block. If unsuccessful it
+   * returns \p last.
+   */
+  template<class InputIterator> static InputIterator
+  find(InputIterator first, InputIterator last,
+       const value_type::key_type& key)
+  { return std::find_if(first, last, key_matches_block_def(key)); }
+
   // introspection
   /**
    * \brief Counts all \Blocks with a given name.
@@ -2178,6 +2278,31 @@ public:
 
   private:
     key_type name_;
+  };
+
+  /**
+   * Unary predicate that checks if a provided key matches the block
+   * definition of a Block.
+   */
+  struct key_matches_block_def : public std::unary_function<value_type, bool>
+  {
+    explicit
+    key_matches_block_def(const value_type::key_type& key)
+      : key_matches_(key) {}
+
+    bool
+    operator()(const value_type& block) const
+    {
+      value_type::const_iterator block_def = block.find_block_def();
+      return (block_def == block.end()) ? false : key_matches_(*block_def);
+    }
+
+    void
+    set_key(const value_type::key_type& key)
+    { key_matches_.set_key(key); }
+
+  private:
+    value_type::key_matches key_matches_;
   };
 
 private:
