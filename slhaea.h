@@ -935,10 +935,9 @@ public:
    * \return Read/write reference to sought-after Line.
    * \throw std::out_of_range If \p key does not match any Line.
    *
-   * This function takes a key (which is a vector of ints) and locates
-   * the Line whose first strings are equal to the to strings
-   * converted ints in \p key. If no such Line exists,
-   * \c std::out_of_range is thrown.
+   * This function takes a vector of ints and locates the Line whose
+   * first strings are equal to the to strings converted ints in
+   * \p key. If no such Line exists, \c std::out_of_range is thrown.
    */
   reference
   at(const std::vector<int>& key)
@@ -950,10 +949,9 @@ public:
    * \return Read-only (constant) reference to sought-after Line.
    * \throw std::out_of_range If \p key does not match any Line.
    *
-   * This function takes a key (which is a vector of ints) and locates
-   * the Line whose first strings are equal to the to strings
-   * converted ints in \p key. If no such Line exists,
-   * \c std::out_of_range is thrown.
+   * This function takes a vector of ints and locates the Line whose
+   * first strings are equal to the to strings converted ints in
+   * \p key. If no such Line exists, \c std::out_of_range is thrown.
    */
   const_reference
   at(const std::vector<int>& key) const
