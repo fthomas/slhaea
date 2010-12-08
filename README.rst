@@ -24,6 +24,8 @@ Its main features are:
 - blocks and lines are not restricted to the ones specified in the
   `SLHA`_, `SLHA2`_, and `FLHA`_ or later accords that use the same
   syntax
+- easy to use since SLHAea is a header-only library consisting of only
+  one file
 
 .. _SUSY Les Houches Accord: http://home.fnal.gov/~skands/slha/
 .. _SLHA:  http://arxiv.org/abs/hep-ph/0311123
