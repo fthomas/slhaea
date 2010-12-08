@@ -1,4 +1,5 @@
 .gitattributes  export-ignore
+.gitignore      export-ignore
 test/code-analysis/clang.txt        export-ignore
 test/code-analysis/cppcheck.txt     export-ignore
 test/code-analysis/flawfinder.txt   export-ignore
