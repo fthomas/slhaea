@@ -449,7 +449,7 @@ public:
   // introspection
   /**
    * Returns true if the %Line begins with \c "BLOCK" or \c "DECAY"
-   * followed by a block name. Comparison is done case-insensitive.
+   * followed by a block name.
    */
   bool
   is_block_def() const
