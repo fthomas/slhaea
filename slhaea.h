@@ -1945,9 +1945,9 @@ public:
    *   end() if not found.
    *
    * This function takes a key and tries to locate the Block whose
-   * name matches \p blockName (comparison is case-insensitive). If
-   * successful the function returns a read/write iterator pointing to
-   * the sought after Block. If unsuccessful it returns end().
+   * name matches \p blockName. If successful the function returns a
+   * read/write iterator pointing to the sought after Block. If
+   * unsuccessful it returns end().
    */
   iterator
   find(const key_type& blockName)
@@ -1960,10 +1960,9 @@ public:
    *   element, or end() const if not found.
    *
    * This function takes a key and tries to locate the Block whose
-   * name matches \p blockName (comparison is case-insensitive). If
-   * successful the function returns a read-only (constant) iterator
-   * pointing to the sought after Block. If unsuccessful it returns
-   * end() const.
+   * name matches \p blockName. If successful the function returns a
+   * read-only (constant) iterator pointing to the sought after Block.
+   * If unsuccessful it returns end() const.
    */
   const_iterator
   find(const key_type& blockName) const
@@ -1978,10 +1977,9 @@ public:
    *   not found.
    *
    * This function tries to locate in the range [\p first, \p last)
-   * the Block whose name matches \p blockName (comparison is
-   * case-insensitive). If successful the function returns an iterator
-   * pointing to the sought after Block. If unsuccessful it returns
-   * \p last.
+   * the Block whose name matches \p blockName. If successful the
+   * function returns an iterator pointing to the sought after Block.
+   * If unsuccessful it returns \p last.
    */
   template<class InputIterator> static InputIterator
   find(InputIterator first, InputIterator last, const key_type& blockName)
@@ -2046,9 +2044,6 @@ public:
    * \brief Counts all \Blocks with a given name.
    * \param blockName Name of the \Blocks that will be counted.
    * \return Number of blocks whose name equals \p blockName.
-   *
-   * Notice that the comparison of \p blockName and the names of the
-   * \Blocks is case-insensitive.
    */
   size_type
   count(const key_type& blockName) const
@@ -2166,10 +2161,9 @@ public:
    * \return Iterator pointing to the next element (or end()).
    *
    * This function takes a key and erases the first Block whose name
-   * matches \p blockName (comparison is case-insensitive). If the
-   * %Coll contains such Block, the function returns an iterator
-   * pointing to the next element (or end()). If no such Block exists,
-   * end() is returned.
+   * matches \p blockName. If the %Coll contains such Block, the
+   * function returns an iterator pointing to the next element (or
+   * end()). If no such Block exists, end() is returned.
    */
   iterator
   erase_first(const key_type& blockName)
@@ -2184,10 +2178,9 @@ public:
    * \return Iterator pointing to the next element (or end()).
    *
    * This function takes a key and erases the last Block whose name
-   * matches \p blockName (comparison is case-insensitive). If the
-   * %Coll contains such Block, the function returns an iterator
-   * pointing to the next element (or end()). If no such Block exists,
-   * end() is returned.
+   * matches \p blockName. If the %Coll contains such Block, the
+   * function returns an iterator pointing to the next element (or
+   * end()). If no such Block exists, end() is returned.
    */
   iterator
   erase_last(const key_type& blockName)
@@ -2200,9 +2193,6 @@ public:
    * \brief Erases all \Blocks with a given name.
    * \param blockName Name of the \Blocks to be erased.
    * \return The number of \Blocks erased.
-   *
-   * This function takes a key and erases all \Blocks whose name
-   * matches \p blockName (comparison is case-insensitive).
    */
   size_type
   erase(const key_type& blockName)
