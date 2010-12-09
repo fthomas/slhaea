@@ -69,5 +69,5 @@ with a SLHAea::Key via the SLHAea::Coll::field() method:
 
 The SLHA allows to have several blocks with the same name but at
 different Q scales. This examples shows how to access blocks by
-matching the first strings of their block definition.
+matching the first strings of their block definition:
 */

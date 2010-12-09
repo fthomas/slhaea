@@ -24,7 +24,7 @@ int main()
   Block b1, b2, b3;
 
   // Find the first block:
-  Block::key_type key;
+  vector<string> key;
   key.push_back("Block");
   key.push_back("TEST");
   key.push_back("q=");
