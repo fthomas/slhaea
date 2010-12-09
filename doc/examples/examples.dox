@@ -68,7 +68,6 @@ with a SLHAea::Key via the SLHAea::Coll::field() method:
 /** \example 10_blocks_of_the_same_name.cpp
 
 The SLHA allows to have several blocks with the same name but at
-different Q scales. This examples shows two ways to access such
-blocks based on their Q value. Notice that the first way is more
-efficient since it only iterates over blocks with the given name.
+different Q scales. This examples shows how to access blocks by
+matching the first strings of their block definition.
 */
