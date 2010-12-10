@@ -12,9 +12,10 @@ int main()
 
   cout << "Size before erasing blocks: " << input.size() << endl;
 
-  Coll::key_matches is_rvkappa("RVKAPPA");
-  Coll::key_matches is_rvsnvev("RVSNVEV");
-  Coll::key_matches is_sphenorp("SPhenoRP");
+  Coll::key_matches
+    is_rvkappa("RVKAPPA"),
+    is_rvsnvev("RVSNVEV"),
+    is_sphenorp("SPhenoRP");
 
   for (Coll::iterator block = input.begin(); block != input.end();)
   {
