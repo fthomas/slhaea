@@ -310,11 +310,11 @@ BOOST_FIXTURE_TEST_CASE(testIntrospection, F)
   BOOST_CHECK(c1.find("test4")  == c1.end()-1);
   BOOST_CHECK(c1.find("test5")  == c1.end()-0);
 
-  BOOST_CHECK(cc1.find("test1")  == cc1.begin()+0);
-  BOOST_CHECK(cc1.find("test2")  == cc1.begin()+1);
-  BOOST_CHECK(cc1.find("test3")  == cc1.begin()+2);
-  BOOST_CHECK(cc1.find("test4")  == cc1.end()-1);
-  BOOST_CHECK(cc1.find("test5")  == cc1.end()-0);
+  BOOST_CHECK(cc1.find("test1") == cc1.begin()+0);
+  BOOST_CHECK(cc1.find("test2") == cc1.begin()+1);
+  BOOST_CHECK(cc1.find("test3") == cc1.begin()+2);
+  BOOST_CHECK(cc1.find("test4") == cc1.end()-1);
+  BOOST_CHECK(cc1.find("test5") == cc1.end()-0);
 
   BOOST_CHECK_EQUAL(c1.count("test1"), 1);
   BOOST_CHECK_EQUAL(c1.count("test5"), 0);
@@ -346,6 +346,57 @@ BOOST_FIXTURE_TEST_CASE(testIntrospection, F)
   BOOST_CHECK_EQUAL(l1.at(2), "10");
   BOOST_CHECK_EQUAL(l2.at(2), "20");
   BOOST_CHECK_EQUAL(l3.at(2), "30");
+}
+
+BOOST_FIXTURE_TEST_CASE(testFindByBlockDef, F)
+{
+  string s1 =
+    "BLOCK test1 foo\n"
+    "decay test1 pop\n"
+    "Block test1 bar push\n"
+    "bLoCk test1 baz pop\n"
+    "BlOcK test1 baz\n";
+
+  Coll c1;
+  c1.str(s1);
+  const Coll cc1(c1);
+
+  vector<string> key;
+  key.push_back("block");
+  key.push_back("test1");
+
+  BOOST_CHECK_EQUAL(c1.find(key)->front().at(2),  "foo");
+  BOOST_CHECK_EQUAL(cc1.find(key)->front().at(2), "foo");
+
+  key.push_back("baZ");
+  BOOST_CHECK_EQUAL(c1.find(key)->front().at(3),  "pop");
+  BOOST_CHECK_EQUAL(cc1.find(key)->front().at(3), "pop");
+
+  key.at(2) = "BAR";
+  BOOST_CHECK_EQUAL(c1.find(key)->front().at(3),  "push");
+  BOOST_CHECK_EQUAL(cc1.find(key)->front().at(3), "push");
+
+  key.pop_back();
+  key.at(0) = "deCAY";
+  BOOST_CHECK_EQUAL(c1.find(key)->front().at(2),  "pop");
+  BOOST_CHECK_EQUAL(cc1.find(key)->front().at(2), "pop");
+
+  key.clear();
+  BOOST_CHECK(c1.find(key)  == c1.end());
+  BOOST_CHECK(cc1.find(key) == cc1.end());
+
+  key.push_back("block");
+  key.push_back("test1");
+  key.push_back("baz");
+  key.push_back("baz");
+  BOOST_CHECK(Coll::find(c1.begin(), c1.end(), key)   == c1.end());
+  BOOST_CHECK(Coll::find(cc1.begin(), cc1.end(), key) == cc1.end());
+
+  key.pop_back();
+  BOOST_CHECK_EQUAL(Coll::find(
+      c1.rbegin(), c1.rend(), key)->front().size(),   3);
+  BOOST_CHECK_EQUAL(Coll::find(
+      cc1.rbegin(), cc1.rend(), key)->front().size(), 3);
 }
 
 BOOST_FIXTURE_TEST_CASE(testPushPop, F)
@@ -618,6 +669,43 @@ BOOST_AUTO_TEST_CASE(testKeyMatches)
   BOOST_CHECK_EQUAL(pred(b1), true);
 
   pred.set_key("");
+  BOOST_CHECK_EQUAL(pred(b1), false);
+}
+
+BOOST_AUTO_TEST_CASE(testKeyMatchesBlockDef)
+{
+  Block b1;
+  b1.str("BLOCK TEST1");
+  vector<string> key;
+  key.push_back("block");
+  key.push_back("test1");
+
+  Coll::key_matches_block_def pred(key);
+  BOOST_CHECK_EQUAL(pred(b1), true);
+
+  b1.rename("TesT2");
+  BOOST_CHECK_EQUAL(pred(b1), false);
+
+  key.at(1) = "tESt2";
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(b1), true);
+
+  key.at(0) = "(any)";
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(b1), true);
+
+  key.at(0) = "DECAY";
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(b1), false);
+
+  b1.front().at(0) = "deCaY";
+  BOOST_CHECK_EQUAL(pred(b1), true);
+
+  key.clear();
+  pred.set_key(key);
+  BOOST_CHECK_EQUAL(pred(b1), false);
+
+  b1.clear();
   BOOST_CHECK_EQUAL(pred(b1), false);
 }
 
