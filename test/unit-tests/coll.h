@@ -238,6 +238,46 @@ BOOST_FIXTURE_TEST_CASE(testAccessors, F)
   BOOST_CHECK_THROW(cc1.at("test3"), out_of_range);
 }
 
+BOOST_AUTO_TEST_CASE(testAtByBlockDef)
+{
+  string s1 =
+    "BLOCK test1 foo\n"
+    "decay test1 pop\n"
+    "Block test1 bar push\n"
+    "bLoCk test1 baz pop\n"
+    "BlOcK test1 baz\n";
+
+  Coll c1;
+  c1.str(s1);
+  const Coll cc1(c1);
+
+  vector<string> key;
+  BOOST_CHECK_THROW(c1.at(key),  out_of_range);
+  BOOST_CHECK_THROW(cc1.at(key), out_of_range);
+
+  key.push_back("BLOB");
+  BOOST_CHECK_THROW(c1.at(key),  out_of_range);
+  BOOST_CHECK_THROW(cc1.at(key), out_of_range);
+
+  key.clear();
+  key.push_back("block");
+  BOOST_CHECK_EQUAL(c1.at(key).front().at(2),  "foo");
+  BOOST_CHECK_EQUAL(cc1.at(key).front().at(2), "foo");
+
+  key.push_back("test1");
+  key.push_back("BAR");
+  BOOST_CHECK_EQUAL(c1.at(key).front().at(2),  "bar");
+  BOOST_CHECK_EQUAL(cc1.at(key).front().at(2), "bar");
+
+  key.at(2) = "BAz";
+  BOOST_CHECK_EQUAL(c1.at(key).front().at(2),  "baz");
+  BOOST_CHECK_EQUAL(cc1.at(key).front().at(2), "baz");
+
+  key.push_back("blob");
+  BOOST_CHECK_THROW(c1.at(key),  out_of_range);
+  BOOST_CHECK_THROW(cc1.at(key), out_of_range);
+}
+
 BOOST_FIXTURE_TEST_CASE(testIterators, F)
 {
   Coll c1;
@@ -348,7 +388,7 @@ BOOST_FIXTURE_TEST_CASE(testIntrospection, F)
   BOOST_CHECK_EQUAL(l3.at(2), "30");
 }
 
-BOOST_FIXTURE_TEST_CASE(testFindByBlockDef, F)
+BOOST_AUTO_TEST_CASE(testFindByBlockDef)
 {
   string s1 =
     "BLOCK test1 foo\n"
@@ -394,9 +434,9 @@ BOOST_FIXTURE_TEST_CASE(testFindByBlockDef, F)
 
   key.pop_back();
   BOOST_CHECK_EQUAL(Coll::find(
-      c1.rbegin(), c1.rend(), key)->front().size(),   3);
+    c1.rbegin(), c1.rend(), key)->front().size(),   3);
   BOOST_CHECK_EQUAL(Coll::find(
-      cc1.rbegin(), cc1.rend(), key)->front().size(), 3);
+    cc1.rbegin(), cc1.rend(), key)->front().size(), 3);
 }
 
 BOOST_FIXTURE_TEST_CASE(testPushPop, F)
