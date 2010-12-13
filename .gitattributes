@@ -1,8 +1,8 @@
 .gitattributes  export-ignore
-test/code-analysis/clang.txt        export-ignore  merge=ours
-test/code-analysis/cppcheck.txt     export-ignore  merge=ours
-test/code-analysis/flawfinder.txt   export-ignore  merge=ours
-test/code-analysis/gcc-effc++.txt   export-ignore  merge=ours
-test/profiling/callgrind-*.txt      export-ignore  merge=ours
-test/profiling/gprof-*.txt          export-ignore  merge=ours
-test/profiling/memcheck-*.txt       export-ignore  merge=ours
+test/code-analysis/clang.txt        export-ignore  merge=binary
+test/code-analysis/cppcheck.txt     export-ignore  merge=binary
+test/code-analysis/flawfinder.txt   export-ignore  merge=binary
+test/code-analysis/gcc-effc++.txt   export-ignore  merge=binary
+test/profiling/callgrind-*.txt      export-ignore  merge=binary
+test/profiling/gprof-*.txt          export-ignore  merge=binary
+test/profiling/memcheck-*.txt       export-ignore  merge=binary
