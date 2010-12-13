@@ -106,6 +106,11 @@ BOOST_AUTO_TEST_CASE(testAssignmentOperator)
   BOOST_CHECK_EQUAL(l1.str(),       " 1 2 3 4 5");
   BOOST_CHECK_EQUAL(l1.size(),      5);
   BOOST_CHECK_EQUAL(l1.data_size(), 5);
+
+  l1.str("a");
+  BOOST_CHECK_EQUAL(l1.str(),       "a");
+  BOOST_CHECK_EQUAL(l1.size(),      1);
+  BOOST_CHECK_EQUAL(l1.data_size(), 1);
 }
 
 BOOST_AUTO_TEST_CASE(testAppending)

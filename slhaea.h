@@ -222,24 +222,25 @@ public:
   str(const std::string& line)
   {
     clear();
-    const std::string
-      trimmed_line = boost::trim_right_copy(line.substr(0, line.find('\n')));
-    if (trimmed_line.empty()) return *this;
+    static const std::string whitespace = " \t\v\f\r";
+    const std::size_t last_non_ws =
+      line.substr(0, line.find('\n')).find_last_not_of(whitespace);
+    if (last_non_ws == std::string::npos) return *this;
 
+    const std::string trimmed_line = line.substr(0, last_non_ws + 1);
     const std::size_t comment_pos = trimmed_line.find('#');
     const std::string data = trimmed_line.substr(0, comment_pos);
 
-    static const std::string delimiters = " \t\v\f\r";
-    std::size_t pos1 = data.find_first_not_of(delimiters, 0);
-    std::size_t pos2 = data.find_first_of(delimiters, pos1);
+    std::size_t pos1 = data.find_first_not_of(whitespace, 0);
+    std::size_t pos2 = data.find_first_of(whitespace, pos1);
 
     while (pos1 != std::string::npos)
     {
       impl_.push_back(data.substr(pos1, pos2 - pos1));
       bounds_.push_back(std::make_pair(pos1, pos2));
 
-      pos1 = data.find_first_not_of(delimiters, pos2);
-      pos2 = data.find_first_of(delimiters, pos1);
+      pos1 = data.find_first_not_of(whitespace, pos2);
+      pos2 = data.find_first_of(whitespace, pos1);
     }
 
     if (comment_pos != std::string::npos)
