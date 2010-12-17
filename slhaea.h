@@ -67,7 +67,7 @@ to_string(const Source& arg)
 template<class Source> inline std::string
 to_string(const Source& arg, int precision)
 {
-  std::stringstream output("");
+  std::ostringstream output("");
   output << std::setprecision(precision) << std::scientific << arg;
   return output.str();
 }
@@ -594,7 +594,7 @@ private:
   {
     if (empty()) return;
 
-    std::stringstream format("");
+    std::ostringstream format("");
     for (std::size_t i = 0; i < bounds_.size(); ++i)
     { format << " %|" << bounds_[i].first << "t|%" << (i+1) << "%"; }
     format_ = format.str().substr(1);
@@ -812,7 +812,7 @@ public:
   Block&
   str(const std::string& block)
   {
-    std::stringstream input(block);
+    std::istringstream input(block);
     clear();
     read(input);
     return *this;
@@ -822,7 +822,7 @@ public:
   std::string
   str() const
   {
-    std::stringstream output("");
+    std::ostringstream output("");
     output << *this;
     return output.str();
   }
@@ -1625,7 +1625,7 @@ public:
   Coll&
   str(const std::string& coll)
   {
-    std::stringstream input(coll);
+    std::istringstream input(coll);
     clear();
     read(input);
     return *this;
@@ -1635,7 +1635,7 @@ public:
   std::string
   str() const
   {
-    std::stringstream output("");
+    std::ostringstream output("");
     output << *this;
     return output.str();
   }
@@ -2400,7 +2400,7 @@ public:
   std::string
   str() const
   {
-    std::stringstream output("");
+    std::ostringstream output("");
     output << block << ";" << boost::join(line, ",") << ";" << field;
     return output.str();
   }
