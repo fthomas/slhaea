@@ -263,7 +263,7 @@ public:
     {
       dist = std::max(0, static_cast<int>(columns_[i]) - length + 1);
       output << std::setw(dist) << " " << (*this)[i];
-      length += (*this)[i].length() + dist;
+      length += dist + (*this)[i].length();
     }
     return output.str().substr(1);
   }
