@@ -125,14 +125,14 @@ public:
   //   write our own.
 
   /** Constructs an empty %Line. */
-  Line() : impl_(), bounds_(), format_() {}
+  Line() : impl_(), columns_(), format_() {}
 
   /**
    * \brief Constructs a %Line from a string.
    * \param line String whose fields are used as content of the %Line.
    * \sa str()
    */
-  Line(const std::string& line) : impl_(), bounds_(), format_()
+  Line(const std::string& line) : impl_(), columns_(), format_()
   { str(line); }
 
   /**
@@ -237,7 +237,7 @@ public:
     while (pos1 != std::string::npos)
     {
       impl_.push_back(data.substr(pos1, pos2 - pos1));
-      bounds_.push_back(std::make_pair(pos1, pos2));
+      columns_.push_back(pos1);
 
       pos1 = data.find_first_not_of(whitespace, pos2);
       pos2 = data.find_first_of(whitespace, pos1);
@@ -246,7 +246,7 @@ public:
     if (comment_pos != std::string::npos)
     {
       impl_.push_back(trimmed_line.substr(comment_pos));
-      bounds_.push_back(std::make_pair(comment_pos, trimmed_line.length()));
+      columns_.push_back(comment_pos);
     }
     return *this;
   }
@@ -506,7 +506,7 @@ public:
   swap(Line& line)
   {
     impl_.swap(line.impl_);
-    bounds_.swap(line.bounds_);
+    columns_.swap(line.columns_);
     format_.swap(line.format_);
   }
 
@@ -515,7 +515,7 @@ public:
   clear()
   {
     impl_.clear();
-    bounds_.clear();
+    columns_.clear();
     format_.clear();
   }
 
@@ -525,7 +525,7 @@ public:
   {
     if (empty()) return;
 
-    bounds_.clear();
+    columns_.clear();
     format_.clear();
 
     const_iterator field = begin();
@@ -535,25 +535,25 @@ public:
     {
       pos1 = 0;
       pos2 = pos1 + field->length();
-      bounds_.push_back(std::make_pair(pos1, pos2));
+      columns_.push_back(pos1);
 
       if (++field == end()) return;
 
       pos1 = pos2 + 1;
       pos2 = pos1 + field->length();
-      bounds_.push_back(std::make_pair(pos1, pos2));
+      columns_.push_back(pos1);
     }
     else if (is_comment(*field))
     {
       pos1 = 0;
       pos2 = pos1 + field->length();
-      bounds_.push_back(std::make_pair(pos1, pos2));
+      columns_.push_back(pos1);
     }
     else
     {
       pos1 = shift_width_;
       pos2 = pos1 + field->length();
-      bounds_.push_back(std::make_pair(pos1, pos2));
+      columns_.push_back(pos1);
     }
 
     while (++field != end())
@@ -561,7 +561,7 @@ public:
       pos1 = pos2 + calc_spaces_for_indent(pos2);
       if ((*field)[0] == '-' || (*field)[0] == '+') --pos1;
       pos2 = pos1 + field->length();
-      bounds_.push_back(std::make_pair(pos1, pos2));
+      columns_.push_back(pos1);
     }
   }
 
@@ -595,8 +595,8 @@ private:
     if (empty()) return;
 
     std::ostringstream format("");
-    for (std::size_t i = 0; i < bounds_.size(); ++i)
-    { format << " %|" << bounds_[i].first << "t|%" << (i+1) << "%"; }
+    for (std::size_t i = 0; i < columns_.size(); ++i)
+    { format << " %|" << columns_[i] << "t|%" << (i+1) << "%"; }
     format_ = format.str().substr(1);
   }
 
@@ -635,7 +635,7 @@ private:
 
 private:
   impl_type impl_;
-  std::vector<std::pair<std::size_t, std::size_t> > bounds_;
+  std::vector<std::size_t> columns_;
   mutable std::string format_;
 
   static const std::size_t shift_width_ = 4;
