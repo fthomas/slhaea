@@ -22,7 +22,6 @@
 #include <utility>
 #include <vector>
 #include <boost/algorithm/string.hpp>
-#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
 namespace SLHAea {
@@ -125,14 +124,14 @@ public:
   //   write our own.
 
   /** Constructs an empty %Line. */
-  Line() : impl_(), columns_(), format_() {}
+  Line() : impl_(), columns_() {}
 
   /**
    * \brief Constructs a %Line from a string.
    * \param line String whose fields are used as content of the %Line.
    * \sa str()
    */
-  Line(const std::string& line) : impl_(), columns_(), format_()
+  Line(const std::string& line) : impl_(), columns_()
   { str(line); }
 
   /**
@@ -255,12 +254,18 @@ public:
   std::string
   str() const
   {
-    if (format_.empty()) build_format_str();
+    if (empty()) return "";
 
-    boost::format formatter(format_);
-    for (const_iterator field = begin(); field != end(); ++field)
-    { formatter % *field; }
-    return formatter.str();
+    std::ostringstream output("");
+    int length = 0, dist = 0;
+
+    for (size_type i = 0; i < size(); ++i)
+    {
+      dist = std::max(0, static_cast<int>(columns_[i]) - length + 1);
+      output << std::setw(dist) << " " << (*this)[i];
+      length += (*this)[i].length() + dist;
+    }
+    return output.str().substr(1);
   }
 
   // element access
@@ -507,7 +512,6 @@ public:
   {
     impl_.swap(line.impl_);
     columns_.swap(line.columns_);
-    format_.swap(line.format_);
   }
 
   /** Erases all the elements in the %Line. */
@@ -516,7 +520,6 @@ public:
   {
     impl_.clear();
     columns_.clear();
-    format_.clear();
   }
 
   /** Reformats the string representation of the %Line. */
@@ -526,8 +529,6 @@ public:
     if (empty()) return;
 
     columns_.clear();
-    format_.clear();
-
     const_iterator field = begin();
     std::size_t pos1 = 0, pos2 = 0;
 
@@ -589,17 +590,6 @@ public:
   }
 
 private:
-  void
-  build_format_str() const
-  {
-    if (empty()) return;
-
-    std::ostringstream format("");
-    for (std::size_t i = 0; i < columns_.size(); ++i)
-    { format << " %|" << columns_[i] << "t|%" << (i+1) << "%"; }
-    format_ = format.str().substr(1);
-  }
-
   bool
   contains_comment() const
   { return std::find_if(rbegin(), rend(), is_comment) != rend(); }
@@ -636,7 +626,6 @@ private:
 private:
   impl_type impl_;
   std::vector<std::size_t> columns_;
-  mutable std::string format_;
 
   static const std::size_t shift_width_ = 4;
   static const std::size_t min_width_   = 2;
