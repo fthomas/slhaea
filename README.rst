@@ -12,7 +12,7 @@ containers of strings.
 
 Its main features are:
 
-- reading and writing SLHA files
+- fast reading and writing of SLHA files
 - easy access to individual blocks, lines, and fields
 - three containers (``Coll``, ``Block``, and ``Line``) that mimic the
   containers of the C++ Standard Library and therefore offer great
