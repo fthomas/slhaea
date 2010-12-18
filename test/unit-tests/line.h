@@ -531,6 +531,12 @@ BOOST_AUTO_TEST_CASE(testReformat)
   l1 = " 1 1.23456 # comment  ";
   l1.reformat();
   BOOST_CHECK_EQUAL(l1.str(), "    1   1.23456     # comment");
+
+  l1 = "1 2 3";
+  l1[0] = "";
+  l1[2] = "";
+  l1.reformat();
+  BOOST_CHECK_EQUAL(l1.str(), "        2   ");
 }
 
 BOOST_AUTO_TEST_CASE(testUnComment)
