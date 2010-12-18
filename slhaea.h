@@ -261,9 +261,9 @@ public:
 
     const_iterator field = begin();
     std::vector<std::size_t>::const_iterator column = columns_.begin();
-    for (; field != end(); ++field, ++column)
+    for (; field != end() && column != columns_.end(); ++field, ++column)
     {
-      spaces  = std::max(0, static_cast<int>(*column) - length + 1);
+      spaces = std::max(0, static_cast<int>(*column) - length + 1);
       length += spaces + field->length();
 
       output << std::setw(spaces) << " " << *field;
@@ -563,7 +563,7 @@ public:
     while (++field != end())
     {
       pos1 = pos2 + calc_spaces_for_indent(pos2);
-      if ((*field)[0] == '-' || (*field)[0] == '+') --pos1;
+      if (!field->empty() && starts_with_sign(*field)) --pos1;
       pos2 = pos1 + field->length();
       columns_.push_back(pos1);
     }
@@ -625,6 +625,10 @@ private:
     static const int digits = std::numeric_limits<T>::digits10;
     return *this << to_string(arg, digits);
   }
+
+  static bool
+  starts_with_sign(const value_type& field)
+  { return field[0] == '-' || field[0] == '+'; }
 
 private:
   impl_type impl_;
