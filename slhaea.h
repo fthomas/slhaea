@@ -257,13 +257,16 @@ public:
     if (empty()) return "";
 
     std::ostringstream output("");
-    int length = 0, dist = 0;
+    int length = 0, spaces = 0;
 
-    for (size_type i = 0; i < size(); ++i)
+    const_iterator field = begin();
+    std::vector<std::size_t>::const_iterator column = columns_.begin();
+    for (; field != end(); ++field, ++column)
     {
-      dist = std::max(0, static_cast<int>(columns_[i]) - length + 1);
-      output << std::setw(dist) << " " << (*this)[i];
-      length += dist + (*this)[i].length();
+      spaces  = std::max(0, static_cast<int>(*column) - length + 1);
+      length += spaces + field->length();
+
+      output << std::setw(spaces) << " " << *field;
     }
     return output.str().substr(1);
   }
