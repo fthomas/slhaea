@@ -72,6 +72,15 @@ to_string(const Source& arg, int precision)
 }
 
 
+namespace detail {
+
+inline bool
+is_all_whitespace(const std::string& str)
+{ return str.find_first_not_of(" \t\n\v\f\r") == std::string::npos; }
+
+} // namespace detail
+
+
 // forward declarations
 class Line;
 class Block;
@@ -772,7 +781,7 @@ public:
 
     while (std::getline(is, line_str))
     {
-      if (boost::all(line_str, boost::is_space())) continue;
+      if (detail::is_all_whitespace(line_str)) continue;
 
       line.str(line_str);
       if (line.is_block_def())
@@ -1602,7 +1611,7 @@ public:
 
     while (std::getline(is, line_str))
     {
-      if (boost::all(line_str, boost::is_space())) continue;
+      if (detail::is_all_whitespace(line_str)) continue;
 
       line.str(line_str);
       if (line.is_block_def()) block = push_back_named_block(line[1]);
