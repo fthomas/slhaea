@@ -9,7 +9,7 @@ Running 64 test cases...
 
 HEAP SUMMARY:
 in use at exit: 0 bytes in 0 blocks
-total heap usage: 10,407 allocs, 10,407 frees, 838,412 bytes allocated
+total heap usage: 10,425 allocs, 10,425 frees, 839,466 bytes allocated
 
 All heap blocks were freed -- no leaks are possible
 
