@@ -6,7 +6,7 @@ Command: test/profiling/input
 
 HEAP SUMMARY:
 in use at exit: 0 bytes in 0 blocks
-total heap usage: 8,196 allocs, 8,196 frees, 531,038 bytes allocated
+total heap usage: 10,414 allocs, 10,414 frees, 631,742 bytes allocated
 
 All heap blocks were freed -- no leaks are possible
 

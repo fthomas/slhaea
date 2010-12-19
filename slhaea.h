@@ -23,7 +23,6 @@
 #include <utility>
 #include <vector>
 #include <boost/algorithm/string.hpp>
-#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
 namespace SLHAea {
@@ -68,7 +67,7 @@ to_string(const Source& arg)
 template<class Source> inline std::string
 to_string(const Source& arg, int precision)
 {
-  std::stringstream output("");
+  std::ostringstream output("");
   output << std::setprecision(precision) << std::scientific << arg;
   return output.str();
 }
@@ -126,14 +125,14 @@ public:
   //   write our own.
 
   /** Constructs an empty %Line. */
-  Line() : impl_(), bounds_(), format_() {}
+  Line() : impl_(), columns_() {}
 
   /**
    * \brief Constructs a %Line from a string.
    * \param line String whose fields are used as content of the %Line.
    * \sa str()
    */
-  Line(const std::string& line) : impl_(), bounds_(), format_()
+  Line(const std::string& line) : impl_(), columns_()
   { str(line); }
 
   /**
@@ -238,7 +237,7 @@ public:
     while (pos1 != std::string::npos)
     {
       impl_.push_back(data.substr(pos1, pos2 - pos1));
-      bounds_.push_back({pos1, pos2});
+      columns_.push_back(pos1);
 
       pos1 = data.find_first_not_of(whitespace, pos2);
       pos2 = data.find_first_of(whitespace, pos1);
@@ -247,7 +246,7 @@ public:
     if (comment_pos != std::string::npos)
     {
       impl_.push_back(trimmed_line.substr(comment_pos));
-      bounds_.push_back({comment_pos, trimmed_line.length()});
+      columns_.push_back(comment_pos);
     }
     return *this;
   }
@@ -256,11 +255,21 @@ public:
   std::string
   str() const
   {
-    if (format_.empty()) build_format_str();
+    if (empty()) return "";
 
-    boost::format formatter(format_);
-    for (auto& field : *this) formatter % field;
-    return formatter.str();
+    std::ostringstream output("");
+    int length = 0, spaces = 0;
+
+    const_iterator field = begin();
+    auto column = columns_.cbegin();
+    for (; field != end() && column != columns_.end(); ++field, ++column)
+    {
+      spaces = std::max(0, static_cast<int>(*column) - length + 1);
+      length += spaces + field->length();
+
+      output << std::setw(spaces) << " " << *field;
+    }
+    return output.str().substr(1);
   }
 
   // element access
@@ -506,8 +515,7 @@ public:
   swap(Line& line)
   {
     impl_.swap(line.impl_);
-    bounds_.swap(line.bounds_);
-    format_.swap(line.format_);
+    columns_.swap(line.columns_);
   }
 
   /** Erases all the elements in the %Line. */
@@ -515,8 +523,7 @@ public:
   clear()
   {
     impl_.clear();
-    bounds_.clear();
-    format_.clear();
+    columns_.clear();
   }
 
   /** Reformats the string representation of the %Line. */
@@ -525,34 +532,32 @@ public:
   {
     if (empty()) return;
 
-    bounds_.clear();
-    format_.clear();
-
+    columns_.clear();
     const_iterator field = begin();
-    std::size_t second = 0;
+    std::size_t pos1 = 0, pos2 = 0;
 
-    auto store_bounds = [&](std::size_t first)
+    auto store_column = [&](std::size_t first)
     {
-      second = first + field->length();
-      bounds_.push_back({first, second});
+      pos2 = first + field->length();
+      columns_.push_back(first);
     };
 
     if (is_block_specifier(*field))
     {
-      store_bounds(0);
+      store_column(0);
       if (++field == end()) return;
-      store_bounds(second + 1);
+      store_column(pos2 + 1);
     }
     else if (is_comment(*field))
-    { store_bounds(0); }
+    { store_column(0); }
     else
-    { store_bounds(shift_width_); }
+    { store_column(shift_width_); }
 
     while (++field != end())
     {
-      auto first = second + calc_spaces_for_indent(second);
-      if ((*field)[0] == '-' || (*field)[0] == '+') --first;
-      store_bounds(first);
+      pos1 = pos2 + calc_spaces_for_indent(pos2);
+      if (starts_with_sign(*field)) --pos1;
+      store_column(pos1);
     }
   }
 
@@ -580,17 +585,6 @@ public:
   }
 
 private:
-  void
-  build_format_str() const
-  {
-    if (empty()) return;
-
-    std::stringstream format("");
-    for (std::size_t i = 0; i < bounds_.size(); ++i)
-    { format << " %|" << bounds_[i].first << "t|%" << (i+1) << "%"; }
-    format_ = format.str().substr(1);
-  }
-
   bool
   contains_comment() const
   { return std::find_if(rbegin(), rend(), is_comment) != rend(); }
@@ -615,7 +609,7 @@ private:
 
   static bool
   is_comment(const value_type& field)
-  { return field[0] == '#'; }
+  { return !field.empty() && field[0] == '#'; }
 
   template<class T> Line&
   insert_fundamental_type(const T& arg)
@@ -624,10 +618,13 @@ private:
     return *this << to_string(arg, digits);
   }
 
+  static bool
+  starts_with_sign(const value_type& field)
+  { return !field.empty() && (field[0] == '-' || field[0] == '+'); }
+
 private:
   impl_type impl_;
-  std::vector<std::pair<std::size_t, std::size_t>> bounds_;
-  mutable std::string format_;
+  std::vector<std::size_t> columns_;
 
   static const std::size_t shift_width_ = 4;
   static const std::size_t min_width_   = 2;
@@ -803,7 +800,7 @@ public:
   Block&
   str(const std::string& block)
   {
-    std::stringstream input(block);
+    std::istringstream input(block);
     clear();
     read(input);
     return *this;
@@ -813,7 +810,7 @@ public:
   std::string
   str() const
   {
-    std::stringstream output("");
+    std::ostringstream output("");
     output << *this;
     return output.str();
   }
@@ -1662,7 +1659,7 @@ public:
   Coll&
   str(const std::string& coll)
   {
-    std::stringstream input(coll);
+    std::istringstream input(coll);
     clear();
     read(input);
     return *this;
@@ -1672,7 +1669,7 @@ public:
   std::string
   str() const
   {
-    std::stringstream output("");
+    std::ostringstream output("");
     output << *this;
     return output.str();
   }
@@ -2437,7 +2434,7 @@ public:
   std::string
   str() const
   {
-    std::stringstream output("");
+    std::ostringstream output("");
     output << block << ";" << boost::join(line, ",") << ";" << field;
     return output.str();
   }
