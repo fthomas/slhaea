@@ -563,7 +563,7 @@ public:
     while (++field != end())
     {
       pos1 = pos2 + calc_spaces_for_indent(pos2);
-      if (!field->empty() && starts_with_sign(*field)) --pos1;
+      if (starts_with_sign(*field)) --pos1;
       pos2 = pos1 + field->length();
       columns_.push_back(pos1);
     }
@@ -617,7 +617,7 @@ private:
 
   static bool
   is_comment(const value_type& field)
-  { return field[0] == '#'; }
+  { return !field.empty() && field[0] == '#'; }
 
   template<class T> Line&
   insert_fundamental_type(const T& arg)
@@ -628,7 +628,7 @@ private:
 
   static bool
   starts_with_sign(const value_type& field)
-  { return field[0] == '-' || field[0] == '+'; }
+  { return !field.empty() && (field[0] == '-' || field[0] == '+'); }
 
 private:
   impl_type impl_;

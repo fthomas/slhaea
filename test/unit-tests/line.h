@@ -113,11 +113,11 @@ BOOST_AUTO_TEST_CASE(testAssignmentOperator)
   BOOST_CHECK_EQUAL(l1.data_size(), 1);
 
   l1.str("  1  2  3  4");
-  l1[0] = "111";
-  l1[1] = "222";
-  l1[2] = "333";
-  l1[3] = "444";
-  BOOST_CHECK_EQUAL(l1.str(),       "  111 222 333 444");
+  l1[0] = "1111";
+  l1[1] = "2222";
+  l1[2] = "3333";
+  l1[3] = "4444";
+  BOOST_CHECK_EQUAL(l1.str(),       "  1111 2222 3333 4444");
   BOOST_CHECK_EQUAL(l1.size(),      4);
   BOOST_CHECK_EQUAL(l1.data_size(), 4);
 }
@@ -492,6 +492,14 @@ BOOST_AUTO_TEST_CASE(testIntrospection)
   BOOST_CHECK_EQUAL(l1.is_block_def(),    false);
   BOOST_CHECK_EQUAL(l1.is_comment_line(), false);
   BOOST_CHECK_EQUAL(l1.is_data_line(),    false);
+
+  l1 = "1 2 3 4";
+  l1[0] = l1[1] = l1[2] = l1[3] = "";
+  BOOST_CHECK_EQUAL(l1.size(),      4);
+  BOOST_CHECK_EQUAL(l1.data_size(), 4);
+  BOOST_CHECK_EQUAL(l1.is_block_def(),    false);
+  BOOST_CHECK_EQUAL(l1.is_comment_line(), false);
+  BOOST_CHECK_EQUAL(l1.is_data_line(),    true);
 }
 
 BOOST_AUTO_TEST_CASE(testSwap)
@@ -576,6 +584,12 @@ BOOST_AUTO_TEST_CASE(testUnComment)
   l1.comment();
   BOOST_CHECK_EQUAL(l1.str(),       "##");
   BOOST_CHECK_EQUAL(l1.size(),      1);
+  BOOST_CHECK_EQUAL(l1.data_size(), 0);
+
+  l1 = "";
+  l1.uncomment();
+  BOOST_CHECK_EQUAL(l1.str(),       "");
+  BOOST_CHECK_EQUAL(l1.size(),      0);
   BOOST_CHECK_EQUAL(l1.data_size(), 0);
 }
 
