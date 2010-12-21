@@ -9,6 +9,7 @@
 #define SLHAEA_H
 
 #include <algorithm>
+#include <cctype>
 #include <cstddef>
 #include <deque>
 #include <functional>
@@ -77,6 +78,15 @@ namespace detail {
 inline bool
 is_all_whitespace(const std::string& str)
 { return str.find_first_not_of(" \t\n\v\f\r") == std::string::npos; }
+
+inline std::string
+to_upper_copy(const std::string& str)
+{
+  std::string str_upper(str.length(), char());
+  std::transform(str.begin(), str.end(), str_upper.begin(),
+    static_cast<int (*)(int)>(std::toupper));
+  return str_upper;
+}
 
 } // namespace detail
 
@@ -620,7 +630,7 @@ private:
     static const std::size_t specifier_length = 5;
     if (field.length() != specifier_length) return false;
 
-    const value_type field_upper = boost::to_upper_copy(field);
+    const value_type field_upper = detail::to_upper_copy(field);
     return (field_upper == "BLOCK") || (field_upper == "DECAY");
   }
 
