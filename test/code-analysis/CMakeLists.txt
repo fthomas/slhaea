@@ -26,6 +26,10 @@ set(flawfinder_ARGS -DQ -m 0 ${SLHAEA_H})
 run_code_analyzer(flawfinder "${flawfinder_ARGS}" flawfinder.txt)
 
 set(g++_ARGS -Weffc++ -I${CMAKE_SOURCE_DIR} ${CURR_SRC_DIR}/dummy.cpp)
-run_code_analyzer(g++ "${g++_ARGS}" gcc-effc++.txt)
+run_code_analyzer(g++ "${g++_ARGS}" g++-effc++.txt)
+
+set(icpc_ARGS -Weffc++ -wd2015 -I${CMAKE_SOURCE_DIR} ${CURR_SRC_DIR}/dummy.cpp)
+run_code_analyzer(icpc "${icpc_ARGS}" icpc-effc++.txt)
+
 
 add_custom_target(code-analyses DEPENDS ${CA_RESULTS})

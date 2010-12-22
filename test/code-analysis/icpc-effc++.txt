@@ -1,0 +1,40 @@
+slhaea.h(9): warning #2012: Effective C++ Item 1 prefer const and inline to #define
+  #define SLHAEA_H
+                  ^
+
+slhaea.h(153): warning #2304: non-explicit constructor with single argument may cause implicit type conversion
+    Line(const std::string& line) : impl_(), columns_()
+    ^
+
+slhaea.h(2378): warning #2304: non-explicit constructor with single argument may cause implicit type conversion
+    Key(const std::string& keyString)
+    ^
+
+slhaea.h(2386): warning #2304: non-explicit constructor with single argument may cause implicit type conversion
+    Key(const char* keyString)
+    ^
+
+slhaea.h(2379): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::block" not initialized (preferable to assignment in constructors)
+    { str(keyString); }
+    ^
+
+slhaea.h(2379): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::line" not initialized (preferable to assignment in constructors)
+    { str(keyString); }
+    ^
+
+slhaea.h(2379): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::field" not initialized (preferable to assignment in constructors)
+    { str(keyString); }
+    ^
+
+slhaea.h(2387): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::block" not initialized (preferable to assignment in constructors)
+    { str(keyString); }
+    ^
+
+slhaea.h(2387): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::line" not initialized (preferable to assignment in constructors)
+    { str(keyString); }
+    ^
+
+slhaea.h(2387): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::field" not initialized (preferable to assignment in constructors)
+    { str(keyString); }
+    ^
+
