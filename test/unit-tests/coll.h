@@ -798,5 +798,3 @@ BOOST_FIXTURE_TEST_CASE(testInEquality, F)
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-// vim: sw=2 tw=78

@@ -17,5 +17,3 @@
 #include "block.h"
 #include "coll.h"
 #include "key.h"
-
-// vim: sw=2 tw=78

@@ -2584,5 +2584,3 @@ operator>=(const Coll& a, const Coll& b)
 } // namespace SLHAea
 
 #endif // SLHAEA_H
-
-// vim: sw=2 tw=78

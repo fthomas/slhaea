@@ -30,5 +30,3 @@ int main(int argc, char* argv[])
     out << input;
   }
 }
-
-// vim: sw=2 tw=78

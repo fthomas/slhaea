@@ -116,5 +116,3 @@ BOOST_AUTO_TEST_CASE(testStr)
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-// vim: sw=2 tw=78
