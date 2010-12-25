@@ -6,6 +6,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <limits>
+#include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/unit_test.hpp>
 #include "slhaea.h"
 
 using namespace std;

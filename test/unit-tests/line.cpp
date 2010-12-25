@@ -9,6 +9,8 @@
 #include <limits>
 #include <string>
 #include <vector>
+#include <boost/concept/assert.hpp>
+#include <boost/test/unit_test.hpp>
 #include "slhaea.h"
 
 using namespace std;

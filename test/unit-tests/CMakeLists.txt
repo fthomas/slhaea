@@ -24,14 +24,14 @@ if(CMAKE_COMPILER_IS_GNUCXX)
             --base-directory ${CMAKE_SOURCE_DIR}
             --output-file ${COVERAGE_OUTFILE}
           COMMAND ${COVERAGE_LCOV}
-            --extract ${COVERAGE_OUTFILE} "\\*slhaea.h"
+            --extract ${COVERAGE_OUTFILE} "${SLHAEA_H}"
             --output-file ${COVERAGE_OUTFILE}
           COMMAND ${COVERAGE_GENHTML}
             --output-directory ${CMAKE_CURRENT_SOURCE_DIR}/lcov-report
             --prefix ${CMAKE_SOURCE_DIR}
-            --legend --demangle-cpp --title "SLHAea"
+            --legend --demangle-cpp --title ${CMAKE_PROJECT_NAME}
             ${COVERAGE_OUTFILE})
     endif()
 endif()
 
-add_test(NAME all_unit_tests COMMAND ut)
+add_test(NAME unit_tests COMMAND ut)

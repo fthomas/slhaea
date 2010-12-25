@@ -8,12 +8,4 @@
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_DYN_LINK
 
-#include <boost/concept/assert.hpp>
-#include <boost/test/floating_point_comparison.hpp>
 #include <boost/test/unit_test.hpp>
-
-#include "aux.h"
-#include "line.h"
-#include "block.h"
-#include "coll.h"
-#include "key.h"

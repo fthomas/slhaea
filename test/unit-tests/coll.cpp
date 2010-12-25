@@ -8,6 +8,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <boost/concept/assert.hpp>
+#include <boost/test/unit_test.hpp>
 #include "slhaea.h"
 
 using namespace std;
