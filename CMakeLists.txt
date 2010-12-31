@@ -26,7 +26,7 @@ set(CMAKE_COPY ${CMAKE_COMMAND} -E copy)
 set(SLHAEA_H ${CMAKE_SOURCE_DIR}/slhaea.h)
 
 add_subdirectory(doc)
-add_subdirectory(test)
+add_subdirectory(tests)
 
 # CPack settings:
 set(CPACK_PACKAGE_VENDOR "Frank S. Thomas")
