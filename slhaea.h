@@ -67,7 +67,7 @@ to_string(const Source& arg)
 template<class Source> inline std::string
 to_string(const Source& arg, int precision)
 {
-  std::ostringstream output("");
+  std::ostringstream output;
   output << std::setprecision(precision) << std::scientific << arg;
   return output.str();
 }
@@ -275,7 +275,7 @@ public:
   {
     if (empty()) return "";
 
-    std::ostringstream output("");
+    std::ostringstream output;
     int length = 0, spaces = 0;
 
     const_iterator field = begin();
@@ -837,7 +837,7 @@ public:
   std::string
   str() const
   {
-    std::ostringstream output("");
+    std::ostringstream output;
     output << *this;
     return output.str();
   }
@@ -1650,7 +1650,7 @@ public:
   std::string
   str() const
   {
-    std::ostringstream output("");
+    std::ostringstream output;
     output << *this;
     return output.str();
   }
@@ -2415,7 +2415,7 @@ public:
   std::string
   str() const
   {
-    std::ostringstream output("");
+    std::ostringstream output;
     output << block << ";" << boost::join(line, ",") << ";" << field;
     return output.str();
   }

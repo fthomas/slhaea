@@ -1,7 +1,7 @@
 Memcheck, a memory error detector
 Copyright (C) 2002-2010, and GNU GPL'd, by Julian Seward et al.
 Using Valgrind-3.6.0.SVN-Debian and LibVEX; rerun with -h for copyright info
-Command: test/profiling/output
+Command: tests/profiling/output
 
 
 HEAP SUMMARY:
