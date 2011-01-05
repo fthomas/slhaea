@@ -1,4 +1,4 @@
-# Doxyfile 1.7.2
+# Doxyfile 1.7.3
 
 #---------------------------------------------------------------------------
 # Project related configuration options
@@ -6,6 +6,8 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = SLHAea
 PROJECT_NUMBER         = @SLHAea_VERSION@
+PROJECT_BRIEF          = "containers for SUSY Les Houches Accord input/output"
+PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = .
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
@@ -63,6 +65,7 @@ SORT_BRIEF_DOCS        = NO
 SORT_MEMBERS_CTORS_1ST = YES
 SORT_GROUP_NAMES       = NO
 SORT_BY_SCOPE_NAME     = YES
+STRICT_PROTO_MATCHING  = NO
 GENERATE_TODOLIST      = YES
 GENERATE_TESTLIST      = YES
 GENERATE_BUGLIST       = YES
@@ -105,6 +108,7 @@ IMAGE_PATH             =
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
+FILTER_SOURCE_PATTERNS =
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
 #---------------------------------------------------------------------------
