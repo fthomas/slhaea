@@ -22,7 +22,11 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/join.hpp>
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
 
 namespace SLHAea {
