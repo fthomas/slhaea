@@ -21,11 +21,12 @@ int main(int argc, char* argv[])
     iss >> iterations;
   }
 
+  ifstream ifs("input.txt");
+  Coll input(ifs);
+
   for (int i = 0; i < iterations; ++i)
   {
-    ifstream ifs("input.txt");
-    Coll input(ifs);
+    stringstream out("");
+    out << input;
   }
 }
-
-// vim: sw=2 tw=78

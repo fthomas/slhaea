@@ -4,7 +4,7 @@ project(SLHAea CXX)
 string(TOLOWER ${CMAKE_PROJECT_NAME} PROJECT_NAME_LOWER)
 
 set(SLHAea_VERSION_MAJOR "0")
-set(SLHAea_VERSION_MINOR "0")
+set(SLHAea_VERSION_MINOR "1")
 set(SLHAea_VERSION "${SLHAea_VERSION_MAJOR}.${SLHAea_VERSION_MINOR}")
 
 # Enable more warnings if g++, clang or icpc is used.
@@ -26,7 +26,7 @@ set(CMAKE_COPY ${CMAKE_COMMAND} -E copy)
 set(SLHAEA_H ${CMAKE_SOURCE_DIR}/slhaea.h)
 
 add_subdirectory(doc)
-add_subdirectory(test)
+add_subdirectory(tests)
 
 # CPack settings:
 set(CPACK_PACKAGE_VENDOR "Frank S. Thomas")

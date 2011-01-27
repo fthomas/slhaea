@@ -60,7 +60,7 @@ Download
 You can download SLHAea in either `tar.gz`_ or `zip`_ formats.
 
 .. _tar.gz: http://github.com/fthomas/slhaea/tarball/master
-.. _zip: http://github.com/fthomas/slhaea/zipball/master
+.. _zip:    http://github.com/fthomas/slhaea/zipball/master
 
 The version control system used for development of SLHAea is Git. The
 `Git repository`_ can be inspected and browsed online at GitHub and it

@@ -1,9 +1,7 @@
 .gitattributes  export-ignore
 .gitignore      export-ignore
-test/code-analysis/clang.txt        export-ignore  merge=binary
-test/code-analysis/cppcheck.txt     export-ignore  merge=binary
-test/code-analysis/flawfinder.txt   export-ignore  merge=binary
-test/code-analysis/gcc-effc++.txt   export-ignore  merge=binary
-test/profiling/callgrind-*.txt      export-ignore  merge=binary
-test/profiling/gprof-*.txt          export-ignore  merge=binary
-test/profiling/memcheck-*.txt       export-ignore  merge=binary
+.vimrc.local    export-ignore
+tests/profiling/callgrind-*.txt     export-ignore  merge=binary
+tests/profiling/gprof-*.txt         export-ignore  merge=binary
+tests/profiling/memcheck-*.txt      export-ignore  merge=binary
+tests/static/sa-*.txt               export-ignore  merge=binary

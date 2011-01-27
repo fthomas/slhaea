@@ -9,6 +9,8 @@
 #include <limits>
 #include <string>
 #include <vector>
+#include <boost/concept/assert.hpp>
+#include <boost/test/unit_test.hpp>
 #include "slhaea.h"
 
 using namespace std;
@@ -724,5 +726,3 @@ BOOST_AUTO_TEST_CASE(testOrder)
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-// vim: sw=2 tw=78

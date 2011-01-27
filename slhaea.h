@@ -1,5 +1,5 @@
 // SLHAea - containers for SUSY Les Houches Accord input/output
-// Copyright © 2009-2010 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
+// Copyright © 2009-2011 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
 //
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
@@ -9,6 +9,7 @@
 #define SLHAEA_H
 
 #include <algorithm>
+#include <cctype>
 #include <cstddef>
 #include <deque>
 #include <functional>
@@ -22,7 +23,11 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/join.hpp>
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
 
 namespace SLHAea {
@@ -67,10 +72,28 @@ to_string(const Source& arg)
 template<class Source> inline std::string
 to_string(const Source& arg, int precision)
 {
-  std::ostringstream output("");
+  std::ostringstream output;
   output << std::setprecision(precision) << std::scientific << arg;
   return output.str();
 }
+
+
+namespace detail {
+
+inline bool
+is_all_whitespace(const std::string& str)
+{ return str.find_first_not_of(" \t\n\v\f\r") == std::string::npos; }
+
+inline std::string
+to_upper_copy(const std::string& str)
+{
+  std::string str_upper(str.length(), char());
+  std::transform(str.begin(), str.end(), str_upper.begin(),
+    static_cast<int (*)(int)>(std::toupper));
+  return str_upper;
+}
+
+} // namespace detail
 
 
 // forward declarations
@@ -257,7 +280,7 @@ public:
   {
     if (empty()) return "";
 
-    std::ostringstream output("");
+    std::ostringstream output;
     int length = 0, spaces = 0;
 
     const_iterator field = begin();
@@ -603,7 +626,7 @@ private:
     static const std::size_t specifier_length = 5;
     if (field.length() != specifier_length) return false;
 
-    const value_type field_upper = boost::to_upper_copy(field);
+    const value_type field_upper = detail::to_upper_copy(field);
     return (field_upper == "BLOCK") || (field_upper == "DECAY");
   }
 
@@ -764,7 +787,7 @@ public:
 
     while (std::getline(is, line_str))
     {
-      if (boost::all(line_str, boost::is_space())) continue;
+      if (detail::is_all_whitespace(line_str)) continue;
 
       line.str(line_str);
       if (line.is_block_def())
@@ -810,7 +833,7 @@ public:
   std::string
   str() const
   {
-    std::ostringstream output("");
+    std::ostringstream output;
     output << *this;
     return output.str();
   }
@@ -1640,7 +1663,7 @@ public:
 
     while (std::getline(is, line_str))
     {
-      if (boost::all(line_str, boost::is_space())) continue;
+      if (detail::is_all_whitespace(line_str)) continue;
 
       line.str(line_str);
       if (line.is_block_def()) block = push_back_named_block(line[1]);
@@ -1669,7 +1692,7 @@ public:
   std::string
   str() const
   {
-    std::ostringstream output("");
+    std::ostringstream output;
     output << *this;
     return output.str();
   }
@@ -2434,7 +2457,7 @@ public:
   std::string
   str() const
   {
-    std::ostringstream output("");
+    std::ostringstream output;
     output << block << ";" << boost::join(line, ",") << ";" << field;
     return output.str();
   }
@@ -2603,5 +2626,3 @@ operator>=(const Coll& a, const Coll& b)
 } // namespace SLHAea
 
 #endif // SLHAEA_H
-
-// vim: sw=2 tw=78
