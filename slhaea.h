@@ -116,7 +116,11 @@ inline std::ostream& operator<<(std::ostream& os, const Key& key);
  * from the string <tt>" 1 2 0.123 # a comment"</tt> its elements
  * would be \c "1", \c "2", \c "0.123", and \c "# a comment".
  * Array-style access to the elements with integer indices is provided
- * by the operator[]() and at() functions.
+ * by the operator[]() and at() functions. %Line also provides
+ * introspective functions to find out whether it is a comment or data
+ * line for example. Introspective functions that check if an element
+ * is a block specifier (\c "BLOCK" or \c "DECAY") always perform
+ * case-insensitive comparisons.
  *
  * In addition to storing the fields of a SLHA line, a %Line also
  * stores its formatting (the exact position of the fields in the
