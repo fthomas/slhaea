@@ -6,12 +6,14 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <limits>
+#include <string>
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/test/unit_test.hpp>
 #include "slhaea.h"
 
 using namespace std;
 using namespace SLHAea;
+using namespace SLHAea::detail;
 
 BOOST_AUTO_TEST_SUITE(TestAuxiliaries)
 
@@ -54,6 +56,34 @@ BOOST_AUTO_TEST_CASE(testToString)
   BOOST_CHECK_EQUAL(to_string(1.0, 2), "1.00e+00");
   BOOST_CHECK_EQUAL(to_string(1.0, 3), "1.000e+00");
   BOOST_CHECK_EQUAL(to_string(1.0, 4), "1.0000e+00");
+}
+
+BOOST_AUTO_TEST_CASE(testTrimLeftRight)
+{
+  string str = "";
+  trim_left(str);
+  trim_right(str);
+  BOOST_CHECK_EQUAL(str, "");
+
+  str = " \t \r \n \v \f ";
+  trim_left(str);
+  BOOST_CHECK_EQUAL(str, "");
+
+  str = " \t \r \n \v \f ";
+  trim_right(str);
+  BOOST_CHECK_EQUAL(str, "");
+
+  str = "\f \n test \n \t";
+  trim_left(str);
+  BOOST_CHECK_EQUAL(str, "test \n \t");
+  trim_right(str);
+  BOOST_CHECK_EQUAL(str, "test");
+
+  str = "test";
+  trim_left(str);
+  BOOST_CHECK_EQUAL(str, "test");
+  trim_right(str);
+  BOOST_CHECK_EQUAL(str, "test");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
