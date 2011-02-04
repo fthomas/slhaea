@@ -1,36 +1,36 @@
-slhaea.h(153): warning #2304: non-explicit constructor with single argument may cause implicit type conversion
+slhaea.h(176): warning #2304: non-explicit constructor with single argument may cause implicit type conversion
     Line(const std::string& line) : impl_(), columns_()
     ^
 
-slhaea.h(2378): warning #2304: non-explicit constructor with single argument may cause implicit type conversion
+slhaea.h(2401): warning #2304: non-explicit constructor with single argument may cause implicit type conversion
     Key(const std::string& keyString)
     ^
 
-slhaea.h(2386): warning #2304: non-explicit constructor with single argument may cause implicit type conversion
+slhaea.h(2409): warning #2304: non-explicit constructor with single argument may cause implicit type conversion
     Key(const char* keyString)
     ^
 
-slhaea.h(2379): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::block" not initialized (preferable to assignment in constructors)
+slhaea.h(2402): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::block" not initialized (preferable to assignment in constructors)
     { str(keyString); }
     ^
 
-slhaea.h(2379): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::line" not initialized (preferable to assignment in constructors)
+slhaea.h(2402): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::line" not initialized (preferable to assignment in constructors)
     { str(keyString); }
     ^
 
-slhaea.h(2379): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::field" not initialized (preferable to assignment in constructors)
+slhaea.h(2402): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::field" not initialized (preferable to assignment in constructors)
     { str(keyString); }
     ^
 
-slhaea.h(2387): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::block" not initialized (preferable to assignment in constructors)
+slhaea.h(2410): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::block" not initialized (preferable to assignment in constructors)
     { str(keyString); }
     ^
 
-slhaea.h(2387): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::line" not initialized (preferable to assignment in constructors)
+slhaea.h(2410): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::line" not initialized (preferable to assignment in constructors)
     { str(keyString); }
     ^
 
-slhaea.h(2387): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::field" not initialized (preferable to assignment in constructors)
+slhaea.h(2410): warning #2022: Effective C++ Item 12 field member "SLHAea::Key::field" not initialized (preferable to assignment in constructors)
     { str(keyString); }
     ^
 

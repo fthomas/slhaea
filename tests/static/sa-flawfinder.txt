@@ -1,16 +1,16 @@
-slhaea.h:738:  [1] (buffer) read:
+slhaea.h:761:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 
-slhaea.h:784:  [1] (buffer) read:
+slhaea.h:807:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 
-slhaea.h:832:  [1] (buffer) read:
+slhaea.h:855:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 
-slhaea.h:1602:  [1] (buffer) read:
+slhaea.h:1625:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 
-slhaea.h:1614:  [1] (buffer) read:
+slhaea.h:1637:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 
-slhaea.h:1645:  [1] (buffer) read:
+slhaea.h:1668:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 
-slhaea.h:2454:  [1] (buffer) read:
+slhaea.h:2477:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 
-slhaea.h:2461:  [1] (buffer) read:
+slhaea.h:2484:  [1] (buffer) read:
   Check buffer boundaries if used in a loop. 

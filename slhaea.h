@@ -26,7 +26,6 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
 
 namespace SLHAea {
@@ -90,6 +89,22 @@ to_upper_copy(const std::string& str)
   std::transform(str.begin(), str.end(), str_upper.begin(),
     static_cast<int (*)(int)>(std::toupper));
   return str_upper;
+}
+
+inline void
+trim_left(std::string& str)
+{
+  std::size_t startpos = str.find_first_not_of(" \t\n\v\f\r");
+  if (startpos != std::string::npos) str.erase(0, startpos);
+  else str.clear();
+}
+
+inline void
+trim_right(std::string& str)
+{
+  std::size_t endpos = str.find_last_not_of(" \t\n\v\f\r");
+  if (endpos != std::string::npos) str.erase(endpos + 1);
+  else str.clear();
 }
 
 } // namespace detail
@@ -202,14 +217,14 @@ public:
   operator<<(const T& field)
   {
     std::string field_str = to_string(field);
-    boost::trim_right(field_str);
+    detail::trim_right(field_str);
     if (field_str.empty()) return *this;
 
     if (contains_comment())
     { back() += field_str; }
     else
     {
-      boost::trim_left(field_str);
+      detail::trim_left(field_str);
       impl_.push_back(field_str);
       reformat();
     }

@@ -9,6 +9,6 @@ Running 64 test cases...
 *** No errors detected
 
 Events    : Ir
-Collected : 32458409
+Collected : 32294066
 
-I   refs:      32,458,409
+I   refs:      32,294,066
