@@ -1581,13 +1581,15 @@ private:
 
 /**
  * Container of \Blocks that resembles a complete SLHA structure.
- * This class is a container of \Blocks that resembles a complete
- * SLHA structure. Its name is an abbreviation of "collection". The
- * elements of %Coll objects can be accessed via their names with the
- * operator[]() and at() functions and access to single fields and
- * \Lines is provided by the field() and line() functions. To fill
- * this container, the functions read() or str() can be used which
- * read data from an input stream or a string, respectively.
+ * This class is a container of \Blocks that resembles a complete SLHA
+ * structure. Its name is an abbreviation of "collection" since it is
+ * a collection of \Blocks. The elements of %Coll objects can be
+ * accessed via their names (which are always compared
+ * case-insensitive) with the operator[]() and at() functions and
+ * access to single fields, \Lines and \Blocks via the Key type is
+ * provided by the field(), line() and block() functions. To fill this
+ * container, the functions read() or str() can be used which read
+ * data from an input stream or a string, respectively.
  */
 class Coll
 {
