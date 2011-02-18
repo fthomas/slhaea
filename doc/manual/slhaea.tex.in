@@ -1,6 +1,8 @@
 \documentclass[
   11pt,
+  aps,prd,
   showkeys,
+  nofootinbib,
   ]{revtex4-1}
 
 \usepackage[utf8x]{inputenc}
@@ -25,6 +27,13 @@
   xleftmargin=.06\linewidth,
   xrightmargin=.06\linewidth,
   columns=fullflexible,
+}
+\lstdefinestyle{plaintext}{
+  language={},
+  basicstyle=\ttfamily,
+  commentstyle=\ttfamily,
+  columns=fixed,
+  basewidth=0.5em
 }
 
 \newcommand{\Cpp}{C%
@@ -58,6 +67,20 @@ This manual refers to SLHAea version \SLHAeaVersion{}.
 \section{Data structures\label{sec:data_structures}}
 
 \subsection{Line\label{ssec:line}}
+
+The \lstinline!Line! data structure is an associative container
+
+ represents a single line in a SLHA
+structure.
+
+, which could either be a \textit{comment line}, a \textit{data
+line}, or a \textit{block specification line}.
+
+\begin{lstlisting}[style=plaintext]
+# Standard Model parameters
+BLOCK SMINPUTS
+ 1    1.27932314E+02    # alpha_em^-1(MZ)^MSbar
+\end{lstlisting}
 
 \subsection{Block\label{ssec:block}}
 
