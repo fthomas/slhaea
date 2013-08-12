@@ -2135,6 +2135,33 @@ public:
   }
 
   /**
+   * \brief Adds a Block to the begin of the %Coll.
+   * \param block Block to be added.
+   *
+   * This function creates an element at the begin of the %Coll and
+   * assigns the given \p block to it.
+   */
+  void
+  push_front(const value_type& block)
+  { impl_.push_front(block); }
+
+  /**
+   * \brief Adds a Block to the begin of the %Coll.
+   * \param blockString String that is used to construct the Block
+   *   that will be added.
+   *
+   * This function creates an element at the begin of the %Coll and
+   * assigns the Block that is constructed from \p blockString to it.
+   */
+  void
+  push_front(const std::string& blockString)
+  {
+    value_type block;
+    block.str(blockString);
+    impl_.push_front(block);
+  }
+
+  /**
    * Removes the last element. This function shrinks the size() of the
    * %Coll by one.
    */
