@@ -77,7 +77,7 @@ For bug reports, feature requests, or general feedback either use the
 `issue tracker`_ or `write me an email`_.
 
 .. _issue tracker: http://github.com/fthomas/slhaea/issues
-.. _write me an email: fthomas@physik.uni-wuerzburg.de
+.. _write me an email: frank@timepit.eu
 
 License
 -------
@@ -92,5 +92,4 @@ License 1.0`_. The full text of the license can be found in the file
 Author
 ------
 
-SLHAea was written by
-Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>.
+SLHAea was written by Frank S. Thomas <frank@timepit.eu>.
