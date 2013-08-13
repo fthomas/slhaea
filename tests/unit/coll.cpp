@@ -474,6 +474,19 @@ BOOST_FIXTURE_TEST_CASE(testPushPop, F)
   BOOST_CHECK_EQUAL(c1.count("test4"), 0);
 }
 
+BOOST_AUTO_TEST_CASE(test_push_front)
+{
+  Coll c1;
+  c1.push_front("BLOCK test2");
+  c1.push_front(Block("test1"));
+
+  Block b2;
+  b2.str("BLOCK test2");
+
+  BOOST_CHECK_EQUAL(*(c1.begin() + 0), Block("test1"));
+  BOOST_CHECK_EQUAL(*(c1.begin() + 1), b2);
+}
+
 BOOST_FIXTURE_TEST_CASE(testInsertErase, F)
 {
   string s1 =
