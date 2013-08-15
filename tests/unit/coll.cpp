@@ -441,37 +441,14 @@ BOOST_AUTO_TEST_CASE(testFindByBlockDef)
     cc1.rbegin(), cc1.rend(), key)->front().size(), 3);
 }
 
-BOOST_FIXTURE_TEST_CASE(testPushPop, F)
+BOOST_AUTO_TEST_CASE(test_push_back)
 {
   Coll c1;
+  c1.push_back(Block("test1"));
+  c1.push_back("BLOCK test2");
 
-  BOOST_CHECK_EQUAL(c1.size(),  0);
-  BOOST_CHECK_EQUAL(c1.empty(), true);
-
-  c1.push_back("BLOCK test3");
-  c1.push_back(Block("test4"));
-
-  BOOST_CHECK_EQUAL(c1.size(),  2);
-  BOOST_CHECK_EQUAL(c1.empty(), false);
-
-  BOOST_CHECK_EQUAL(c1.count("test3"), 1);
-  BOOST_CHECK_EQUAL(c1.count("test4"), 1);
-
-  c1.pop_back();
-
-  BOOST_CHECK_EQUAL(c1.size(),  1);
-  BOOST_CHECK_EQUAL(c1.empty(), false);
-
-  BOOST_CHECK_EQUAL(c1.count("test3"), 1);
-  BOOST_CHECK_EQUAL(c1.count("test4"), 0);
-
-  c1.pop_back();
-
-  BOOST_CHECK_EQUAL(c1.size(),  0);
-  BOOST_CHECK_EQUAL(c1.empty(), true);
-
-  BOOST_CHECK_EQUAL(c1.count("test3"), 0);
-  BOOST_CHECK_EQUAL(c1.count("test4"), 0);
+  BOOST_CHECK_EQUAL(*(c1.begin() + 0), Block("test1"));
+  BOOST_CHECK_EQUAL(*(c1.begin() + 1), Block::from_str("BLOCK test2"));
 }
 
 BOOST_AUTO_TEST_CASE(test_push_front)
@@ -480,11 +457,21 @@ BOOST_AUTO_TEST_CASE(test_push_front)
   c1.push_front("BLOCK test2");
   c1.push_front(Block("test1"));
 
-  Block b2;
-  b2.str("BLOCK test2");
-
   BOOST_CHECK_EQUAL(*(c1.begin() + 0), Block("test1"));
-  BOOST_CHECK_EQUAL(*(c1.begin() + 1), b2);
+  BOOST_CHECK_EQUAL(*(c1.begin() + 1), Block::from_str("BLOCK test2"));
+}
+
+BOOST_AUTO_TEST_CASE(test_pop_back)
+{
+  Coll c1;
+  c1.push_front(Block("test1"));
+  c1.push_front(Block("test2"));
+
+  BOOST_CHECK_EQUAL(c1.size(), 2);
+  c1.pop_back();
+  BOOST_CHECK_EQUAL(c1.size(), 1);
+  c1.pop_back();
+  BOOST_CHECK_EQUAL(c1.size(), 0);
 }
 
 BOOST_FIXTURE_TEST_CASE(testInsertErase, F)

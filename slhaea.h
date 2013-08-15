@@ -761,6 +761,17 @@ public:
   { read(is); }
 
   /**
+   * \brief Constructs a %Block with content from a string.
+   * \param block String to read content from.
+   */
+  static Block
+  from_str(const std::string& block)
+  {
+    std::istringstream input(block);
+    return Block(input);
+  }
+
+  /**
    * \brief Sets the name of the %Block.
    * \param newName New name of the %Block.
    *
@@ -1625,6 +1636,17 @@ public:
   explicit
   Coll(std::istream& is) : impl_()
   { read(is); }
+
+  /**
+   * \brief Constructs a %Coll with content from a string.
+   * \param coll String to read content from.
+   */
+  static Coll
+  from_str(const std::string& coll)
+  {
+    std::istringstream input(coll);
+    return Coll(input);
+  }
 
   /**
    * \brief Assigns content from an input stream to the %Coll.
