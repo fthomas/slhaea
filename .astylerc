@@ -1,0 +1,9 @@
+--indent=spaces=2
+--break-blocks
+--pad-oper
+--pad-header
+--align-pointer=type
+--align-reference=type
+--add-brackets
+--convert-tabs
+--lineend=linux
