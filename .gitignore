@@ -1,3 +1,4 @@
 doc/api-html/
 doc/manual/*.pdf
 tests/unit/lcov-report/
+CMakeLists.txt.user

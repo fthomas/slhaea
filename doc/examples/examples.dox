@@ -71,3 +71,11 @@ The SLHA allows to have several blocks with the same name but at
 different Q scales. This examples shows how to access blocks by
 matching the first strings of their block definition:
 */
+
+/** \example 11_multiple_columns.cpp
+
+This example shows how to read values from a table with a mixed
+number of keys and values. The first two lines have one key and one
+value, the third line has two keys and one value, and the last two
+lines have two keys and two values.
+*/

@@ -1,0 +1,11 @@
+--style=java
+--indent=spaces=2
+--pad-oper
+--pad-header
+--unpad-paren
+--align-pointer=type
+--align-reference=type
+--add-brackets
+--convert-tabs
+--lineend=linux
+--mode=c

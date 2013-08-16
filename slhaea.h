@@ -1,5 +1,5 @@
 // SLHAea - containers for SUSY Les Houches Accord input/output
-// Copyright © 2009-2011 Frank S. Thomas <fthomas@physik.uni-wuerzburg.de>
+// Copyright © 2009-2011 Frank S. Thomas <frank@timepit.eu>
 //
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
@@ -27,7 +27,6 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
 
 namespace SLHAea {
@@ -93,6 +92,22 @@ to_upper_copy(const std::string& str)
   return str_upper;
 }
 
+inline void
+trim_left(std::string& str)
+{
+  std::size_t startpos = str.find_first_not_of(" \t\n\v\f\r");
+  if (startpos != std::string::npos) str.erase(0, startpos);
+  else str.clear();
+}
+
+inline void
+trim_right(std::string& str)
+{
+  std::size_t endpos = str.find_last_not_of(" \t\n\v\f\r");
+  if (endpos != std::string::npos) str.erase(endpos + 1);
+  else str.clear();
+}
+
 } // namespace detail
 
 
@@ -117,7 +132,11 @@ inline std::ostream& operator<<(std::ostream& os, const Key& key);
  * from the string <tt>" 1 2 0.123 # a comment"</tt> its elements
  * would be \c "1", \c "2", \c "0.123", and \c "# a comment".
  * Array-style access to the elements with integer indices is provided
- * by the operator[]() and at() functions.
+ * by the operator[]() and at() functions. %Line also provides
+ * introspective functions to find out whether it is a comment or data
+ * line for example. Introspective functions that check if an element
+ * is a block specifier (\c "BLOCK" or \c "DECAY") always perform
+ * case-insensitive comparisons.
  *
  * In addition to storing the fields of a SLHA line, a %Line also
  * stores its formatting (the exact position of the fields in the
@@ -199,14 +218,14 @@ public:
   operator<<(const T& field)
   {
     std::string field_str = to_string(field);
-    boost::trim_right(field_str);
+    detail::trim_right(field_str);
     if (field_str.empty()) return *this;
 
     if (contains_comment())
     { back() += field_str; }
     else
     {
-      boost::trim_left(field_str);
+      detail::trim_left(field_str);
       impl_.push_back(field_str);
       reformat();
     }
@@ -732,6 +751,17 @@ public:
   explicit
   Block(std::istream& is) : name_(), impl_()
   { read(is); }
+
+  /**
+   * \brief Constructs a %Block with content from a string.
+   * \param block String to read content from.
+   */
+  static Block
+  from_str(const std::string& block)
+  {
+    std::istringstream input(block);
+    return Block(input);
+  }
 
   /**
    * \brief Sets the name of the %Block.
@@ -1600,13 +1630,15 @@ private:
 
 /**
  * Container of \Blocks that resembles a complete SLHA structure.
- * This class is a container of \Blocks that resembles a complete
- * SLHA structure. Its name is an abbreviation of "collection". The
- * elements of %Coll objects can be accessed via their names with the
- * operator[]() and at() functions and access to single fields and
- * \Lines is provided by the field() and line() functions. To fill
- * this container, the functions read() or str() can be used which
- * read data from an input stream or a string, respectively.
+ * This class is a container of \Blocks that resembles a complete SLHA
+ * structure. Its name is an abbreviation of "collection" since it is
+ * a collection of \Blocks. The elements of %Coll objects can be
+ * accessed via their names (which are always compared
+ * case-insensitive) with the operator[]() and at() functions and
+ * access to single fields, \Lines and \Blocks via the Key type is
+ * provided by the field(), line() and block() functions. To fill this
+ * container, the functions read() or str() can be used which read
+ * data from an input stream or a string, respectively.
  */
 class Coll
 {
@@ -1642,6 +1674,17 @@ public:
   explicit
   Coll(std::istream& is) : impl_()
   { read(is); }
+
+  /**
+   * \brief Constructs a %Coll with content from a string.
+   * \param coll String to read content from.
+   */
+  static Coll
+  from_str(const std::string& coll)
+  {
+    std::istringstream input(coll);
+    return Coll(input);
+  }
 
   /**
    * \brief Assigns content from an input stream to the %Coll.
@@ -2149,6 +2192,33 @@ public:
     value_type block;
     block.str(blockString);
     impl_.push_back(block);
+  }
+
+  /**
+   * \brief Adds a Block to the begin of the %Coll.
+   * \param block Block to be added.
+   *
+   * This function creates an element at the begin of the %Coll and
+   * assigns the given \p block to it.
+   */
+  void
+  push_front(const value_type& block)
+  { impl_.push_front(block); }
+
+  /**
+   * \brief Adds a Block to the begin of the %Coll.
+   * \param blockString String that is used to construct the Block
+   *   that will be added.
+   *
+   * This function creates an element at the begin of the %Coll and
+   * assigns the Block that is constructed from \p blockString to it.
+   */
+  void
+  push_front(const std::string& blockString)
+  {
+    value_type block;
+    block.str(blockString);
+    impl_.push_front(block);
   }
 
   /**
