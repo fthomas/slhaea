@@ -544,11 +544,11 @@ BOOST_AUTO_TEST_CASE(test_erase_last) {
 
   Coll::iterator it = c1.erase_last("test2");
 
-  BOOST_CHECK_EQUAL(it, c1.end());
+  BOOST_CHECK(it == c1.end());
   BOOST_CHECK_EQUAL(c1,
                     Coll::from_str(
                       "BLOCK test2\n"
-                      "BLOCK test1\n");
+                      "BLOCK test1\n"));
 }
 
 BOOST_AUTO_TEST_CASE(test_erase_last__nonexistent) {
@@ -558,11 +558,11 @@ BOOST_AUTO_TEST_CASE(test_erase_last__nonexistent) {
 
   Coll::iterator it = c1.erase_last("test3");
 
-  BOOST_CHECK_EQUAL(it, c1.end());
+  BOOST_CHECK(it == c1.end());
   BOOST_CHECK_EQUAL(c1,
                     Coll::from_str(
                       "BLOCK test1\n"
-                      "BLOCK test2\n");
+                      "BLOCK test2\n"));
 }
 
 BOOST_AUTO_TEST_CASE(testErase) {
