@@ -18,8 +18,7 @@ using namespace SLHAea;
 
 BOOST_AUTO_TEST_SUITE(TestColl)
 
-BOOST_AUTO_TEST_CASE(assertConcepts)
-{
+BOOST_AUTO_TEST_CASE(assertConcepts) {
   BOOST_CONCEPT_ASSERT((Mutable_ReversibleContainer<Coll>));
 
   BOOST_CONCEPT_ASSERT((Mutable_RandomAccessIterator<Coll::iterator>));
@@ -61,8 +60,7 @@ struct F {
   string fs1, fs2;
 };
 
-BOOST_FIXTURE_TEST_CASE(testReadWrite, F)
-{
+BOOST_FIXTURE_TEST_CASE(testReadWrite, F) {
   stringstream ss1(fs1);
   stringstream ss2(fs1);
 
@@ -92,8 +90,7 @@ BOOST_FIXTURE_TEST_CASE(testReadWrite, F)
   BOOST_CHECK_EQUAL(c4.size(), 0);
 }
 
-BOOST_AUTO_TEST_CASE(testDuplicatedBlocks)
-{
+BOOST_AUTO_TEST_CASE(testDuplicatedBlocks) {
   string s1 =
     "BLOCK test1\n"
     "BLOCK test2\n"
@@ -134,8 +131,7 @@ BOOST_AUTO_TEST_CASE(testDuplicatedBlocks)
   BOOST_CHECK_EQUAL(c1.size(), 3);
 }
 
-BOOST_FIXTURE_TEST_CASE(testField, F)
-{
+BOOST_FIXTURE_TEST_CASE(testField, F) {
   Coll c1;
   c1.str(fs1);
   const Coll cc1 = c1;
@@ -163,8 +159,7 @@ BOOST_FIXTURE_TEST_CASE(testField, F)
   BOOST_CHECK_EQUAL(c1.field("test2;4;1"),         "4.15");
 }
 
-BOOST_FIXTURE_TEST_CASE(testLine, F)
-{
+BOOST_FIXTURE_TEST_CASE(testLine, F) {
   Coll c1;
   c1.str(fs1);
   const Coll cc1 = c1;
@@ -172,14 +167,13 @@ BOOST_FIXTURE_TEST_CASE(testLine, F)
   Key k1("TEST2;4,3;1");
   Key k2("test1;2;2");
 
-  BOOST_CHECK_EQUAL( c1.line(k1),  c1.at(k1.block).at(k1.line));
+  BOOST_CHECK_EQUAL(c1.line(k1),  c1.at(k1.block).at(k1.line));
   BOOST_CHECK_EQUAL(cc1.line(k1), cc1.at(k1.block).at(k1.line));
-  BOOST_CHECK_EQUAL( c1.line(k2),  c1.at(k2.block).at(k2.line));
+  BOOST_CHECK_EQUAL(c1.line(k2),  c1.at(k2.block).at(k2.line));
   BOOST_CHECK_EQUAL(cc1.line(k2), cc1.at(k2.block).at(k2.line));
 }
 
-BOOST_FIXTURE_TEST_CASE(testSubscriptAccessor, F)
-{
+BOOST_FIXTURE_TEST_CASE(testSubscriptAccessor, F) {
   stringstream ss1(fs1);
   Coll c1(ss1);
 
@@ -205,8 +199,7 @@ BOOST_FIXTURE_TEST_CASE(testSubscriptAccessor, F)
   BOOST_CHECK_EQUAL(c1["test3"].back().is_block_def(),  true);
 }
 
-BOOST_FIXTURE_TEST_CASE(testAccessors, F)
-{
+BOOST_FIXTURE_TEST_CASE(testAccessors, F) {
   stringstream ss1(fs1);
   Coll c1(ss1);
   const Coll cc1 = c1;
@@ -240,8 +233,7 @@ BOOST_FIXTURE_TEST_CASE(testAccessors, F)
   BOOST_CHECK_THROW(cc1.at("test3"), out_of_range);
 }
 
-BOOST_AUTO_TEST_CASE(testAtByBlockDef)
-{
+BOOST_AUTO_TEST_CASE(testAtByBlockDef) {
   string s1 =
     "BLOCK test1 foo\n"
     "decay test1 pop\n"
@@ -280,65 +272,63 @@ BOOST_AUTO_TEST_CASE(testAtByBlockDef)
   BOOST_CHECK_THROW(cc1.at(key), out_of_range);
 }
 
-BOOST_FIXTURE_TEST_CASE(testIterators, F)
-{
+BOOST_FIXTURE_TEST_CASE(testIterators, F) {
   Coll c1;
   c1.str(fs2);
   const Coll cc1 = c1;
 
-  BOOST_CHECK_EQUAL((*(c1.begin())),  (*(cc1.begin())));
-  BOOST_CHECK_EQUAL((*(c1.end()-1)),  (*(cc1.end()-1)));
+  BOOST_CHECK_EQUAL((*(c1.begin())), (*(cc1.begin())));
+  BOOST_CHECK_EQUAL((*(c1.end() - 1)), (*(cc1.end() - 1)));
   BOOST_CHECK_EQUAL((*(c1.rbegin())), (*(cc1.rbegin())));
-  BOOST_CHECK_EQUAL((*(c1.rend()-1)), (*(cc1.rend()-1)));
+  BOOST_CHECK_EQUAL((*(c1.rend() - 1)), (*(cc1.rend() - 1)));
 
-  BOOST_CHECK(c1.begin()+0 == c1.end()-4);
-  BOOST_CHECK(c1.begin()+1 == c1.end()-3);
-  BOOST_CHECK(c1.begin()+2 == c1.end()-2);
-  BOOST_CHECK(c1.begin()+3 == c1.end()-1);
+  BOOST_CHECK(c1.begin() + 0 == c1.end() - 4);
+  BOOST_CHECK(c1.begin() + 1 == c1.end() - 3);
+  BOOST_CHECK(c1.begin() + 2 == c1.end() - 2);
+  BOOST_CHECK(c1.begin() + 3 == c1.end() - 1);
 
-  BOOST_CHECK(c1.rbegin()+0 == c1.rend()-4);
-  BOOST_CHECK(c1.rbegin()+1 == c1.rend()-3);
-  BOOST_CHECK(c1.rbegin()+2 == c1.rend()-2);
-  BOOST_CHECK(c1.rbegin()+3 == c1.rend()-1);
+  BOOST_CHECK(c1.rbegin() + 0 == c1.rend() - 4);
+  BOOST_CHECK(c1.rbegin() + 1 == c1.rend() - 3);
+  BOOST_CHECK(c1.rbegin() + 2 == c1.rend() - 2);
+  BOOST_CHECK(c1.rbegin() + 3 == c1.rend() - 1);
 
-  BOOST_CHECK(c1.cbegin()+0 == c1.cend()-4);
-  BOOST_CHECK(c1.cbegin()+1 == c1.cend()-3);
-  BOOST_CHECK(c1.cbegin()+2 == c1.cend()-2);
-  BOOST_CHECK(c1.cbegin()+3 == c1.cend()-1);
+  BOOST_CHECK(c1.cbegin() + 0 == c1.cend() - 4);
+  BOOST_CHECK(c1.cbegin() + 1 == c1.cend() - 3);
+  BOOST_CHECK(c1.cbegin() + 2 == c1.cend() - 2);
+  BOOST_CHECK(c1.cbegin() + 3 == c1.cend() - 1);
 
-  BOOST_CHECK(c1.crbegin()+0 == c1.crend()-4);
-  BOOST_CHECK(c1.crbegin()+1 == c1.crend()-3);
-  BOOST_CHECK(c1.crbegin()+2 == c1.crend()-2);
-  BOOST_CHECK(c1.crbegin()+3 == c1.crend()-1);
+  BOOST_CHECK(c1.crbegin() + 0 == c1.crend() - 4);
+  BOOST_CHECK(c1.crbegin() + 1 == c1.crend() - 3);
+  BOOST_CHECK(c1.crbegin() + 2 == c1.crend() - 2);
+  BOOST_CHECK(c1.crbegin() + 3 == c1.crend() - 1);
 
-  BOOST_CHECK(cc1.begin()+0 == cc1.end()-4);
-  BOOST_CHECK(cc1.begin()+1 == cc1.end()-3);
-  BOOST_CHECK(cc1.begin()+2 == cc1.end()-2);
-  BOOST_CHECK(cc1.begin()+3 == cc1.end()-1);
+  BOOST_CHECK(cc1.begin() + 0 == cc1.end() - 4);
+  BOOST_CHECK(cc1.begin() + 1 == cc1.end() - 3);
+  BOOST_CHECK(cc1.begin() + 2 == cc1.end() - 2);
+  BOOST_CHECK(cc1.begin() + 3 == cc1.end() - 1);
 
-  BOOST_CHECK(cc1.rbegin()+0 == cc1.rend()-4);
-  BOOST_CHECK(cc1.rbegin()+1 == cc1.rend()-3);
-  BOOST_CHECK(cc1.rbegin()+2 == cc1.rend()-2);
-  BOOST_CHECK(cc1.rbegin()+3 == cc1.rend()-1);
+  BOOST_CHECK(cc1.rbegin() + 0 == cc1.rend() - 4);
+  BOOST_CHECK(cc1.rbegin() + 1 == cc1.rend() - 3);
+  BOOST_CHECK(cc1.rbegin() + 2 == cc1.rend() - 2);
+  BOOST_CHECK(cc1.rbegin() + 3 == cc1.rend() - 1);
 
-  BOOST_CHECK(cc1.cbegin()+0 == cc1.cend()-4);
-  BOOST_CHECK(cc1.cbegin()+1 == cc1.cend()-3);
-  BOOST_CHECK(cc1.cbegin()+2 == cc1.cend()-2);
-  BOOST_CHECK(cc1.cbegin()+3 == cc1.cend()-1);
+  BOOST_CHECK(cc1.cbegin() + 0 == cc1.cend() - 4);
+  BOOST_CHECK(cc1.cbegin() + 1 == cc1.cend() - 3);
+  BOOST_CHECK(cc1.cbegin() + 2 == cc1.cend() - 2);
+  BOOST_CHECK(cc1.cbegin() + 3 == cc1.cend() - 1);
 
-  BOOST_CHECK(cc1.crbegin()+0 == cc1.crend()-4);
-  BOOST_CHECK(cc1.crbegin()+1 == cc1.crend()-3);
-  BOOST_CHECK(cc1.crbegin()+2 == cc1.crend()-2);
-  BOOST_CHECK(cc1.crbegin()+3 == cc1.crend()-1);
+  BOOST_CHECK(cc1.crbegin() + 0 == cc1.crend() - 4);
+  BOOST_CHECK(cc1.crbegin() + 1 == cc1.crend() - 3);
+  BOOST_CHECK(cc1.crbegin() + 2 == cc1.crend() - 2);
+  BOOST_CHECK(cc1.crbegin() + 3 == cc1.crend() - 1);
 
-  BOOST_CHECK_EQUAL((*(c1.begin()+0)).name(), "test1");
-  BOOST_CHECK_EQUAL((*(c1.begin()+1)).name(), "test2");
-  BOOST_CHECK_EQUAL((*(c1.begin()+2)).name(), "test3");
-  BOOST_CHECK_EQUAL((*(c1.begin()+3)).name(), "test4");
+  BOOST_CHECK_EQUAL((*(c1.begin() + 0)).name(), "test1");
+  BOOST_CHECK_EQUAL((*(c1.begin() + 1)).name(), "test2");
+  BOOST_CHECK_EQUAL((*(c1.begin() + 2)).name(), "test3");
+  BOOST_CHECK_EQUAL((*(c1.begin() + 3)).name(), "test4");
 }
 
-BOOST_FIXTURE_TEST_CASE(testIntrospection, F)
-{
+BOOST_FIXTURE_TEST_CASE(testIntrospection, F) {
   Coll c1;
   c1.str(fs2);
   const Coll cc1 = c1;
@@ -346,17 +336,17 @@ BOOST_FIXTURE_TEST_CASE(testIntrospection, F)
   BOOST_CHECK_GT(c1.max_size(),  0);
   BOOST_CHECK_GT(cc1.max_size(), 0);
 
-  BOOST_CHECK(c1.find("test1")  == c1.begin()+0);
-  BOOST_CHECK(c1.find("test2")  == c1.begin()+1);
-  BOOST_CHECK(c1.find("test3")  == c1.begin()+2);
-  BOOST_CHECK(c1.find("test4")  == c1.end()-1);
-  BOOST_CHECK(c1.find("test5")  == c1.end()-0);
+  BOOST_CHECK(c1.find("test1")  == c1.begin() + 0);
+  BOOST_CHECK(c1.find("test2")  == c1.begin() + 1);
+  BOOST_CHECK(c1.find("test3")  == c1.begin() + 2);
+  BOOST_CHECK(c1.find("test4")  == c1.end() - 1);
+  BOOST_CHECK(c1.find("test5")  == c1.end() - 0);
 
-  BOOST_CHECK(cc1.find("test1") == cc1.begin()+0);
-  BOOST_CHECK(cc1.find("test2") == cc1.begin()+1);
-  BOOST_CHECK(cc1.find("test3") == cc1.begin()+2);
-  BOOST_CHECK(cc1.find("test4") == cc1.end()-1);
-  BOOST_CHECK(cc1.find("test5") == cc1.end()-0);
+  BOOST_CHECK(cc1.find("test1") == cc1.begin() + 0);
+  BOOST_CHECK(cc1.find("test2") == cc1.begin() + 1);
+  BOOST_CHECK(cc1.find("test3") == cc1.begin() + 2);
+  BOOST_CHECK(cc1.find("test4") == cc1.end() - 1);
+  BOOST_CHECK(cc1.find("test5") == cc1.end() - 0);
 
   BOOST_CHECK_EQUAL(c1.count("test1"), 1);
   BOOST_CHECK_EQUAL(c1.count("test5"), 0);
@@ -382,7 +372,7 @@ BOOST_FIXTURE_TEST_CASE(testIntrospection, F)
   c2.push_back("BLOCK test 30");
 
   Line l1 =    *c2.find("test")->begin();
-  Line l2 = *Coll::find(c2.begin()+1, c2.end(), "test")->begin();
+  Line l2 = *Coll::find(c2.begin() + 1, c2.end(), "test")->begin();
   Line l3 = *Coll::find(c2.rbegin(), c2.rend(), "test")->begin();
 
   BOOST_CHECK_EQUAL(l1.at(2), "10");
@@ -390,8 +380,7 @@ BOOST_FIXTURE_TEST_CASE(testIntrospection, F)
   BOOST_CHECK_EQUAL(l3.at(2), "30");
 }
 
-BOOST_AUTO_TEST_CASE(testFindByBlockDef)
-{
+BOOST_AUTO_TEST_CASE(testFindByBlockDef) {
   string s1 =
     "BLOCK test1 foo\n"
     "decay test1 pop\n"
@@ -436,13 +425,12 @@ BOOST_AUTO_TEST_CASE(testFindByBlockDef)
 
   key.pop_back();
   BOOST_CHECK_EQUAL(Coll::find(
-    c1.rbegin(), c1.rend(), key)->front().size(),   3);
+                      c1.rbegin(), c1.rend(), key)->front().size(),   3);
   BOOST_CHECK_EQUAL(Coll::find(
-    cc1.rbegin(), cc1.rend(), key)->front().size(), 3);
+                      cc1.rbegin(), cc1.rend(), key)->front().size(), 3);
 }
 
-BOOST_AUTO_TEST_CASE(test_push_back)
-{
+BOOST_AUTO_TEST_CASE(test_push_back) {
   Coll c1;
   c1.push_back(Block("test1"));
   c1.push_back("BLOCK test2");
@@ -451,8 +439,7 @@ BOOST_AUTO_TEST_CASE(test_push_back)
   BOOST_CHECK_EQUAL(*(c1.begin() + 1), Block::from_str("BLOCK test2"));
 }
 
-BOOST_AUTO_TEST_CASE(test_push_front)
-{
+BOOST_AUTO_TEST_CASE(test_push_front) {
   Coll c1;
   c1.push_front("BLOCK test2");
   c1.push_front(Block("test1"));
@@ -461,8 +448,7 @@ BOOST_AUTO_TEST_CASE(test_push_front)
   BOOST_CHECK_EQUAL(*(c1.begin() + 1), Block::from_str("BLOCK test2"));
 }
 
-BOOST_AUTO_TEST_CASE(test_pop_back)
-{
+BOOST_AUTO_TEST_CASE(test_pop_back) {
   Coll c1;
   c1.push_front(Block("test1"));
   c1.push_front(Block("test2"));
@@ -474,8 +460,7 @@ BOOST_AUTO_TEST_CASE(test_pop_back)
   BOOST_CHECK_EQUAL(c1.size(), 0);
 }
 
-BOOST_FIXTURE_TEST_CASE(testInsertErase, F)
-{
+BOOST_FIXTURE_TEST_CASE(testInsertErase, F) {
   string s1 =
     "BLOCK test1\n"
     "BLOCK test2\n";
@@ -492,21 +477,21 @@ BOOST_FIXTURE_TEST_CASE(testInsertErase, F)
   BOOST_CHECK_EQUAL(c1.size(), 3);
   BOOST_CHECK_EQUAL(c1.count("test1"), 2);
 
-  c1.insert(c1.end(), c1.begin(), c1.begin()+2);
+  c1.insert(c1.end(), c1.begin(), c1.begin() + 2);
   BOOST_CHECK_EQUAL(c1.size(), 5);
   BOOST_CHECK_EQUAL(c1.count("test1"), 4);
 
-  it = c1.erase(c1.end()-1, c1.end());
+  it = c1.erase(c1.end() - 1, c1.end());
   BOOST_CHECK(it == c1.end());
   BOOST_CHECK_EQUAL(c1.size(), 4);
   BOOST_CHECK_EQUAL(c1.count("test1"), 3);
 
-  it = c1.erase(c1.begin()+1);
-  BOOST_CHECK(it == c1.begin()+1);
+  it = c1.erase(c1.begin() + 1);
+  BOOST_CHECK(it == c1.begin() + 1);
   BOOST_CHECK_EQUAL(c1.size(), 3);
   BOOST_CHECK_EQUAL(c1.count("test1"), 2);
 
-  it = c1.erase(c1.begin()+2);
+  it = c1.erase(c1.begin() + 2);
   BOOST_CHECK(it == c1.end());
   BOOST_CHECK_EQUAL(c1.size(), 2);
   BOOST_CHECK_EQUAL(c1.count("test1"), 1);
@@ -517,8 +502,7 @@ BOOST_FIXTURE_TEST_CASE(testInsertErase, F)
   BOOST_CHECK_EQUAL(c1.empty(), true);
 }
 
-BOOST_AUTO_TEST_CASE(testEraseFirst)
-{
+BOOST_AUTO_TEST_CASE(testEraseFirst) {
   string s1 =
     "BLOCK test1\n"
     "BLOCK test2\n"
@@ -534,7 +518,7 @@ BOOST_AUTO_TEST_CASE(testEraseFirst)
   BOOST_CHECK_EQUAL(c1.empty(), false);
 
   it = c1.erase_first("test2");
-  BOOST_CHECK(it == c1.begin()+1);
+  BOOST_CHECK(it == c1.begin() + 1);
   BOOST_CHECK_EQUAL(c1.count("test1"), 1);
   BOOST_CHECK_EQUAL(c1.count("test2"), 1);
   BOOST_CHECK_EQUAL(c1.empty(), false);
@@ -552,43 +536,36 @@ BOOST_AUTO_TEST_CASE(testEraseFirst)
   BOOST_CHECK_EQUAL(c1.empty(), true);
 }
 
-BOOST_AUTO_TEST_CASE(testEraseLast)
-{
-  string s1 =
-    "BLOCK test1\n"
-    "BLOCK test2\n"
-    "BLOCK test2\n";
-  Coll c1;
-  c1.str(s1);
-  Coll::iterator it;
+BOOST_AUTO_TEST_CASE(test_erase_last) {
+  Coll c1 = Coll::from_str(
+              "BLOCK test2\n"
+              "BLOCK test1\n"
+              "BLOCK test2\n");
 
-  it = c1.erase_last("test0");
-  BOOST_CHECK(it == c1.end());
-  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
-  BOOST_CHECK_EQUAL(c1.count("test2"), 2);
-  BOOST_CHECK_EQUAL(c1.empty(), false);
+  Coll::iterator it = c1.erase_last("test2");
 
-  it = c1.erase_last("test2");
-  BOOST_CHECK(it == c1.end());
-  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
-  BOOST_CHECK_EQUAL(c1.count("test2"), 1);
-  BOOST_CHECK_EQUAL(c1.empty(), false);
-
-  it = c1.erase_last("test2");
-  BOOST_CHECK(it == c1.end());
-  BOOST_CHECK_EQUAL(c1.count("test1"), 1);
-  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
-  BOOST_CHECK_EQUAL(c1.empty(), false);
-
-  it = c1.erase_last("test1");
-  BOOST_CHECK(it == c1.end());
-  BOOST_CHECK_EQUAL(c1.count("test1"), 0);
-  BOOST_CHECK_EQUAL(c1.count("test2"), 0);
-  BOOST_CHECK_EQUAL(c1.empty(), true);
+  BOOST_CHECK_EQUAL(it, c1.end());
+  BOOST_CHECK_EQUAL(c1,
+                    Coll::from_str(
+                      "BLOCK test2\n"
+                      "BLOCK test1\n");
 }
 
-BOOST_AUTO_TEST_CASE(testErase)
-{
+BOOST_AUTO_TEST_CASE(test_erase_last__nonexistent) {
+  Coll c1 = Coll::from_str(
+              "BLOCK test1\n"
+              "BLOCK test2\n");
+
+  Coll::iterator it = c1.erase_last("test3");
+
+  BOOST_CHECK_EQUAL(it, c1.end());
+  BOOST_CHECK_EQUAL(c1,
+                    Coll::from_str(
+                      "BLOCK test1\n"
+                      "BLOCK test2\n");
+}
+
+BOOST_AUTO_TEST_CASE(testErase) {
   string s1 =
     "BLOCK test1\n"
     "BLOCK test2\n"
@@ -630,8 +607,7 @@ BOOST_AUTO_TEST_CASE(testErase)
   BOOST_CHECK_EQUAL(c1.empty(), true);
 }
 
-BOOST_FIXTURE_TEST_CASE(testSwap, F)
-{
+BOOST_FIXTURE_TEST_CASE(testSwap, F) {
   Coll c1;
   c1.str(fs1);
   const Coll cc1 = c1;
@@ -661,8 +637,7 @@ BOOST_FIXTURE_TEST_CASE(testSwap, F)
   BOOST_CHECK_EQUAL(c2.str(), "");
 }
 
-BOOST_AUTO_TEST_CASE(testReformat)
-{
+BOOST_AUTO_TEST_CASE(testReformat) {
   Coll c1;
   c1.push_back("  Block  t1 ");
   c1.push_back(" DECAY  t2");
@@ -670,13 +645,12 @@ BOOST_AUTO_TEST_CASE(testReformat)
 
   c1.reformat();
   BOOST_CHECK_EQUAL(c1.str(),
-    "Block t1\n"
-    "DECAY t2\n"
-    "    1   2   3   4\n");
+                    "Block t1\n"
+                    "DECAY t2\n"
+                    "    1   2   3   4\n");
 }
 
-BOOST_FIXTURE_TEST_CASE(testUnComment, F)
-{
+BOOST_FIXTURE_TEST_CASE(testUnComment, F) {
   Coll c1;
   c1.str(fs1);
 
@@ -697,8 +671,7 @@ BOOST_FIXTURE_TEST_CASE(testUnComment, F)
   BOOST_CHECK_EQUAL(c1.str(), c2.str());
 }
 
-BOOST_AUTO_TEST_CASE(testKeyMatches)
-{
+BOOST_AUTO_TEST_CASE(testKeyMatches) {
   Block b1("TEST1");
   Coll::key_matches pred("test1");
 
@@ -714,8 +687,7 @@ BOOST_AUTO_TEST_CASE(testKeyMatches)
   BOOST_CHECK_EQUAL(pred(b1), false);
 }
 
-BOOST_AUTO_TEST_CASE(testKeyMatchesBlockDef)
-{
+BOOST_AUTO_TEST_CASE(testKeyMatchesBlockDef) {
   Block b1;
   b1.str("BLOCK TEST1");
   vector<string> key;
@@ -751,8 +723,7 @@ BOOST_AUTO_TEST_CASE(testKeyMatchesBlockDef)
   BOOST_CHECK_EQUAL(pred(b1), false);
 }
 
-BOOST_FIXTURE_TEST_CASE(testInEquality, F)
-{
+BOOST_FIXTURE_TEST_CASE(testInEquality, F) {
   Coll c1;
   c1.str(fs1);
 
