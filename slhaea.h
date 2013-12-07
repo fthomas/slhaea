@@ -94,7 +94,7 @@ to_upper_copy(const std::string& str)
 inline void
 trim_left(std::string& str)
 {
-  std::size_t startpos = str.find_first_not_of(" \t\n\v\f\r");
+  const std::size_t startpos = str.find_first_not_of(" \t\n\v\f\r");
   if (startpos != std::string::npos) str.erase(0, startpos);
   else str.clear();
 }
@@ -102,7 +102,7 @@ trim_left(std::string& str)
 inline void
 trim_right(std::string& str)
 {
-  std::size_t endpos = str.find_last_not_of(" \t\n\v\f\r");
+  const std::size_t endpos = str.find_last_not_of(" \t\n\v\f\r");
   if (endpos != std::string::npos) str.erase(endpos + 1);
   else str.clear();
 }
