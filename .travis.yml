@@ -2,4 +2,5 @@ language: cpp
 compiler:
  - clang
  - gcc
-script: "cmake . && make"
+before_install: "sudo apt-get install libboost-dev"
+script: "cmake . && make test"
