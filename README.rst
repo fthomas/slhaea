@@ -1,5 +1,8 @@
 SLHAea - containers for SUSY Les Houches Accord input/output
 ============================================================
+.. image:: https://travis-ci.org/fthomas/slhaea.png?branch=master
+   :alt: Build Status
+   :target: https://travis-ci.org/fthomas/slhaea
 
 Introduction
 ------------
