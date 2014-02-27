@@ -1550,8 +1550,10 @@ private:
   {
     key_type key;
     key.reserve(cont.size());
+    std::string (*to_string)(const typename Container::value_type&) =
+      boost::lexical_cast<std::string, typename Container::value_type>;
     std::transform(cont.begin(), cont.end(), std::back_inserter(key),
-      boost::lexical_cast<std::string, typename Container::value_type>);
+      to_string);
     return key;
   }
 
