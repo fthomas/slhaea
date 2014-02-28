@@ -1,0 +1,35 @@
+<map id="begin" name="begin">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Line.html#a1b9b8885b0880fc4ddf9a2c7d1ca3dc4" title="Returns a formatted string representation of the Line. " alt="" coords="173,131,211,159"/>
+<area shape="rect" id="node25" href="$classSLHAea_1_1Line.html#ab6e38e0459cf917a2c931667492fc8e0" title="Returns true if the Line begins with &quot;BLOCK&quot; or &quot;DECAY&quot; followed by a block name. ..." alt="" coords="143,514,241,542"/>
+<area shape="rect" id="node53" href="$namespaceSLHAea.html#a17882219f9a35c3152126fcca621baf2" title="SLHAea::operator\&lt;" alt="" coords="336,578,483,606"/>
+<area shape="rect" id="node55" href="$classSLHAea_1_1Line.html#aa3c5bbb0ca3183a6fcf4c55ff029981b" title="Returns the number of elements without the comment in the Line. " alt="" coords="151,615,233,643"/>
+<area shape="rect" id="node57" href="$classSLHAea_1_1Line.html#a4668790be4f6440a25e289fab92c2559" title="Reformats the string representation of the Line. " alt="" coords="153,666,231,694"/>
+<area shape="rect" id="node65" href="$structSLHAea_1_1Block_1_1key__matches.html#a1f08803f0a693b9b46a6ebae637b765e" title="SLHAea::Block::key\l_matches::operator()" alt="" coords="113,717,271,761"/>
+<area shape="rect" id="node67" href="$namespaceSLHAea.html#a0faa3a8a65a658cfc5f1cd2d79697f77" title="SLHAea::operator==" alt="" coords="113,783,271,811"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Line.html#a6f89cf17e2c808617766fff730669f02" title="Constructs a Line from a string. " alt="" coords="385,5,433,33"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Line.html#a3ddf84f2365ed6789b235c570ae18f3f" title="Assigns content from a string to the Line. " alt="" coords="365,55,453,83"/>
+<area shape="rect" id="node9" href="$classSLHAea_1_1Line.html#a8932baf02fef6612a5dc5efcdd9c2d81" title="Appends a string to the end of the Line. " alt="" coords="375,106,444,134"/>
+<area shape="rect" id="node13" href="$classSLHAea_1_1Line.html#a0b45ef674a1f5f2f317579ff92cddeee" title="Comments the Line. " alt="" coords="368,157,451,185"/>
+<area shape="rect" id="node19" href="$classSLHAea_1_1Line.html#a41d7b376436776be32a8da7c323269d5" title="Uncomments the Line. " alt="" coords="360,207,459,235"/>
+<area shape="rect" id="node11" href="$classSLHAea_1_1Line.html#a51492122897d6e975688002a962c1df5" title="Appends a string to the end of the Line. " alt="" coords="599,106,697,134"/>
+<area shape="rect" id="node15" href="$classSLHAea_1_1Block.html#a0b45ef674a1f5f2f317579ff92cddeee" title="Comments all Lines in the Block. " alt="" coords="556,157,740,185"/>
+<area shape="rect" id="node17" href="$classSLHAea_1_1Coll.html#a0b45ef674a1f5f2f317579ff92cddeee" title="Comments all Blocks in the Coll. " alt="" coords="807,157,980,185"/>
+<area shape="rect" id="node21" href="$classSLHAea_1_1Block.html#a41d7b376436776be32a8da7c323269d5" title="Uncomments all Lines in the Block. " alt="" coords="548,207,748,235"/>
+<area shape="rect" id="node23" href="$classSLHAea_1_1Coll.html#a41d7b376436776be32a8da7c323269d5" title="Uncomments all Blocks in the Coll. " alt="" coords="799,207,988,235"/>
+<area shape="rect" id="node27" href="$classSLHAea_1_1Block.html#a3dbf0544060b07ecb6a43f8e666528b2" title="Assigns content from an input stream to the Block. " alt="" coords="333,334,485,362"/>
+<area shape="rect" id="node39" href="$classSLHAea_1_1Block.html#a4bb0203636f59c383fede73bf98aab5c" title="Returns a read/write iterator that points to the first Line in the Block which is a block definition..." alt="" coords="336,461,483,505"/>
+<area shape="rect" id="node45" href="$classSLHAea_1_1Coll.html#a083c207ab848f1e7e6cde481b793c715" title="Assigns content from an input stream to the Coll. " alt="" coords="339,527,480,555"/>
+<area shape="rect" id="node29" href="$classSLHAea_1_1Block.html#ae34ad8fb90d5653774486c63f535b157" title="Constructs a Block with content from an input stream. " alt="" coords="569,258,727,286"/>
+<area shape="rect" id="node31" href="$classSLHAea_1_1Block.html#addbe2d06b25e55f60189be62b4120991" title="Assigns content from a string to the Block. " alt="" coords="579,309,717,337"/>
+<area shape="rect" id="node37" href="$namespaceSLHAea.html#a2686df0de79d34426ff09dcd983f17d6" title="SLHAea::operator\&gt;\&gt;" alt="" coords="569,359,727,387"/>
+<area shape="rect" id="node33" href="$classSLHAea_1_1Coll.html#ab025b6b6bac3287804de10c21d3189d7" title="Adds a Block to the end of the Coll. " alt="" coords="804,283,983,311"/>
+<area shape="rect" id="node35" href="$classSLHAea_1_1Coll.html#ad9a7052dbd77765c92eaa74a7e9b2fd4" title="Adds a Block to the begin of the Coll. " alt="" coords="823,334,964,378"/>
+<area shape="rect" id="node41" href="$classSLHAea_1_1Block.html#a2bc2036b66ce5b372e90b18026d2f80f" title="Changes the name and definition of the Block. " alt="" coords="561,410,735,438"/>
+<area shape="rect" id="node43" href="$structSLHAea_1_1Coll_1_1key__matches__block__def.html#abd532ed30e3ab5d1445965af9b6fa935" title="SLHAea::Coll::key_matches\l_block_def::operator()" alt="" coords="549,461,747,505"/>
+<area shape="rect" id="node47" href="$classSLHAea_1_1Coll.html#a862e3c12c64482e7fe6e2b7963a52088" title="Constructs a Coll with content from an input stream. " alt="" coords="581,527,715,555"/>
+<area shape="rect" id="node49" href="$classSLHAea_1_1Coll.html#a24818c1c42ea4fa2abda951b7adf33c6" title="Assigns content from a string to the Coll. " alt="" coords="584,578,712,606"/>
+<area shape="rect" id="node51" href="$namespaceSLHAea.html#aa7ee62b781bd56565ef146397c20b52c" title="SLHAea::operator\&gt;\&gt;" alt="" coords="569,629,727,657"/>
+<area shape="rect" id="node59" href="$classSLHAea_1_1Line.html#a432836d3b3acedd3f84528b8abb3a147" title="Inserts an element at the end of the Line. " alt="" coords="360,654,459,682"/>
+<area shape="rect" id="node61" href="$classSLHAea_1_1Block.html#a4668790be4f6440a25e289fab92c2559" title="Reformats all Lines in the Block. " alt="" coords="320,705,499,733"/>
+<area shape="rect" id="node63" href="$classSLHAea_1_1Coll.html#a4668790be4f6440a25e289fab92c2559" title="Reformats all Blocks in the Coll. " alt="" coords="564,705,732,733"/>
+</map>

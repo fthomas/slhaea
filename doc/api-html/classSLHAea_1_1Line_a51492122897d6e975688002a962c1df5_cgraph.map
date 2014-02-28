@@ -1,0 +1,7 @@
+<map id="operator+=" name="operator+=">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Line.html#a8932baf02fef6612a5dc5efcdd9c2d81" title="Appends a string to the end of the Line. " alt="" coords="153,55,223,83"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Line.html#a1b9b8885b0880fc4ddf9a2c7d1ca3dc4" title="Returns a formatted string representation of the Line. " alt="" coords="273,55,311,83"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Line.html#ac6e61de369e994009e36f344f99c15ad" title="Returns true if the Line is empty. " alt="" coords="361,5,423,33"/>
+<area shape="rect" id="node9" href="$classSLHAea_1_1Line.html#ad69bd11391be1a1dba5c8202259664f8" title="Returns a read/write iterator that points to the first element in the Line. " alt="" coords="364,55,420,83"/>
+<area shape="rect" id="node11" href="$classSLHAea_1_1Line.html#acad38d52497a975bfb6f2f6acd76631f" title="Returns a read/write iterator that points one past the last element in the Line. " alt="" coords="369,106,415,134"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="data_size" name="data_size">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Block.html#ad69bd11391be1a1dba5c8202259664f8" title="Returns a read/write iterator that points to the first element in the Block. " alt="" coords="204,5,260,33"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Block.html#acad38d52497a975bfb6f2f6acd76631f" title="Returns a read/write iterator that points one past the last element in the Block. ..." alt="" coords="209,55,255,83"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Line.html#af5cc4e9b2287ff9038b616cabacc1964" title="Returns true if the Line is not empty and if it does not begin with &quot;#&quot;, &quot;BLOCK&quot; or &quot;DECAY&quot;..." alt="" coords="137,106,327,134"/>
+<area shape="rect" id="node9" href="$classSLHAea_1_1Line.html#ac6e61de369e994009e36f344f99c15ad" title="Returns true if the Line is empty. " alt="" coords="377,81,532,109"/>
+<area shape="rect" id="node11" href="$classSLHAea_1_1Line.html#a6a48363b4355f6f5b441637774f79a59" title="Returns a read/write reference to the first element of the Line. " alt="" coords="383,131,527,159"/>
+</map>

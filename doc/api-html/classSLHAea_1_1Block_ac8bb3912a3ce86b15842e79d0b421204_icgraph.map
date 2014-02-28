@@ -1,0 +1,5 @@
+<map id="clear" name="clear">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Block.html#addbe2d06b25e55f60189be62b4120991" title="Assigns content from a string to the Block. " alt="" coords="108,34,145,62"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Coll.html#ab025b6b6bac3287804de10c21d3189d7" title="Adds a Block to the end of the Coll. " alt="" coords="196,5,375,33"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Coll.html#ad9a7052dbd77765c92eaa74a7e9b2fd4" title="Adds a Block to the begin of the Coll. " alt="" coords="215,55,356,99"/>
+</map>

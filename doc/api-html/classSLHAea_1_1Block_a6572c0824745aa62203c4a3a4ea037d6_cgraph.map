@@ -1,0 +1,7 @@
+<map id="operator[]" name="operator[]">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Block.html#a9c9766a96c492f3e9e5861d6b4f87387" title="Tries to locate a Line in the Block. " alt="" coords="164,5,209,33"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Block.html#acad38d52497a975bfb6f2f6acd76631f" title="Returns a read/write iterator that points one past the last element in the Block. ..." alt="" coords="287,55,332,83"/>
+<area shape="rect" id="node10" href="$classSLHAea_1_1Block.html#aced3728616fa70a56ee9eac934676163" title="Adds a Line to the end of the Block. " alt="" coords="141,106,232,134"/>
+<area shape="rect" id="node12" href="$classSLHAea_1_1Block.html#af71e6c1eccbc12e9339c00a86a981a43" title="Returns a read/write reference to the last element of the Block. " alt="" coords="161,157,212,185"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Block.html#ad69bd11391be1a1dba5c8202259664f8" title="Returns a read/write iterator that points to the first element in the Block. " alt="" coords="281,5,337,33"/>
+</map>

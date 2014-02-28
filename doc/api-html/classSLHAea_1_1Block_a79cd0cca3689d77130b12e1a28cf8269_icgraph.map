@@ -1,0 +1,5 @@
+<map id="erase" name="erase">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Block.html#a135c90b4c90bb870c241107ec9fbbe14" title="Erases first Line that matches the provided key. " alt="" coords="113,5,201,33"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Block.html#a5ad41a9d095492853edca0826f18d5c9" title="Erases last Line that matches the provided key. " alt="" coords="113,55,201,83"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Block.html#ae57ff6dd1cb4dc347b892dfa87ea6613" title="Erases all Lines that match the provided key. " alt="" coords="128,106,187,134"/>
+</map>

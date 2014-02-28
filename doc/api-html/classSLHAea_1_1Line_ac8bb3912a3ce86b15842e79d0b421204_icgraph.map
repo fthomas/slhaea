@@ -1,0 +1,15 @@
+<map id="clear" name="clear">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Line.html#a5031d8722804a21d4064f967ea736a30" title="Assigns content to the Line based on a string. " alt="" coords="108,207,145,235"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Block.html#a3dbf0544060b07ecb6a43f8e666528b2" title="Assigns content from an input stream to the Block. " alt="" coords="199,106,351,134"/>
+<area shape="rect" id="node17" href="$classSLHAea_1_1Coll.html#a083c207ab848f1e7e6cde481b793c715" title="Assigns content from an input stream to the Coll. " alt="" coords="204,182,345,210"/>
+<area shape="rect" id="node25" href="$namespaceSLHAea.html#ad10c5b06933773ca9223ad2ccdd96ece" title="SLHAea::operator\&lt;\&lt;" alt="" coords="196,233,353,261"/>
+<area shape="rect" id="node27" href="$namespaceSLHAea.html#a0faa3a8a65a658cfc5f1cd2d79697f77" title="SLHAea::operator==" alt="" coords="196,283,353,311"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Block.html#ae34ad8fb90d5653774486c63f535b157" title="Constructs a Block with content from an input stream. " alt="" coords="404,5,561,33"/>
+<area shape="rect" id="node9" href="$classSLHAea_1_1Block.html#addbe2d06b25e55f60189be62b4120991" title="Assigns content from a string to the Block. " alt="" coords="413,55,552,83"/>
+<area shape="rect" id="node15" href="$namespaceSLHAea.html#a2686df0de79d34426ff09dcd983f17d6" title="SLHAea::operator\&gt;\&gt;" alt="" coords="404,106,561,134"/>
+<area shape="rect" id="node11" href="$classSLHAea_1_1Coll.html#ab025b6b6bac3287804de10c21d3189d7" title="Adds a Block to the end of the Coll. " alt="" coords="612,26,791,54"/>
+<area shape="rect" id="node13" href="$classSLHAea_1_1Coll.html#ad9a7052dbd77765c92eaa74a7e9b2fd4" title="Adds a Block to the begin of the Coll. " alt="" coords="631,77,772,121"/>
+<area shape="rect" id="node19" href="$classSLHAea_1_1Coll.html#a862e3c12c64482e7fe6e2b7963a52088" title="Constructs a Coll with content from an input stream. " alt="" coords="416,157,549,185"/>
+<area shape="rect" id="node21" href="$classSLHAea_1_1Coll.html#a24818c1c42ea4fa2abda951b7adf33c6" title="Assigns content from a string to the Coll. " alt="" coords="419,207,547,235"/>
+<area shape="rect" id="node23" href="$namespaceSLHAea.html#aa7ee62b781bd56565ef146397c20b52c" title="SLHAea::operator\&gt;\&gt;" alt="" coords="404,258,561,286"/>
+</map>

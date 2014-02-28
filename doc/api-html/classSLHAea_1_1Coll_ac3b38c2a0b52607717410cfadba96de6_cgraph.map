@@ -1,0 +1,10 @@
+<map id="erase_last" name="erase_last">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Coll.html#a10ab943538a44503d8813eeb8b0bc28f" title="Accesses a Block in the Coll. " alt="" coords="147,55,200,83"/>
+<area shape="rect" id="node8" href="$classSLHAea_1_1Coll.html#a71434df103d67e2712514f84f4cf2456" title="Tries to locate a Block in the Coll. " alt="" coords="341,5,387,33"/>
+<area shape="rect" id="node12" href="$classSLHAea_1_1Coll.html#acad38d52497a975bfb6f2f6acd76631f" title="Returns a read/write iterator that points one past the last element in the Coll. " alt="" coords="441,55,487,83"/>
+<area shape="rect" id="node16" href="$classSLHAea_1_1Coll.html#acea44ed500a54b2bb93e16b86e81afa8" title="Returns a read/write reverse iterator that points to the last element in the Coll. " alt="" coords="143,157,204,185"/>
+<area shape="rect" id="node18" href="$classSLHAea_1_1Coll.html#a68c599ddcbfddc65170de524ac165e44" title="Returns a read/write reverse iterator that points to one before the first element in the Coll..." alt="" coords="148,207,199,235"/>
+<area shape="rect" id="node20" href="$classSLHAea_1_1Coll.html#a79cd0cca3689d77130b12e1a28cf8269" title="Erases element at given position. " alt="" coords="144,258,203,286"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Coll.html#a2cbd090094af40a9431a0f906029c9b7" title="Locates a Block in the Coll. " alt="" coords="255,55,292,83"/>
+<area shape="rect" id="node10" href="$classSLHAea_1_1Coll.html#ad69bd11391be1a1dba5c8202259664f8" title="Returns a read/write iterator that points to the first element in the Coll. " alt="" coords="436,5,492,33"/>
+</map>

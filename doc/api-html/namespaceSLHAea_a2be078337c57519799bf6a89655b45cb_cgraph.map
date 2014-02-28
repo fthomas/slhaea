@@ -1,0 +1,5 @@
+<map id="operator==" name="operator==">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Coll.html#a503ab01f6c0142145d3434f6924714e7" title="Returns the number of elements in the Coll. " alt="" coords="157,5,293,33"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Coll.html#ad69bd11391be1a1dba5c8202259664f8" title="Returns a read/write iterator that points to the first element in the Coll. " alt="" coords="152,55,299,83"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Coll.html#acad38d52497a975bfb6f2f6acd76631f" title="Returns a read/write iterator that points one past the last element in the Coll. " alt="" coords="157,106,293,134"/>
+</map>

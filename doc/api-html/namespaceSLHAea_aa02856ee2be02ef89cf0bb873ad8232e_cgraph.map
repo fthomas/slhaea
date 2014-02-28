@@ -1,0 +1,6 @@
+<map id="operator==" name="operator==">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Block.html#a503ab01f6c0142145d3434f6924714e7" title="Returns the number of elements in the Block. " alt="" coords="159,5,305,33"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Block.html#a0c1be1a015573a2c058623e6a2d9fd29" title="Sets the name of the Block. " alt="" coords="152,55,312,83"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Block.html#ad69bd11391be1a1dba5c8202259664f8" title="Returns a read/write iterator that points to the first element in the Block. " alt="" coords="153,106,311,134"/>
+<area shape="rect" id="node9" href="$classSLHAea_1_1Block.html#acad38d52497a975bfb6f2f6acd76631f" title="Returns a read/write iterator that points one past the last element in the Block. ..." alt="" coords="159,157,305,185"/>
+</map>

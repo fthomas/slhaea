@@ -1,0 +1,19 @@
+<map id="size" name="size">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Line.html#ab6e38e0459cf917a2c931667492fc8e0" title="Returns true if the Line begins with &quot;BLOCK&quot; or &quot;DECAY&quot; followed by a block name. ..." alt="" coords="132,245,231,273"/>
+<area shape="rect" id="node33" href="$structSLHAea_1_1Block_1_1key__matches.html#a1f08803f0a693b9b46a6ebae637b765e" title="SLHAea::Block::key\l_matches::operator()" alt="" coords="103,295,260,339"/>
+<area shape="rect" id="node35" href="$namespaceSLHAea.html#a0faa3a8a65a658cfc5f1cd2d79697f77" title="SLHAea::operator==" alt="" coords="103,362,260,390"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Block.html#a3dbf0544060b07ecb6a43f8e666528b2" title="Assigns content from an input stream to the Block. " alt="" coords="309,81,461,109"/>
+<area shape="rect" id="node17" href="$classSLHAea_1_1Block.html#a4bb0203636f59c383fede73bf98aab5c" title="Returns a read/write iterator that points to the first Line in the Block which is a block definition..." alt="" coords="312,207,459,251"/>
+<area shape="rect" id="node23" href="$classSLHAea_1_1Coll.html#a083c207ab848f1e7e6cde481b793c715" title="Assigns content from an input stream to the Coll. " alt="" coords="315,274,456,302"/>
+<area shape="rect" id="node31" href="$namespaceSLHAea.html#a17882219f9a35c3152126fcca621baf2" title="SLHAea::operator\&lt;" alt="" coords="312,325,459,353"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Block.html#ae34ad8fb90d5653774486c63f535b157" title="Constructs a Block with content from an input stream. " alt="" coords="529,5,687,33"/>
+<area shape="rect" id="node9" href="$classSLHAea_1_1Block.html#addbe2d06b25e55f60189be62b4120991" title="Assigns content from a string to the Block. " alt="" coords="539,55,677,83"/>
+<area shape="rect" id="node15" href="$namespaceSLHAea.html#a2686df0de79d34426ff09dcd983f17d6" title="SLHAea::operator\&gt;\&gt;" alt="" coords="529,106,687,134"/>
+<area shape="rect" id="node11" href="$classSLHAea_1_1Coll.html#ab025b6b6bac3287804de10c21d3189d7" title="Adds a Block to the end of the Coll. " alt="" coords="756,26,935,54"/>
+<area shape="rect" id="node13" href="$classSLHAea_1_1Coll.html#ad9a7052dbd77765c92eaa74a7e9b2fd4" title="Adds a Block to the begin of the Coll. " alt="" coords="775,77,916,121"/>
+<area shape="rect" id="node19" href="$classSLHAea_1_1Block.html#a2bc2036b66ce5b372e90b18026d2f80f" title="Changes the name and definition of the Block. " alt="" coords="521,157,695,185"/>
+<area shape="rect" id="node21" href="$structSLHAea_1_1Coll_1_1key__matches__block__def.html#abd532ed30e3ab5d1445965af9b6fa935" title="SLHAea::Coll::key_matches\l_block_def::operator()" alt="" coords="509,207,707,251"/>
+<area shape="rect" id="node25" href="$classSLHAea_1_1Coll.html#a862e3c12c64482e7fe6e2b7963a52088" title="Constructs a Coll with content from an input stream. " alt="" coords="541,274,675,302"/>
+<area shape="rect" id="node27" href="$classSLHAea_1_1Coll.html#a24818c1c42ea4fa2abda951b7adf33c6" title="Assigns content from a string to the Coll. " alt="" coords="544,325,672,353"/>
+<area shape="rect" id="node29" href="$namespaceSLHAea.html#aa7ee62b781bd56565ef146397c20b52c" title="SLHAea::operator\&gt;\&gt;" alt="" coords="529,375,687,403"/>
+</map>

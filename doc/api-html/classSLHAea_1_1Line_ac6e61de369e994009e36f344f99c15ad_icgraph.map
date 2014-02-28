@@ -1,0 +1,20 @@
+<map id="empty" name="empty">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Line.html#a1b9b8885b0880fc4ddf9a2c7d1ca3dc4" title="Returns a formatted string representation of the Line. " alt="" coords="164,106,201,134"/>
+<area shape="rect" id="node13" href="$classSLHAea_1_1Line.html#a0b45ef674a1f5f2f317579ff92cddeee" title="Comments the Line. " alt="" coords="347,157,429,185"/>
+<area shape="rect" id="node19" href="$classSLHAea_1_1Line.html#a41d7b376436776be32a8da7c323269d5" title="Uncomments the Line. " alt="" coords="339,207,437,235"/>
+<area shape="rect" id="node25" href="$classSLHAea_1_1Line.html#a5f049fda5b3f285f2c8abbc745b10f13" title="Returns true if the Line begins with &quot;#&quot;. " alt="" coords="117,258,248,286"/>
+<area shape="rect" id="node27" href="$classSLHAea_1_1Line.html#af5cc4e9b2287ff9038b616cabacc1964" title="Returns true if the Line is not empty and if it does not begin with &quot;#&quot;, &quot;BLOCK&quot; or &quot;DECAY&quot;..." alt="" coords="135,309,231,337"/>
+<area shape="rect" id="node31" href="$classSLHAea_1_1Line.html#a4668790be4f6440a25e289fab92c2559" title="Reformats the string representation of the Line. " alt="" coords="144,359,221,387"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Line.html#a6f89cf17e2c808617766fff730669f02" title="Constructs a Line from a string. " alt="" coords="364,5,412,33"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Line.html#a3ddf84f2365ed6789b235c570ae18f3f" title="Assigns content from a string to the Line. " alt="" coords="344,55,432,83"/>
+<area shape="rect" id="node9" href="$classSLHAea_1_1Line.html#a8932baf02fef6612a5dc5efcdd9c2d81" title="Appends a string to the end of the Line. " alt="" coords="353,106,423,134"/>
+<area shape="rect" id="node11" href="$classSLHAea_1_1Line.html#a51492122897d6e975688002a962c1df5" title="Appends a string to the end of the Line. " alt="" coords="580,106,679,134"/>
+<area shape="rect" id="node15" href="$classSLHAea_1_1Block.html#a0b45ef674a1f5f2f317579ff92cddeee" title="Comments all Lines in the Block. " alt="" coords="537,157,721,185"/>
+<area shape="rect" id="node17" href="$classSLHAea_1_1Coll.html#a0b45ef674a1f5f2f317579ff92cddeee" title="Comments all Blocks in the Coll. " alt="" coords="788,157,961,185"/>
+<area shape="rect" id="node21" href="$classSLHAea_1_1Block.html#a41d7b376436776be32a8da7c323269d5" title="Uncomments all Lines in the Block. " alt="" coords="529,207,729,235"/>
+<area shape="rect" id="node23" href="$classSLHAea_1_1Coll.html#a41d7b376436776be32a8da7c323269d5" title="Uncomments all Blocks in the Coll. " alt="" coords="780,207,969,235"/>
+<area shape="rect" id="node29" href="$classSLHAea_1_1Block.html#aa3c5bbb0ca3183a6fcf4c55ff029981b" title="Returns the number of data Lines in the Block. " alt="" coords="296,309,480,337"/>
+<area shape="rect" id="node33" href="$classSLHAea_1_1Line.html#a432836d3b3acedd3f84528b8abb3a147" title="Inserts an element at the end of the Line. " alt="" coords="339,359,437,387"/>
+<area shape="rect" id="node35" href="$classSLHAea_1_1Block.html#a4668790be4f6440a25e289fab92c2559" title="Reformats all Lines in the Block. " alt="" coords="299,410,477,438"/>
+<area shape="rect" id="node37" href="$classSLHAea_1_1Coll.html#a4668790be4f6440a25e289fab92c2559" title="Reformats all Blocks in the Coll. " alt="" coords="545,410,713,438"/>
+</map>

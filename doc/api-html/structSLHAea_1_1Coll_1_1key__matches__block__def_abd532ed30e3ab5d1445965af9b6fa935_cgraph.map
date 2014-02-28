@@ -1,0 +1,8 @@
+<map id="operator()" name="operator()">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Block.html#a4bb0203636f59c383fede73bf98aab5c" title="Returns a read/write iterator that points to the first Line in the Block which is a block definition..." alt="" coords="141,45,288,89"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Block.html#acad38d52497a975bfb6f2f6acd76631f" title="Returns a read/write iterator that points one past the last element in the Block. ..." alt="" coords="359,110,505,138"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Block.html#ad69bd11391be1a1dba5c8202259664f8" title="Returns a read/write iterator that points to the first element in the Block. " alt="" coords="353,5,511,33"/>
+<area shape="rect" id="node9" href="$classSLHAea_1_1Line.html#ab6e38e0459cf917a2c931667492fc8e0" title="Returns true if the Line begins with &quot;BLOCK&quot; or &quot;DECAY&quot; followed by a block name. ..." alt="" coords="336,55,528,83"/>
+<area shape="rect" id="node11" href="$classSLHAea_1_1Line.html#a503ab01f6c0142145d3434f6924714e7" title="Returns the number of elements in the Line. " alt="" coords="583,30,721,58"/>
+<area shape="rect" id="node13" href="$classSLHAea_1_1Line.html#ad69bd11391be1a1dba5c8202259664f8" title="Returns a read/write iterator that points to the first element in the Line. " alt="" coords="577,81,727,109"/>
+</map>

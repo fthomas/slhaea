@@ -1,0 +1,5 @@
+<map id="erase" name="erase">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Coll.html#a49846b4797a645bd6512e8f6440717a1" title="Erases first Block with a given name. " alt="" coords="113,5,201,33"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Coll.html#ac3b38c2a0b52607717410cfadba96de6" title="Erases last Block with a given name. " alt="" coords="113,55,201,83"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Coll.html#a82214b55b63739f0c7a500dd7e36ec56" title="Erases all Blocks with a given name. " alt="" coords="128,106,187,134"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="front" name="front">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Line.html#a5f049fda5b3f285f2c8abbc745b10f13" title="Returns true if the Line begins with &quot;#&quot;. " alt="" coords="107,5,237,33"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Line.html#af5cc4e9b2287ff9038b616cabacc1964" title="Returns true if the Line is not empty and if it does not begin with &quot;#&quot;, &quot;BLOCK&quot; or &quot;DECAY&quot;..." alt="" coords="124,55,220,83"/>
+<area shape="rect" id="node9" href="$classSLHAea_1_1Line.html#a41d7b376436776be32a8da7c323269d5" title="Uncomments the Line. " alt="" coords="123,106,221,134"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Block.html#aa3c5bbb0ca3183a6fcf4c55ff029981b" title="Returns the number of data Lines in the Block. " alt="" coords="295,55,479,83"/>
+<area shape="rect" id="node11" href="$classSLHAea_1_1Block.html#a41d7b376436776be32a8da7c323269d5" title="Uncomments all Lines in the Block. " alt="" coords="287,106,487,134"/>
+<area shape="rect" id="node13" href="$classSLHAea_1_1Coll.html#a41d7b376436776be32a8da7c323269d5" title="Uncomments all Blocks in the Coll. " alt="" coords="537,106,727,134"/>
+</map>

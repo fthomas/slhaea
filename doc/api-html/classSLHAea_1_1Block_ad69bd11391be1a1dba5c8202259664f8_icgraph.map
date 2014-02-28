@@ -1,0 +1,29 @@
+<map id="begin" name="begin">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Block.html#a9c9766a96c492f3e9e5861d6b4f87387" title="Tries to locate a Line in the Block. " alt="" coords="169,106,215,134"/>
+<area shape="rect" id="node27" href="$classSLHAea_1_1Block.html#a4bb0203636f59c383fede73bf98aab5c" title="Returns a read/write iterator that points to the first Line in the Block which is a block definition..." alt="" coords="136,207,248,235"/>
+<area shape="rect" id="node33" href="$classSLHAea_1_1Block.html#addd4e2b6ff9c7bef508bc908caabb2d4" title="Counts all Lines that match a given key. " alt="" coords="163,258,221,286"/>
+<area shape="rect" id="node35" href="$classSLHAea_1_1Block.html#aa3c5bbb0ca3183a6fcf4c55ff029981b" title="Returns the number of data Lines in the Block. " alt="" coords="151,309,233,337"/>
+<area shape="rect" id="node37" href="$classSLHAea_1_1Block.html#ae57ff6dd1cb4dc347b892dfa87ea6613" title="Erases all Lines that match the provided key. " alt="" coords="163,359,221,387"/>
+<area shape="rect" id="node39" href="$classSLHAea_1_1Block.html#a4668790be4f6440a25e289fab92c2559" title="Reformats all Lines in the Block. " alt="" coords="153,410,231,438"/>
+<area shape="rect" id="node43" href="$classSLHAea_1_1Block.html#a0b45ef674a1f5f2f317579ff92cddeee" title="Comments all Lines in the Block. " alt="" coords="151,461,233,489"/>
+<area shape="rect" id="node47" href="$classSLHAea_1_1Block.html#a41d7b376436776be32a8da7c323269d5" title="Uncomments all Lines in the Block. " alt="" coords="143,511,241,539"/>
+<area shape="rect" id="node51" href="$namespaceSLHAea.html#a9f66962808cfa3f1d8836fc748bcfcb3" title="SLHAea::operator\&lt;\&lt;" alt="" coords="113,562,271,590"/>
+<area shape="rect" id="node53" href="$namespaceSLHAea.html#aa02856ee2be02ef89cf0bb873ad8232e" title="SLHAea::operator==" alt="" coords="113,613,271,641"/>
+<area shape="rect" id="node55" href="$namespaceSLHAea.html#ac5bd97d106d5e7a369888be1ff2b2707" title="SLHAea::operator\&lt;" alt="" coords="119,663,265,691"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Block.html#a6572c0824745aa62203c4a3a4ea037d6" title="Locates a Line in the Block. " alt="" coords="376,5,461,33"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Block.html#afd73bb6a2ebbe514d3e7f1e30c6262bc" title="Locates a Line in the Block. " alt="" coords="400,55,437,83"/>
+<area shape="rect" id="node23" href="$classSLHAea_1_1Block.html#a135c90b4c90bb870c241107ec9fbbe14" title="Erases first Line that matches the provided key. " alt="" coords="375,106,463,134"/>
+<area shape="rect" id="node25" href="$classSLHAea_1_1Block.html#a5ad41a9d095492853edca0826f18d5c9" title="Erases last Line that matches the provided key. " alt="" coords="375,157,463,185"/>
+<area shape="rect" id="node9" href="$classSLHAea_1_1Block.html#aae6fb41314e65a5259821690a4617c5a" title="Locates a Line in the Block. " alt="" coords="615,30,652,58"/>
+<area shape="rect" id="node11" href="$classSLHAea_1_1Coll.html#a05f2a9c8d847486a18d14de53422aa2f" title="Accesses a single Line in the Coll. " alt="" coords="567,81,700,109"/>
+<area shape="rect" id="node13" href="$classSLHAea_1_1Coll.html#a083c207ab848f1e7e6cde481b793c715" title="Assigns content from an input stream to the Coll. " alt="" coords="749,55,891,83"/>
+<area shape="rect" id="node21" href="$classSLHAea_1_1Coll.html#a33c00f56ca4bdc5f903ca3d052fe062f" title="Accesses a single field in the Coll. " alt="" coords="751,106,889,134"/>
+<area shape="rect" id="node15" href="$classSLHAea_1_1Coll.html#a862e3c12c64482e7fe6e2b7963a52088" title="Constructs a Coll with content from an input stream. " alt="" coords="952,5,1085,33"/>
+<area shape="rect" id="node17" href="$classSLHAea_1_1Coll.html#a24818c1c42ea4fa2abda951b7adf33c6" title="Assigns content from a string to the Coll. " alt="" coords="955,55,1083,83"/>
+<area shape="rect" id="node19" href="$namespaceSLHAea.html#aa7ee62b781bd56565ef146397c20b52c" title="SLHAea::operator\&gt;\&gt;" alt="" coords="940,106,1097,134"/>
+<area shape="rect" id="node29" href="$classSLHAea_1_1Block.html#a2bc2036b66ce5b372e90b18026d2f80f" title="Changes the name and definition of the Block. " alt="" coords="383,207,455,235"/>
+<area shape="rect" id="node31" href="$structSLHAea_1_1Coll_1_1key__matches__block__def.html#abd532ed30e3ab5d1445965af9b6fa935" title="SLHAea::Coll::key_matches\l_block_def::operator()" alt="" coords="320,258,517,302"/>
+<area shape="rect" id="node41" href="$classSLHAea_1_1Coll.html#a4668790be4f6440a25e289fab92c2559" title="Reformats all Blocks in the Coll. " alt="" coords="335,410,503,438"/>
+<area shape="rect" id="node45" href="$classSLHAea_1_1Coll.html#a0b45ef674a1f5f2f317579ff92cddeee" title="Comments all Blocks in the Coll. " alt="" coords="332,461,505,489"/>
+<area shape="rect" id="node49" href="$classSLHAea_1_1Coll.html#a41d7b376436776be32a8da7c323269d5" title="Uncomments all Blocks in the Coll. " alt="" coords="324,511,513,539"/>
+</map>

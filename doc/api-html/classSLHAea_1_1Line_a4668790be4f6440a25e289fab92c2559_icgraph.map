@@ -1,0 +1,5 @@
+<map id="reformat" name="reformat">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Line.html#a432836d3b3acedd3f84528b8abb3a147" title="Inserts an element at the end of the Line. " alt="" coords="173,5,272,33"/>
+<area shape="rect" id="node5" href="$classSLHAea_1_1Block.html#a4668790be4f6440a25e289fab92c2559" title="Reformats all Lines in the Block. " alt="" coords="133,55,312,83"/>
+<area shape="rect" id="node7" href="$classSLHAea_1_1Coll.html#a4668790be4f6440a25e289fab92c2559" title="Reformats all Blocks in the Coll. " alt="" coords="360,55,528,83"/>
+</map>

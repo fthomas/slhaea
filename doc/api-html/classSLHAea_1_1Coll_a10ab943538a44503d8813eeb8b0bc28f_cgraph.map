@@ -1,0 +1,6 @@
+<map id="block" name="block">
+<area shape="rect" id="node3" href="$classSLHAea_1_1Coll.html#a2cbd090094af40a9431a0f906029c9b7" title="Locates a Block in the Coll. " alt="" coords="111,30,148,58"/>
+<area shape="rect" id="node6" href="$classSLHAea_1_1Coll.html#a71434df103d67e2712514f84f4cf2456" title="Tries to locate a Block in the Coll. " alt="" coords="197,5,243,33"/>
+<area shape="rect" id="node10" href="$classSLHAea_1_1Coll.html#acad38d52497a975bfb6f2f6acd76631f" title="Returns a read/write iterator that points one past the last element in the Coll. " alt="" coords="297,55,343,83"/>
+<area shape="rect" id="node8" href="$classSLHAea_1_1Coll.html#ad69bd11391be1a1dba5c8202259664f8" title="Returns a read/write iterator that points to the first element in the Coll. " alt="" coords="292,5,348,33"/>
+</map>
