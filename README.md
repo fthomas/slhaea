@@ -1,13 +1,10 @@
 # SLHAea - containers for SUSY Les Houches Accord input/output
-
-.. image:: https://travis-ci.org/fthomas/slhaea.png?branch=master
-   :alt: Build Status
-   :target: https://travis-ci.org/fthomas/slhaea
+[![Build Status](https://travis-ci.org/fthomas/slhaea.png?branch=master)](https://travis-ci.org/fthomas/slhaea)
 
 ## Introduction
 
 SLHAea is an easy to use C++ library for input, output, and
-manipulation of data in the `SUSY Les Houches Accord`_ (SLHA). It is
+manipulation of data in the [SUSY Les Houches Accord][] (SLHA). It is
 based on the concept that a SLHA structure is a container of blocks,
 which are then again containers of lines, which are then again
 containers of strings.
@@ -24,26 +21,25 @@ Its main features are:
   or integers
 - no precision is lost in read/write cycles of unmodified data
 - blocks and lines are not restricted to the ones specified in the
-  `SLHA`_, `SLHA2`_, and `FLHA`_ or later accords that use the same
+  [SLHA][], [SLHA2][], and [FLHA][] or later accords that use the same
   syntax
 - easy to use since SLHAea is a header-only library consisting of only
   one file
 
-.. _SUSY Les Houches Accord: http://home.fnal.gov/~skands/slha/
-.. _SLHA:  http://arxiv.org/abs/hep-ph/0311123
-.. _SLHA2: http://arxiv.org/abs/0801.0045
-.. _FLHA:  http://arxiv.org/abs/1008.0762
+[SUSY Les Houches Accord]: http://home.fnal.gov/~skands/slha/
+[SLHA]:  http://arxiv.org/abs/hep-ph/0311123
+[SLHA2]: http://arxiv.org/abs/0801.0045
+[FLHA]:  http://arxiv.org/abs/1008.0762
 
 ## Documentation
 
-The API documentation is `here`_. It includes some `practical
-examples`_ which can also be found in the `doc/examples/`_ directory
+The API documentation is [here][]. It includes some [practical
+examples][] which can also be found in the [doc/examples/][] directory
 in SLHAea's source tree.
 
-.. _here: http://fthomas.github.io/slhaea/doc/api-html/
-.. _practical examples:
-    http://fthomas.github.io/slhaea/doc/api-html/examples.html
-.. _doc/examples/: http://github.com/fthomas/slhaea/tree/master/doc/examples/
+[here]: http://fthomas.github.io/slhaea/doc/api-html/
+[practical examples]: http://fthomas.github.io/slhaea/doc/api-html/examples.html
+[doc/examples/]: http://github.com/fthomas/slhaea/tree/master/doc/examples/
 
 ## Dependencies
 
@@ -60,20 +56,20 @@ You can download SLHAea in either [tar.gz][] or [zip][] formats.
 [zip]:    http://github.com/fthomas/slhaea/zipball/master
 
 The version control system used for development of SLHAea is Git. The
-`Git repository`_ can be inspected and browsed online at GitHub and it
-can be cloned by running::
+[Git repository][] can be inspected and browsed online at GitHub and it
+can be cloned by running:
 
-  git clone git://github.com/fthomas/slhaea.git
+    git clone git://github.com/fthomas/slhaea.git
 
-.. _Git repository: http://github.com/fthomas/slhaea
+[Git repository]: http://github.com/fthomas/slhaea
 
 ## Issues and feedback
 
 For bug reports, feature requests, or general feedback either use the
-`issue tracker`_ or [write me an email][].
+[issue tracker][] or [write me an email][].
 
-.. _issue tracker: http://github.com/fthomas/slhaea/issues
-[write me an email]: <frank@timepit.eu>
+[issue tracker]: http://github.com/fthomas/slhaea/issues
+[write me an email]: <mailto:frank@timepit.eu>
 
 ## License
 
