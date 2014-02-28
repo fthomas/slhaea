@@ -1,11 +1,10 @@
-SLHAea - containers for SUSY Les Houches Accord input/output
-============================================================
+# SLHAea - containers for SUSY Les Houches Accord input/output
+
 .. image:: https://travis-ci.org/fthomas/slhaea.png?branch=master
    :alt: Build Status
    :target: https://travis-ci.org/fthomas/slhaea
 
-Introduction
-------------
+## Introduction
 
 SLHAea is an easy to use C++ library for input, output, and
 manipulation of data in the `SUSY Les Houches Accord`_ (SLHA). It is
@@ -35,8 +34,7 @@ Its main features are:
 .. _SLHA2: http://arxiv.org/abs/0801.0045
 .. _FLHA:  http://arxiv.org/abs/1008.0762
 
-Documentation
--------------
+## Documentation
 
 The API documentation is `here`_. It includes some `practical
 examples`_ which can also be found in the `doc/examples/`_ directory
@@ -47,21 +45,19 @@ in SLHAea's source tree.
     http://fthomas.github.io/slhaea/doc/api-html/examples.html
 .. _doc/examples/: http://github.com/fthomas/slhaea/tree/master/doc/examples/
 
-Dependencies
-------------
+## Dependencies
 
 To use SLHAea only the C++ Standard Library and some headers from the
-`Boost C++ Libraries`_ are required.
+[Boost C++ Libraries][] are required.
 
-.. _Boost C++ Libraries: http://www.boost.org/
+[Boost C++ Libraries]: http://www.boost.org/
 
-Download
---------
+## Download
 
-You can download SLHAea in either `tar.gz`_ or `zip`_ formats.
+You can download SLHAea in either [tar.gz][] or [zip][] formats.
 
-.. _tar.gz: http://github.com/fthomas/slhaea/tarball/master
-.. _zip:    http://github.com/fthomas/slhaea/zipball/master
+[tar.gz]: http://github.com/fthomas/slhaea/tarball/master
+[zip]:    http://github.com/fthomas/slhaea/zipball/master
 
 The version control system used for development of SLHAea is Git. The
 `Git repository`_ can be inspected and browsed online at GitHub and it
@@ -71,26 +67,23 @@ can be cloned by running::
 
 .. _Git repository: http://github.com/fthomas/slhaea
 
-Issues and feedback
--------------------
+## Issues and feedback
 
 For bug reports, feature requests, or general feedback either use the
-`issue tracker`_ or `write me an email`_.
+`issue tracker`_ or [write me an email][].
 
 .. _issue tracker: http://github.com/fthomas/slhaea/issues
-.. _write me an email: frank@timepit.eu
+[write me an email]: <frank@timepit.eu>
 
-License
--------
+## License
 
-SLHAea is `free software`_ and licensed under the `Boost Software
-License 1.0`_. The full text of the license can be found in the file
+SLHAea is [free software][] and licensed under the [Boost Software
+License 1.0][]. The full text of the license can be found in the file
 ``LICENSE_1_0.txt`` in SLHAea's source tree.
 
-.. _free software: http://www.gnu.org/philosophy/free-sw.html
-.. _Boost Software License 1.0:  http://www.boost.org/users/license.html
+[free software]: http://www.gnu.org/philosophy/free-sw.html
+[Boost Software License 1.0]: http://www.boost.org/users/license.html
 
-Author
-------
+## Author
 
-SLHAea was written by Frank S. Thomas <frank@timepit.eu>.
+SLHAea was written by Frank S. Thomas <<frank@timepit.eu>>.
