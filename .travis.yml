@@ -3,7 +3,7 @@ compiler:
  - clang
  - gcc
 before_install: 
- - sudo apt-get install libboost-dev libboost-test-dev doxygen
+ - sudo apt-get install libboost-dev libboost-test-dev doxygen graphviz
 script:
  - cmake .
  - make
