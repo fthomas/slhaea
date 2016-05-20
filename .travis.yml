@@ -3,6 +3,6 @@ compiler:
  - clang
  - gcc
 before_install: 
- - sudo apt-get install libboost-dev libboost-test-dev
+ - sudo apt-get install libboost-dev libboost-test-dev doxygen
 script:
  - cmake . && make && make test
