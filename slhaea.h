@@ -2665,4 +2665,6 @@ operator>=(const Coll& a, const Coll& b)
 
 } // namespace SLHAea
 
+#undef MEM_FN
+
 #endif // SLHAEA_H
