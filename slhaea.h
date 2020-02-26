@@ -28,6 +28,12 @@
 #include <boost/algorithm/string/split.hpp>
 #include <boost/lexical_cast.hpp>
 
+#if __cplusplus <= 199711L
+#define MEM_FN std::mem_fun_ref
+#else
+#define MEM_FN std::mem_fn
+#endif
+
 namespace SLHAea {
 
 // auxiliary functions
@@ -1274,7 +1280,7 @@ public:
   find_block_def()
   {
     return std::find_if(begin(), end(),
-      std::mem_fun_ref(&value_type::is_block_def));
+      MEM_FN(&value_type::is_block_def));
   }
 
   /**
@@ -1286,7 +1292,7 @@ public:
   find_block_def() const
   {
     return std::find_if(begin(), end(),
-      std::mem_fun_ref(&value_type::is_block_def));
+      MEM_FN(&value_type::is_block_def));
   }
 
   // introspection
@@ -1310,7 +1316,7 @@ public:
   data_size() const
   {
     return std::count_if(begin(), end(),
-      std::mem_fun_ref(&value_type::is_data_line));
+      MEM_FN(&value_type::is_data_line));
   }
 
   /** Returns the size() of the largest possible %Block. */
@@ -1500,7 +1506,7 @@ public:
    */
   void
   reformat()
-  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::reformat)); }
+  { std::for_each(begin(), end(), MEM_FN(&value_type::reformat)); }
 
   /**
    * \brief Comments all Lines in the %Block.
@@ -1508,7 +1514,7 @@ public:
    */
   void
   comment()
-  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::comment)); }
+  { std::for_each(begin(), end(), MEM_FN(&value_type::comment)); }
 
   /**
    * \brief Uncomments all Lines in the %Block.
@@ -1516,7 +1522,7 @@ public:
    */
   void
   uncomment()
-  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
+  { std::for_each(begin(), end(), MEM_FN(&value_type::uncomment)); }
 
   /** Unary predicate that checks if a provided key matches a Line. */
   struct key_matches : public std::unary_function<value_type, bool>
@@ -2323,7 +2329,7 @@ public:
    */
   void
   reformat()
-  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::reformat)); }
+  { std::for_each(begin(), end(), MEM_FN(&value_type::reformat)); }
 
   /**
    * \brief Comments all Blocks in the %Coll.
@@ -2331,7 +2337,7 @@ public:
    */
   void
   comment()
-  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::comment)); }
+  { std::for_each(begin(), end(), MEM_FN(&value_type::comment)); }
 
   /**
    * \brief Uncomments all Blocks in the %Coll.
@@ -2339,7 +2345,7 @@ public:
    */
   void
   uncomment()
-  { std::for_each(begin(), end(), std::mem_fun_ref(&value_type::uncomment)); }
+  { std::for_each(begin(), end(), MEM_FN(&value_type::uncomment)); }
 
   /**
    * Unary predicate that checks if a provided name matches the name
@@ -2658,5 +2664,7 @@ operator>=(const Coll& a, const Coll& b)
 { return !(a < b); }
 
 } // namespace SLHAea
+
+#undef MEM_FN
 
 #endif // SLHAEA_H
