@@ -1570,11 +1570,11 @@ private:
   {
     key_type key;
     key.reserve(5);
-    if (s0.empty()) return key; key.push_back(s0);
-    if (s1.empty()) return key; key.push_back(s1);
-    if (s2.empty()) return key; key.push_back(s2);
-    if (s3.empty()) return key; key.push_back(s3);
-    if (s4.empty()) return key; key.push_back(s4);
+    if (s0.empty()) { return key; } key.push_back(s0);
+    if (s1.empty()) { return key; } key.push_back(s1);
+    if (s2.empty()) { return key; } key.push_back(s2);
+    if (s3.empty()) { return key; } key.push_back(s3);
+    if (s4.empty()) { return key; } key.push_back(s4);
     return key;
   }
 
@@ -1583,11 +1583,11 @@ private:
   {
     key_type key;
     key.reserve(5);
-    if (i0 == no_index_) return key; key.push_back(to_string(i0));
-    if (i1 == no_index_) return key; key.push_back(to_string(i1));
-    if (i2 == no_index_) return key; key.push_back(to_string(i2));
-    if (i3 == no_index_) return key; key.push_back(to_string(i3));
-    if (i4 == no_index_) return key; key.push_back(to_string(i4));
+    if (i0 == no_index_) { return key; } key.push_back(to_string(i0));
+    if (i1 == no_index_) { return key; } key.push_back(to_string(i1));
+    if (i2 == no_index_) { return key; } key.push_back(to_string(i2));
+    if (i3 == no_index_) { return key; } key.push_back(to_string(i3));
+    if (i4 == no_index_) { return key; } key.push_back(to_string(i4));
     return key;
   }
 
