@@ -5,11 +5,10 @@ string(REPLACE "/" "\\/" ESC_BIN_DIR ${CMAKE_BINARY_DIR}/)
 function(run_gprof BINARY OUTFILE)
     find_program(PROFILER_gprof gprof)
     if(PROFILER_gprof)
-        get_target_property(BIN_LOC ${BINARY} LOCATION)
         add_custom_command(
           OUTPUT  ${CURR_BIN_DIR}/${OUTFILE}
-          COMMAND ${BIN_LOC}
-          COMMAND ${PROFILER_gprof} -b ${BIN_LOC} > ${OUTFILE} 2>&1
+          COMMAND $<TARGET_FILE:${BINARY}>
+          COMMAND ${PROFILER_gprof} -b $<TARGET_FILE:${BINARY}> > ${OUTFILE} 2>&1
           COMMAND ${CMAKE_COPY} ${OUTFILE} ${CURR_SRC_DIR}/
           DEPENDS ${SLHAEA_H} ${BINARY})
         set(GPROF_RESULTS ${GPROF_RESULTS};${CURR_BIN_DIR}/${OUTFILE}
@@ -20,10 +19,9 @@ endfunction()
 function(run_valgrind TOOL BINARY OUTFILE)
     find_program(PROFILER_valg valgrind)
     if(PROFILER_valg)
-        get_target_property(BIN_LOC ${BINARY} LOCATION)
         add_custom_command(
           OUTPUT  ${CURR_BIN_DIR}/${OUTFILE}
-          COMMAND ${PROFILER_valg} --tool=${TOOL} ${BIN_LOC} > ${OUTFILE} 2>&1
+          COMMAND ${PROFILER_valg} --tool=${TOOL} $<TARGET_FILE:${BINARY}> > ${OUTFILE} 2>&1
           COMMAND sed -i 's/==[0-9]\\+==[ ]*//' ${OUTFILE}
           COMMAND sed -i 's/${ESC_BIN_DIR}//' ${OUTFILE}
           COMMAND ${CMAKE_COPY} ${OUTFILE} ${CURR_SRC_DIR}/
