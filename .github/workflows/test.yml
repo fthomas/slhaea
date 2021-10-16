@@ -1,0 +1,36 @@
+name: test
+
+on: [push]
+
+jobs:
+  test:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - name: install conan
+      run: |
+        pip install conan
+        conan profile new default --detect
+    - name: Change libcxx to libstdc++11 on Linux
+      run: conan profile update settings.compiler.libcxx=libstdc++11 default
+      if: ${{ runner.os == 'Linux' }}
+    - name: install dependencies
+      run: conan install boost/1.75.0@ --generator=cmake_paths --build=missing -o boost:shared=True
+    - name: cmake
+      run: cmake . -DCMAKE_TOOLCHAIN_FILE=./conan_paths.cmake
+    - name: cmake build
+      run: cmake --build .
+    - name: ctest
+      run: ctest
+      env:
+        CTEST_OUTPUT_ON_FAILURE: 1
