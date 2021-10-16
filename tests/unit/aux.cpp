@@ -7,7 +7,12 @@
 
 #include <limits>
 #include <string>
+#include <boost/version.hpp>
+#if BOOST_VERSION < 105900
 #include <boost/test/floating_point_comparison.hpp>
+#else
+#include <boost/test/tools/floating_point_comparison.hpp>
+#endif
 #include <boost/test/unit_test.hpp>
 #include "slhaea.h"
 
