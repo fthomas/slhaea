@@ -1,5 +1,6 @@
 # SLHAea - containers for SUSY Les Houches Accord input/output
-[![Build Status](https://travis-ci.org/fthomas/slhaea.svg?branch=master)](https://travis-ci.org/fthomas/slhaea)
+
+[![test](https://github.com/fthomas/slhaea/actions/workflows/test.yml/badge.svg)](https://github.com/fthomas/slhaea/actions/workflows/test.yml)
 
 ## Introduction
 
