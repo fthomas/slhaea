@@ -25,7 +25,7 @@ jobs:
       run: conan profile update settings.compiler.libcxx=libstdc++11 default
       if: ${{ runner.os == 'Linux' }}
     - name: install dependencies
-      run: conan install boost/1.75.0@ --generator=cmake_paths --build=missing
+      run: conan install boost/1.75.0@ --generator=cmake_paths --build=missing -o boost:shared=True
     - name: cmake
       run: cmake . -DCMAKE_TOOLCHAIN_FILE=./conan_paths.cmake
     - name: cmake build
