@@ -18,10 +18,12 @@ jobs:
       with:
         python-version: '3.x'
     - name: install conan
-      run: |
-        pip install conan
+      run: pip install conan
     - name: install dependencies
-      run: conan install boost/1.75.0@ --generator=cmake_paths --build=missing -s compiler.libcxx=libstdc++11
+      run: conan install boost/1.75.0@ --generator=cmake_paths --build=missing
+    - name: Change libcxx to libstdc++11 on Linux
+      run: conan profile update compiler.libcxx=libstdc++11 default
+      if: ${{ runner.os == 'Linux' }}
     - name: cmake
       run: cmake . -DCMAKE_TOOLCHAIN_FILE=./conan_paths.cmake
     - name: cmake build
