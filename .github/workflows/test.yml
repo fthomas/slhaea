@@ -20,7 +20,7 @@ jobs:
     - name: install conan
       run: pip install conan
     - name: install dependencies
-      run: conan install .
+      run: conan install boost/1.75.0@ --build=missing
     - name: cmake
       run: cmake . -DCMAKE_TOOLCHAIN_FILE=./conan_paths.cmake
     - name: cmake build
