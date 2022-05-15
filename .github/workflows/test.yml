@@ -19,8 +19,7 @@ jobs:
       with:
         boost_version: 1.73.0
     - name: cmake
-      run: |
-        cmake .
+      run: cmake .
       env:
         BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
     - name: cmake build
