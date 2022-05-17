@@ -37,6 +37,7 @@ jobs:
       id: install-boost
       with:
         boost_version: 1.79.0
+        link: shared
         platform_version: 2022
         toolset: msvc
     - name: cmake
