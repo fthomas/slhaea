@@ -3,31 +3,48 @@ name: test
 on: [push]
 
 jobs:
-  test:
-
+  test_unix:
+    name: Test on Unix-like operating systems
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
         os: [ubuntu-latest, macOS-latest]
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up Python
-      uses: actions/setup-python@v1
+    - uses: actions/checkout@v2
+    - name: Install boost
+      uses: MarkusJx/install-boost@v2.3.0
+      id: install-boost
       with:
-        python-version: '3.x'
-    - name: install conan
-      run: |
-        pip install conan
-        conan profile new default --detect
-    - name: Change libcxx to libstdc++11 on Linux
-      run: conan profile update settings.compiler.libcxx=libstdc++11 default
-      if: ${{ runner.os == 'Linux' }}
-    - name: install dependencies
-      run: conan install boost/1.75.0@ --generator=cmake_paths --build=missing -o boost:shared=True
+        boost_version: 1.79.0
     - name: cmake
-      run: cmake . -DCMAKE_TOOLCHAIN_FILE=./conan_paths.cmake
+      run: cmake .
+      env:
+        BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+    - name: cmake build
+      run: cmake --build .
+    - name: ctest
+      run: ctest
+      env:
+        CTEST_OUTPUT_ON_FAILURE: 1
+
+  test_windows:
+    name: Test on Windows Server 2022
+    runs-on: windows-2022
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install boost
+      uses: MarkusJx/install-boost@v2.3.0
+      id: install-boost
+      with:
+        boost_version: 1.79.0
+        link: shared
+        platform_version: 2022
+        toolset: msvc
+    - name: cmake
+      run: |
+        cmake . -DBoost_INCLUDE_DIR="${{steps.install-boost.outputs.BOOST_ROOT}}\include" -DBoost_LIBRARY_DIRS="${{steps.install-boost.outputs.BOOST_ROOT}}\lib"
+      env:
+        BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
     - name: cmake build
       run: cmake --build .
     - name: ctest
